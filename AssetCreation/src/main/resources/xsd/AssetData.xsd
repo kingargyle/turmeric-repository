@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2006-2010 eBay Inc. All Rights Reserved.
+    Licensed under the Apache License, Version 2.0 (the "License"); 
+    you may not use this file except in compliance with the License. 
+    You may obtain a copy of the License at 
+   
+       http://www.apache.org/licenses/LICENSE-2.0
+       
+-->
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.ebay.com/AssetData"
+	xmlns:tns="http://www.ebay.com/AssetData" elementFormDefault="qualified">
+	
+	<element name="assetData" type="tns:AssetData" />
+	
+	<complexType name="AssetData">
+		<sequence>
+			<element name="assets" type="tns:Assets" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+	
+	<complexType name="Assets">
+		<sequence>
+			<element name="id" type="token" minOccurs="1" maxOccurs="1"/>
+			<element name="assetid" type="token" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+	
+</schema>

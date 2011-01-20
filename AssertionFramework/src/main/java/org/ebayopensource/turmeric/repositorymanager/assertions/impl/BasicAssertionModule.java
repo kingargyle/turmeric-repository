@@ -1,0 +1,100 @@
+/*******************************************************************************
+ * Copyright (c) 2006-2010 eBay Inc. All Rights Reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *******************************************************************************/
+package org.ebayopensource.turmeric.repositorymanager.assertions.impl;
+
+
+import java.util.Collection;
+
+import org.ebayopensource.turmeric.repositorymanager.assertions.AssertionContent;
+import org.ebayopensource.turmeric.repositorymanager.assertions.AssertionModule;
+
+
+/**
+ * BasicAssertionModule implements AssertionModule.
+ * 
+ * @author pcopeland
+ */
+public class BasicAssertionModule
+    implements AssertionModule
+{
+    private String name;
+    private String version;
+    private String description;
+    private Collection<AssertionContent> moduleScripts;
+    private String assertionProcessorType;
+
+    /**
+     * Creates a BasicAssertionModule. By default FailureResult = FAILED and
+     * AssertionModules = null.
+     * 
+     * @param name name of this BasicAssertionModule.
+     * @param version version of this BasicAssertionModule.
+     * @param description description of this BasicAssertionModule.
+     * @param scriptContents script contents for this BasicAssertionModule.
+     * @param assertionProcessor assertionProcessor for this BasicAssertionModule.
+     */
+    public BasicAssertionModule(
+            String name,
+            String version,
+            String description,
+            Collection<AssertionContent> moduleScripts,
+            String assertionProcessorType)
+    {
+        this.name = name;
+        this.version = version;
+        this.description = description;
+        this.moduleScripts = moduleScripts;
+        this.assertionProcessorType = assertionProcessorType;
+    }
+
+    /**
+     * Returns the name of this AssertionModule.
+     * 
+     * @return the name of this AssertionModule.
+     */
+    public String getName() { return name; }
+
+    /**
+     * Returns the version of this AssertionModule.
+     * 
+     * @return the version of this AssertionModule.
+     */
+    public String getVersion() { return version; }
+
+    /**
+     * Returns the description of this AssertionModule.
+     * 
+     * @return the description of this AssertionModule.
+     */
+    public String getDescription() { return description; }
+
+    /**
+     * Returns the AssertionScripts contained in this AssertionModule.
+     * 
+     * @return the AssertionScripts contained in this AssertionModule.
+     */
+    public Collection<AssertionContent> getModuleScripts()
+    {
+        return moduleScripts;
+    }
+
+    /**
+     * Returns the AssertionProcessor type that uses this AssertionModule.
+     * 
+     * @return the AssertionProcessor type that uses this AssertionModule.
+     */
+    public String getAssertionProcessorType() { return assertionProcessorType; }
+
+    public String toString()
+    {
+        return "AssertionModule["+name
+            +",version="+version
+            +",processor="+assertionProcessorType+"]";
+    }
+}

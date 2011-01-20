@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2006-2010 eBay Inc. All Rights Reserved.
+    Licensed under the Apache License, Version 2.0 (the "License"); 
+    you may not use this file except in compliance with the License. 
+    You may obtain a copy of the License at 
+   
+       http://www.apache.org/licenses/LICENSE-2.0
+       
+-->
+<ErrorBundle xmlns="http://www.ebayopensource.org/turmeric/common/config" xmlns:tns="http://www.ebayopensource.org/turmeric/common/config" xmlns:xs="http://www.w3.org/2001/XMLSchema" libraryVersion="1.0.0" packageName="org.ebayopensource.turmeric.errorlibrary.assertion" domain="Assertion" organization="ebayopensource" errorLibraryName="AssetRepositoryErrorLibrary">
+  <errorlist>
+    <error id="119002" category="APPLICATION" subdomain="AssertionsService" severity="ERROR" errorGroup="" name="ASSERTION_CONTENT_MISSING" />
+    <error id="119004" category="APPLICATION" subdomain="AssertionsService" severity="ERROR" errorGroup="" name="ASSET_NAME_MISSING" />
+    <error id="119006" category="APPLICATION" subdomain="AssertionsService" severity="ERROR" errorGroup="" name="ASSERTIONS_MISSING" />
+    <error id="119008" category="APPLICATION" subdomain="AssertionsService" severity="ERROR" errorGroup="" name="ASSERTION_NAME_MISSING" />
+    <error id="119010" category="APPLICATION" subdomain="AssertionsService" severity="ERROR" errorGroup="" name="ASSERTION_ERROR_SEVERITY_MISSING" />
+    <error id="119012" category="APPLICATION" subdomain="AssertionsService" severity="ERROR" errorGroup="" name="UNKNOWN_EXCEPTION" />
+    <error id="119014" category="APPLICATION" subdomain="AssertionsService" severity="WARNING" errorGroup="" name="MULTIPLE_CONTENT_TAG_POPULATION_WARNING" />
+    <error id="119016" category="APPLICATION" subdomain="AssertionsService" severity="ERROR" errorGroup="" name="ASSERTION_OBJECT_CONTENT_MISSING" />
+    <error id="119018" category="APPLICATION" subdomain="AssertionsService" severity="ERROR" errorGroup="" name="OBJECT_NOT_FOUND_EXCEPTION" />
+    <error id="119020" category="APPLICATION" subdomain="AssertionsService" severity="ERROR" errorGroup="" name="ASSET_TYPE_MISSING" />
+    <error id="119022" category="APPLICATION" subdomain="AssertionsService" severity="ERROR" errorGroup="" name="MODULE_SCRIPTS_MISSING" />
+    <error id="119024" category="APPLICATION" subdomain="AssertionsService" severity="ERROR" errorGroup="" name="ASSERTION_PROCESSOR_TYPE" />
+    <error id="119026" category="APPLICATION" subdomain="AssertionsService" severity="ERROR" errorGroup="" name="REQUEST_EMPTY" />
+    <error id="119028" category="APPLICATION" subdomain="AssertionsService" severity="ERROR" errorGroup="" name="ARTIFACT_CATEGORY_MISSING" />
+    <error id="119030" category="APPLICATION" subdomain="AssertionsService" severity="ERROR" errorGroup="" name="LIBRARY_NAME_MISSING" />
+    <error id="119032" category="APPLICATION" subdomain="AssertionsService" severity="ERROR" errorGroup="" name="ASSERTION_GROUP_LIST_NULL" />
+    <error id="119034" category="APPLICATION" subdomain="AssertionsService" severity="ERROR" errorGroup="" name="NOT_ALL_WSDL" />
+    <error id="119036" category="APPLICATION" subdomain="AssertionsService" severity="ERROR" errorGroup="" name="MISSING_ARTIFACT" />
+  </errorlist>
+</ErrorBundle>
+

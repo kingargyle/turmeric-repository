@@ -1,0 +1,310 @@
+/*******************************************************************************
+ * Copyright (c) 2006-2010 eBay Inc. All Rights Reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *******************************************************************************/
+
+package org.ebayopensource.turmeric.repository.wso2;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeTrue;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.wso2.carbon.registry.app.RemoteRegistry;
+import org.wso2.carbon.registry.core.Resource;
+import org.wso2.carbon.registry.core.exceptions.RegistryException;
+
+import org.ebayopensource.turmeric.common.v1.types.AckValue;
+import org.ebayopensource.turmeric.repository.v1.services.Artifact;
+import org.ebayopensource.turmeric.repository.v1.services.ArtifactInfo;
+import org.ebayopensource.turmeric.repository.v1.services.ArtifactValueType;
+import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
+import org.ebayopensource.turmeric.repository.v1.services.AssetInfoForUpdate;
+import org.ebayopensource.turmeric.repository.v1.services.AssetKey;
+import org.ebayopensource.turmeric.repository.v1.services.AssetLifeCycleInfo;
+import org.ebayopensource.turmeric.repository.v1.services.AttributeNameValue;
+import org.ebayopensource.turmeric.repository.v1.services.BasicAssetInfo;
+import org.ebayopensource.turmeric.repository.v1.services.CreateCompleteAssetRequest;
+import org.ebayopensource.turmeric.repository.v1.services.CreateCompleteAssetResponse;
+import org.ebayopensource.turmeric.repository.v1.services.ExtendedAssetInfo;
+import org.ebayopensource.turmeric.repository.v1.services.GetAssetInfoRequest;
+import org.ebayopensource.turmeric.repository.v1.services.GetAssetInfoResponse;
+import org.ebayopensource.turmeric.repository.v1.services.GetAssetLifeCycleStatesRequest;
+import org.ebayopensource.turmeric.repository.v1.services.GetAssetLifeCycleStatesResponse;
+import org.ebayopensource.turmeric.repository.v1.services.GetBasicAssetInfoRequest;
+import org.ebayopensource.turmeric.repository.v1.services.GetBasicAssetInfoResponse;
+import org.ebayopensource.turmeric.repository.v1.services.GetServiceRequest;
+import org.ebayopensource.turmeric.repository.v1.services.GetServiceResponse;
+import org.ebayopensource.turmeric.repository.v1.services.Library;
+import org.ebayopensource.turmeric.repository.v1.services.LockAssetRequest;
+import org.ebayopensource.turmeric.repository.v1.services.LockAssetResponse;
+import org.ebayopensource.turmeric.repository.v1.services.ServiceInfo;
+import org.ebayopensource.turmeric.repository.v1.services.UpdateCompleteAssetRequest;
+import org.ebayopensource.turmeric.repository.v1.services.UpdateCompleteAssetResponse;
+
+/**
+ * @author mgorovoy
+ * 
+ */
+public class UpdateAssetAttributesTest extends Wso2Base {
+    // First resource path must be the primary resource created by the test
+    // in order for the assumption checks to work correctly.
+    private static final String[] resources = {
+            "/_system/governance/services/http/www/ebay/com/marketplace/services/UpdateAssetAttributesTest",
+            "/_system/governance/endpoints/http/localhost:8080/ep-UpdateAssetAttributesTest",
+            "/_system/governance/endpoints/http/localhost:8080/ep-UpdateAssetAttributesTest-updated",
+            "/_system/governance/endpoints/http/localhost:8080/ep-UpdateAssetAttributesTest-updated-merge" };
+
+    private static final String assetName = "UpdateAssetAttributesTest";
+    private static final String assetDesc = "UpdateAssetAttributesTest description";
+    private static final String libraryName = "http://www.ebay.com/marketplace/services";
+    private static final String stringProperty = "test value";
+    private static final Long longProperty = new Long(100000l);
+    private static final Boolean booleanProperty = Boolean.FALSE;
+
+    @Before
+    public void checkRepository() {
+        boolean exists = false;
+        try {
+            RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+            exists = wso2.resourceExists("/");
+
+            for (String resource : resources) {
+                if (wso2.resourceExists(resource)) {
+                    wso2.delete(resource);
+                }
+            }
+        }
+        catch (Exception ex) {
+        }
+
+        assumeTrue(exists);
+    }
+
+    private CreateCompleteAssetResponse createAsset() throws Exception {
+        AssetKey key = new AssetKey();
+        Library lib = new Library();
+        lib.setLibraryName(libraryName);
+        key.setLibrary(lib);
+        key.setAssetName(assetName);
+
+        BasicAssetInfo basicInfo = new BasicAssetInfo();
+        basicInfo.setAssetKey(key);
+        basicInfo.setAssetName(assetName);
+        basicInfo.setAssetDescription(assetDesc);
+        basicInfo.setAssetType("Service");
+
+        ExtendedAssetInfo extendedInfo = new ExtendedAssetInfo();
+        List<AttributeNameValue> attrs = extendedInfo.getAttribute();
+        attrs.add(RSProviderUtil.newAttribute("namespace", libraryName));
+        attrs.add(RSProviderUtil.newAttribute("longProperty", longProperty.longValue()));
+        attrs.add(RSProviderUtil.newAttribute("booleanProperty", booleanProperty.booleanValue()));
+
+        AssetLifeCycleInfo lifeCycleInfo = new AssetLifeCycleInfo();
+        lifeCycleInfo.setDomainOwner("John Doe");
+        lifeCycleInfo.setDomainType("Technical Owner");
+
+        AssetInfo assetInfo = new AssetInfo();
+        assetInfo.setBasicAssetInfo(basicInfo);
+        assetInfo.setExtendedAssetInfo(extendedInfo);
+        assetInfo.setAssetLifeCycleInfo(lifeCycleInfo);
+
+        CreateCompleteAssetRequest request = new CreateCompleteAssetRequest();
+        request.setAssetInfo(assetInfo);
+
+        RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+        return provider.createCompleteAsset(request);
+    }
+
+    private UpdateCompleteAssetResponse replaceAsset(String assetId) throws Exception {
+        AssetKey key = new AssetKey();
+        key.setAssetId(assetId);
+
+        LockAssetRequest lockReq = new LockAssetRequest();
+        lockReq.setAssetKey(key);
+
+        RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+        LockAssetResponse lockRes = provider.lockAsset(lockReq);
+        assertEquals(AckValue.SUCCESS, lockRes.getAck());
+
+        BasicAssetInfo basicInfo = new BasicAssetInfo();
+        basicInfo.setAssetKey(key);
+        basicInfo.setAssetName(assetName);
+        basicInfo.setAssetDescription(assetDesc + " updated");
+        basicInfo.setAssetType("Service");
+
+        ExtendedAssetInfo extendedInfo = new ExtendedAssetInfo();
+        List<AttributeNameValue> attrs = extendedInfo.getAttribute();
+        attrs.add(RSProviderUtil.newAttribute("namespace", libraryName));
+        attrs.add(RSProviderUtil.newAttribute("stringProperty", stringProperty + " updated"));
+        attrs.add(RSProviderUtil.newAttribute("longProperty", longProperty.longValue() * 10));
+        attrs.add(RSProviderUtil.newAttribute("booleanProperty", !booleanProperty.booleanValue()));
+
+        AssetLifeCycleInfo lifeCycleInfo = new AssetLifeCycleInfo();
+        lifeCycleInfo.setDomainOwner("John Doe Junior");
+        lifeCycleInfo.setDomainType("Business Owner");
+
+        AssetInfoForUpdate assetInfo = new AssetInfoForUpdate();
+        assetInfo.setBasicAssetInfo(basicInfo);
+        assetInfo.setExtendedAssetInfo(extendedInfo);
+        assetInfo.setAssetLifeCycleInfo(lifeCycleInfo);
+
+        UpdateCompleteAssetRequest request = new UpdateCompleteAssetRequest();
+        request.setPartialUpdate(false);
+        request.setAssetInfoForUpdate(assetInfo);
+        request.setReplaceCurrent(true);
+
+        return provider.updateCompleteAsset(request);
+    }
+
+    private UpdateCompleteAssetResponse mergeAsset(String assetId) throws Exception {
+        AssetKey key = new AssetKey();
+        key.setAssetId(assetId);
+
+        LockAssetRequest lockReq = new LockAssetRequest();
+        lockReq.setAssetKey(key);
+
+        RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+        LockAssetResponse lockRes = provider.lockAsset(lockReq);
+        assertEquals(AckValue.SUCCESS, lockRes.getAck());
+
+        BasicAssetInfo basicInfo = new BasicAssetInfo();
+        basicInfo.setAssetKey(key);
+        basicInfo.setAssetName(assetName);
+        basicInfo.setAssetDescription(assetDesc + " updated");
+        basicInfo.setAssetType("Service");
+
+        ExtendedAssetInfo extendedInfo = new ExtendedAssetInfo();
+        List<AttributeNameValue> attrs = extendedInfo.getAttribute();
+        attrs.add(RSProviderUtil.newAttribute("namespace", libraryName));
+        attrs.add(RSProviderUtil.newAttribute("stringProperty", stringProperty + " updated"));
+        attrs.add(RSProviderUtil.newAttribute("longProperty", longProperty.longValue() * 10));
+        attrs.add(RSProviderUtil.newAttribute("booleanProperty", !booleanProperty.booleanValue()));
+
+        AssetLifeCycleInfo lifeCycleInfo = new AssetLifeCycleInfo();
+        lifeCycleInfo.setDomainOwner("John Doe Junior");
+        lifeCycleInfo.setDomainType("Business Owner");
+
+        AssetInfoForUpdate assetInfo = new AssetInfoForUpdate();
+        assetInfo.setBasicAssetInfo(basicInfo);
+        assetInfo.setExtendedAssetInfo(extendedInfo);
+        assetInfo.setAssetLifeCycleInfo(lifeCycleInfo);
+
+        UpdateCompleteAssetRequest request = new UpdateCompleteAssetRequest();
+        request.setPartialUpdate(false);
+        request.setAssetInfoForUpdate(assetInfo);
+        request.setReplaceCurrent(false);
+
+        return provider.updateCompleteAsset(request);
+    }
+
+    /**
+     * Helper method to validate the asset basic and extended info
+     * 
+     * @return
+     */
+    private AssetInfo validateAsset(String assetId) {
+        // now, i search the service to get all its related objects
+        RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+
+        GetAssetInfoRequest request = new GetAssetInfoRequest();
+        AssetKey key = new AssetKey();
+        key.setAssetId(assetId);
+        request.setAssetKey(key);
+        request.setAssetType("Service");
+
+        GetAssetInfoResponse assetInfoResponse = provider.getAssetInfo(request);
+        assertEquals(AckValue.SUCCESS, assetInfoResponse.getAck());
+        assertEquals(null, assetInfoResponse.getErrorMessage());
+
+        // //now, validating the basic info of the updated asset
+        BasicAssetInfo assetInfo = assetInfoResponse.getAssetInfo().getBasicAssetInfo();
+        assertEquals(assetName, assetInfo.getAssetName());
+        assertEquals("Service", assetInfo.getAssetType());
+        assertEquals(assetDesc + " updated", assetInfo.getAssetDescription());
+        // now, validating extended info
+        ExtendedAssetInfo extededAssetInfo = assetInfoResponse.getAssetInfo()
+                        .getExtendedAssetInfo();
+        List<AttributeNameValue> attrValues = extededAssetInfo.getAttribute();
+        for (AttributeNameValue attributeNameValue : attrValues) {
+            if ("stringProperty".equals(attributeNameValue.getAttributeName())) {
+                assertEquals(stringProperty + " updated",
+                                attributeNameValue.getAttributeValueString());
+            }
+            else if ("longProperty".equals(attributeNameValue.getAttributeName())) {
+                assertEquals(Long.toString(longProperty * 10),
+                                attributeNameValue.getAttributeValueString());
+            }
+            else if ("booleanProperty".equals(attributeNameValue.getAttributeName())) {
+                assertEquals(Boolean.toString(!booleanProperty),
+                                attributeNameValue.getAttributeValueString());
+            }
+        }
+        // now, validating lifecycle info
+        AssetLifeCycleInfo lifeCycleInfo = assetInfoResponse.getAssetInfo().getAssetLifeCycleInfo();
+        assertEquals("John Doe Junior", lifeCycleInfo.getDomainOwner());
+        assertEquals("Business Owner", lifeCycleInfo.getDomainType());
+
+        return assetInfoResponse.getAssetInfo();
+    }
+
+    @Test
+    public void updateReplaceTest() throws Exception {
+        boolean clean = false;
+        try {
+            RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+            clean = !wso2.resourceExists(resources[0]);
+        }
+        catch (RegistryException e) {
+        }
+        assumeTrue(clean);
+
+        // first, create the complete asset
+        CreateCompleteAssetResponse response = createAsset();
+        assertEquals(AckValue.SUCCESS, response.getAck());
+        assertEquals(null, response.getErrorMessage());
+
+        // then, update the complete asset, replacing all its related objects
+        UpdateCompleteAssetResponse responseUpdate = replaceAsset(response.getAssetKey().getAssetId());
+        assertEquals(AckValue.SUCCESS, responseUpdate.getAck());
+        assertEquals(null, responseUpdate.getErrorMessage());
+
+        AssetInfo assetInfo = validateAsset(responseUpdate.getAssetKey().getAssetId());
+    }
+
+    @Test
+    public void mergeCompleteAssetTest() throws Exception {
+        boolean clean = false;
+        try {
+            RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+            clean = !wso2.resourceExists(resources[0]);
+        }
+        catch (RegistryException e) {
+        }
+        assumeTrue(clean);
+
+        // first, create the complete asset
+        CreateCompleteAssetResponse response = createAsset();
+        assertEquals(AckValue.SUCCESS, response.getAck());
+        assertEquals(null, response.getErrorMessage());
+
+        // then, update the complete asset, replacing all its related objects
+        UpdateCompleteAssetResponse responseUpdate = mergeAsset(response.getAssetKey().getAssetId());
+        assertEquals(AckValue.SUCCESS, responseUpdate.getAck());
+        assertEquals(null, responseUpdate.getErrorMessage());
+
+        AssetInfo assetInfo = this.validateAsset(responseUpdate.getAssetKey().getAssetId());
+    }
+}

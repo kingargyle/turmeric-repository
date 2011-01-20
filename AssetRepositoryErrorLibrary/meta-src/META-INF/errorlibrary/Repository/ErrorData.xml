@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2006-2010 eBay Inc. All Rights Reserved.
+    Licensed under the Apache License, Version 2.0 (the "License"); 
+    you may not use this file except in compliance with the License. 
+    You may obtain a copy of the License at 
+   
+       http://www.apache.org/licenses/LICENSE-2.0
+       
+-->
+<ErrorBundle xmlns="http://www.ebayopensource.org/turmeric/common/config" xmlns:tns="http://www.ebayopensource.org/turmeric/common/config" xmlns:xs="http://www.w3.org/2001/XMLSchema" libraryVersion="1.0.0" packageName="org.ebayopensource.turmeric.errorlibrary.repository" domain="Repository" organization="ebayopensource" errorLibraryName="AssetRepositoryErrorLibrary">
+  <errorlist>
+    <error id="118004" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="BASE_ASSETINFO_MISSING" />
+    <error id="118006" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="ASSET_NAME_MISSING" />
+    <error id="118008" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="ASSET_VERSION_MISSING" />
+    <error id="118010" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="ASSET_ID_MISSING" />
+    <error id="118012" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="LIBRARY_ID_MISSING" />
+    <error id="118014" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="DEPTH_MISSING" />
+    <error id="118016" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="UNKNOWN_EXCEPTION" />
+    <error id="118018" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="NO_ARTIFACTS_FOR_ADDING" />
+    <error id="118020" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="ASSET_NAME_AND_ID_MISSING" />
+    <error id="118022" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="ASSET_TYPE_MISSING" />
+    <error id="118024" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="SOURCE_ASSET_NOT_ENTERED" />
+    <error id="118026" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="RELATIONS_NOT_ENTERED" />
+    <error id="118028" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="INVALID_VERSION" />
+    <error id="118030" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="ARTIFACT_EMPTY_EXCEPTION" />
+    <error id="118032" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="RELATIONSHIP_NAME_NOT_ENTERED" />
+    <error id="118034" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="BASIC_SERVICE_INFO_MISSING" />
+    <error id="118036" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="REQUEST_EMPTY" />
+    <error id="118038" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="ARTIFACT_NAME_MISSING" />
+    <error id="118040" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="ARTIFACT_VALUE_TYPE_MISSING" />
+    <error id="118042" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="ARTIFACT_CATEGORY_MISSING" />
+    <error id="118044" category="APPLICATION" subdomain="RepositoryService" severity="WARNING" errorGroup="" name="ASSET_ID_NOT_NEEDED" />
+    <error id="118046" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="ASSET_KEY_MISMATCH_ERROR" />
+    <error id="118048" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="CAPTURE_TEMPLATE_NOT_RESOLVED" />
+    <error id="118050" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="LIBRARY_NAME_MISSING" />
+    <error id="118052" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="MISSING_ASSETINFO" />
+    <error id="118054" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="APPROVAL_ROLE_MISSING" />
+    <error id="118056" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="REJECTION_ROLE_MISSING" />
+    <error id="118058" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="APPROVAL_INFO_MISSING" />
+    <error id="118060" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="REJECTION_INFO_MISSING" />
+    <error id="118062" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="NEXT_LEVEL_ATTRIBUTE_MISSING" />
+    <error id="118064" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="TARGET_ASSETKEY_MISSING" />
+    <error id="118066" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="ASSETKEY_MISSING" />
+    <error id="118068" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="LIBRARY_MISSING" />
+    <error id="118070" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="FLATTENED_RELATIONSHIP_MISSING" />
+    <error id="118072" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="ARTIFACT_MISSING" />
+    <error id="118074" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="NEW_RELATION_MISSING" />
+    <error id="118076" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="NO_REQUEST_PARAM" />
+    <error id="118078" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="GROUP_NOT_PROVIDED" />
+    <error id="118080" category="APPLICATION" subdomain="RepositoryService" severity="WARNING" errorGroup="" name="COMMENT_TOO_LONG" />
+    <error id="118082" category="APPLICATION" subdomain="RepositoryService" severity="ERROR" errorGroup="" name="SERVICE_PROVIDER_EXCEPTION" />
+  </errorlist>
+</ErrorBundle>
+

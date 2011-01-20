@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2006-2010 eBay Inc. All Rights Reserved.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+ http://www.apache.org/licenses/LICENSE-2.0
+ 
+ -->
+<aspect name="TurmericLifeCycle" class="org.wso2.carbon.governance.registry.extensions.aspects.ChecklistLifeCycle">
+    <configuration type="literal">
+        <lifecycle>
+            <state name="New">
+                <checkitem>Submitted for Promotion</checkitem>
+            </state>
+            <state name="Proposed">
+                <checkitem>Submitted for Promotion</checkitem>
+            </state>
+            <state name="InReview">
+                <checkitem>Submitted for Promotion</checkitem>
+            </state>
+            <state name="Approved">
+                <checkitem>Submitted for Promotion</checkitem>
+            </state>
+            <state name="Deployed">
+                <checkitem>Submitted for Promotion</checkitem>
+            </state>
+            <state name="Deprecated">
+                <checkitem>Submitted for Promotion</checkitem>
+            </state>
+            <state name="Retired" />
+        </lifecycle>
+    </configuration>
+</aspect>

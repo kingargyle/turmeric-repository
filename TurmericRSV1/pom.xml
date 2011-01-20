@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ================================================================== -->
+<!--  Copyright (c) 2006-2010 eBay Inc. All Rights Reserved.            -->
+<!--  Licensed under the Apache License, Version 2.0 (the "License");   -->
+<!--  you may not use this file except in compliance with the License.  -->
+<!--  You may obtain a copy of the License at                           -->
+<!--                                                                    -->
+<!--     http://www.apache.org/licenses/LICENSE-2.0                     -->
+<!-- ================================================================== -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.ebayopensource.turmeric.repository</groupId>
+    <artifactId>turmeric-repository-parent</artifactId>
+    <version>0.9.0.5-Beta-SNAPSHOT</version>
+  </parent>
+  <groupId>org.ebayopensource.turmeric.intf</groupId>
+  <artifactId>TurmericRSV1</artifactId>
+  <name>Repository :: TurmericRSV1</name>
+  <properties>
+    <implProjectName>TurmericRSV1Impl</implProjectName>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.4</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.ebayopensource.turmeric.codegen</groupId>
+      <artifactId>codegen-tools</artifactId>
+      <version>${turmeric-runtime-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.ebayopensource.turmeric.runtime</groupId>
+      <artifactId>soa-client</artifactId>
+      <version>${turmeric-runtime-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.ebayopensource.turmeric.typelib</groupId>
+      <artifactId>common-type-library</artifactId>
+      <version>${turmeric-runtime-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.xml.bind</groupId>
+      <artifactId>jaxb-xjc</artifactId>
+      <version>2.1.2</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+    <testSourceDirectory>test</testSourceDirectory>
+    <outputDirectory>build/classes</outputDirectory>
+    <testOutputDirectory>build/classes</testOutputDirectory>
+    <resources>
+      <resource>
+        <directory>meta-src</directory>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <filesets>
+            <fileset><directory>${project.basedir}/build</directory></fileset>
+            <fileset><directory>${project.basedir}/gen-src</directory></fileset>
+            <fileset><directory>${project.basedir}/gen-meta-src</directory></fileset>
+          </filesets>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>1.0</version>
+        <executions>
+          <execution>
+            <id>add-source</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>gen-src/client</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.ebayopensource.turmeric.maven</groupId>
+        <artifactId>turmeric-maven-plugin</artifactId>
+        <version>${turmeric-runtime-version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>gen-interface-wsdl</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <verbose>true</verbose>
+          <legacy>true</legacy>
+          <resourcesOutputDirectory>${project.basedir}/gen-meta-src</resourcesOutputDirectory>
+          <outputDirectory>${project.basedir}/gen-src/client</outputDirectory>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

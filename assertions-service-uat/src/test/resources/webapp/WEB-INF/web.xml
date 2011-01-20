@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<servlet>
+		<display-name>TurmericRSV1SPFServlet</display-name>
+		<servlet-name>TurmericRSV1SPFServlet</servlet-name>
+		<servlet-class>org.ebayopensource.turmeric.runtime.spf.pipeline.SPFServlet</servlet-class>
+		<init-param>
+			<param-name>SOA_SERVICE_NAME</param-name>
+			<param-value>TurmericRSV1</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TurmericRSV1SPFServlet</servlet-name>
+		<url-pattern>/TurmericRSV1/*</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<display-name>TurmericASV1SPFServlet</display-name>
+		<servlet-name>TurmericASV1SPFServlet</servlet-name>
+		<servlet-class>org.ebayopensource.turmeric.runtime.spf.pipeline.SPFServlet</servlet-class>
+		<init-param>
+			<param-name>SOA_SERVICE_NAME</param-name>
+			<param-value>TurmericASV1</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TurmericASV1SPFServlet</servlet-name>
+		<url-pattern>/TurmericASV1/*</url-pattern>
+	</servlet-mapping>
+</web-app>

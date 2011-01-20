@@ -1,0 +1,25 @@
+<aspect name="TurmericLifeCycle" class="org.wso2.carbon.governance.registry.extensions.aspects.ChecklistLifeCycle">
+    <configuration type="literal">
+        <lifecycle>
+            <state name="New">
+                <checkitem>Submitted for Promotion</checkitem>
+            </state>
+            <state name="Proposed">
+                <checkitem>Submitted for Promotion</checkitem>
+            </state>
+            <state name="InReview">
+                <checkitem>Submitted for Promotion</checkitem>
+            </state>
+            <state name="Approved">
+                <checkitem>Submitted for Promotion</checkitem>
+            </state>
+            <state name="Deployed">
+                <checkitem>Submitted for Promotion</checkitem>
+            </state>
+            <state name="Deprecated">
+                <checkitem>Submitted for Promotion</checkitem>
+            </state>
+            <state name="Retired" />
+        </lifecycle>
+    </configuration>
+</aspect>

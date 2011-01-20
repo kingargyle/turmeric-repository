@@ -1,0 +1,641 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2006-2010 eBay Inc. All Rights Reserved.
+    Licensed under the Apache License, Version 2.0 (the "License"); 
+    you may not use this file except in compliance with the License. 
+    You may obtain a copy of the License at 
+   
+       http://www.apache.org/licenses/LICENSE-2.0
+       
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+	 xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns0="http://www.ebay.com/marketplace/services" 
+	 xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	 xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" 
+	 xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.ebay.com/marketplace/services" 
+	 targetNamespace="http://www.ebay.com/marketplace/services" >
+	
+	<xs:complexType name="AssetInfo">
+				<xs:annotation>
+					<xs:documentation>
+						AssetInfo contains the basic required asset
+						info, multiple name-value pair attributes, the
+						list of artifact and assetLifeCycleInfo and
+						dependent assets
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="basicAssetInfo"
+						type="tns:BasicAssetInfo" />
+					<xs:element name="extendedAssetInfo"
+						type="tns:ExtendedAssetInfo" minOccurs="0" />
+					<xs:element name="artifactInfo"
+						type="tns:ArtifactInfo" minOccurs="0" maxOccurs="unbounded" />
+					<xs:element name="assetLifeCycleInfo"
+						type="tns:AssetLifeCycleInfo" minOccurs="0">
+					</xs:element>
+					<xs:element name="flattenedRelationship"
+						type="tns:FlattenedRelationship" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>
+								You can specify the dependent service or
+								data types in flattenedRelationship
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="FlattenedRelationship">
+				<xs:annotation>
+					<xs:documentation>
+						This shows all the relationships shown in
+						flattened mode.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="sourceAsset" type="tns:AssetKey"
+						minOccurs="0" />
+					<xs:element name="relatedAsset" type="tns:Relation"
+						minOccurs="0" maxOccurs="unbounded" />
+					<xs:element name="depth" type="xs:int"
+						minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>
+								this indicates the depth of the
+								relationship in the data
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="partial" type="xs:boolean"
+						minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>
+								this indicates if all relationships for
+								the particular asset is included in the
+								data
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="Relation">
+				<xs:sequence>
+					<xs:element name="sourceAsset" type="tns:AssetKey"
+						minOccurs="0" />
+					<xs:element name="targetAsset" type="tns:AssetKey" />
+					<xs:element name="assetRelationship"
+						type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								The possible values are: DependsOn,
+								ProvidedBy, NextVersion,
+								PreviousVersion.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="AssetLifeCycleInfo">
+				<xs:sequence>
+					<xs:element name="lifeCycleState"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								What is the current life cycle state for
+								the asset? It should be one of the
+								following states: Proposed, Submitted,
+								EntryReview, EntryApproval, EntryExit
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="domainOwner" type="xs:string"
+						minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>
+								Domain owner (it should be a person or
+								DL) for this asset (these are preset
+								based on domains). This is different
+								from Service owner, which is a
+								pre-defined classifier.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="domainType" type="xs:string"
+						minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>
+								This indicates which business domain
+								this asset belongs to
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="architect" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								This indicates the domain architect and
+								it should be always popolated
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="serviceArchitect" type="xs:string"
+						minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>
+								This is the service architect assigned
+							</xs:documentation>
+							<xs:appinfo></xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="opsArchitect" type="xs:string"
+						minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>
+								This is the ops architect assigned. It
+								is optional in some cases.
+							</xs:documentation>
+							<xs:appinfo></xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="productManager" type="xs:string"
+						minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>
+								This is the product manager. It is
+								optional in some cases.
+							</xs:documentation>
+							<xs:appinfo></xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="projectManager" type="xs:string"
+						minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>
+								This is the project manager. It is
+								optional in some cases.
+							</xs:documentation>
+							<xs:appinfo></xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="approver" type="xs:string"
+						minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>
+								Who is the approver at this stage? It
+								can be changed when the state changes.
+							</xs:documentation>
+							<xs:appinfo></xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="trackerId" type="xs:string"
+						minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>
+								 What is the trace ticket for this
+								asset?
+							</xs:documentation>
+							<xs:appinfo></xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="traceTicket" type="xs:string"
+						minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>
+								 This is the tracker project ID, if
+								there is a project.
+							</xs:documentation>
+							<xs:appinfo></xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="nextAction" type="xs:string"
+						minOccurs="0">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="Artifact">
+				<xs:sequence>
+					<xs:element name="artifactName" type="xs:string" />
+					<xs:element name="artifactIdentifier"
+						type="xs:token" />
+					<xs:element name="artifactCategory"
+						type="tns:ArtifactCategory" />
+					<xs:element name="artifactValueType"
+						type="tns:ArtifactValueType" />
+					<xs:element name="artifactDisplayName" type="xs:string" minOccurs="0" maxOccurs="1" />
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:simpleType name="ArtifactValueType">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates the type of value being uploaded for artifact
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="url">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="description">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="file">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			
+			<xs:simpleType name="ArtifactCategory">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates the category of an artifact
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="interface_mappings">
+						<xs:annotation>
+							<xs:documentation>new enum added to sync with RMS</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="acquisition_document_template">
+						<xs:annotation>
+							<xs:documentation>new enum added to sync with RMS</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="linked_url">
+						<xs:annotation>
+							<xs:documentation>Link to XML definitions</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="service_interface_design">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="service_usecases">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="security_risk_assessment_spreadsheet">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="error_log">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="external_documentation">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="internal_documentation">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="wsdl">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="currentWSDL">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="business_usecase">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="prd">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="erd">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="phd">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="service_definition">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="service_usecase">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="service_interface">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="service_configuration">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="authorization_policies">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="rate_limiting_policies">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="schema"></xs:enumeration>
+					<xs:enumeration value="arch_spec">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					
+					
+					<xs:enumeration value="sla">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="message-definition">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="schema-definition">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="usage-guide">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="requirements">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="architecture">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="design-information">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="test-information">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="physical-implementation">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="implementation-source">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="documentation">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="packed-documentation">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="validation-report">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="assertion-script">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="assertion-module-script">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			
+			<xs:complexType name="ArtifactInfo">
+				<xs:annotation>
+					<xs:documentation>
+						Artifact Info is something like WSDL, PRD,
+						configuration files ...
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="artifact" type="tns:Artifact" />
+					<xs:element name="artifactDetail"
+						type="xs:base64Binary" /> 
+					<xs:element name="contentType" type="xs:string" minOccurs="0" />	
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="BasicAssetInfo">
+				<xs:annotation>
+					<xs:documentation>
+						BasicServiceInfo structure contains some basic
+						typed information about the service
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="assetType" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								The type of the asset, it should Service
+								or DataType
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="assetName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The name of the asset
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="assetDescription"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								A brief description of the service
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="assetLongDescription"
+						type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>
+								A long description of the service
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="version" type="tns:Version">
+						<xs:annotation>
+							<xs:documentation>
+								The version of the asset in
+								Major.Minor.Maintenance format
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="assetKey" type="tns:AssetKey"
+						minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>
+								This is the optional as we do not have
+								asset key while creating the service or
+								asset
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="groupName" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>
+								This is an optional field, However it is mandated during asset creation.
+								When provided during asset creation, the created asset will be assigned to this group. 
+								When provided during asset updation, the group information of the asset will be updated with the 
+								group name provided over here.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:simpleType name="Version">
+				<xs:annotation>
+					<xs:documentation>
+						The pattern should be MAJOR.MINOR.MAINTENANCE
+						NNN.NN.N.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:pattern
+						value="[0-9][0-9][0-9].[0-9][0-9].[0-9]">
+					</xs:pattern>
+				</xs:restriction>
+			</xs:simpleType>
+			
+			<xs:complexType name="AssetKey">
+				<xs:annotation>
+					<xs:documentation>
+						If only assetName is provided, the assetKey can
+						not identify the asset. It will need more info
+						such as assetType and version to identify the
+						asset.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:choice>
+						<xs:element name="assetId" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>
+									This should be asset key or id which
+									can identify the asset with it
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="assetName" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>
+									Name of the Asset.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+					<xs:element name="library" type="tns:Library" />
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="Library">
+				<xs:sequence>
+					<xs:element name="libraryName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The library name is unique crossing the
+								system
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="libraryId" type="xs:string"
+						minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>
+								The libraryId is unique crossing the
+								system
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="ExtendedAssetInfo">
+				<xs:annotation>
+					<xs:documentation>
+						ExtendedAssetInfo contains additional classifier
+						name-values
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="attribute"
+						type="tns:AttributeNameValue" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="AttributeNameValue">
+				<xs:annotation>
+                	<xs:documentation>
+                		The attributeValueLong and attributeValueBoolean
+                		functions are no longer used. 
+                		All date values are stored in the format 
+                		"yyyy-mm-dd"
+                	</xs:documentation>
+                </xs:annotation>
+				<xs:sequence>
+					<xs:element name="attributeName" type="xs:string" />
+					<xs:choice>
+						<xs:element name="attributeValueLong"
+							type="xs:long" />
+						<xs:element name="attributeValueString"
+							type="xs:string" />
+						<xs:element name="attributeValueBoolean"
+							type="xs:boolean" />
+					</xs:choice>
+				</xs:sequence>
+			</xs:complexType>
+	
+</xs:schema>

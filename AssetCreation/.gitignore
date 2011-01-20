@@ -1,0 +1,11 @@
+target
+build
+bin
+/temp*.xml
+.classpath
+.project
+.settings
+*.swp
+*.patch
+*.diff
+*.log

@@ -1,0 +1,6 @@
+/target
+/build
+/gen-meta-src
+/gen-src
+*.swp
+*.log

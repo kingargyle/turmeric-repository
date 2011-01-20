@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2006-2010 eBay Inc. All Rights Reserved.
+    Licensed under the Apache License, Version 2.0 (the "License"); 
+    you may not use this file except in compliance with the License. 
+    You may obtain a copy of the License at 
+   
+       http://www.apache.org/licenses/LICENSE-2.0
+       
+-->
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://www.webserviceX.NET/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" targetNamespace="http://www.webserviceX.NET/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.webserviceX.NET/">
+        <xs:complexType abstract="true" name="BaseResponse">
+        <xs:annotation>
+            <xs:documentation>
+                Base response container for all service operations.
+                Contains error information associated with the request.
+            </xs:documentation>
+        </xs:annotation>
+
+        <xs:sequence>
+            <xs:element name="ack" type="tns:AckValue">
+                <xs:annotation>
+                    <xs:documentation>
+
+                    </xs:documentation>
+                    <xs:appinfo>
+                        <CallInfo>
+                            <AllCalls />
+                            <Returned>Always</Returned>
+
+                        </CallInfo>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="errorMessage"
+                type="tns:ErrorMessage">
+                <xs:annotation>
+                    <xs:documentation>
+                        Information for an error or warning that
+                        occurred when eBay processed the request.
+                    </xs:documentation>
+
+                    <xs:appinfo>
+                        <CallInfo>
+                            <AllCalls />
+                            <Returned>Conditionally</Returned>
+                        </CallInfo>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="version" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation></xs:documentation>
+                    <xs:appinfo>
+                        <CallInfo>
+                            <AllCalls />
+                            <Returned>Always</Returned>
+
+                        </CallInfo>
+                    </xs:appinfo>
+                </xs:annotation>
+
+            </xs:element>
+            <xs:element name="timestamp" type="xs:dateTime"
+                minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation></xs:documentation>
+
+                    <xs:appinfo>
+                        <CallInfo>
+                            <AllCalls />
+                            <Returned>Always</Returned>
+                        </CallInfo>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="extension" type="tns:ExtensionType"
+                minOccurs="0" maxOccurs="unbounded" />
+            <xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax" />    
+        </xs:sequence>
+    </xs:complexType>
+    
+        <s:complexType abstract="true" name="BaseRequest">
+        <s:annotation>
+            <s:documentation>
+                This is the base class for request container for all
+                service operations.
+            </s:documentation>
+        </s:annotation>
+        <s:sequence>
+            <s:element name="extension" type="tns:abcExtensionType" minOccurs="0" maxOccurs="unbounded" />
+			<s:any maxOccurs="unbounded" minOccurs="0" processContents="lax" />    
+        </s:sequence>
+    </s:complexType>
+
+        <s:complexType abstract="true" name="BaseServiceRequest">
+        <s:annotation>
+            <s:documentation>
+                This is the base class for request container for all
+                service operations.
+            </s:documentation>
+        </s:annotation>
+        <s:sequence>
+            <s:element name="extension" type="tns:ExtensionType" minOccurs="0" maxOccurs="unbounded" />
+			<s:any maxOccurs="unbounded" minOccurs="0" processContents="lax" />    
+        </s:sequence>
+    </s:complexType>
+        
+                <s:complexType abstract="true" name="BaseServiceResponse">
+        <s:annotation>
+            <s:documentation>
+                This is the base class for request container for all
+                service operations.
+            </s:documentation>
+        </s:annotation>
+        <s:sequence>
+            <s:element name="extension" type="tns:ExtensionType" minOccurs="0" maxOccurs="unbounded" />
+			<s:any maxOccurs="unbounded" minOccurs="0" processContents="lax" />    
+        </s:sequence>
+    </s:complexType>
+
+			<xs:complexType name="CreateServiceRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseRequest">
+						<xs:sequence>
+							<xs:element name="serviceInfo"
+								type="tns:ServiceInfo" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="CreateServiceResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseResponse">
+						<xs:sequence>
+							<xs:element name="assetKey"
+								type="tns:AssetKey" minOccurs="0" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			<xs:complexType name="TestServiceRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="serviceInfo"
+								type="tns:ServiceInfo" />
+						</xs:sequence>
+						<s:attribute name="test123" type="xs:any"/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+      <s:element name="GetQuote">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="symbol" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetQuoteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetQuoteResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="string" nillable="true" type="s:string" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetQuoteSoapIn">
+    <wsdl:part name="parameters" element="tns:GetQuote" />
+  </wsdl:message>
+  <wsdl:message name="GetQuoteSoapOut">
+    <wsdl:part name="parameters" element="tns:GetQuoteResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetQuoteHttpGetIn">
+    <wsdl:part name="symbol" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetQuoteHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetQuoteHttpPostIn">
+    <wsdl:part name="symbol" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetQuoteHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:portType name="StockQuoteSoap">
+    <wsdl:operation name="GetQuote">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Get Stock quote for a company Symbol</documentation>
+      <wsdl:input message="tns:GetQuoteSoapIn" />
+      <wsdl:output message="tns:GetQuoteSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="StockQuoteHttpGet">
+    <wsdl:operation name="GetQuote">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Get Stock quote for a company Symbol</documentation>
+      <wsdl:input message="tns:GetQuoteHttpGetIn" />
+      <wsdl:output message="tns:GetQuoteHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="StockQuoteHttpPost">
+    <wsdl:operation name="GetQuote">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Get Stock quote for a company Symbol</documentation>
+      <wsdl:input message="tns:GetQuoteHttpPostIn" />
+      <wsdl:output message="tns:GetQuoteHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="StockQuoteSoap" type="tns:StockQuoteSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+    <wsdl:operation name="GetQuote">
+      <soap:operation soapAction="http://www.webserviceX.NET/GetQuote" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="StockQuoteHttpGet" type="tns:StockQuoteHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="GetQuote">
+      <http:operation location="/GetQuote" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="StockQuoteHttpPost" type="tns:StockQuoteHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="GetQuote">
+      <http:operation location="/GetQuote" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="StockQuote">
+    <wsdl:port name="StockQuoteSoap" binding="tns:StockQuoteSoap">
+      <soap:address location="http://www.webservicex.net/stockquote.asmx" />
+    </wsdl:port>
+    <wsdl:port name="StockQuoteHttpGet" binding="tns:StockQuoteHttpGet">
+      <http:address location="http://www.webservicex.net/stockquote.asmx" />
+    </wsdl:port>
+    <wsdl:port name="StockQuoteHttpPost" binding="tns:StockQuoteHttpPost">
+      <http:address location="http://www.webservicex.net/stockquote.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+    <wsdl:service name="Test">
+    <wsdl:port name="TestSoap" binding="tns:StockQuoteSoap">
+      <soap:address location="http://www.webservicex.net/stockquote.asmx" />
+    </wsdl:port>
+    <wsdl:port name="TestHttpGet" binding="tns:StockQuoteHttpGet">
+      <http:address location="http://www.webservicex.net/stockquote.asmx" />
+    </wsdl:port>
+    <wsdl:port name="TestHttp" binding="tns:StockQuoteHttpPost">
+      <http:address location="http://www.webservicex.net/stockquote.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2006-2010 eBay Inc. All Rights Reserved.
+    Licensed under the Apache License, Version 2.0 (the "License"); 
+    you may not use this file except in compliance with the License. 
+    You may obtain a copy of the License at 
+   
+       http://www.apache.org/licenses/LICENSE-2.0
+       
+-->
+<web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" 
+
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+   <servlet>
+       <description>AssertionsService</description>
+       <display-name>AssertionsService</display-name>
+       <servlet-name>AssertionsService</servlet-name>
+       <servlet-class>com.ebay.soaframework.spf.pipeline.SPFServlet</servlet-class>
+      <init-param>
+         <param-name>SOA_SERVICE_NAME</param-name>
+         <param-value>AssertionsService</param-value>
+      </init-param>
+   </servlet>
+   <servlet-mapping>
+       <servlet-name>AssertionsService</servlet-name>
+       <url-pattern>/AssertionsService</url-pattern>
+   </servlet-mapping>
+
+	<servlet>
+		<description>Cache Manager initalizer</description>
+		<display-name>CacheManager</display-name>
+		<servlet-name>CacheManager</servlet-name>
+		<servlet-class>com.ebay.services.assertionsservice.init.CacheManagerServlet</servlet-class>		
+		<load-on-startup>1</load-on-startup>
+	</servlet>	
+	<servlet-mapping>
+		<servlet-name>CacheManager</servlet-name>
+		<url-pattern>/CacheManager</url-pattern>
+	</servlet-mapping>
+	
+</web-app>

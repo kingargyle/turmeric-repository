@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+    Copyright (c) 2006-2010 eBay Inc. All Rights Reserved.
+    Licensed under the Apache License, Version 2.0 (the "License"); 
+    you may not use this file except in compliance with the License. 
+    You may obtain a copy of the License at 
+   
+       http://www.apache.org/licenses/LICENSE-2.0
+       
+-->
+<client-config-list xmlns="http://www.ebayopensource.org/turmeric/common/config">
+    <client-config service-name="{http://www.ebay.com/marketplace/services}AssertionsService">
+        <service-interface-class-name>com.ebay.services.assertionsservice.intf.AssertionsService</service-interface-class-name>
+        <service-location>http://dev-soa-02:8080/AssertionsService/AssertionsService</service-location>
+        <client-instance-config>
+            <invocation-options>
+                <preferred-transport name="LOCAL">
+                    <override-options>
+                        <socket-connect-timeout-msec>50000000</socket-connect-timeout-msec>
+                        <socket-read-timeout-msec>20000000</socket-read-timeout-msec>
+                        <invocation-timeout-msec>100000000</invocation-timeout-msec>
+                        <num-connect-retries>3</num-connect-retries>
+                        <other-options>
+                            <option name="USE_HTTPS">TRUE</option>
+                            <option name="VERIFY_TRUST_FOR_HTTPS">FALSE</option>
+                        </other-options>
+                    </override-options>
+                </preferred-transport>
+                <request-data-binding>XML</request-data-binding>
+                <response-data-binding>XML</response-data-binding>
+            </invocation-options>
+            <transport name="HTTP11">
+                <class-name>org.ebayopensource.turmeric.runtime.sif.impl.transport.http.HTTPClientTransport</class-name>
+            </transport>
+        </client-instance-config>
+    </client-config>
+</client-config-list>

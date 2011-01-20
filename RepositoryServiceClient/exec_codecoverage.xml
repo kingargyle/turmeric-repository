@@ -1,0 +1,38 @@
+<project name="RepositoryServiceCodeCoverage" default="emma-instr" basedir=".">
+
+	<property name="instrument.dir" value="${instrument.dir}" />
+	<property name="listofjars" value="${listofjars}" />
+	<property name="rpt.emma.dir" value="${rpt.emma.dir}" />
+	<property name="emma.filter" value="*.*" />
+	<property name="emma.dir" value="${emma.dir}" />
+
+	<path id="emma.lib">
+		<pathelement location="${emma.dir}/emma.jar" />
+		<pathelement location="${emma.dir}/emma_ant.jar" />
+	</path>
+
+	<taskdef resource="emma_ant.properties" classpathref="emma.lib" />
+
+	<target name="emma-instr" description="turns on EMMA's instrumentation/reporting">
+
+		<echo>#############################################</echo>
+		<echo>  EMMA INSTRUMENT JARS: ${listofjars} in ${instrument.dir}</echo>
+		<echo>#############################################</echo>
+
+		<echo message="==== emma.enabled is ${emma.enabled}====" />
+		<echo message="==== instrument.dir is ${instrument.dir}====" />
+		<echo message="==== {rpt.emma.dir} is ${rpt.emma.dir}====" />
+
+		<taskdef name="emma" classname="com.vladium.emma.emmaTask" />
+		<property name="emma.enabled" value="true" />
+		<emma enabled="${emma.enabled}">
+			<instr mode="overwrite" outfile="${rpt.emma.dir}/coverage.em" merge="true">
+				<instrpath>
+					<fileset dir="${instrument.dir}" includes="${listofjars}" />
+				</instrpath>
+				<filter value="${emma.filter}" />
+			</instr>
+		</emma>
+	</target>
+
+</project>

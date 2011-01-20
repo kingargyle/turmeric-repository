@@ -1,0 +1,1533 @@
+/*******************************************************************************
+ * Copyright (c) 2006-2010 eBay Inc. All Rights Reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *******************************************************************************/
+
+package org.ebayopensource.turmeric.repository.wso2;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathFactory;
+
+import org.w3c.dom.Document;
+import org.wso2.carbon.registry.app.RemoteRegistry;
+import org.wso2.carbon.registry.core.Collection;
+import org.wso2.carbon.registry.core.Resource;
+
+import org.ebayopensource.turmeric.common.v1.types.AckValue;
+import org.ebayopensource.turmeric.common.v1.types.CommonErrorData;
+import org.ebayopensource.turmeric.common.v1.types.ErrorData;
+import org.ebayopensource.turmeric.repository.v1.services.ApprovalInfo;
+import org.ebayopensource.turmeric.repository.v1.services.ApproveAssetRequest;
+import org.ebayopensource.turmeric.repository.v1.services.ApproveAssetResponse;
+import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
+import org.ebayopensource.turmeric.repository.v1.services.AssetInfoForUpdate;
+import org.ebayopensource.turmeric.repository.v1.services.AssetKey;
+import org.ebayopensource.turmeric.repository.v1.services.AssetStatus;
+import org.ebayopensource.turmeric.repository.v1.services.BasicAssetInfo;
+import org.ebayopensource.turmeric.repository.v1.services.CreateAndSubmitAssetRequest;
+import org.ebayopensource.turmeric.repository.v1.services.CreateAndSubmitAssetResponse;
+import org.ebayopensource.turmeric.repository.v1.services.CreateAssetRequest;
+import org.ebayopensource.turmeric.repository.v1.services.CreateAssetResponse;
+import org.ebayopensource.turmeric.repository.v1.services.CreateCompleteAssetRequest;
+import org.ebayopensource.turmeric.repository.v1.services.CreateCompleteAssetResponse;
+import org.ebayopensource.turmeric.repository.v1.services.CreateServiceRequest;
+import org.ebayopensource.turmeric.repository.v1.services.CreateServiceResponse;
+import org.ebayopensource.turmeric.repository.v1.services.FlattenedRelationship;
+import org.ebayopensource.turmeric.repository.v1.services.FlattenedRelationshipForUpdate;
+import org.ebayopensource.turmeric.repository.v1.services.GetAllAssetsGroupedByCategoryRequest;
+import org.ebayopensource.turmeric.repository.v1.services.GetAllAssetsGroupedByCategoryResponse;
+import org.ebayopensource.turmeric.repository.v1.services.GetAllProjectsAndGroupsRequest;
+import org.ebayopensource.turmeric.repository.v1.services.GetAllProjectsAndGroupsResponse;
+import org.ebayopensource.turmeric.repository.v1.services.GetAssetDependenciesByGraphRequest;
+import org.ebayopensource.turmeric.repository.v1.services.GetAssetDependenciesByGraphResponse;
+import org.ebayopensource.turmeric.repository.v1.services.GetAssetDependenciesRequest;
+import org.ebayopensource.turmeric.repository.v1.services.GetAssetDependenciesResponse;
+import org.ebayopensource.turmeric.repository.v1.services.GetAssetInfoRequest;
+import org.ebayopensource.turmeric.repository.v1.services.GetAssetInfoResponse;
+import org.ebayopensource.turmeric.repository.v1.services.GetAssetLifeCycleStatesRequest;
+import org.ebayopensource.turmeric.repository.v1.services.GetAssetLifeCycleStatesResponse;
+import org.ebayopensource.turmeric.repository.v1.services.GetAssetStatusRequest;
+import org.ebayopensource.turmeric.repository.v1.services.GetAssetStatusResponse;
+import org.ebayopensource.turmeric.repository.v1.services.GetAssetSubmissionPropertiesRequest;
+import org.ebayopensource.turmeric.repository.v1.services.GetAssetSubmissionPropertiesResponse;
+import org.ebayopensource.turmeric.repository.v1.services.GetAssetTreeByAttributesRequest;
+import org.ebayopensource.turmeric.repository.v1.services.GetAssetTreeByAttributesResponse;
+import org.ebayopensource.turmeric.repository.v1.services.GetAssetTypesRequest;
+import org.ebayopensource.turmeric.repository.v1.services.GetAssetTypesResponse;
+import org.ebayopensource.turmeric.repository.v1.services.GetAssetVersionsRequest;
+import org.ebayopensource.turmeric.repository.v1.services.GetAssetVersionsResponse;
+import org.ebayopensource.turmeric.repository.v1.services.GetBasicAssetInfoRequest;
+import org.ebayopensource.turmeric.repository.v1.services.GetBasicAssetInfoResponse;
+import org.ebayopensource.turmeric.repository.v1.services.GetCatalogAssetInfoRequest;
+import org.ebayopensource.turmeric.repository.v1.services.GetCatalogAssetInfoResponse;
+import org.ebayopensource.turmeric.repository.v1.services.GetLibraryListRequest;
+import org.ebayopensource.turmeric.repository.v1.services.GetLibraryListResponse;
+import org.ebayopensource.turmeric.repository.v1.services.GetServiceRequest;
+import org.ebayopensource.turmeric.repository.v1.services.GetServiceResponse;
+import org.ebayopensource.turmeric.repository.v1.services.GetSubscriptionRequest;
+import org.ebayopensource.turmeric.repository.v1.services.GetSubscriptionResponse;
+import org.ebayopensource.turmeric.repository.v1.services.GetUsersProjectsAndGroupsRequest;
+import org.ebayopensource.turmeric.repository.v1.services.GetUsersProjectsAndGroupsResponse;
+import org.ebayopensource.turmeric.repository.v1.services.Library;
+import org.ebayopensource.turmeric.repository.v1.services.LockAssetRequest;
+import org.ebayopensource.turmeric.repository.v1.services.LockAssetResponse;
+import org.ebayopensource.turmeric.repository.v1.services.RejectAssetRequest;
+import org.ebayopensource.turmeric.repository.v1.services.RejectAssetResponse;
+import org.ebayopensource.turmeric.repository.v1.services.RejectionInfo;
+import org.ebayopensource.turmeric.repository.v1.services.RemoveAssetRequest;
+import org.ebayopensource.turmeric.repository.v1.services.RemoveAssetResponse;
+import org.ebayopensource.turmeric.repository.v1.services.SearchAssetsDetailedRequest;
+import org.ebayopensource.turmeric.repository.v1.services.SearchAssetsDetailedResponse;
+import org.ebayopensource.turmeric.repository.v1.services.SearchAssetsRequest;
+import org.ebayopensource.turmeric.repository.v1.services.SearchAssetsResponse;
+import org.ebayopensource.turmeric.repository.v1.services.SubmitForPublishingRequest;
+import org.ebayopensource.turmeric.repository.v1.services.SubmitForPublishingResponse;
+import org.ebayopensource.turmeric.repository.v1.services.SubscribeRequest;
+import org.ebayopensource.turmeric.repository.v1.services.SubscribeResponse;
+import org.ebayopensource.turmeric.repository.v1.services.UnlockAssetRequest;
+import org.ebayopensource.turmeric.repository.v1.services.UnlockAssetResponse;
+import org.ebayopensource.turmeric.repository.v1.services.UnsubscribeRequest;
+import org.ebayopensource.turmeric.repository.v1.services.UnsubscribeResponse;
+import org.ebayopensource.turmeric.repository.v1.services.UpdateAssetArtifactsRequest;
+import org.ebayopensource.turmeric.repository.v1.services.UpdateAssetArtifactsResponse;
+import org.ebayopensource.turmeric.repository.v1.services.UpdateAssetAttributesRequest;
+import org.ebayopensource.turmeric.repository.v1.services.UpdateAssetAttributesRequest;
+import org.ebayopensource.turmeric.repository.v1.services.UpdateAssetAttributesResponse;
+import org.ebayopensource.turmeric.repository.v1.services.UpdateAssetDependenciesByGraphRequest;
+import org.ebayopensource.turmeric.repository.v1.services.UpdateAssetDependenciesByGraphResponse;
+import org.ebayopensource.turmeric.repository.v1.services.UpdateAssetDependenciesRequest;
+import org.ebayopensource.turmeric.repository.v1.services.UpdateAssetDependenciesResponse;
+import org.ebayopensource.turmeric.repository.v1.services.UpdateAssetRequest;
+import org.ebayopensource.turmeric.repository.v1.services.UpdateAssetResponse;
+import org.ebayopensource.turmeric.repository.v1.services.UpdateCompleteAssetRequest;
+import org.ebayopensource.turmeric.repository.v1.services.UpdateCompleteAssetResponse;
+import org.ebayopensource.turmeric.repository.v1.services.UpdateServiceRequest;
+import org.ebayopensource.turmeric.repository.v1.services.UpdateServiceResponse;
+import org.ebayopensource.turmeric.repository.v1.services.UpdateSubscriptionRequest;
+import org.ebayopensource.turmeric.repository.v1.services.UpdateSubscriptionResponse;
+import org.ebayopensource.turmeric.repository.v1.services.ValidateAssetRequest;
+import org.ebayopensource.turmeric.repository.v1.services.ValidateAssetResponse;
+import org.ebayopensource.turmeric.services.common.error.RepositoryServiceErrorDescriptor;
+
+import org.ebayopensource.turmeric.services.common.error.RepositoryServiceErrorDescriptor;
+import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositoryServiceProvider;
+
+/**
+ * @author mgorovoy
+ * 
+ */
+public class RepositoryServiceProviderImpl implements RepositoryServiceProvider {
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#getService(org.ebayopensource.turmeric.repository.v1.services.GetServiceRequest)
+     */
+    @Override
+    public GetServiceResponse getService(GetServiceRequest request) {
+        List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
+
+        errorDataList.add(RepositoryServiceErrorDescriptor.UNKNOWN_EXCEPTION.newError());
+        return RSProviderUtil.addErrorsToResponse(errorDataList, new GetServiceResponse());
+
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#lockAsset(org.ebayopensource.turmeric.repository.v1.services.LockAssetRequest)
+     */
+    @Override
+    public LockAssetResponse lockAsset(LockAssetRequest request) {
+        RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+        List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
+        LockAssetResponse response = new LockAssetResponse();
+
+        try {
+            AssetKey assetKey = RSProviderUtil.completeAssetKey(request.getAssetKey(), null, null);
+            String assetId = assetKey.getAssetId();
+
+            if (!wso2.resourceExists(assetId)) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
+                                .newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            wso2.beginTransaction();
+            Resource asset = wso2.get(assetId);
+            if (!RSProviderUtil.islocked(asset)) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_LOCK_EXCEPTION.newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+            RSProviderUtil.lock(asset);
+            wso2.put(assetId, asset);
+
+            AssetInfo assetInfo = RSProviderUtil.getAssetInfo(assetKey, asset);
+
+            // populate the response
+            response.setAssetInfo(assetInfo);
+            response.setVersion(assetInfo.getBasicAssetInfo().getVersion());
+            return RSProviderUtil.setSuccessResponse(response);
+        }
+        catch (Exception ex) {
+            return RSProviderUtil.handleException(ex, response,
+                            RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
+        }
+        finally {
+            try {
+                if (response.getAck() == AckValue.SUCCESS && response.getErrorMessage() == null) {
+                    wso2.commitTransaction();
+                }
+                else {
+                    wso2.rollbackTransaction();
+                }
+            }
+            catch (Exception e) {
+            }
+        }
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#unsubscribe(org.ebayopensource.turmeric.repository.v1.services.UnsubscribeRequest)
+     */
+    @Override
+    public UnsubscribeResponse unsubscribe(UnsubscribeRequest request) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#getUsersProjectsAndGroups(org.ebayopensource.turmeric.repository.v1.services.GetUsersProjectsAndGroupsRequest)
+     */
+    @Override
+    public GetUsersProjectsAndGroupsResponse getUsersProjectsAndGroups(
+                    GetUsersProjectsAndGroupsRequest request) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#searchAssets(org.ebayopensource.turmeric.repository.v1.services.SearchAssetsRequest)
+     */
+    @Override
+    public SearchAssetsResponse searchAssets(SearchAssetsRequest request) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#updateAssetArtifacts(org.ebayopensource.turmeric.repository.v1.services.UpdateAssetArtifactsRequest)
+     */
+    @Override
+    public UpdateAssetArtifactsResponse updateAssetArtifacts(UpdateAssetArtifactsRequest request) {
+        RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+        List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
+        UpdateAssetArtifactsResponse response = new UpdateAssetArtifactsResponse();
+
+        try {
+            AssetKey assetKey = RSProviderUtil.completeAssetKey(request.getAssetKey(), null, null);
+            String assetId = assetKey.getAssetId();
+
+            if (!wso2.resourceExists(assetId)) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
+                                .newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            wso2.beginTransaction();
+            Resource asset = wso2.get(assetId);
+            if (!RSProviderUtil.islocked(asset)) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_LOCK_EXCEPTION.newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            // get the existing assetInfo
+            AssetInfo assetInfo = RSProviderUtil.getAssetInfo(assetKey, asset);
+
+            if (assetInfo == null) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_TYPE_EXCEPTION.newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            if (request.isReplaceCurrent()) {
+                RSProviderUtil.removeArtifacts(assetId);
+                RSProviderUtil.updateArtifacts(assetKey, null, request.getArtifactInfo());
+            }
+            else {
+                RSProviderUtil.updateArtifacts(assetKey, assetInfo.getArtifactInfo(),
+                                request.getArtifactInfo());
+            }
+
+            // populate the response
+            response.setVersion(assetInfo.getBasicAssetInfo().getVersion());
+            return RSProviderUtil.setSuccessResponse(response);
+
+        }
+        catch (Exception ex) {
+            return RSProviderUtil.handleException(ex, response,
+                            RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
+        }
+        finally {
+            try {
+                if (request.isPartialUpdate()
+                                || (response.getAck() == AckValue.SUCCESS && response
+                                                .getErrorMessage() == null)) {
+                    wso2.commitTransaction();
+                }
+                else {
+                    wso2.rollbackTransaction();
+                }
+            }
+            catch (Exception e) {
+            }
+        }
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#updateAssetDependenciesByGraph(org.ebayopensource.turmeric.repository.v1.services.UpdateAssetDependenciesByGraphRequest)
+     */
+    @Override
+    public UpdateAssetDependenciesByGraphResponse updateAssetDependenciesByGraph(
+                    UpdateAssetDependenciesByGraphRequest request) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#approveAsset(org.ebayopensource.turmeric.repository.v1.services.ApproveAssetRequest)
+     */
+    @Override
+    public ApproveAssetResponse approveAsset(ApproveAssetRequest request) {
+        RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+        List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
+        ApproveAssetResponse response = new ApproveAssetResponse();
+
+        try {
+            ApprovalInfo approvalInfo = request.getApprovalInfo();
+            String assetId = approvalInfo.getAssetId();
+
+            if (!wso2.resourceExists(assetId)) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
+                                .newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            wso2.beginTransaction();
+            Resource asset = wso2.get(assetId);
+            RSLifeCycle.approve(asset, approvalInfo.getComments());
+
+            wso2.put(assetId, asset);
+
+            response.setTimestamp(DatatypeFactory.newInstance().newXMLGregorianCalendar(
+                            new GregorianCalendar()));
+            response.setVersion(asset.getProperty(RSProviderUtil.__artifactVersionPropName));
+            return RSProviderUtil.setSuccessResponse(response);
+        }
+        catch (Exception ex) {
+            return RSProviderUtil.handleException(ex, response,
+                            RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
+        }
+        finally {
+            try {
+                if (response.getAck() == AckValue.SUCCESS && response.getErrorMessage() == null) {
+                    wso2.commitTransaction();
+                }
+                else {
+                    wso2.rollbackTransaction();
+                }
+            }
+            catch (Exception e) {
+            }
+        }
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#createAndSubmitAsset(org.ebayopensource.turmeric.repository.v1.services.CreateAndSubmitAssetRequest)
+     */
+    @Override
+    public CreateAndSubmitAssetResponse createAndSubmitAsset(CreateAndSubmitAssetRequest request) {
+        RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+        List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
+        CreateAndSubmitAssetResponse response = new CreateAndSubmitAssetResponse();
+
+        try {
+            AssetInfo assetInfo = request.getAssetInfo();
+            BasicAssetInfo basicInfo = assetInfo.getBasicAssetInfo();
+            AssetKey assetKey = basicInfo.getAssetKey();
+
+            if (assetKey.getAssetId() == null && assetKey.getAssetName() == null) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_NAME_MISSING.newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            Library library = assetKey.getLibrary();
+            if (library.getLibraryId() == null && library.getLibraryName() == null) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.INVALID_LIBRARY.newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            String assetType = basicInfo.getAssetType();
+            assetKey = RSProviderUtil.completeAssetKey(assetKey, assetType, null);
+            String assetId = assetKey.getAssetId();
+
+            if (wso2.resourceExists(assetId)) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.DUPLICATE_ASSET.newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            wso2.beginTransaction();
+            Resource asset = RSProviderUtil.newAssetResource();
+
+            asset.setProperty(RSProviderUtil.__artifactVersionPropName, basicInfo.getVersion());
+            RSProviderUtil.updateResourceProperties(asset, assetInfo.getExtendedAssetInfo());
+
+            if ("Service".equalsIgnoreCase(assetType)) {
+                asset.setMediaType("application/vnd.wso2-service+xml");
+                String content = RSProviderUtil.getAssetInfoXml(assetInfo);
+                if (content != null) {
+                    InputStream contentStream = new ByteArrayInputStream(content.getBytes("UTF-8"));
+                    asset.setContentStream(contentStream);
+                }
+            }
+            else // TODO handle other known types
+            {
+                asset.setDescription(assetInfo.getBasicAssetInfo().getAssetDescription());
+            }
+
+            RSLifeCycle.submit(asset, request.getComment());
+
+            wso2.put(assetId, asset);
+
+            RSProviderUtil.removeArtifacts(assetId);
+            RSProviderUtil.removeDependencies(assetId);
+
+            RSProviderUtil.createArtifacts(assetKey, assetInfo.getArtifactInfo());
+            RSProviderUtil.createDependencies(assetKey, assetInfo.getFlattenedRelationship());
+
+            response.setAssetKey(assetKey);
+            return RSProviderUtil.setSuccessResponse(response);
+        }
+        catch (Exception ex) {
+            return RSProviderUtil.handleException(ex, response,
+                            RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
+        }
+        finally {
+            try {
+                if (response.getAck() == AckValue.SUCCESS && response.getErrorMessage() == null) {
+                    wso2.commitTransaction();
+                }
+                else {
+                    wso2.rollbackTransaction();
+                }
+            }
+            catch (Exception e) {
+            }
+        }
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#getAssetTypes(org.ebayopensource.turmeric.repository.v1.services.GetAssetTypesRequest)
+     */
+    @Override
+    public GetAssetTypesResponse getAssetTypes(GetAssetTypesRequest request) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#getAssetTreeByAttributes(org.ebayopensource.turmeric.repository.v1.services.GetAssetTreeByAttributesRequest)
+     */
+    @Override
+    public GetAssetTreeByAttributesResponse getAssetTreeByAttributes(
+                    GetAssetTreeByAttributesRequest request) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#removeAsset(org.ebayopensource.turmeric.repository.v1.services.RemoveAssetRequest)
+     */
+    @Override
+    public RemoveAssetResponse removeAsset(RemoveAssetRequest request) {
+        RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+        List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
+        RemoveAssetResponse response = new RemoveAssetResponse();
+
+        try {
+            AssetKey assetKey = RSProviderUtil.completeAssetKey(request.getAssetKey(), null, null);
+            String assetId = assetKey.getAssetId();
+
+            if (!wso2.resourceExists(assetId)) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
+                                .newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            wso2.beginTransaction();
+            RSProviderUtil.removeArtifacts(assetId);
+            RSProviderUtil.removeDependencies(assetId);
+
+            wso2.delete(assetId);
+
+            return RSProviderUtil.setSuccessResponse(response);
+        }
+        catch (Exception ex) {
+            return RSProviderUtil.handleException(ex, new RemoveAssetResponse(),
+                            RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
+        }
+        finally {
+            try {
+                if (response.getAck() == AckValue.SUCCESS && response.getErrorMessage() == null) {
+                    wso2.commitTransaction();
+                }
+                else {
+                    wso2.rollbackTransaction();
+                }
+            }
+            catch (Exception e) {
+            }
+        }
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#createService(org.ebayopensource.turmeric.repository.v1.services.CreateServiceRequest)
+     */
+    @Override
+    public CreateServiceResponse createService(CreateServiceRequest request) {
+        List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
+
+        errorDataList.add(RepositoryServiceErrorDescriptor.UNKNOWN_EXCEPTION.newError());
+        return RSProviderUtil.addErrorsToResponse(errorDataList, new CreateServiceResponse());
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#getAssetSubmissionProperties(org.ebayopensource.turmeric.repository.v1.services.GetAssetSubmissionPropertiesRequest)
+     */
+    @Override
+    public GetAssetSubmissionPropertiesResponse getAssetSubmissionProperties(
+                    GetAssetSubmissionPropertiesRequest request) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#updateAsset(org.ebayopensource.turmeric.repository.v1.services.UpdateAssetRequest)
+     */
+    @Override
+    public UpdateAssetResponse updateAsset(UpdateAssetRequest request) {
+        RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+        List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
+        UpdateAssetResponse response = new UpdateAssetResponse();
+
+        try {
+            BasicAssetInfo basicInfo = request.getBasicAssetInfo();
+            AssetKey origAssetKey = RSProviderUtil.completeAssetKey(basicInfo.getAssetKey(),
+                            basicInfo.getAssetType(), null);
+            String origAssetId = origAssetKey.getAssetId();
+
+            if (!wso2.resourceExists(origAssetId)) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
+                                .newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            wso2.beginTransaction();
+            Resource asset = wso2.get(origAssetId);
+            if (!RSProviderUtil.islocked(asset)) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_LOCK_EXCEPTION.newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            // get the existing assetInfo
+            AssetInfo assetInfo = RSProviderUtil.getAssetInfo(origAssetKey, asset);
+            if (assetInfo == null) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_TYPE_EXCEPTION.newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+            BasicAssetInfo origBasicInfo = assetInfo.getBasicAssetInfo();
+
+            // update the assetInfo
+            AssetKey newAssetKey = new AssetKey();
+            Library oldLibrary = origAssetKey.getLibrary();
+            newAssetKey.setAssetName(basicInfo.getAssetName());
+            Library newLibrary = new Library();
+            newLibrary.setLibraryId(oldLibrary.getLibraryId());
+            newLibrary.setLibraryName(oldLibrary.getLibraryName());
+            newAssetKey.setLibrary(newLibrary);
+            newAssetKey = RSProviderUtil.completeAssetKey(newAssetKey, basicInfo.getAssetType(),
+                            null);
+
+            basicInfo.setAssetKey(newAssetKey);
+            assetInfo.setBasicAssetInfo(basicInfo);
+            //update the basicInfo.version if null
+            if(basicInfo.getVersion()==null){
+                basicInfo.setVersion(origBasicInfo.getVersion());
+            }
+            asset.setProperty(RSProviderUtil.__artifactVersionPropName, basicInfo.getVersion()!=null?basicInfo.getVersion():origBasicInfo.getVersion());
+
+            if ("Service".equals(basicInfo.getAssetType())) {
+                String content = RSProviderUtil.getAssetInfoXml(assetInfo);
+                if (content != null) {
+                    InputStream contentStream = new ByteArrayInputStream(content.getBytes("UTF-8"));
+                    asset.setContentStream(contentStream);
+                }
+            }
+            else {
+                asset.setDescription(basicInfo.getAssetDescription());
+            }
+
+            // check if assetId have changed
+            String newAssetId = basicInfo.getAssetKey().getAssetId();
+            if (!origAssetId.equals(newAssetId)) {
+                RSProviderUtil.moveAsset(origAssetKey, assetInfo);
+            }
+
+            // update the resource
+            wso2.put(newAssetKey.getAssetId(), asset);
+
+            // populate the response
+            response.setAssetInfo(assetInfo);
+            response.setVersion(assetInfo.getBasicAssetInfo().getVersion());
+            return RSProviderUtil.setSuccessResponse(response);
+        }
+        catch (Exception ex) {
+            return RSProviderUtil.handleException(ex, new UpdateAssetResponse(),
+                            RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
+        }
+        finally {
+            try {
+                if (response.getAck() == AckValue.SUCCESS && response.getErrorMessage() == null) {
+                    wso2.commitTransaction();
+                }
+                else {
+                    wso2.rollbackTransaction();
+                }
+            }
+            catch (Exception e) {
+            }
+        }
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#rejectAsset(org.ebayopensource.turmeric.repository.v1.services.RejectAssetRequest)
+     */
+    @Override
+    public RejectAssetResponse rejectAsset(RejectAssetRequest request) {
+        RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+        List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
+        RejectAssetResponse response = new RejectAssetResponse();
+
+        try {
+            RejectionInfo rejectionInfo = request.getRejectionInfo();
+            String assetId = rejectionInfo.getAssetId();
+
+            if (!wso2.resourceExists(assetId)) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
+                                .newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            wso2.beginTransaction();
+            Resource asset = wso2.get(assetId);
+            RSLifeCycle.reject(asset, rejectionInfo.getComments());
+
+            wso2.put(assetId, asset);
+
+            response.setTimestamp(DatatypeFactory.newInstance().newXMLGregorianCalendar(
+                            new GregorianCalendar()));
+            response.setVersion(asset.getProperty(RSProviderUtil.__artifactVersionPropName));
+            return RSProviderUtil.setSuccessResponse(response);
+        }
+        catch (Exception ex) {
+            return RSProviderUtil.handleException(ex, response,
+                            RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
+        }
+        finally {
+            try {
+                if (response.getAck() == AckValue.SUCCESS && response.getErrorMessage() == null) {
+                    wso2.commitTransaction();
+                }
+                else {
+                    wso2.rollbackTransaction();
+                }
+            }
+            catch (Exception e) {
+            }
+        }
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#getAllProjectsAndGroups(org.ebayopensource.turmeric.repository.v1.services.GetAllProjectsAndGroupsRequest)
+     */
+    @Override
+    public GetAllProjectsAndGroupsResponse getAllProjectsAndGroups(
+                    GetAllProjectsAndGroupsRequest request) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#searchAssetsDetailed(org.ebayopensource.turmeric.repository.v1.services.SearchAssetsDetailedRequest)
+     */
+    @Override
+    public SearchAssetsDetailedResponse searchAssetsDetailed(SearchAssetsDetailedRequest request) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#getSubscription(org.ebayopensource.turmeric.repository.v1.services.GetSubscriptionRequest)
+     */
+    @Override
+    public GetSubscriptionResponse getSubscription(GetSubscriptionRequest request) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#getAssetDependenciesByGraph(org.ebayopensource.turmeric.repository.v1.services.GetAssetDependenciesByGraphRequest)
+     */
+    @Override
+    public GetAssetDependenciesByGraphResponse getAssetDependenciesByGraph(
+                    GetAssetDependenciesByGraphRequest request) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#submitForPublishing(org.ebayopensource.turmeric.repository.v1.services.SubmitForPublishingRequest)
+     */
+    @Override
+    public SubmitForPublishingResponse submitForPublishing(SubmitForPublishingRequest request) {
+        RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+        List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
+        SubmitForPublishingResponse response = new SubmitForPublishingResponse();
+
+        try {
+            AssetKey assetKey = RSProviderUtil.completeAssetKey(request.getAssetKey(), null, null);
+            String assetId = assetKey.getAssetId();
+
+            if (!wso2.resourceExists(assetId)) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
+                                .newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            wso2.beginTransaction();
+            Resource asset = wso2.get(assetId);
+            RSLifeCycle.submit(asset, request.getComment());
+
+            wso2.put(assetId, asset);
+
+            response.setTimestamp(DatatypeFactory.newInstance().newXMLGregorianCalendar(
+                            new GregorianCalendar()));
+            response.setVersion(asset.getProperty(RSProviderUtil.__artifactVersionPropName));
+            return RSProviderUtil.setSuccessResponse(response);
+        }
+        catch (Exception ex) {
+            return RSProviderUtil.handleException(ex, response,
+                            RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
+        }
+        finally {
+            try {
+                if (response.getAck() == AckValue.SUCCESS && response.getErrorMessage() == null) {
+                    wso2.commitTransaction();
+                }
+                else {
+                    wso2.rollbackTransaction();
+                }
+            }
+            catch (Exception e) {
+            }
+        }
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#getAssetStatus(org.ebayopensource.turmeric.repository.v1.services.GetAssetStatusRequest)
+     */
+    @Override
+    public GetAssetStatusResponse getAssetStatus(GetAssetStatusRequest request) {
+        RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+        List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
+        GetAssetStatusResponse response = new GetAssetStatusResponse();
+
+        try {
+            AssetKey assetKey = RSProviderUtil.completeAssetKey(request.getAssetKey(), null, null);
+            String assetId = assetKey.getAssetId();
+
+            if (!wso2.resourceExists(assetId)) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
+                                .newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            Resource asset = wso2.get(assetId);
+            final String state = RSLifeCycle.getState(asset);
+
+            // populate the response
+            response.setAssetStatus(new AssetStatus() {
+                {
+                    setState(state);
+                }
+            });
+            response.setVersion(asset.getProperty(RSProviderUtil.__artifactVersionPropName));
+            return RSProviderUtil.setSuccessResponse(response);
+
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            return RSProviderUtil.handleException(ex, response,
+                            RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
+        }
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#createCompleteAsset(org.ebayopensource.turmeric.repository.v1.services.CreateCompleteAssetRequest)
+     */
+    @Override
+    public CreateCompleteAssetResponse createCompleteAsset(CreateCompleteAssetRequest request) {
+        RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+        List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
+        CreateCompleteAssetResponse response = new CreateCompleteAssetResponse();
+
+        try {
+            AssetInfo assetInfo = request.getAssetInfo();
+            BasicAssetInfo basicInfo = assetInfo.getBasicAssetInfo();
+            AssetKey assetKey = basicInfo.getAssetKey();
+
+            if (assetKey.getAssetId() == null && assetKey.getAssetName() == null) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_NAME_MISSING.newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            Library library = assetKey.getLibrary();
+            if (library.getLibraryId() == null && library.getLibraryName() == null) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.INVALID_LIBRARY.newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            String assetType = basicInfo.getAssetType();
+            assetKey = RSProviderUtil.completeAssetKey(assetKey, assetType, null);
+            String assetId = assetKey.getAssetId();
+
+            if (wso2.resourceExists(assetId)) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.DUPLICATE_ASSET.newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            wso2.beginTransaction();
+            Resource asset = RSProviderUtil.newAssetResource();
+
+            asset.setProperty(RSProviderUtil.__artifactVersionPropName, basicInfo.getVersion());
+            RSProviderUtil.updateResourceProperties(asset, assetInfo.getExtendedAssetInfo());
+
+            if ("Service".equalsIgnoreCase(assetType)) {
+                asset.setMediaType("application/vnd.wso2-service+xml");
+                String content = RSProviderUtil.getAssetInfoXml(assetInfo);
+                if (content != null) {
+                    InputStream contentStream = new ByteArrayInputStream(content.getBytes("UTF-8"));
+                    asset.setContentStream(contentStream);
+                }
+            }
+            else // TODO handle other known types
+            {
+                asset.setDescription(assetInfo.getBasicAssetInfo().getAssetDescription());
+            }
+
+            wso2.put(assetId, asset);
+
+            RSProviderUtil.removeArtifacts(assetId);
+            RSProviderUtil.removeDependencies(assetId);
+
+            RSProviderUtil.createArtifacts(assetKey, assetInfo.getArtifactInfo());
+            RSProviderUtil.createDependencies(assetKey, assetInfo.getFlattenedRelationship());
+
+            response.setAssetKey(assetKey);
+            return RSProviderUtil.setSuccessResponse(response);
+        }
+        catch (Exception ex) {
+            return RSProviderUtil.handleException(ex, response,
+                            RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
+        }
+        finally {
+            try {
+                if (response.getAck() == AckValue.SUCCESS && response.getErrorMessage() == null) {
+                    wso2.commitTransaction();
+                }
+                else {
+                    wso2.rollbackTransaction();
+                }
+            }
+            catch (Exception e) {
+            }
+        }
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#subscribe(org.ebayopensource.turmeric.repository.v1.services.SubscribeRequest)
+     */
+    @Override
+    public SubscribeResponse subscribe(SubscribeRequest request) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#validateAsset(org.ebayopensource.turmeric.repository.v1.services.ValidateAssetRequest)
+     */
+    @Override
+    public ValidateAssetResponse validateAsset(ValidateAssetRequest request) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#unlockAsset(org.ebayopensource.turmeric.repository.v1.services.UnlockAssetRequest)
+     */
+    @Override
+    public UnlockAssetResponse unlockAsset(UnlockAssetRequest request) {
+        RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+        List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
+        UnlockAssetResponse response = new UnlockAssetResponse();
+
+        try {
+            AssetKey assetKey = RSProviderUtil.completeAssetKey(request.getAssetKey(), null, null);
+            String assetId = assetKey.getAssetId();
+
+            if (!wso2.resourceExists(assetId)) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
+                                .newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            wso2.beginTransaction();
+            Resource service = wso2.get(assetId);
+            RSProviderUtil.unlock(service);
+            wso2.put(assetId, service);
+
+            AssetInfo assetInfo = RSProviderUtil.getAssetInfo(assetKey, service);
+
+            // populate the response
+            response.setAssetInfo(assetInfo);
+            response.setVersion(assetInfo.getBasicAssetInfo().getVersion());
+            return RSProviderUtil.setSuccessResponse(response);
+        }
+        catch (Exception ex) {
+            return RSProviderUtil.handleException(ex, response,
+                            RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
+        }
+        finally {
+            try {
+                if (response.getAck() == AckValue.SUCCESS && response.getErrorMessage() == null) {
+                    wso2.commitTransaction();
+                }
+                else {
+                    wso2.rollbackTransaction();
+                }
+            }
+            catch (Exception e) {
+            }
+        }
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#getAssetDependencies(org.ebayopensource.turmeric.repository.v1.services.GetAssetDependenciesRequest)
+     */
+    @Override
+    public GetAssetDependenciesResponse getAssetDependencies(GetAssetDependenciesRequest request) {
+        RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+        List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
+        GetAssetDependenciesResponse response = new GetAssetDependenciesResponse();
+
+        try {
+            AssetKey assetKey = RSProviderUtil.completeAssetKey(request.getAssetKey(), null, null);
+            String assetId = assetKey.getAssetId();
+
+            if (!wso2.resourceExists(assetId)) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
+                                .newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            Resource asset = wso2.get(assetId);
+
+            FlattenedRelationship relationship = new FlattenedRelationship();
+            RSProviderUtil.retrieveAssociations(null, relationship, asset);
+
+            // populate the response
+            response.setFlattenedRelationship(relationship);
+            response.setVersion(asset.getProperty(RSProviderUtil.__artifactVersionPropName));
+            return RSProviderUtil.setSuccessResponse(response);
+
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            return RSProviderUtil.handleException(ex, response,
+                            RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
+        }
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#getAssetInfo(org.ebayopensource.turmeric.repository.v1.services.GetAssetInfoRequest)
+     */
+    @Override
+    public GetAssetInfoResponse getAssetInfo(GetAssetInfoRequest request) {
+    	System.err.println("RepositoryServiceProviderImpl.getAssetInfo: getting assetInfo");
+        RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+        List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
+        GetAssetInfoResponse response = new GetAssetInfoResponse();
+
+        try {
+            AssetKey assetKey = RSProviderUtil.completeAssetKey(request.getAssetKey(),
+                            request.getAssetType(), null);
+            String assetId = assetKey.getAssetId();
+
+            if (!wso2.resourceExists(assetId)) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
+                                .newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            Resource asset = wso2.get(assetId);
+            AssetInfo assetInfo = RSProviderUtil.getAssetInfo(assetKey, asset);
+
+            if (assetInfo == null) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_TYPE_EXCEPTION.newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            // populate the response
+            response.setAssetInfo(assetInfo);
+            response.setVersion(assetInfo.getBasicAssetInfo().getVersion());
+            return RSProviderUtil.setSuccessResponse(response);
+
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            return RSProviderUtil.handleException(ex, response,
+                            RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
+        }
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#getAssetLifeCycleStates(org.ebayopensource.turmeric.repository.v1.services.GetAssetLifeCycleStatesRequest)
+     */
+    @Override
+    public GetAssetLifeCycleStatesResponse getAssetLifeCycleStates(
+                    GetAssetLifeCycleStatesRequest request) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#getCatalogAssetInfo(org.ebayopensource.turmeric.repository.v1.services.GetCatalogAssetInfoRequest)
+     */
+    @Override
+    public GetCatalogAssetInfoResponse getCatalogAssetInfo(
+                    GetCatalogAssetInfoRequest getCatalogAssetInfoRequest) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#getLibraryList(org.ebayopensource.turmeric.repository.v1.services.GetLibraryListRequest)
+     */
+    @Override
+    public GetLibraryListResponse getLibraryList(GetLibraryListRequest request) {
+    	System.err.println("RepositoryServiceProviderImpl.getLibraryList: getting libraryList");
+        GetLibraryListResponse response = new GetLibraryListResponse();
+        try {
+
+            Set<String> libraryIdentifierCollection = new HashSet<String>();
+
+            RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+            String prefix = "/_system/governance";
+            Resource services = wso2.get(prefix);
+
+            RSProviderUtil.findLibraries((Collection) services, libraryIdentifierCollection);
+
+            for (String libraryIdentifier : libraryIdentifierCollection) {
+            	//exclude repository libraryIdentifier, being for wso2 internal operations only
+            	if(libraryIdentifier.startsWith("/_system/governance/repository")){
+            		continue;
+            	}
+                String name = libraryIdentifier;
+
+                // convert name back to URL by conventions
+                String[] frags = libraryIdentifier.substring(prefix.length() + 1).split("/");
+
+                if (frags.length >= 2) {
+                    StringBuilder b = new StringBuilder();
+                    b.append(frags[0]).append("://").append(frags[1]);
+                    char div = '.';
+                    for (int i = 2; i < frags.length; i++) {
+                        b.append(div).append(frags[i]);
+
+                        // TODO this needs a better way and is only a hack for
+                        // now
+                        if ("com".equalsIgnoreCase(frags[i]) || "org".equalsIgnoreCase(frags[i])
+                                        || "net".equalsIgnoreCase(frags[i]))
+                            div = '/';
+                    }
+                    name = b.toString();
+                }
+
+                Library library = new Library();
+                library.setLibraryId(libraryIdentifier);
+                library.setLibraryName(name);
+                response.getLibrary().add(library);
+            }
+            RSProviderUtil.setSuccessResponse(response);
+        }
+        catch (Exception ex) {
+            RSProviderUtil.handleException(ex, response,
+                            RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
+        }
+
+        return response;
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#getAllAssetsGroupedByCategory(org.ebayopensource.turmeric.repository.v1.services.GetAllAssetsGroupedByCategoryRequest)
+     */
+    @Override
+    public GetAllAssetsGroupedByCategoryResponse getAllAssetsGroupedByCategory(
+                    GetAllAssetsGroupedByCategoryRequest request) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#updateService(org.ebayopensource.turmeric.repository.v1.services.UpdateServiceRequest)
+     */
+    @Override
+    public UpdateServiceResponse updateService(UpdateServiceRequest request) {
+        List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
+
+        errorDataList.add(RepositoryServiceErrorDescriptor.UNKNOWN_EXCEPTION.newError());
+        return RSProviderUtil.addErrorsToResponse(errorDataList, new UpdateServiceResponse());
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#updateAssetAttributes(org.ebayopensource.turmeric.repository.v1.services.UpdateAssetAttributesRequest)
+     */
+    @Override
+    public UpdateAssetAttributesResponse updateAssetAttributes(UpdateAssetAttributesRequest request) {
+        RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+        List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
+        UpdateAssetAttributesResponse response = new UpdateAssetAttributesResponse();
+
+        try {
+            AssetKey assetKey = RSProviderUtil.completeAssetKey(request.getAssetKey(), null, null);
+            String assetId = assetKey.getAssetId();
+
+            if (!wso2.resourceExists(assetId)) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
+                                .newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            wso2.beginTransaction();
+            Resource asset = wso2.get(assetId);
+            if (!RSProviderUtil.islocked(asset)) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_LOCK_EXCEPTION.newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            // get the existing assetInfo
+            AssetInfo assetInfo = RSProviderUtil.getAssetInfo(assetKey, asset);
+
+            if (assetInfo == null) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_TYPE_EXCEPTION.newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            if (request.isReplaceCurrent()) {
+                assetInfo.setExtendedAssetInfo(request.getExtendedAssetInfo());
+            }
+            else {
+                RSProviderUtil.updateExtendedInfo(assetInfo.getExtendedAssetInfo(),
+                                request.getExtendedAssetInfo());
+            }
+
+            // populate the response
+            response.setVersion(assetInfo.getBasicAssetInfo().getVersion());
+            return RSProviderUtil.setSuccessResponse(response);
+
+        }
+        catch (Exception ex) {
+            return RSProviderUtil.handleException(ex, response,
+                            RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
+        }
+        finally {
+            try {
+                if (request.isPartialUpdate()
+                                || (response.getAck() == AckValue.SUCCESS && response
+                                                .getErrorMessage() == null)) {
+                    wso2.commitTransaction();
+                }
+                else {
+                    wso2.rollbackTransaction();
+                }
+            }
+            catch (Exception e) {
+            }
+        }
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#getAssetVersions(org.ebayopensource.turmeric.repository.v1.services.GetAssetVersionsRequest)
+     */
+    @Override
+    public GetAssetVersionsResponse getAssetVersions(GetAssetVersionsRequest request) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#updateCompleteAsset(org.ebayopensource.turmeric.repository.v1.services.UpdateCompleteAssetRequest)
+     */
+    @Override
+    public UpdateCompleteAssetResponse updateCompleteAsset(UpdateCompleteAssetRequest request) {
+        RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+        List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
+        UpdateCompleteAssetResponse response = new UpdateCompleteAssetResponse();
+
+        try {
+            AssetInfoForUpdate updateInfo = request.getAssetInfoForUpdate();
+            BasicAssetInfo basicInfo = updateInfo.getBasicAssetInfo();
+            AssetKey assetKey = RSProviderUtil.completeAssetKey(basicInfo.getAssetKey(),
+                            basicInfo.getAssetType(), null);
+            String assetId = assetKey.getAssetId();
+
+            if (!wso2.resourceExists(assetId)) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
+                                .newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            wso2.beginTransaction();
+            Resource asset = wso2.get(assetId);
+            if (!RSProviderUtil.islocked(asset)) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_LOCK_EXCEPTION.newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            // get the existing assetInfo
+            AssetInfo origAssetInfo = RSProviderUtil.getAssetInfo(assetKey, asset);
+
+            if (origAssetInfo == null) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_TYPE_EXCEPTION.newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            AssetKey origAssetKey = origAssetInfo.getBasicAssetInfo().getAssetKey();
+
+            // update the assetInfo
+            AssetKey newAssetKey = new AssetKey();
+            newAssetKey.setAssetName(basicInfo.getAssetName());
+            Library newLibrary = new Library();
+            newLibrary.setLibraryName(assetKey.getLibrary().getLibraryName());
+            newAssetKey.setLibrary(newLibrary);
+            newAssetKey = RSProviderUtil.completeAssetKey(newAssetKey, basicInfo.getAssetType(),
+                            null);
+
+            basicInfo.setAssetKey(newAssetKey);
+            origAssetInfo.setBasicAssetInfo(basicInfo);
+
+            FlattenedRelationshipForUpdate relationship = updateInfo
+                            .getFlattenedRelationshipForUpdate();
+            if (request.isReplaceCurrent()) {
+                origAssetInfo.setAssetLifeCycleInfo(updateInfo.getAssetLifeCycleInfo());
+                origAssetInfo.setExtendedAssetInfo(updateInfo.getExtendedAssetInfo());
+                // update resource properties
+                asset.setProperty(RSProviderUtil.__artifactVersionPropName, basicInfo.getVersion());
+                RSProviderUtil.updateResourceProperties(asset, origAssetInfo.getExtendedAssetInfo());
+                String content = RSProviderUtil.getAssetInfoXml(origAssetInfo);
+                if (content != null) {
+                    InputStream contentStream = new ByteArrayInputStream(content.getBytes("UTF-8"));
+                    asset.setContentStream(contentStream);
+                }
+                RSProviderUtil.removeArtifacts(assetId);
+                RSProviderUtil.removeDependencies(assetId);
+                // update the resource
+                wso2.put(assetId, asset);
+                RSProviderUtil.updateArtifacts(assetKey, null, updateInfo.getArtifactInfo());
+                if (relationship != null) {
+                    RSProviderUtil.updateDependencies(assetKey, null, relationship);
+                }
+            }
+            else {
+                RSProviderUtil.updateLifeCycleInfo(origAssetInfo.getAssetLifeCycleInfo(),
+                                updateInfo.getAssetLifeCycleInfo());
+                RSProviderUtil.updateExtendedInfo(origAssetInfo.getExtendedAssetInfo(),
+                                updateInfo.getExtendedAssetInfo());
+                // update resource properties
+                asset.setProperty(RSProviderUtil.__artifactVersionPropName, basicInfo.getVersion());
+                RSProviderUtil.updateResourceProperties(asset, updateInfo.getExtendedAssetInfo());
+                if ("Service".equals(basicInfo.getAssetType())) {
+                    String content = RSProviderUtil.getAssetInfoXml(origAssetInfo);
+                    if (content != null) {
+                        InputStream contentStream = new ByteArrayInputStream(
+                                        content.getBytes("UTF-8"));
+                        asset.setContentStream(contentStream);
+                    }
+                }
+                // update the resource
+                wso2.put(assetId, asset);
+                RSProviderUtil.updateArtifacts(assetKey, origAssetInfo.getArtifactInfo(),
+                                updateInfo.getArtifactInfo());
+                if (relationship != null) {
+                    RSProviderUtil.updateDependencies(assetKey,
+                                    origAssetInfo.getFlattenedRelationship(), relationship);
+                }
+            }
+
+            // check if asset name or library name have changed
+            if (!assetKey.getAssetId().equals(origAssetKey.getAssetId())) {
+                RSProviderUtil.moveAsset(assetKey, origAssetInfo);
+            }
+
+            // populate the response
+            response.setAssetKey(assetKey);
+            response.setVersion(basicInfo.getVersion());
+            return RSProviderUtil.setSuccessResponse(response);
+        }
+        catch (Exception ex) {
+            return RSProviderUtil.handleException(ex, response,
+                            RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
+        }
+        finally {
+            try {
+                if (request.isPartialUpdate()
+                                || (response.getAck() == AckValue.SUCCESS && response
+                                                .getErrorMessage() == null)) {
+                    wso2.commitTransaction();
+                }
+                else {
+                    wso2.rollbackTransaction();
+                }
+            }
+            catch (Exception e) {
+            }
+        }
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#createAsset(org.ebayopensource.turmeric.repository.v1.services.CreateAssetRequest)
+     */
+    @Override
+    public CreateAssetResponse createAsset(CreateAssetRequest request) {
+        RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+        List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
+        CreateAssetResponse response = new CreateAssetResponse();
+
+        try {
+            BasicAssetInfo basicInfo = request.getBasicAssetInfo();
+            AssetKey assetKey = basicInfo.getAssetKey();
+            if (assetKey.getAssetId() == null && assetKey.getAssetName() == null) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_NAME_MISSING.newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            Library library = assetKey.getLibrary();
+            if (library.getLibraryId() == null && library.getLibraryName() == null) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.INVALID_LIBRARY.newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            String assetType = basicInfo.getAssetType();
+            assetKey = RSProviderUtil.completeAssetKey(assetKey, assetType, null);
+
+            String assetId = assetKey.getAssetId();
+            if (wso2.resourceExists(assetId)) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.DUPLICATE_ASSET.newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            wso2.beginTransaction();
+            Resource asset = RSProviderUtil.newAssetResource();
+            asset.setProperty(RSProviderUtil.__artifactVersionPropName, basicInfo.getVersion());
+            RSProviderUtil.lock(asset); // automatically lock created asset
+
+            if ("Service".equalsIgnoreCase(assetType)) {
+                asset.setMediaType("application/vnd.wso2-service+xml");
+                String content = RSProviderUtil.getBasicAssetInfoXml(basicInfo);
+                if (content != null) {
+                    InputStream contentStream = new ByteArrayInputStream(content.getBytes("UTF-8"));
+                    asset.setContentStream(contentStream);
+                }
+            }
+            else // TODO handle other known types
+            {
+                asset.setDescription(basicInfo.getAssetDescription());
+            }
+
+            wso2.put(assetId, asset);
+
+            RSProviderUtil.removeArtifacts(assetId);
+            RSProviderUtil.removeDependencies(assetId);
+
+            // populate the response
+            response.setAssetKey(assetKey);
+            return RSProviderUtil.setSuccessResponse(response);
+        }
+        catch (Exception ex) {
+            return RSProviderUtil.handleException(ex, response,
+                            RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
+        }
+        finally {
+            try {
+                if (response.getAck() == AckValue.SUCCESS && response.getErrorMessage() == null) {
+                    wso2.commitTransaction();
+                }
+                else {
+                    wso2.rollbackTransaction();
+                }
+            }
+            catch (Exception e) {
+            }
+        }
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#getBasicAssetInfo(org.ebayopensource.turmeric.repository.v1.services.GetBasicAssetInfoRequest)
+     */
+    @Override
+    public GetBasicAssetInfoResponse getBasicAssetInfo(GetBasicAssetInfoRequest request) {
+        RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+        List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
+        GetBasicAssetInfoResponse response = new GetBasicAssetInfoResponse();
+
+        try {
+            AssetKey assetKey = RSProviderUtil.completeAssetKey(request.getAssetKey(),
+                            request.getAssetType(), null);
+            String assetId = assetKey.getAssetId();
+
+            if (!wso2.resourceExists(assetId)) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
+                                .newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            Resource asset = wso2.get(assetId);
+
+            String type = RSProviderUtil.getAssetType(assetId);
+
+            // Create the basic service info structure
+            BasicAssetInfo basicAssetInfo = new BasicAssetInfo();
+            basicAssetInfo.setAssetKey(assetKey);
+
+            if ("Service".equals(type)) {
+                Document doc = RSProviderUtil.parseContent(asset);
+                XPath xpath = XPathFactory.newInstance().newXPath();
+
+                if (Integer.parseInt(xpath.evaluate("count(/*)", doc)) != 1) {
+                    errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_TYPE_EXCEPTION
+                                    .newError());
+                    return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+                }
+
+                RSProviderUtil.completeBasicAssetInfo(basicAssetInfo, asset, doc);
+            }else{
+                RSProviderUtil.completeBasicAssetInfo(basicAssetInfo, asset, null);
+            }
+
+            // populate the response
+            response.setBasicAssetInfo(basicAssetInfo);
+            response.setVersion(basicAssetInfo.getVersion());
+            return RSProviderUtil.setSuccessResponse(response);
+
+        }
+        catch (Exception ex) {
+            return RSProviderUtil.handleException(ex, new GetBasicAssetInfoResponse(),
+                            RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
+        }
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#updateAssetDependencies(org.ebayopensource.turmeric.repository.v1.services.UpdateAssetDependenciesRequest)
+     */
+    @Override
+    public UpdateAssetDependenciesResponse updateAssetDependencies(
+                    UpdateAssetDependenciesRequest request) {
+        RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+        List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
+        UpdateAssetDependenciesResponse response = new UpdateAssetDependenciesResponse();
+
+        try {
+            AssetKey assetKey = RSProviderUtil.completeAssetKey(request.getAssetKey(), null, null);
+            String assetId = assetKey.getAssetId();
+
+            if (!wso2.resourceExists(assetId)) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
+                                .newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            wso2.beginTransaction();
+            Resource asset = wso2.get(assetId);
+            if (!RSProviderUtil.islocked(asset)) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_LOCK_EXCEPTION.newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            // get the existing assetInfo
+            AssetInfo assetInfo = RSProviderUtil.getAssetInfo(assetKey, asset);
+
+            if (assetInfo == null) {
+                errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_TYPE_EXCEPTION.newError());
+                return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+            }
+
+            FlattenedRelationshipForUpdate relationship = request
+                            .getFlattenedRelationshipForUpdate();
+            if (request.isReplaceCurrent()) {
+                RSProviderUtil.removeDependencies(assetId);
+                RSProviderUtil.updateDependencies(assetKey, null, relationship);
+            }
+            else {
+                RSProviderUtil.updateDependencies(assetKey, assetInfo.getFlattenedRelationship(),
+                                relationship);
+            }
+
+            // populate the response
+            response.setVersion(assetInfo.getBasicAssetInfo().getVersion());
+            return RSProviderUtil.setSuccessResponse(response);
+
+        }
+        catch (Exception ex) {
+            return RSProviderUtil.handleException(ex, response,
+                            RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
+        }
+        finally {
+            try {
+                if ((response.getAck() == AckValue.SUCCESS && response.getErrorMessage() == null)) {
+                    wso2.commitTransaction();
+                }
+                else {
+                    wso2.rollbackTransaction();
+                }
+            }
+            catch (Exception e) {
+            }
+        }
+    }
+
+    /**
+     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#updateSubscription(org.ebayopensource.turmeric.repository.v1.services.UpdateSubscriptionRequest)
+     */
+    @Override
+    public UpdateSubscriptionResponse updateSubscription(UpdateSubscriptionRequest request) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+}

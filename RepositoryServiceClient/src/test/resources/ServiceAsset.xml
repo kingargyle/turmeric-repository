@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<assetCreation xmlns="http://www.ebay.com/AssetCreation">
+	<assetDestinationLocation>assetcreation/assets</assetDestinationLocation>
+	<repositoryServiceEndPoint>http://localhost:8081/RepositoryService/RepositoryService</repositoryServiceEndPoint>
+	<!-- <assetInput>
+		<id>SystemAsset</id>
+		<assetType>Asset Type</assetType>
+		<sourceAssetID>1.0_1265625776047184883050</sourceAssetID>
+		<libraryName>SystemAssets</libraryName>
+		<captureTemplateName>Asset Type</captureTemplateName>
+		<numberOfAssets>2</numberOfAssets>
+		<prefix>test_RS</prefix>
+		<suffix>phase6</suffix>
+		<comments>junit purpose</comments>
+		<persist>true</persist>
+		<needFullAsset>true</needFullAsset>
+	</assetInput> -->
+	<assetInput>
+		<id>ServiceAsset</id>
+		<assetType>Service</assetType>
+		<sourceAssetID>1.0_1268038220337217288618</sourceAssetID>
+		<libraryName>GovernedAssets</libraryName>
+		<captureTemplateName>Propose Service Template</captureTemplateName>
+		<lifeCycleState>Proposed</lifeCycleState>
+		<numberOfAssets>5</numberOfAssets>
+		<prefix>test_VisakAsset</prefix>
+		<suffix>phase6</suffix>
+		<comments>junit purpose</comments>
+		<persist>true</persist>
+		<needFullAsset>true</needFullAsset>
+	</assetInput> 
+ 
+</assetCreation>

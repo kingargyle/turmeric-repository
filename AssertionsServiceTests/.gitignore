@@ -1,0 +1,12 @@
+target
+build
+bin
+ConfigRoot
+temp*.xml
+.classpath
+.project
+.settings
+*.swp
+*.patch
+*.diff
+*.log

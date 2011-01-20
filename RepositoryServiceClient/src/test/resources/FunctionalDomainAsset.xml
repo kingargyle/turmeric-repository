@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<assetCreation xmlns="http://www.ebay.com/AssetCreation">
+
+	<assetDestinationLocation>assetcreation/assets</assetDestinationLocation>
+	
+	<repositoryServiceEndPoint>http://localhost:8081/RepositoryService/RepositoryService</repositoryServiceEndPoint>
+	<assetInput>
+		<id>Common</id>
+		<assetType>Functional Domain</assetType>
+		<sourceAssetID>1.0_1263795309990-1578593622</sourceAssetID>
+		<libraryName>GovernedAssets</libraryName>
+		<captureTemplateName>Functional Domain Template</captureTemplateName>
+		<lifeCycleState>Approved</lifeCycleState>
+		<numberOfAssets>10</numberOfAssets>
+		<prefix>test_VisakAsset</prefix>
+		<suffix>phase6</suffix>
+		<comments>junit purpose</comments>
+		<persist>true</persist>
+		<needFullAsset>true</needFullAsset>
+	</assetInput> 
+</assetCreation>

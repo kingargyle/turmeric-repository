@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2006-2010 eBay Inc. All Rights Reserved.
+    Licensed under the Apache License, Version 2.0 (the "License"); 
+    you may not use this file except in compliance with the License. 
+    You may obtain a copy of the License at 
+   
+       http://www.apache.org/licenses/LICENSE-2.0
+       
+-->
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.ebay.com/AssetCreation"
+	xmlns:tns="http://www.ebay.com/AssetCreation" elementFormDefault="qualified">
+	
+	<element name="assetCreation" type="tns:AssetCreation" />
+	
+	<complexType name="AssetCreation">
+		<sequence>
+			<element name="assetDestinationLocation" type="string" />
+			<element name="repositoryServiceEndPoint" type="anyURI" />
+			<element name="assetInput" type="tns:AssetInput" minOccurs="1" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+	
+	<simpleType name="AssetType">
+		<restriction base="string">
+			<enumeration value="Service" />
+			<enumeration value="Functional Domain" />
+			<enumeration value="Consumer" />
+			<enumeration value="Property" />
+			<enumeration value="Flag" />
+			<enumeration value="Flag Set" />
+			<enumeration value="Feature Contingency" />
+			<enumeration value="Command" />
+			<enumeration value="Deliverable" />
+			<enumeration value="Search Driver" />
+			<enumeration value="Page" />
+			<enumeration value="Page Group" />
+			<enumeration value="Template" />
+			<enumeration value="Module" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="LifeCycleState">
+		<restriction base="string">
+			<enumeration value="New" />
+			<enumeration value="Proposed" />
+			<enumeration value="InReview" />
+			<enumeration value="Approved" />
+			<enumeration value="Deployed" />
+			<enumeration value="Deprecated" />
+			<enumeration value="Retired" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="CaptureTemplateName">
+		<restriction base="string">
+			<enumeration value="Propose Service Template" />
+			<enumeration value="New Service Template" />
+			<enumeration value="Functional Domain Template" />
+			<enumeration value="New Consumer" />
+			<enumeration value="Property" />
+			<enumeration value="Flag" />
+			<enumeration value="Flag Set" />
+			<enumeration value="Feature Contingency" />
+			<enumeration value="Command" />
+			<enumeration value="Deliverable" />
+			<enumeration value="Search Driver" />
+			<enumeration value="Page" />
+			<enumeration value="Page Group" />
+			<enumeration value="Template" />
+			<enumeration value="Module" />
+		</restriction>
+	</simpleType>  
+	
+	<complexType name="AssetInput">
+		<sequence>
+			<element name="id" type="token" />
+			<element name="assetType" type="tns:AssetType" />
+			<element name="sourceAssetID" type="token" />
+			<element name="libraryName" type="string" />
+			<element name="captureTemplateName" type="tns:CaptureTemplateName" />
+			<element name="lifeCycleState" type="tns:LifeCycleState" />
+			<element name="numberOfAssets" type="int" />
+			<element name="prefix" type="string" />
+			<element name="suffix" type="string" />
+			<element name="comments" type="string" />
+			<element name="persist" type="boolean" />
+			<element name="needFullAsset" type="boolean" />
+			<!-- WsdlDocumentLocation is considered only when needFullAsset is configured to true -->
+			<element name="wsdlDocumentLocation" type="string" minOccurs="0" maxOccurs="1" />
+			<!-- default behaviour: asset will be published --> 
+			<element name="published" type="boolean" minOccurs="0" maxOccurs="1"/>
+			<!--  default behaviour: consumed assets will not be deleted -->
+			<element name="deleteConsumedAssets" type ="boolean" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+	
+</schema>
