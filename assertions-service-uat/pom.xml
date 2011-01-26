@@ -3,7 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.ebayopensource.turmeric.repository</groupId>
 	<artifactId>assertions-service-uat</artifactId>
-	<version>1.0.1.0-SNAPSHOT</version>
+   <parent>
+    <groupId>org.ebayopensource.turmeric.repository</groupId>
+    <artifactId>turmeric-repository-parent</artifactId>
+    <version>0.9.1.0-SNAPSHOT</version>
+  </parent>
 	<build>
 		<plugins>
 			<plugin>
@@ -183,7 +187,7 @@
 		<org.ebayopensource.turmeric.repository.wso2.url>https://localhost:9443/registry/</org.ebayopensource.turmeric.repository.wso2.url>
 		<org.ebayopensource.turmeric.repository.wso2.username>admin</org.ebayopensource.turmeric.repository.wso2.username>
 		<org.ebayopensource.turmeric.repository.wso2.password>admin</org.ebayopensource.turmeric.repository.wso2.password>
-		<javax.net.ssl.trustStore>src/test/resources/client-truststore.jks</javax.net.ssl.trustStore>
+		<javax.net.ssl.trustStore>${basedir}/src/test/resources/client-truststore.jks</javax.net.ssl.trustStore>
 		<javax.net.ssl.trustStorePassword>wso2carbon</javax.net.ssl.trustStorePassword>
 		<javax.net.ssl.trustStoreType>JKS</javax.net.ssl.trustStoreType>
 	</properties>
