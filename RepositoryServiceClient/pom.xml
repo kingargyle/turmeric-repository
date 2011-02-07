@@ -6,11 +6,10 @@
 	<parent>
 		<groupId>org.ebayopensource.turmeric.repository</groupId>
 		<artifactId>turmeric-repository-parent</artifactId>
-		<version>1.0.1.0-SNAPSHOT</version>
+		<version>0.9.1.0-SNAPSHOT</version>
 	</parent>
 	<groupId>org.ebayopensource.turmeric.repository</groupId>
 	<artifactId>RepositoryServiceClient</artifactId>
-	<version>1.0.1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Repository :: Repository Service :: Client</name>
 	<build>
@@ -230,7 +229,7 @@
 		<dependency>
 			<groupId>org.ebayopensource.turmeric.repository</groupId>
 			<artifactId>repository-service-wso2</artifactId>
-			<version>1.0.1.0-SNAPSHOT</version>
+			<version>0.9.1.0-SNAPSHOT</version>
 			<type>jar</type>
 			<scope>compile</scope>
 			<exclusions>
