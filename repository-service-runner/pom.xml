@@ -195,7 +195,7 @@
 		<dependency>
 		      <groupId>org.apache.axis2</groupId>
 		      <artifactId>axis2-jaxbri</artifactId>
-		      <version>${axis2-version}</version>
+		      <version>1.6-wso2v4</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
