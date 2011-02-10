@@ -193,9 +193,9 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.ebay.soa.externaljars</groupId>
-			<artifactId>axis2-jaxbri</artifactId>
-			<version>1.0.0</version>
+		      <groupId>org.apache.axis2</groupId>
+		      <artifactId>axis2-jaxbri</artifactId>
+		      <version>${axis2-version}</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
