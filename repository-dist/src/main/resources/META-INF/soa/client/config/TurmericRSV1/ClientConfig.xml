@@ -11,7 +11,7 @@
 <client-config-list xmlns="http://www.ebayopensource.org/turmeric/common/config">
   <client-config service-name="TurmericRSV1">
     <service-interface-class-name>org.ebayopensource.turmeric.repository.v1.services.repositoryservice.impl.TurmericRSV1</service-interface-class-name>
-    <service-location>http://localhost:8080/turmeric-repository-dist-1.0.1.0-SNAPSHOT/TurmericRSV1</service-location>
+    <service-location>http://localhost:8080/repository/TurmericRSV1</service-location>
     <client-instance-config>
       <invocation-options>
         <preferred-transport name="HTTP11">
