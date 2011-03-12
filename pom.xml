@@ -17,15 +17,15 @@
 	</parent>
 	<groupId>org.ebayopensource.turmeric.repository</groupId>
 	<artifactId>turmeric-repository-parent</artifactId>
-	<version>0.9.1.0-SNAPSHOT</version>
+	<version>1.0.0-Alpha</version>
 	<name>Turmeric Parent :: Repository</name>
 	<packaging>pom</packaging>
 	<properties>
 		<turmeric-runtime-version>1.0.0-Beta</turmeric-runtime-version>
 	</properties>
 	<scm>
-		<connection>scm:svn:http://www.ebayopensource.org/svn/turmeric/soa-platform/trunk/repository</connection>
-		<developerConnection>scm:svn:http://www.ebayopensource.org/svn/turmeric/soa-platform/trunk/repository</developerConnection>
+		<connection>scm:svn:http://www.ebayopensource.org/svn/turmeric/soa-platform/tags/turmeric-repository-1.0.0-Alpha</connection>
+		<developerConnection>scm:svn:http://www.ebayopensource.org/svn/turmeric/soa-platform/tags/turmeric-repository-1.0.0-Alpha</developerConnection>
 	</scm>
 	<build>
 		<plugins>
