@@ -12,7 +12,7 @@
   <parent>
     <groupId>org.ebayopensource.turmeric.repository</groupId>
     <artifactId>turmeric-repository-parent</artifactId>
-    <version>1.0.0.1-SNAPSHOT</version>
+    <version>1.0.0-Alpha-RC1</version>
   </parent>
   <groupId>org.ebayopensource.turmeric.impl</groupId>
   <artifactId>TurmericRSV1Impl</artifactId>
