@@ -21,7 +21,7 @@ import org.ebayopensource.turmeric.common.v1.types.BaseServiceResponse;
 import org.ebayopensource.turmeric.common.v1.types.CommonErrorData;
 import org.ebayopensource.turmeric.common.v1.types.ErrorMessage;
 import org.ebayopensource.turmeric.repository.v1.services.*;
-import org.ebayopensource.turmeric.repository.v1.services.assertionservice.intf.TurmericASV1;
+import org.ebayopensource.turmeric.repository.v1.services.assertionservice.impl.TurmericASV1;
 
 public class TurmericASV1Impl
     implements TurmericASV1

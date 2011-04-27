@@ -65,7 +65,7 @@
         </executions>
         <configuration>
           <verbose>true</verbose>
-          <packageName>org.ebayopensource.turmeric.repository.v1.services.assertionservice.intf</packageName>
+          <packageName>org.ebayopensource.turmeric.repository.v1.services.assertionservice.impl</packageName>
           <enableNamespaceFolding>true</enableNamespaceFolding>
         </configuration>
       </plugin>
