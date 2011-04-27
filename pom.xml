@@ -87,8 +87,9 @@
 	<modules>
 		<module>TurmericRSV2</module>
 		<module>TurmericRSV2Impl</module>
-		<module>TurmericRSV1</module>
+	<!--	<module>TurmericRSV1</module>
 		<module>TurmericRSV1Impl</module>
+        -->
 		<module>TurmericASV1</module>
 		<module>TurmericASV1Impl</module>
 		<module>repository-service-support</module>
