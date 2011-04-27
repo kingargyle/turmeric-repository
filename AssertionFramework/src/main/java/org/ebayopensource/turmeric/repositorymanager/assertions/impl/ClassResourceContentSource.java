@@ -39,7 +39,8 @@ public class ClassResourceContentSource
      * 
      * @return an InputStream for this ClassResourceAssertionContent.
      */
-    public InputStream getContentStream()
+    @Override
+	public InputStream getContentStream()
         throws IOException
     {
         Class<?> resourceClass = classResourceContent.getResourceClass();
@@ -53,5 +54,6 @@ public class ClassResourceContentSource
     /**
      * Returns null
      */
-    public Reader getContentReader() { return null; }
+    @Override
+	public Reader getContentReader() { return null; }
 }

@@ -52,21 +52,24 @@ public class StringContent
      * 
      * @return the name of this StringContent.
      */
-    public String getName() { return contentName; }
+    @Override
+	public String getName() { return contentName; }
 
     /**
      * Sets the name of this StringContent.
      * 
      * @param name the new name of this StringContent.
      */
-    public void setName(String contentName) { this.contentName = contentName; }
+    @Override
+	public void setName(String contentName) { this.contentName = contentName; }
 
     /**
      * Returns the source name for this StringContent.
      * 
      * @return the source name for this StringContent.
      */
-    public String getSourceName() { return sourceName; }
+    @Override
+	public String getSourceName() { return sourceName; }
 
     /**
      * Adds a distinguishing identifier to the source name.
@@ -82,7 +85,8 @@ public class StringContent
      */
     public String getContent() { return content; }
 
-    public String toString()
+    @Override
+	public String toString()
     {
         return "StringContent["+sourceName+"]";
     }

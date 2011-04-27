@@ -9,7 +9,6 @@
 
 package org.ebayopensource.turmeric.repository.wso2;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -20,12 +19,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import org.wso2.carbon.registry.app.Properties;
 import org.wso2.carbon.registry.app.RemoteRegistry;
 import org.wso2.carbon.registry.core.Resource;
-
-import org.ebayopensource.turmeric.repository.v1.services.CustomProperty;
-import org.ebayopensource.turmeric.repository.v1.services.Property;
 
 /**
  * @author mgorovoy
@@ -67,7 +62,6 @@ public class RSLifeCycle {
             Element lifecycleElement = (Element) configurationElement.
                     getElementsByTagName("lifecycle").item(0);
             
-            String initState = null;
             List<Item> initItems = new ArrayList<Item>();
             LinkedHashMap<String, Integer> initMap = new LinkedHashMap<String,Integer>();
             NodeList states = lifecycleElement.getElementsByTagName("state");
@@ -110,7 +104,7 @@ public class RSLifeCycle {
     }
     
     public List<String> getValidStates() {
-        return new ArrayList(_map.keySet());
+        return new ArrayList<String>(_map.keySet());
     }
     
     public Item getItem(int idx)
@@ -202,7 +196,8 @@ public class RSLifeCycle {
                     String currName = "";
                     String currStatus = "";
     
-                    List<String> subitems = (List<String>)entry.getValue();
+                    @SuppressWarnings("unchecked")
+					List<String> subitems = (List<String>)entry.getValue();
                     for (String subitem : subitems)
                     {
                         if (subitem.startsWith("order:")) {
@@ -242,8 +237,8 @@ public class RSLifeCycle {
             }
         } else {
             state = __baseLifeCycle._state;
-            items = new ArrayList(__baseLifeCycle._items);
-            map = new LinkedHashMap(__baseLifeCycle._map);
+            items = new ArrayList<Item>(__baseLifeCycle._items);
+            map = new LinkedHashMap<String, Integer>(__baseLifeCycle._map);
         }
             
         return new RSLifeCycle(state, items, map);
@@ -310,7 +305,12 @@ public class RSLifeCycle {
         if (asset != null && item != null) {
             asset.setProperty(String.format(__optionPropFormat, item._index),
                               new ArrayList<String>() {
-                                  {
+                                  /**
+								 * 
+								 */
+								private static final long serialVersionUID = -510451693337655141L;
+
+								{
                                       add("status:" + item._status);
                                       if (!item._name.isEmpty()) {
                                           add("name:"   + item._name);

@@ -27,25 +27,7 @@ import org.ebayopensource.turmeric.assetcreation.exception.IdNotFoundException;
 import org.ebayopensource.turmeric.assetcreation.exception.ProcessingException;
 import org.ebayopensource.turmeric.assetcreation.exception.UpdateCompleteAssetException;
 import org.ebayopensource.turmeric.common.v1.types.CommonErrorData;
-import org.ebayopensource.turmeric.common.v1.types.ErrorData;
-
-
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfoForUpdate;
-import org.ebayopensource.turmeric.repository.v1.services.AssetKey;
-import org.ebayopensource.turmeric.repository.v1.services.AttributeNameValue;
-import org.ebayopensource.turmeric.repository.v1.services.ExtendedAssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.Library;
-import org.ebayopensource.turmeric.repository.v1.services.LockAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.LockAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.RemoveAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.RemoveAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.UnlockAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.UnlockAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateAssetAttributesRequest;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateAssetAttributesResponse;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateCompleteAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateCompleteAssetResponse;
+import org.ebayopensource.turmeric.repository.v2.services.*;
 import org.ebayopensource.turmeric.runtime.common.exceptions.ServiceException;
 
 
@@ -85,6 +67,7 @@ public class AssetCreator implements AssetCreatorIntf {
 		AssetPersist.persist(assetStore,inputFilePath);
 	}
 	
+	@Override
 	public AssetInfoForUpdate getAssetInfoForUpdate(AssetInfo assetInfo) {
 		s_logger.debug("Inside AssetCreator.getAssetInfoForUpdate()");
 		AssetInfoForUpdate assetInfoForUpdate = new AssetInfoForUpdate();
@@ -93,6 +76,7 @@ public class AssetCreator implements AssetCreatorIntf {
 		return assetInfoForUpdate;
 	}
 	
+	@Override
 	public UpdateCompleteAssetResponse updateCompleteAsset(AssetInfoForUpdate assetInfoForUpdate) throws UpdateCompleteAssetException {
 		
 		UpdateCompleteAssetResponse updateAssetResponse = null;
@@ -114,6 +98,7 @@ public class AssetCreator implements AssetCreatorIntf {
 		return updateAssetResponse;
 	}
 	
+	@Override
 	public LockAssetResponse lockAsset(AssetKey assetKey) throws ProcessingException {
 		
 		LockAssetResponse lockAssetResponse = null;
@@ -135,6 +120,7 @@ public class AssetCreator implements AssetCreatorIntf {
 	}
 	
 	
+	@Override
 	public UnlockAssetResponse unlockAsset(AssetKey assetKey) throws ProcessingException {
 		
 		UnlockAssetResponse unlockAssetResponse = null;
@@ -163,6 +149,7 @@ public class AssetCreator implements AssetCreatorIntf {
 		return unlockAssetResponse;
 	}
 	
+	@Override
 	public RemoveAssetResponse removeAsset(AssetKey assetKey) throws ProcessingException {
 		
 		s_logger.debug("Inside AssetCreator.removeAsset()");
@@ -192,6 +179,7 @@ public class AssetCreator implements AssetCreatorIntf {
 		return removeAssetRes;
 	}
 	
+	@Override
 	public void deleteConsumedAssets() throws ProcessingException
 	{
 		s_logger.debug("Inside deleteConsumedAssets()");

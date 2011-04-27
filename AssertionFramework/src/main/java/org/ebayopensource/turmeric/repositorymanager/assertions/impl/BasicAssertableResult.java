@@ -69,7 +69,8 @@ public class BasicAssertableResult
      * 
      * @return the Assertion that generated this result.
      */
-    public Assertable getAssertable() { return assertable; }
+    @Override
+	public Assertable getAssertable() { return assertable; }
 
     /**
      * Returns the validation result for this AssertionResult. The
@@ -77,14 +78,16 @@ public class BasicAssertableResult
      *
      * @return the validation result for this AssertionResult.
      */
-    public ValidationResult getValidationResult() { return result; }
+    @Override
+	public ValidationResult getValidationResult() { return result; }
 
     /**
      * Returns a list of failure or warning messages, or null.
      * 
      * @return a list of failure or warning messages, or null.
      */
-    public List<AssertionResultItem> getResultItems()
+    @Override
+	public List<AssertionResultItem> getResultItems()
     {
         return resultItems;
     }
@@ -94,7 +97,8 @@ public class BasicAssertableResult
      * 
      * @param groupResult the group AssertableResult that contains this member.
      */
-    public void addAssertableResult(AssertableResult groupMemberResult)
+    @Override
+	public void addAssertableResult(AssertableResult groupMemberResult)
     {
         ValidationResult memberResult = groupMemberResult.getValidationResult();
         if (result != ValidationResult.ERROR || result != ValidationResult.MUST) {
@@ -115,7 +119,8 @@ public class BasicAssertableResult
      * 
      * @param groupResult the result from the containing AssertionGroup.
      */
-    public void addContainingGroupResult(AssertableResult groupResult)
+    @Override
+	public void addContainingGroupResult(AssertableResult groupResult)
     {
         if (parentGroupResults == null)
             parentGroupResults = new LinkedHashSet<AssertableResult>();
@@ -128,7 +133,8 @@ public class BasicAssertableResult
      * 
      * @return the member Assertables if this is a group AssertableResult
      */
-    public List<AssertableResult> getMemberAssertableResults()
+    @Override
+	public List<AssertableResult> getMemberAssertableResults()
     {
         return memberResults;
     }
@@ -139,7 +145,8 @@ public class BasicAssertableResult
      * 
      * @return the containing AssertionGroups.
      */
-    public Collection<AssertionGroup> getContainingGroups()
+    @Override
+	public Collection<AssertionGroup> getContainingGroups()
     {
         return getContainingGroups(new LinkedHashSet<AssertionGroup>());
     }
@@ -165,7 +172,8 @@ public class BasicAssertableResult
         return containingGroups;
     }
 
-    public String toString()
+    @Override
+	public String toString()
     {
         return "AssertionResult["+assertable+",result="+getValidationResult()+"]";
     }

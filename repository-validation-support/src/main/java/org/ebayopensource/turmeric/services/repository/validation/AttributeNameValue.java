@@ -13,14 +13,14 @@ package org.ebayopensource.turmeric.services.repository.validation;
  */
 @Deprecated
 public class AttributeNameValue extends
-		org.ebayopensource.turmeric.repository.v1.services.AttributeNameValue {
+		org.ebayopensource.turmeric.repository.v2.services.AttributeNameValue {
 
 	/**
 	 * @deprecated
 	 */
 	@Deprecated
 	public static AttributeNameValue wrap(
-			org.ebayopensource.turmeric.repository.v1.services.AttributeNameValue anv) {
+			org.ebayopensource.turmeric.repository.v2.services.AttributeNameValue anv) {
 
 		AttributeNameValue nv = new AttributeNameValue();
 

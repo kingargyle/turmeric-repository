@@ -11,7 +11,7 @@ package org.ebayopensource.turmeric.services.assertionsservice.junit;
 import org.ebayopensource.turmeric.services.assertionsservice.junit.BaseIndividualAssertionsTest;
 import org.junit.Test;
 
-import junit.framework.TestCase;
+import junit.framework.Assert;
 
 /**
  * @author szacharias
@@ -28,7 +28,7 @@ public class TestWSDLValidatorToolAssertions extends BaseIndividualAssertionsTes
 		
 		
 		System.out.println("testDocumentLiteral_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -40,7 +40,7 @@ public class TestWSDLValidatorToolAssertions extends BaseIndividualAssertionsTes
 		
 		
 		System.out.println("testDocumentLiteral_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -52,7 +52,7 @@ public class TestWSDLValidatorToolAssertions extends BaseIndividualAssertionsTes
 	
 		
 		System.out.println("testOperationsHave0or1RequestParam_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -64,7 +64,7 @@ public class TestWSDLValidatorToolAssertions extends BaseIndividualAssertionsTes
 	
 		
 		System.out.println("testOperationsHave0or1RequestParam_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}	
 	
 	@Test
@@ -75,7 +75,7 @@ public class TestWSDLValidatorToolAssertions extends BaseIndividualAssertionsTes
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 				
 		System.out.println("testServiceOperationCannotReturnArray_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -86,7 +86,7 @@ public class TestWSDLValidatorToolAssertions extends BaseIndividualAssertionsTes
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 				
 		System.out.println("testServiceOperationCannotReturnArray_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -98,7 +98,7 @@ public class TestWSDLValidatorToolAssertions extends BaseIndividualAssertionsTes
 	
 		
 		System.out.println("testPortTypeNameStandard_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -110,7 +110,7 @@ public class TestWSDLValidatorToolAssertions extends BaseIndividualAssertionsTes
 	
 		
 		System.out.println("testPortTypeNameStandard_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -122,7 +122,7 @@ public class TestWSDLValidatorToolAssertions extends BaseIndividualAssertionsTes
 	
 		
 		System.out.println("testServicePortNameStandard_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -134,7 +134,7 @@ public class TestWSDLValidatorToolAssertions extends BaseIndividualAssertionsTes
 	
 		
 		System.out.println("testServicePortNameStandard_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -146,7 +146,7 @@ public class TestWSDLValidatorToolAssertions extends BaseIndividualAssertionsTes
 
 		
 		System.out.println("testServiceBindingNameStandard_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -158,7 +158,7 @@ public class TestWSDLValidatorToolAssertions extends BaseIndividualAssertionsTes
 		
 		
 		System.out.println("testServiceBindingNameStandard_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -170,7 +170,7 @@ public class TestWSDLValidatorToolAssertions extends BaseIndividualAssertionsTes
 	
 		
 		System.out.println("testNoDuplicateElementsInsideComplexType_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -182,7 +182,7 @@ public class TestWSDLValidatorToolAssertions extends BaseIndividualAssertionsTes
 		
 		
 		System.out.println("testNoDuplicateElementsInsideComplexType_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -194,7 +194,7 @@ public class TestWSDLValidatorToolAssertions extends BaseIndividualAssertionsTes
 
 		
 		System.out.println("testServiceNameUppercase_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -206,7 +206,7 @@ public class TestWSDLValidatorToolAssertions extends BaseIndividualAssertionsTes
 	
 		
 		System.out.println("testServiceNameUppercase_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -218,7 +218,7 @@ public class TestWSDLValidatorToolAssertions extends BaseIndividualAssertionsTes
 	
 		
 		System.out.println("testComplexTypeNameUppercase_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -230,7 +230,7 @@ public class TestWSDLValidatorToolAssertions extends BaseIndividualAssertionsTes
 		
 		
 		System.out.println("testComplexTypeNameUppercase_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -242,7 +242,7 @@ public class TestWSDLValidatorToolAssertions extends BaseIndividualAssertionsTes
 	
 		
 		System.out.println("testServiceLocationUrlPrefix_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -254,7 +254,7 @@ public class TestWSDLValidatorToolAssertions extends BaseIndividualAssertionsTes
 	
 		
 		System.out.println("testServiceLocationUrlPrefix_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -266,7 +266,7 @@ public class TestWSDLValidatorToolAssertions extends BaseIndividualAssertionsTes
 	
 		
 		System.out.println("testEbayMarketPlaceHaveOnlyOneNamespace_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -278,7 +278,7 @@ public class TestWSDLValidatorToolAssertions extends BaseIndividualAssertionsTes
 	
 		
 		System.out.println("testEbayMarketPlaceHaveOnlyOneNamespace_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -287,7 +287,7 @@ public class TestWSDLValidatorToolAssertions extends BaseIndividualAssertionsTes
 		String assertionAssetName = "soa_xsAnyInsideComplexType_assertion";		
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testXsAnyInsideComplexType_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}	
 	
 	@Test
@@ -296,7 +296,7 @@ public class TestWSDLValidatorToolAssertions extends BaseIndividualAssertionsTes
 		String assertionAssetName = "soa_xsAnyInsideComplexType_assertion";		
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testXsAnyInsideComplexType_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -305,7 +305,7 @@ public class TestWSDLValidatorToolAssertions extends BaseIndividualAssertionsTes
 		String assertionAssetName = "soa_complexTypeWithAllOrChoice_assertion";		
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testComplexTypeWithAllOrChoice_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}	
 	
 	@Test
@@ -314,7 +314,7 @@ public class TestWSDLValidatorToolAssertions extends BaseIndividualAssertionsTes
 		String assertionAssetName = "soa_complexTypeWithAllOrChoice_assertion";	
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testComplexTypeWithAllOrChoice_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 
   }

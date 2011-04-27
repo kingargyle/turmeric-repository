@@ -17,11 +17,7 @@ import org.ebayopensource.turmeric.assetcreation.exception.AssetCreationExceptio
 import org.ebayopensource.turmeric.common.v1.types.CommonErrorData;
 import org.ebayopensource.turmeric.common.v1.types.ErrorData;
 import org.ebayopensource.turmeric.common.v1.types.ErrorMessage;
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.CreateAndSubmitAssetResponse;
-
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetInfoResponse;
-import org.ebayopensource.turmeric.repository.v1.services.SubmitForPublishingResponse;
+import org.ebayopensource.turmeric.repository.v2.services.*;
 
 public class Validator {
 	

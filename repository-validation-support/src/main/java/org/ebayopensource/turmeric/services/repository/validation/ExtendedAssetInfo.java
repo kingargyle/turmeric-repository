@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Deprecated
 public class ExtendedAssetInfo extends
-		org.ebayopensource.turmeric.repository.v1.services.ExtendedAssetInfo {
+		org.ebayopensource.turmeric.repository.v2.services.ExtendedAssetInfo {
 
 	/**
 	 * @deprecated use {@link org.ebayopensource.turmeric.repository.v1.services.ExtendedAssetInfo#getAttribute()} instead
@@ -24,10 +24,10 @@ public class ExtendedAssetInfo extends
 	@Deprecated
 	public List<AttributeNameValue> getAttribute_m() {
 		List<AttributeNameValue> attribs = new ArrayList<AttributeNameValue>();
-		List<org.ebayopensource.turmeric.repository.v1.services.AttributeNameValue> attribs_m = super
+		List<org.ebayopensource.turmeric.repository.v2.services.AttributeNameValue> attribs_m = super
 				.getAttribute();
 
-		for (org.ebayopensource.turmeric.repository.v1.services.AttributeNameValue anv : attribs_m) {
+		for (org.ebayopensource.turmeric.repository.v2.services.AttributeNameValue anv : attribs_m) {
 			attribs.add(AttributeNameValue.wrap(anv));
 		}
 

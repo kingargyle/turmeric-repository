@@ -21,24 +21,24 @@ import org.wso2.carbon.registry.core.Resource;
 
 
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
-import org.ebayopensource.turmeric.repository.v1.services.Artifact;
-import org.ebayopensource.turmeric.repository.v1.services.ArtifactInfo;
-import org.ebayopensource.turmeric.repository.v1.services.ArtifactValueType;
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AssetKey;
-import org.ebayopensource.turmeric.repository.v1.services.AssetLifeCycleInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AttributeNameValue;
-import org.ebayopensource.turmeric.repository.v1.services.BasicAssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.CreateCompleteAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.CreateCompleteAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.ExtendedAssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetInfoRequest;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetInfoResponse;
-import org.ebayopensource.turmeric.repository.v1.services.Library;
-import org.ebayopensource.turmeric.repository.v1.services.LockAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.LockAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateAssetResponse;
+import org.ebayopensource.turmeric.repository.v2.services.Artifact;
+import org.ebayopensource.turmeric.repository.v2.services.ArtifactInfo;
+import org.ebayopensource.turmeric.repository.v2.services.ArtifactValueType;
+import org.ebayopensource.turmeric.repository.v2.services.AssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
+import org.ebayopensource.turmeric.repository.v2.services.AssetLifeCycleInfo;
+import org.ebayopensource.turmeric.repository.v2.services.AttributeNameValue;
+import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.CreateCompleteAssetRequest;
+import org.ebayopensource.turmeric.repository.v2.services.CreateCompleteAssetResponse;
+import org.ebayopensource.turmeric.repository.v2.services.ExtendedAssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.GetAssetInfoRequest;
+import org.ebayopensource.turmeric.repository.v2.services.GetAssetInfoResponse;
+import org.ebayopensource.turmeric.repository.v2.services.Library;
+import org.ebayopensource.turmeric.repository.v2.services.LockAssetRequest;
+import org.ebayopensource.turmeric.repository.v2.services.LockAssetResponse;
+import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetRequest;
+import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetResponse;
 
 /**
  */

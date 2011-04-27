@@ -27,24 +27,29 @@ public class AssertionProcessor
     implements org.ebayopensource.turmeric.repositorymanager.assertions.AssertionProcessor
 {
 
+	@Override
 	public AssertableResult applyAssertion(Assertion assertion,
 			List<AssertionContent> content) throws IOException {
 		return null;
 	}
 
+	@Override
 	public void close() {
 		
 	}
 
+	@Override
 	public AssertionContentSource getAssertionContentSource(
 			AssertionContent assertionContent) {
 		return null;
 	}
 
+	@Override
 	public String getName() {
 		return null;
 	}
 
+	@Override
 	public void init(AssertionProcessorContext context) {
 		
 	}	

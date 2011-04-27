@@ -22,26 +22,6 @@
   <properties>
     <wso2.version>3.0.0</wso2.version>
   </properties>
-  <build>
-    <resources>
-      <resource>
-        <directory>meta-src</directory>
-      </resource>
-      <resource>
-        <directory>gen-meta-src</directory>
-      </resource>
-    </resources>
-    <testResources>
-    	<testResource>
-    		<directory>meta-src</directory>
-    	</testResource>
-    	<testResource>
-    		<directory>src/test/resources</directory>
-    	</testResource>
-    </testResources>
-    <plugins>
-    </plugins>
-  </build>
  <dependencyManagement>
     <dependencies>
       <dependency>
@@ -75,7 +55,7 @@
     </dependency>
     <dependency>
       <groupId>org.ebayopensource.turmeric.impl</groupId>
-      <artifactId>TurmericRSV1Impl</artifactId>
+      <artifactId>TurmericRSV2Impl</artifactId>
       <version>${project.version}</version>
     </dependency> 
     <dependency>

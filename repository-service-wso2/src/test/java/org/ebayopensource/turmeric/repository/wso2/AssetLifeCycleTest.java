@@ -23,28 +23,28 @@ import org.wso2.carbon.registry.core.Resource;
 import org.wso2.carbon.registry.core.exceptions.RegistryException;
 
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
-import org.ebayopensource.turmeric.repository.v1.services.ApprovalInfo;
-import org.ebayopensource.turmeric.repository.v1.services.ApproveAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.ApproveAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.Artifact;
-import org.ebayopensource.turmeric.repository.v1.services.ArtifactInfo;
-import org.ebayopensource.turmeric.repository.v1.services.ArtifactValueType;
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AssetKey;
-import org.ebayopensource.turmeric.repository.v1.services.AssetLifeCycleInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AttributeNameValue;
-import org.ebayopensource.turmeric.repository.v1.services.BasicAssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.CreateCompleteAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.CreateCompleteAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.ExtendedAssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.FlattenedRelationship;
-import org.ebayopensource.turmeric.repository.v1.services.Library;
-import org.ebayopensource.turmeric.repository.v1.services.RejectAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.RejectAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.RejectionInfo;
-import org.ebayopensource.turmeric.repository.v1.services.Relation;
-import org.ebayopensource.turmeric.repository.v1.services.SubmitForPublishingRequest;
-import org.ebayopensource.turmeric.repository.v1.services.SubmitForPublishingResponse;
+import org.ebayopensource.turmeric.repository.v2.services.ApprovalInfo;
+import org.ebayopensource.turmeric.repository.v2.services.ApproveAssetRequest;
+import org.ebayopensource.turmeric.repository.v2.services.ApproveAssetResponse;
+import org.ebayopensource.turmeric.repository.v2.services.Artifact;
+import org.ebayopensource.turmeric.repository.v2.services.ArtifactInfo;
+import org.ebayopensource.turmeric.repository.v2.services.ArtifactValueType;
+import org.ebayopensource.turmeric.repository.v2.services.AssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
+import org.ebayopensource.turmeric.repository.v2.services.AssetLifeCycleInfo;
+import org.ebayopensource.turmeric.repository.v2.services.AttributeNameValue;
+import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.CreateCompleteAssetRequest;
+import org.ebayopensource.turmeric.repository.v2.services.CreateCompleteAssetResponse;
+import org.ebayopensource.turmeric.repository.v2.services.ExtendedAssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.FlattenedRelationship;
+import org.ebayopensource.turmeric.repository.v2.services.Library;
+import org.ebayopensource.turmeric.repository.v2.services.RejectAssetRequest;
+import org.ebayopensource.turmeric.repository.v2.services.RejectAssetResponse;
+import org.ebayopensource.turmeric.repository.v2.services.RejectionInfo;
+import org.ebayopensource.turmeric.repository.v2.services.Relation;
+import org.ebayopensource.turmeric.repository.v2.services.SubmitForPublishingRequest;
+import org.ebayopensource.turmeric.repository.v2.services.SubmitForPublishingResponse;
 
 /**
  * @author mgorovoy
@@ -64,9 +64,6 @@ public class AssetLifeCycleTest extends Wso2Base {
     private static final String assetComment = "AssetLifeCycleTest comment";
     private static final String libraryName = "http://www.domain.com/assets";
     private static final String baseUrl = "http://www.domain.com/assets/";
-    private static final String stringProperty = "a test value";
-    private static final Long longProperty = new Long(1234567l);
-    private static final Boolean booleanProperty = Boolean.FALSE;
 
     @Before
     public void checkRepository() {

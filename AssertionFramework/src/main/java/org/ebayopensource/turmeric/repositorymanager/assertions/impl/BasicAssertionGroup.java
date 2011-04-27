@@ -69,7 +69,8 @@ public class BasicAssertionGroup
      * 
      * @return the name of this AssertionGroup.
      */
-    public String getName() { return name; }
+    @Override
+	public String getName() { return name; }
 
     /**
      * Returns the version of this AssertionGroup. When the definition
@@ -77,28 +78,32 @@ public class BasicAssertionGroup
      * 
      * @return the version of this AssertionGroup.
      */
-    public String getVersion() { return version; }
+    @Override
+	public String getVersion() { return version; }
 
     /**
      * Returns the description of this AssertionGroup.
      * 
      * @return the description of this AssertionGroup.
      */
-    public String getDescription() { return description; }
+    @Override
+	public String getDescription() { return description; }
 
     /**
      * Returns the Assertablea in this AssertionGroup.
      * 
      * @return the Assertablea in this AssertionGroup.
      */
-    public Collection<? extends Assertable> getGroupMembers() { return groupMembers; }
+    @Override
+	public Collection<? extends Assertable> getGroupMembers() { return groupMembers; }
 
     /**
      * Returns true if the argument is a AssertionGroup with equal name and version.
      * 
      * @return true if the argument is an AssertionGroup with equal name and version.
      */
-    public boolean equals(Object o)
+    @Override
+	public boolean equals(Object o)
     {
         if (!(o instanceof AssertionGroup))
             return false;
@@ -119,9 +124,11 @@ public class BasicAssertionGroup
      * 
      * @return the hashCode for this AssertionGroup.
      */
-    public int hashCode() { return hashCode; }
+    @Override
+	public int hashCode() { return hashCode; }
 
-    public String toString()
+    @Override
+	public String toString()
     {
         return "AssertionGroup["+name+",version="+version+"]";
     }

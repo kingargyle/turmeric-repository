@@ -12,8 +12,7 @@ import java.util.List;
 
 import org.ebayopensource.turmeric.assetcreation.artifacts.AssetInput;
 import org.ebayopensource.turmeric.assetcreation.exception.ProcessingException;
-import org.ebayopensource.turmeric.repository.v1.services.ArtifactInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.*;
 
 public class ModifyConsumerAsset extends ModifyAsset {
 

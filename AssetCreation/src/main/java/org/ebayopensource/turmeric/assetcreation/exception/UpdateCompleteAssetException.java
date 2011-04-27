@@ -10,6 +10,11 @@ package org.ebayopensource.turmeric.assetcreation.exception;
 
 public class UpdateCompleteAssetException extends Exception {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3148640117550423883L;
+
 	public UpdateCompleteAssetException()
 	{
 		

@@ -15,12 +15,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-
 import org.apache.log4j.Logger;
 import org.ebayopensource.turmeric.assetcreation.artifacts.AssetCreation;
-import org.xml.sax.SAXException;
 
 
 public class ReadConfigFile {
@@ -47,6 +43,7 @@ public class ReadConfigFile {
 			}
 			JAXBContext jc = JAXBContext.newInstance("org.ebayopensource.turmeric.assetcreation.artifacts");
 			Unmarshaller unmarshaller = jc.createUnmarshaller();
+			@SuppressWarnings("unchecked")
 			JAXBElement<AssetCreation> element = (JAXBElement<AssetCreation>)unmarshaller.unmarshal(inputXmlFile);
 			assetCreation = element.getValue();
 			s_logger.info(inputXmlFile.getName()+ " is proper ");

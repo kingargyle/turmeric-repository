@@ -21,9 +21,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
-import org.ebayopensource.turmeric.repository.v1.services.GetLibraryListRequest;
-import org.ebayopensource.turmeric.repository.v1.services.GetLibraryListResponse;
-import org.ebayopensource.turmeric.repository.v1.services.Library;
+import org.ebayopensource.turmeric.repository.v2.services.GetLibraryListRequest;
+import org.ebayopensource.turmeric.repository.v2.services.GetLibraryListResponse;
+import org.ebayopensource.turmeric.repository.v2.services.Library;
 
 public class GetLibraryListTest extends Wso2Base {
 	@BeforeClass

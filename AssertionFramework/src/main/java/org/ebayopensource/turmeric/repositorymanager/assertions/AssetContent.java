@@ -49,14 +49,16 @@ public class AssetContent
      * 
      * @return the artifact name as a URI.
      */
-    public String getName() { return contentName; }
+    @Override
+	public String getName() { return contentName; }
 
     /**
      * Sets the name of this AssetContent.
      * 
      * @param name the new name of this AssetContent.
      */
-    public void setName(String contentName) { this.contentName = contentName; }
+    @Override
+	public void setName(String contentName) { this.contentName = contentName; }
 
     /**
      * Returns the source name for this AssetContent. The form of 
@@ -64,7 +66,8 @@ public class AssetContent
      * 
      * @return the source name for this AssetContent.
      */
-    public String getSourceName() { return sourceName; }
+    @Override
+	public String getSourceName() { return sourceName; }
 
     /**
      * Returns the Artifact name for this AssetContent.
@@ -81,7 +84,8 @@ public class AssetContent
      */
     public AssetReference getAssetReference() { return assetRef; }
 
-    public String toString()
+    @Override
+	public String toString()
     {
         return "AssetContent["+sourceName+"]";
     }

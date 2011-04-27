@@ -58,28 +58,32 @@ public class BasicAssertionModule
      * 
      * @return the name of this AssertionModule.
      */
-    public String getName() { return name; }
+    @Override
+	public String getName() { return name; }
 
     /**
      * Returns the version of this AssertionModule.
      * 
      * @return the version of this AssertionModule.
      */
-    public String getVersion() { return version; }
+    @Override
+	public String getVersion() { return version; }
 
     /**
      * Returns the description of this AssertionModule.
      * 
      * @return the description of this AssertionModule.
      */
-    public String getDescription() { return description; }
+    @Override
+	public String getDescription() { return description; }
 
     /**
      * Returns the AssertionScripts contained in this AssertionModule.
      * 
      * @return the AssertionScripts contained in this AssertionModule.
      */
-    public Collection<AssertionContent> getModuleScripts()
+    @Override
+	public Collection<AssertionContent> getModuleScripts()
     {
         return moduleScripts;
     }
@@ -89,9 +93,11 @@ public class BasicAssertionModule
      * 
      * @return the AssertionProcessor type that uses this AssertionModule.
      */
-    public String getAssertionProcessorType() { return assertionProcessorType; }
+    @Override
+	public String getAssertionProcessorType() { return assertionProcessorType; }
 
-    public String toString()
+    @Override
+	public String toString()
     {
         return "AssertionModule["+name
             +",version="+version

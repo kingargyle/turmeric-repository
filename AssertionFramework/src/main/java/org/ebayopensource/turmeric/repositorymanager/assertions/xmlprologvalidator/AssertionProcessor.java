@@ -25,14 +25,16 @@ public class AssertionProcessor
 
     private AssertionProcessorContext context;
 
-    public String getName() { return assertionProcessorName; }
+    @Override
+	public String getName() { return assertionProcessorName; }
 
     /**
      * Sets the context for this AssertionProcessor.
      * 
      * @param the context for this AssertionProcessor.
      */
-    public void init(AssertionProcessorContext apContext)
+    @Override
+	public void init(AssertionProcessorContext apContext)
     {
         this.context = apContext;
     }
@@ -43,13 +45,15 @@ public class AssertionProcessor
      * @param assertionContent 
      * @return an AssertionContentSource for a given AssertionContent.
      */
-    public AssertionContentSource getAssertionContentSource(
+    @Override
+	public AssertionContentSource getAssertionContentSource(
             AssertionContent assertionContent)
     {
         return context.getAssertionContentSource(assertionContent);
     }
 
-    public AssertableResult applyAssertion(
+    @Override
+	public AssertableResult applyAssertion(
             Assertion assertion,
             List<AssertionContent> content)
     {
@@ -57,7 +61,9 @@ public class AssertionProcessor
         return null;
     }
 
-    public void close() {}
+    @Override
+	public void close() {}
 
-    public String toString() { return getName(); }
+    @Override
+	public String toString() { return getName(); }
 }

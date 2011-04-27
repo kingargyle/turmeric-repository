@@ -52,7 +52,8 @@ public class AssertionResultItem
      */
     public String getLineNumber() { return lineNumber; }
 
-    public String toString()
+    @Override
+	public String toString()
     {
         String tsContent = (contentName == null) ? "" : ",content="+contentName;
         String tsLine = (lineNumber == null) ? "" : ",line="+lineNumber;

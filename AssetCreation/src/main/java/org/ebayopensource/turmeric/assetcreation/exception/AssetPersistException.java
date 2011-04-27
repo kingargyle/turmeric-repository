@@ -10,6 +10,11 @@ package org.ebayopensource.turmeric.assetcreation.exception;
 
 public class AssetPersistException extends Exception {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5075488100178622644L;
+
 	public AssetPersistException() {
 		
 	}

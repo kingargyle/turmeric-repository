@@ -40,9 +40,11 @@ public abstract class AbstractContentSource
      * 
      * @return the underlying AssertionContent.
      */
-    public AssertionContent getAssertionContent() { return assertionContent; }
+    @Override
+	public AssertionContent getAssertionContent() { return assertionContent; }
 
-    public String getStringContent()
+    @Override
+	public String getStringContent()
         throws IOException
     {
         if (stringContent == null) 
@@ -77,7 +79,8 @@ public abstract class AbstractContentSource
         return stringContent;
     }
 
-    public String toString()
+    @Override
+	public String toString()
     {
         return "AssertionContentSource:"+assertionContent;
     }

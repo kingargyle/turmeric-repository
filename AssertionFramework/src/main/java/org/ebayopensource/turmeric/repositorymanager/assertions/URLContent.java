@@ -44,7 +44,8 @@ public class URLContent
         }
     }
     
-    private URL getURL(String urlSpec) throws MalformedURLException
+    @SuppressWarnings("deprecation")
+	private URL getURL(String urlSpec) throws MalformedURLException
     {
     	boolean urlThrewException = false;
 		boolean uriThrewException = false;
@@ -138,21 +139,24 @@ public class URLContent
      * 
      * @return the name of this URLContent.
      */
-    public String getName() { return contentName; }
+    @Override
+	public String getName() { return contentName; }
 
     /**
      * Sets the name of this URLContent.
      * 
      * @param name the new name of this URLContent.
      */
-    public void setName(String contentName) { this.contentName = contentName; }
+    @Override
+	public void setName(String contentName) { this.contentName = contentName; }
 
     /**
      * Returns the URL for this URLContent.
      * 
      * @return the URL for this URLContent.
      */
-    public String getSourceName() { return sourceName; }
+    @Override
+	public String getSourceName() { return sourceName; }
 
     /**
      * Returns the underlying URL for this URLContent.
@@ -161,7 +165,8 @@ public class URLContent
      */
     public URL getURL() { return url; }
 
-    public String toString()
+    @Override
+	public String toString()
     {
     	return "URLContent["+sourceName+"]";
     }

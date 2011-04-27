@@ -30,6 +30,11 @@ import com.ebay.kernel.BaseEnum;
  */
 public class ServiceBaseErrorDescriptor extends BaseEnum{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2962357488334374395L;
+	
 	private static final String DOMAIN_MARKETPLACE = "Marketplace"; //constant for all services in eBay Marketplace
 	private final long m_errorId;
 	private final String m_errorName;
@@ -137,7 +142,7 @@ public class ServiceBaseErrorDescriptor extends BaseEnum{
 	}
 		
 	
-	private String getFormatedMessage(String[] params){
+	private String getFormatedMessage(Object[] params){
 		String result = m_message;
 		if (params != null && params.length > 0) {
 			try {

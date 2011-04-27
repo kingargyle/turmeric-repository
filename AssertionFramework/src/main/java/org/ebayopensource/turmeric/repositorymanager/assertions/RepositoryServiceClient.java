@@ -16,14 +16,8 @@ import java.util.Map;
 
 import org.ebayopensource.turmeric.common.v1.types.ErrorData;
 import org.ebayopensource.turmeric.common.v1.types.ErrorMessage;
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AssetKey;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetInfoRequest;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetInfoResponse;
-import org.ebayopensource.turmeric.repository.v1.services.GetLibraryListRequest;
-import org.ebayopensource.turmeric.repository.v1.services.GetLibraryListResponse;
-import org.ebayopensource.turmeric.repository.v1.services.Library;
-import org.ebayopensource.turmeric.repository.v1.services.repositoryservice.impl.TurmericRSV1;
+import org.ebayopensource.turmeric.repository.v2.services.*;
+import org.ebayopensource.turmeric.repository.v2.services.intf.TurmericRSV2;
 import org.ebayopensource.turmeric.repositorymanager.assertions.exception.AssertionIllegalArgumentException;
 import org.ebayopensource.turmeric.repositorymanager.assertions.exception.AssertionRuntimeException;
 import org.ebayopensource.turmeric.runtime.common.exceptions.ServiceException;
@@ -79,9 +73,9 @@ public class RepositoryServiceClient
      * @return the service proxy object.
      * @throws ServiceException 
      */
-    private TurmericRSV1 getServiceProxy() throws ServiceException
+    private TurmericRSV2 getServiceProxy() throws ServiceException
     {
-    	Service service = ServiceFactory.create("TurmericRSV1", "TurmericRSV1", serviceLocationURL);
+    	Service service = ServiceFactory.create("TurmericRSV2", "TurmericRSV2", serviceLocationURL);
     	
         // get security cookie after first successful login
         if (securityCookie == null) {
@@ -102,7 +96,7 @@ public class RepositoryServiceClient
             requestContext.setTransportHeader(
                     "X-TURMERIC-SECURITY-PASSWORD", password);
         }
-        return (TurmericRSV1) service.getProxy();
+        return (TurmericRSV2) service.getProxy();
     }
 
     /**

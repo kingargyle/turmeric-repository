@@ -85,35 +85,40 @@ public class BasicAssertion
      * 
      * @return the name of this Assertion.
      */
-    public String getName() { return name; } 
+    @Override
+	public String getName() { return name; } 
 
     /**
      * Returns the version of this Assertion.
      * 
      * @return the version of this Assertion.
      */
-    public String getVersion() { return version; } 
+    @Override
+	public String getVersion() { return version; } 
 
     /**
      * Returns the description of this Assertion.
      * 
      * @return the description of this Assertion.
      */
-    public String getDescription()  { return description; } 
+    @Override
+	public String getDescription()  { return description; } 
 
     /**
      * Returns the failure or warning severity for this Assertion.
      * 
      * @return the failure or warning severity for this Assertion.
      */
-    public ValidationResult getErrorSeverity() { return errorSeverity; }
+    @Override
+	public ValidationResult getErrorSeverity() { return errorSeverity; }
 
     /**
      * Returns the executable script that is the validation rule.
      * 
      * @return the executable script that is the validation rule.
      */
-    public AssertionContent getAssertionScript() { return assertionScript; }
+    @Override
+	public AssertionContent getAssertionScript() { return assertionScript; }
 
     /**
      * Returns the AssertionProcessor type that executes the validation
@@ -122,7 +127,8 @@ public class BasicAssertion
      * @return the AssertionProcessor type that executes the validation
      * rule.
      */
-    public String getAssertionProcessorType()
+    @Override
+	public String getAssertionProcessorType()
     {
         return assertionProcessorType;
     }
@@ -132,14 +138,16 @@ public class BasicAssertion
      * 
      * @return the AssertionModules that are used by the AssertionScript or null.
      */
-    public Collection<AssertionModule> getAssertionModules() { return assertionModules; }
+    @Override
+	public Collection<AssertionModule> getAssertionModules() { return assertionModules; }
 
     /**
      * Returns true if the argument is a Assertion with equal name and version.
      * 
      * @return true if the argument is an Assertion with equal name and version.
      */
-    public boolean equals(Object o)
+    @Override
+	public boolean equals(Object o)
     {
         if (o == null || !(o instanceof Assertion))
             return false;
@@ -160,9 +168,11 @@ public class BasicAssertion
      * 
      * @return the hashCode for this BasicAssertion.
      */
-    public int hashCode() { return hashCode; }
+    @Override
+	public int hashCode() { return hashCode; }
 
-    public String toString()
+    @Override
+	public String toString()
     {
         return "Assertion["+name
             +",version="+version

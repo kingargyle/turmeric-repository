@@ -10,7 +10,6 @@
 package org.ebayopensource.turmeric.repository.wso2;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeTrue;
 
 import java.util.List;
@@ -21,31 +20,28 @@ import org.wso2.carbon.registry.app.RemoteRegistry;
 import org.wso2.carbon.registry.core.exceptions.RegistryException;
 
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
-import org.ebayopensource.turmeric.repository.v1.services.Artifact;
-import org.ebayopensource.turmeric.repository.v1.services.ArtifactInfo;
-import org.ebayopensource.turmeric.repository.v1.services.ArtifactValueType;
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfoForUpdate;
-import org.ebayopensource.turmeric.repository.v1.services.AssetKey;
-import org.ebayopensource.turmeric.repository.v1.services.AssetLifeCycleInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AttributeNameValue;
-import org.ebayopensource.turmeric.repository.v1.services.BasicAssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.CreateCompleteAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.CreateCompleteAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.ExtendedAssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.FlattenedRelationship;
-import org.ebayopensource.turmeric.repository.v1.services.FlattenedRelationshipForUpdate;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetInfoRequest;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetInfoResponse;
-import org.ebayopensource.turmeric.repository.v1.services.Library;
-import org.ebayopensource.turmeric.repository.v1.services.LockAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.LockAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.Relation;
-import org.ebayopensource.turmeric.repository.v1.services.RelationForUpdate;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateAssetDependenciesRequest;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateAssetDependenciesResponse;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateCompleteAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateCompleteAssetResponse;
+import org.ebayopensource.turmeric.repository.v2.services.Artifact;
+import org.ebayopensource.turmeric.repository.v2.services.ArtifactInfo;
+import org.ebayopensource.turmeric.repository.v2.services.ArtifactValueType;
+import org.ebayopensource.turmeric.repository.v2.services.AssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
+import org.ebayopensource.turmeric.repository.v2.services.AssetLifeCycleInfo;
+import org.ebayopensource.turmeric.repository.v2.services.AttributeNameValue;
+import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.CreateCompleteAssetRequest;
+import org.ebayopensource.turmeric.repository.v2.services.CreateCompleteAssetResponse;
+import org.ebayopensource.turmeric.repository.v2.services.ExtendedAssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.FlattenedRelationship;
+import org.ebayopensource.turmeric.repository.v2.services.FlattenedRelationshipForUpdate;
+import org.ebayopensource.turmeric.repository.v2.services.GetAssetInfoRequest;
+import org.ebayopensource.turmeric.repository.v2.services.GetAssetInfoResponse;
+import org.ebayopensource.turmeric.repository.v2.services.Library;
+import org.ebayopensource.turmeric.repository.v2.services.LockAssetRequest;
+import org.ebayopensource.turmeric.repository.v2.services.LockAssetResponse;
+import org.ebayopensource.turmeric.repository.v2.services.Relation;
+import org.ebayopensource.turmeric.repository.v2.services.RelationForUpdate;
+import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetDependenciesRequest;
+import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetDependenciesResponse;
 
 /**
  * @author mgorovoy
@@ -249,6 +245,6 @@ public class UpdateAssetDependenciesTest extends Wso2Base {
         assertEquals(AckValue.SUCCESS, responseUpdate.getAck());
         assertEquals(null, responseUpdate.getErrorMessage());
 
-        AssetInfo assetInfo = validateAsset(response.getAssetKey().getAssetId());
+        validateAsset(response.getAssetKey().getAssetId());
     }
 }

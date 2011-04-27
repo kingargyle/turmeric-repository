@@ -36,16 +36,16 @@ import org.w3c.dom.Element;
 import org.wso2.carbon.registry.app.RemoteRegistry;
 import org.wso2.carbon.registry.core.Resource;
 
-import org.ebayopensource.turmeric.repository.v1.services.Artifact;
-import org.ebayopensource.turmeric.repository.v1.services.ArtifactInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AssetKey;
-import org.ebayopensource.turmeric.repository.v1.services.AssetLifeCycleInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AttributeNameValue;
-import org.ebayopensource.turmeric.repository.v1.services.BasicAssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.ExtendedAssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.FlattenedRelationship;
-import org.ebayopensource.turmeric.repository.v1.services.Relation;
+import org.ebayopensource.turmeric.repository.v2.services.Artifact;
+import org.ebayopensource.turmeric.repository.v2.services.ArtifactInfo;
+import org.ebayopensource.turmeric.repository.v2.services.AssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
+import org.ebayopensource.turmeric.repository.v2.services.AssetLifeCycleInfo;
+import org.ebayopensource.turmeric.repository.v2.services.AttributeNameValue;
+import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.ExtendedAssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.FlattenedRelationship;
+import org.ebayopensource.turmeric.repository.v2.services.Relation;
 
 
 

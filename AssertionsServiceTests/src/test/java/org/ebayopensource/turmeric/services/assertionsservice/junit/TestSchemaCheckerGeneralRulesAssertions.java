@@ -10,7 +10,7 @@ package org.ebayopensource.turmeric.services.assertionsservice.junit;
 
 import org.junit.Test;
 
-import junit.framework.TestCase;
+import junit.framework.Assert;
 
 public class TestSchemaCheckerGeneralRulesAssertions extends BaseIndividualAssertionsTest{
 	
@@ -20,7 +20,7 @@ public class TestSchemaCheckerGeneralRulesAssertions extends BaseIndividualAsser
 		String assertionAssetName = "soa_elementsAndAttributesNamespaceStandard_assertion";
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testElementsAndAttributesNamespaceStandard_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -29,6 +29,6 @@ public class TestSchemaCheckerGeneralRulesAssertions extends BaseIndividualAsser
 		String assertionAssetName = "soa_elementsAndAttributesNamespaceStandard_assertion";
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testElementsAndAttributesNamespaceStandard_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}	
 }

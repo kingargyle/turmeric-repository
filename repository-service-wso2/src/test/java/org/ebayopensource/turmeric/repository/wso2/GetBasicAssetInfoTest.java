@@ -17,11 +17,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
-import org.ebayopensource.turmeric.repository.v1.services.AssetKey;
-import org.ebayopensource.turmeric.repository.v1.services.BasicAssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.GetBasicAssetInfoRequest;
-import org.ebayopensource.turmeric.repository.v1.services.GetBasicAssetInfoResponse;
-import org.ebayopensource.turmeric.repository.v1.services.Library;
+import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
+import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.GetBasicAssetInfoRequest;
+import org.ebayopensource.turmeric.repository.v2.services.GetBasicAssetInfoResponse;
+import org.ebayopensource.turmeric.repository.v2.services.Library;
 
 public class GetBasicAssetInfoTest extends Wso2Base {
     @BeforeClass

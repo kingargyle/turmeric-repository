@@ -43,27 +43,31 @@ public class ClassResourceContent
      * 
      * @return a name for this AssertionContent.
      */
-    public String getName() { return contentName; }
+    @Override
+	public String getName() { return contentName; }
 
     /**
      * Sets the name of this AssertionContent.
      * 
      * @param name the new name of this AssertionContent.
      */
-    public void setName(String contentName) { this.contentName = contentName; }
+    @Override
+	public void setName(String contentName) { this.contentName = contentName; }
 
     /**
      * Returns a source name of the class resource.
      * 
      * @return a source name of the class resource.
      */
-    public String getSourceName() { return sourceName; }
+    @Override
+	public String getSourceName() { return sourceName; }
 
     public String getResourceName() { return resourceName; }
 
     public Class<?> getResourceClass() { return resourceClass; }
 
-    public String toString()
+    @Override
+	public String toString()
     {
         return "ClassResourceContent["+sourceName+"]";
     }

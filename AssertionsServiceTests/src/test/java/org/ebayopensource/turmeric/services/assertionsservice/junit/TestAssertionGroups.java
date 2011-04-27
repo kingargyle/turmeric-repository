@@ -14,21 +14,13 @@ import java.util.List;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-
+import org.junit.Assert;
 import org.ebayopensource.turmeric.assetcreation.AssetCreatorFactory;
 import org.ebayopensource.turmeric.assetcreation.AssetCreatorIntf;
 import org.ebayopensource.turmeric.assetcreation.exception.AssetInfoNotFoundException;
 import org.ebayopensource.turmeric.assetcreation.exception.IdNotFoundException;
-import org.ebayopensource.turmeric.repository.v1.services.ApplyAssertionGroupsRequest;
-import org.ebayopensource.turmeric.repository.v1.services.ArtifactAsset;
-import org.ebayopensource.turmeric.repository.v1.services.ArtifactContentTypes;
-import org.ebayopensource.turmeric.repository.v1.services.AssertableArtifact;
-import org.ebayopensource.turmeric.repository.v1.services.AssertionGroupAsset;
-import org.ebayopensource.turmeric.repository.v1.services.AssertionGroupAssetTypes;
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.ExternalArtifact;
+import org.ebayopensource.turmeric.repository.v1.services.*;
+import org.ebayopensource.turmeric.repository.v2.services.AssetInfo;
 
 /**
  * @author szacharias
@@ -68,7 +60,7 @@ public class TestAssertionGroups extends BaseAssertionsServiceTest {
 		request.getArtifacts().add(artifact);
 
 		String result = processRequest(request, POSITIVE_CASE);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 		
 		System.out.println("testAssertionGroupsRequestWithInternalArtifact_Positive : "  +  result);
 	}
@@ -86,7 +78,7 @@ public class TestAssertionGroups extends BaseAssertionsServiceTest {
 		request.getArtifacts().addAll(artifacts);
 		
 		String result = processRequest(request, POSITIVE_CASE);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 
 		System.out.println("testAssertionGroupsRequestWithInternalArtifacts : "  +  result);
 	}
@@ -104,7 +96,7 @@ public class TestAssertionGroups extends BaseAssertionsServiceTest {
 		request.getArtifacts().add(artifact);
 
 		String result = processRequest(request, POSITIVE_CASE);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 		
 		System.out.println("testAssertionGroupsRequestWithMultipleGroupsAndInternalArtifact : "  +  result);
 	}
@@ -122,7 +114,7 @@ public class TestAssertionGroups extends BaseAssertionsServiceTest {
 		request.getArtifacts().add(artifact);
 		
 		String result = processRequest(request, NEGATIVE_CASE);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 
 		System.out.println("testAssertionGroupsRequestWithInternalArtifact_Negative : "  +  result);
 	}
@@ -140,7 +132,7 @@ public class TestAssertionGroups extends BaseAssertionsServiceTest {
 		request.getArtifacts().add(artifact);
 		
 		String result = processRequest(request, POSITIVE_CASE);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 
 		System.out.println("testAssertionGroupsRequestWithExternalArtifact_Positive : "  +  result);
 	}
@@ -158,7 +150,7 @@ public class TestAssertionGroups extends BaseAssertionsServiceTest {
 		request.getArtifacts().addAll(artifacts);
 		
 		String result = processRequest(request, POSITIVE_CASE);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 
 		System.out.println("testAssertionGroupsRequestWithExternalArtifacts : "  +  result);
 	}
@@ -176,7 +168,7 @@ public class TestAssertionGroups extends BaseAssertionsServiceTest {
 		request.getArtifacts().add(artifact);
 		
 		String result = processRequest(request, POSITIVE_CASE);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 
 		System.out.println("testAssertionGroupsRequestWithMultipleGroupsAndExternalArtifact : "  +  result);
 	}
@@ -194,7 +186,7 @@ public class TestAssertionGroups extends BaseAssertionsServiceTest {
 		request.getArtifacts().add(artifact);
 
 		String result = processRequest(request, NEGATIVE_CASE);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 		
 		System.out.println("testAssertionGroupsRequestWithExternalArtifact_Negative : "  +  result);
 	}
@@ -214,7 +206,7 @@ public class TestAssertionGroups extends BaseAssertionsServiceTest {
 		request.getArtifacts().add(artifact);
 
 		String result = processRequest(request, FAILURE_CASE);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 		
 		System.out.println("testAssertionGroupsRequestWithInvalidGroupDetails : "  +  result);
 	}

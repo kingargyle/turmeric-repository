@@ -18,17 +18,15 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
-import org.ebayopensource.turmeric.repository.v1.services.ArtifactInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AssetKey;
-import org.ebayopensource.turmeric.repository.v1.services.AttributeNameValue;
-import org.ebayopensource.turmeric.repository.v1.services.BasicAssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.BasicServiceInfo;
-import org.ebayopensource.turmeric.repository.v1.services.ExtendedAssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetInfoRequest;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetInfoResponse;
-import org.ebayopensource.turmeric.repository.v1.services.GetServiceResponse;
-import org.ebayopensource.turmeric.repository.v1.services.Library;
+import org.ebayopensource.turmeric.repository.v2.services.ArtifactInfo;
+import org.ebayopensource.turmeric.repository.v2.services.AssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
+import org.ebayopensource.turmeric.repository.v2.services.AttributeNameValue;
+import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.ExtendedAssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.GetAssetInfoRequest;
+import org.ebayopensource.turmeric.repository.v2.services.GetAssetInfoResponse;
+import org.ebayopensource.turmeric.repository.v2.services.Library;
 
 public class GetAssetInfoTest extends Wso2Base {
     @BeforeClass

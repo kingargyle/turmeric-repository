@@ -16,7 +16,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.UUID;
@@ -38,39 +37,35 @@ import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.wso2.carbon.registry.app.RemoteRegistry;
 import org.wso2.carbon.registry.core.Association;
 import org.wso2.carbon.registry.core.Collection;
 import org.wso2.carbon.registry.core.Resource;
 import org.wso2.carbon.registry.core.exceptions.RegistryException;
-import org.wso2.carbon.registry.core.exceptions.ResourceNotFoundException;
-
 import org.ebayopensource.turmeric.services.common.error.RepositoryServiceErrorDescriptor;
 
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
 import org.ebayopensource.turmeric.common.v1.types.BaseResponse;
 import org.ebayopensource.turmeric.common.v1.types.CommonErrorData;
-import org.ebayopensource.turmeric.common.v1.types.ErrorData;
 import org.ebayopensource.turmeric.common.v1.types.ErrorMessage;
 import org.ebayopensource.turmeric.common.v1.types.ErrorParameter;
-import org.ebayopensource.turmeric.repository.v1.services.Artifact;
-import org.ebayopensource.turmeric.repository.v1.services.ArtifactInfo;
-import org.ebayopensource.turmeric.repository.v1.services.ArtifactValueType;
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AssetKey;
-import org.ebayopensource.turmeric.repository.v1.services.AssetLifeCycleInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AttributeNameValue;
+import org.ebayopensource.turmeric.repository.v2.services.Artifact;
+import org.ebayopensource.turmeric.repository.v2.services.ArtifactInfo;
+import org.ebayopensource.turmeric.repository.v2.services.ArtifactValueType;
+import org.ebayopensource.turmeric.repository.v2.services.AssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
+import org.ebayopensource.turmeric.repository.v2.services.AssetLifeCycleInfo;
+import org.ebayopensource.turmeric.repository.v2.services.AttributeNameValue;
 
-import org.ebayopensource.turmeric.repository.v1.services.BasicAssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.BasicServiceInfo;
+import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.BasicServiceInfo;
 
-import org.ebayopensource.turmeric.repository.v1.services.ExtendedAssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.FlattenedRelationship;
-import org.ebayopensource.turmeric.repository.v1.services.FlattenedRelationshipForUpdate;
-import org.ebayopensource.turmeric.repository.v1.services.Library;
-import org.ebayopensource.turmeric.repository.v1.services.Relation;
-import org.ebayopensource.turmeric.repository.v1.services.RelationForUpdate;
+import org.ebayopensource.turmeric.repository.v2.services.ExtendedAssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.FlattenedRelationship;
+import org.ebayopensource.turmeric.repository.v2.services.FlattenedRelationshipForUpdate;
+import org.ebayopensource.turmeric.repository.v2.services.Library;
+import org.ebayopensource.turmeric.repository.v2.services.Relation;
+import org.ebayopensource.turmeric.repository.v2.services.RelationForUpdate;
 
 public class RSProviderUtil {
 	private static final String __systemRoot = "/_system/governance";
@@ -224,7 +219,7 @@ public class RSProviderUtil {
 		messageErrorParameter.setValue(exception.getMessage());
 		errorDataList.add(messageErrorParameter);
 
-		CommonErrorData errorData = (CommonErrorData) RepositoryServiceErrorDescriptor.UNKNOWN_EXCEPTION
+		CommonErrorData errorData = RepositoryServiceErrorDescriptor.UNKNOWN_EXCEPTION
 				.newError(errorDataList);
 		return errorData;
 	}
@@ -244,7 +239,7 @@ public class RSProviderUtil {
 		errorParameter.setName("Error Message");
 		errorParameter.setValue(exception.getMessage());
 		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
-		errorDataList.add((CommonErrorData) errorDescriptor
+		errorDataList.add(errorDescriptor
 				.newError(errorParameter));
 
 		if (response.getErrorMessage() == null) {
@@ -363,7 +358,7 @@ public class RSProviderUtil {
 				attr.setAttributeValueString(value.toString());
 				attributes.add(attr);
 			} else {
-				for (Object item : (List) value) {
+				for (Object item : (List<?>) value) {
 					if (item != null) {
 						AttributeNameValue attr = new AttributeNameValue();
 						attr.setAttributeName(key.toString());
@@ -1111,23 +1106,5 @@ public class RSProviderUtil {
 		RSProviderUtil.lock(asset);
 		asset.setProperty(__artifactIdPropName, UUID.randomUUID().toString());
 		return asset;
-	}
-
-	private static class LocationData {
-		private final String _registryRoot;
-		private final String _assetFolder;
-
-		public LocationData(String regRoot, String assetFolder) {
-			_registryRoot = regRoot;
-			_assetFolder = assetFolder;
-		}
-
-		public String getRegistyRoot() {
-			return _registryRoot;
-		}
-
-		public String getAssetFolder() {
-			return _assetFolder;
-		}
 	}
 }

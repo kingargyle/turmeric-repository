@@ -10,6 +10,11 @@ package org.ebayopensource.turmeric.assetcreation.exception;
 
 public class IdDuplicateException extends AssetCreationException {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6915895967771012323L;
+
 	public IdDuplicateException() {
 		
 	}

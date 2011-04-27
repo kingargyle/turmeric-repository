@@ -10,6 +10,11 @@ package org.ebayopensource.turmeric.assetcreation.exception;
 
 public class AssetInfoNotFoundException extends Exception {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6473693355897714124L;
+
 	public AssetInfoNotFoundException() {
 		
 	}

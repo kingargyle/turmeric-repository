@@ -18,7 +18,7 @@ import org.ebayopensource.turmeric.assetcreation.exception.AssetCreationExceptio
 import org.ebayopensource.turmeric.assetcreation.exception.AssetInfoNotFoundException;
 import org.ebayopensource.turmeric.assetcreation.exception.AssetPersistException;
 import org.ebayopensource.turmeric.assetcreation.exception.IdNotFoundException;
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.AssetInfo;
 
 public class ServiceAssetWithWsdl {
 	

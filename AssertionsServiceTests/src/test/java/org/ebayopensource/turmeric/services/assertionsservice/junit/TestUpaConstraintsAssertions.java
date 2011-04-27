@@ -8,8 +8,7 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.services.assertionsservice.junit;
 
-import junit.framework.TestCase;
-
+import junit.framework.Assert;
 import org.junit.Test;
 
 public class TestUpaConstraintsAssertions extends BaseIndividualAssertionsTest {
@@ -20,7 +19,7 @@ public class TestUpaConstraintsAssertions extends BaseIndividualAssertionsTest {
 		String assertionAssetName = "soa_AllOperationReqRspShouldExtendSameBaseTypes_assertion";
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testAllOperationReqRspShouldExtendSameBaseTypes_Positive: "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -29,7 +28,7 @@ public class TestUpaConstraintsAssertions extends BaseIndividualAssertionsTest {
 		String assertionAssetName = "soa_AllOperationReqRspShouldExtendSameBaseTypes_assertion";
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testAllOperationReqRspShouldExtendSameBaseTypes_Negative: "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 		
 	@Test
@@ -38,7 +37,7 @@ public class TestUpaConstraintsAssertions extends BaseIndividualAssertionsTest {
 		String assertionAssetName = "soa_attributesCanBeAnyPrimitiveTypeOnly_assertion";
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testAttributesCanBeAnyPrimitiveTypeOnly_Positive: "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -47,7 +46,7 @@ public class TestUpaConstraintsAssertions extends BaseIndividualAssertionsTest {
 		String assertionAssetName = "soa_attributesCanBeAnyPrimitiveTypeOnly_assertion";
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testAttributesCanBeAnyPrimitiveTypeOnly_Negative: "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -56,7 +55,7 @@ public class TestUpaConstraintsAssertions extends BaseIndividualAssertionsTest {
 		String assertionAssetName = "soa_baseReqRspMustHaveExtensionElement_assertion";
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testBaseReqRspMustHaveExtensionElement_Positive: "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -65,7 +64,7 @@ public class TestUpaConstraintsAssertions extends BaseIndividualAssertionsTest {
 		String assertionAssetName = "soa_baseReqRspMustHaveExtensionElement_assertion";
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testBaseReqRspMustHaveExtensionElement_Negative: "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -74,7 +73,7 @@ public class TestUpaConstraintsAssertions extends BaseIndividualAssertionsTest {
 		String assertionAssetName = "soa_baseReqRspMustNotHaveXsAny_assertion";
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testBaseReqRspMustNotHaveXsAny_Positive: "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -83,7 +82,7 @@ public class TestUpaConstraintsAssertions extends BaseIndividualAssertionsTest {
 		String assertionAssetName = "soa_baseReqRspMustNotHaveXsAny_assertion";
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testBaseReqRspMustNotHaveXsAny_Negative: "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -92,7 +91,7 @@ public class TestUpaConstraintsAssertions extends BaseIndividualAssertionsTest {
 		String assertionAssetName = "soa_WsdlDefineOnlyOneBaseReqRspTypes_assertion";
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testWsdlDefineOnlyOneBaseReqRspTypes_Positive: "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -101,7 +100,7 @@ public class TestUpaConstraintsAssertions extends BaseIndividualAssertionsTest {
 		String assertionAssetName = "soa_WsdlDefineOnlyOneBaseReqRspTypes_assertion";
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testWsdlDefineOnlyOneBaseReqRspTypes_Negative: "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 }

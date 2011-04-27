@@ -15,10 +15,10 @@ import java.util.List;
  * @deprecated use {@link org.ebayopensource.turmeric.repository.v1.services.AssetInfo} instead
  */
 @Deprecated
-public class AssetInfo extends org.ebayopensource.turmeric.repository.v1.services.AssetInfo {
+public class AssetInfo extends org.ebayopensource.turmeric.repository.v2.services.AssetInfo {
 	/**
 	 * @deprecated use
-	 *             {@link org.ebayopensource.turmeric.repository.v1.services.AssetInfo#setExtendedAssetInfo(org.ebayopensource.turmeric.repository.v1.services.ExtendedAssetInfo)}
+	 *             {@link org.ebayopensource.turmeric.repository.v2.services.AssetInfo#setExtendedAssetInfo(org.ebayopensource.turmeric.repository.v1.services.ExtendedAssetInfo)}
 	 *             instead
 	 */
 	@Deprecated
@@ -31,10 +31,10 @@ public class AssetInfo extends org.ebayopensource.turmeric.repository.v1.service
 	 */
 	public List<ArtifactInfo> getArtifactInfo_m() {
 		List<ArtifactInfo> info = new ArrayList<ArtifactInfo>();
-		List<org.ebayopensource.turmeric.repository.v1.services.ArtifactInfo> info_m = super
+		List<org.ebayopensource.turmeric.repository.v2.services.ArtifactInfo> info_m = super
 				.getArtifactInfo();
 
-		for (org.ebayopensource.turmeric.repository.v1.services.ArtifactInfo i : info_m) {
+		for (org.ebayopensource.turmeric.repository.v2.services.ArtifactInfo i : info_m) {
 			info.add(ArtifactInfo.wrap(i));
 		}
 

@@ -9,7 +9,7 @@
 package org.ebayopensource.turmeric.services.repository.validation;
 
 /**
- * @deprecated use {@link org.ebayopensource.turmeric.repository.v1.services.ArtifactValueType} instead
+ * @deprecated use {@link org.ebayopensource.turmeric.repository.v2.services.ArtifactValueType} instead
  */
 @Deprecated
 public enum ArtifactValueType {
@@ -25,11 +25,11 @@ public enum ArtifactValueType {
 	}
 
 	/**
-	 * @deprecated use {@link org.ebayopensource.turmeric.repository.v1.services.ArtifactValueType#fromValue(String)} instead
+	 * @deprecated use {@link org.ebayopensource.turmeric.repository.v2.services.ArtifactValueType#fromValue(String)} instead
 	 */
 	@Deprecated
-	public static org.ebayopensource.turmeric.repository.v1.services.ArtifactValueType fromValue(String v) {
-		for (org.ebayopensource.turmeric.repository.v1.services.ArtifactValueType c : org.ebayopensource.turmeric.repository.v1.services.ArtifactValueType.values()) {
+	public static org.ebayopensource.turmeric.repository.v2.services.ArtifactValueType fromValue(String v) {
+		for (org.ebayopensource.turmeric.repository.v2.services.ArtifactValueType c : org.ebayopensource.turmeric.repository.v2.services.ArtifactValueType.values()) {
 			if (c.value().equals(v)) {
 				return c;
 			}

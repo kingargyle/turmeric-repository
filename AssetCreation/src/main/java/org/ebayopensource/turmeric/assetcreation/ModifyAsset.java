@@ -15,8 +15,7 @@ import org.apache.log4j.Logger;
 
 import org.ebayopensource.turmeric.assetcreation.artifacts.AssetInput;
 import org.ebayopensource.turmeric.assetcreation.exception.ProcessingException;
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AttributeNameValue;
+import org.ebayopensource.turmeric.repository.v2.services.*;
 
 public abstract class ModifyAsset {
 	

@@ -13,20 +13,8 @@ package org.ebayopensource.turmeric.assetcreation;
  * @author sanarayanan
  */
 
-import org.ebayopensource.turmeric.assetcreation.exception.AssetCreationException;
-import org.ebayopensource.turmeric.assetcreation.exception.AssetIdNotFoundException;
-import org.ebayopensource.turmeric.assetcreation.exception.AssetInfoNotFoundException;
-import org.ebayopensource.turmeric.assetcreation.exception.AssetPersistException;
-import org.ebayopensource.turmeric.assetcreation.exception.IdNotFoundException;
-import org.ebayopensource.turmeric.assetcreation.exception.ProcessingException;
-import org.ebayopensource.turmeric.assetcreation.exception.UpdateCompleteAssetException;
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfoForUpdate;
-import org.ebayopensource.turmeric.repository.v1.services.AssetKey;
-import org.ebayopensource.turmeric.repository.v1.services.LockAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.RemoveAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.UnlockAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateCompleteAssetResponse;
+import org.ebayopensource.turmeric.assetcreation.exception.*;
+import org.ebayopensource.turmeric.repository.v2.services.*;
 
 
 

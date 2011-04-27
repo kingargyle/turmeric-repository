@@ -10,7 +10,7 @@ package org.ebayopensource.turmeric.services.assertionsservice.junit;
 
 import org.junit.Test;
 
-import junit.framework.TestCase;
+import junit.framework.Assert;
 
 public class TestDocumentationStartsWithPDAssertions extends BaseIndividualAssertionsTest {
 
@@ -20,7 +20,7 @@ public class TestDocumentationStartsWithPDAssertions extends BaseIndividualAsser
 		String assertionAssetName = "soa_documentationStartsWithPD_assertion";
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testDocumentationStartsWithPD_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 
 	@Test
@@ -29,7 +29,7 @@ public class TestDocumentationStartsWithPDAssertions extends BaseIndividualAsser
 		String assertionAssetName = "soa_documentationStartsWithPD_assertion";
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testDocumentationStartsWithPD_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 }

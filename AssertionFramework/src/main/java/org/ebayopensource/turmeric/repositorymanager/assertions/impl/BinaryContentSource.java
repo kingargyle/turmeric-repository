@@ -44,7 +44,8 @@ public class BinaryContentSource
      * @return an InputStream for this AssertioContent.
      * @throws IOException
      */
-    public InputStream getContentStream()
+    @Override
+	public InputStream getContentStream()
         throws IOException
     {
         if (inputStream == null)
@@ -60,7 +61,8 @@ public class BinaryContentSource
      * @return a character stream reader for this AssertionContent or null.
      * @throws IOException
      */
-    public Reader getContentReader()
+    @Override
+	public Reader getContentReader()
         throws IOException
     {
         return null;

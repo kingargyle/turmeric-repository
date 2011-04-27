@@ -10,7 +10,7 @@ package org.ebayopensource.turmeric.services.assertionsservice.junit;
 
 import org.junit.Test;
 
-import junit.framework.TestCase;
+import junit.framework.Assert;
 
 public class TestwsdlTypeRulesAssertions extends BaseIndividualAssertionsTest {
 	
@@ -20,7 +20,7 @@ public class TestwsdlTypeRulesAssertions extends BaseIndividualAssertionsTest {
 		String assertionAssetName = "soa_elementsMustNotUseRefAttribute_assertion";
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testUseEqualsRequiredNotAllowed_Positive: "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -29,7 +29,7 @@ public class TestwsdlTypeRulesAssertions extends BaseIndividualAssertionsTest {
 		String assertionAssetName = "soa_elementsMustNotUseRefAttribute_assertion";
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testElementsMustNotUseRefAttribute_Negative: "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -38,7 +38,7 @@ public class TestwsdlTypeRulesAssertions extends BaseIndividualAssertionsTest {
 		String assertionAssetName = "soa_complexTypeWithinComplexType_assertion";
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testUseEqualsRequiredNotAllowed_Positive: "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -47,7 +47,7 @@ public class TestwsdlTypeRulesAssertions extends BaseIndividualAssertionsTest {
 		String assertionAssetName = "soa_complexTypeWithinComplexType_assertion";
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testComplexTypeWithinComplexType_Negative: "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -56,7 +56,7 @@ public class TestwsdlTypeRulesAssertions extends BaseIndividualAssertionsTest {
 		String assertionAssetName = "soa_arrayShouldNotHaveXsAny_assertion";		
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testUseEqualsRequiredNotAllowed_Positive: "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}	
 	
 	@Test
@@ -65,7 +65,7 @@ public class TestwsdlTypeRulesAssertions extends BaseIndividualAssertionsTest {
 		String assertionAssetName = "soa_arrayShouldNotHaveXsAny_assertion";		
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testArrayShouldNotHaveXsAny_Negative: "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -74,7 +74,7 @@ public class TestwsdlTypeRulesAssertions extends BaseIndividualAssertionsTest {
 		String assertionAssetName = "soa_tokenRestrictedTypeName_assertion";		
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testUseEqualsRequiredNotAllowed_Positive: "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}	
 	
 	@Test
@@ -83,7 +83,7 @@ public class TestwsdlTypeRulesAssertions extends BaseIndividualAssertionsTest {
 		String assertionAssetName = "soa_tokenRestrictedTypeName_assertion";		
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testTokenRestrictedTypeName_Negative: "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -92,7 +92,7 @@ public class TestwsdlTypeRulesAssertions extends BaseIndividualAssertionsTest {
 		String assertionAssetName = "soa_requestResponseTypeMustNotHaveAny_assertion";		
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testRequestResponseTypeMustNotHaveAny_Positive: "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}	
 	
 	@Test
@@ -101,7 +101,7 @@ public class TestwsdlTypeRulesAssertions extends BaseIndividualAssertionsTest {
 		String assertionAssetName = "soa_requestResponseTypeMustNotHaveAny_assertion";		
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testRequestResponseTypeMustNotHaveAny_Negative: "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 }

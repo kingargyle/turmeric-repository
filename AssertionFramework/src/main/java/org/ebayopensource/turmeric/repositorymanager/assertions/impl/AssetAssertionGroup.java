@@ -10,10 +10,7 @@ package org.ebayopensource.turmeric.repositorymanager.assertions.impl;
 
 import java.util.ArrayList;
 
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AssetKey;
-import org.ebayopensource.turmeric.repository.v1.services.BasicAssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.Relation;
+import org.ebayopensource.turmeric.repository.v2.services.*;
 import org.ebayopensource.turmeric.repositorymanager.assertions.Assertable;
 import org.ebayopensource.turmeric.repositorymanager.assertions.AssetReference;
 import org.ebayopensource.turmeric.repositorymanager.assertions.exception.AssertionIllegalArgumentException;
@@ -49,14 +46,16 @@ public class AssetAssertionGroup
      * 
      * @return the AssetReference for this AssetAssertion.
      */
-    public AssetReference getAssetReference() { return assetRef; }
+    @Override
+	public AssetReference getAssetReference() { return assetRef; }
 
     /**
      * Initializes the state of this AssetAssertion.
      * 
      * @param context the context for accessing the Repository.
      */
-    public void dereference(AssertionProcessorContext context) throws AssertionIllegalArgumentException
+    @Override
+	public void dereference(AssertionProcessorContext context) throws AssertionIllegalArgumentException
     {
         if (isDereferenced) return;
 

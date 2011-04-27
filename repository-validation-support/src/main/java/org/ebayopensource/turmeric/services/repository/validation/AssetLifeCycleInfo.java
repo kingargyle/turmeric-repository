@@ -13,6 +13,6 @@ package org.ebayopensource.turmeric.services.repository.validation;
  */
 @Deprecated
 public class AssetLifeCycleInfo extends
-		org.ebayopensource.turmeric.repository.v1.services.AssetLifeCycleInfo {
+		org.ebayopensource.turmeric.repository.v2.services.AssetLifeCycleInfo {
 
 }

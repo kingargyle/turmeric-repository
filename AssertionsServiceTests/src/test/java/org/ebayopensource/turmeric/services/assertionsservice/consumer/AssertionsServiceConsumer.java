@@ -13,7 +13,7 @@ import org.ebayopensource.turmeric.repository.v1.services.ApplyAssertionGroupsRe
 import org.ebayopensource.turmeric.repository.v1.services.ApplyAssertionGroupsResponse;
 import org.ebayopensource.turmeric.repository.v1.services.ApplyAssertionsRequest;
 import org.ebayopensource.turmeric.repository.v1.services.ApplyAssertionsResponse;
-import org.ebayopensource.turmeric.repository.v1.services.assertionsservice.impl.TurmericASV1;
+import org.ebayopensource.turmeric.repository.v1.services.assertionservice.intf.TurmericASV1;
 
 import org.ebayopensource.turmeric.runtime.common.exceptions.ServiceException;
 import org.ebayopensource.turmeric.runtime.sif.service.Service;
@@ -32,11 +32,13 @@ public class AssertionsServiceConsumer extends BaseAssertionsServiceConsumer {
 
 	private TurmericASV1 service;
 
+	@Override
 	public ApplyAssertionsResponse applyAssertions(ApplyAssertionsRequest request) {
 
 		return getService().applyAssertions(request);
 	}
 
+	@Override
 	public ApplyAssertionGroupsResponse applyAssertionGroups(ApplyAssertionGroupsRequest request) {
 
 		return getService().applyAssertionGroups(request);
@@ -65,6 +67,7 @@ public class AssertionsServiceConsumer extends BaseAssertionsServiceConsumer {
 		this.service = service;
 	}
 	
+	@Override
 	protected TurmericASV1 getProxy() throws ServiceException {
 		  
 	     if(m_proxy == null) {

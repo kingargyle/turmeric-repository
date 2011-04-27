@@ -16,18 +16,18 @@ import java.util.List;
  */
 @Deprecated
 public class FlattenedRelationship extends
-		org.ebayopensource.turmeric.repository.v1.services.FlattenedRelationship {
+		org.ebayopensource.turmeric.repository.v2.services.FlattenedRelationship {
 
 	/**
-	 * @deprecated use use {@link org.ebayopensource.turmeric.repository.v1.services.FlattenedRelationship#getRelatedAsset()} instead
+	 * @deprecated use use {@link org.ebayopensource.turmeric.repository.v2.services.FlattenedRelationship#getRelatedAsset()} instead
 	 */
 	@Deprecated
 	public List<Relation> getRelatedAsset_m() {
 		List<Relation> related = new ArrayList<Relation>();
-		List<org.ebayopensource.turmeric.repository.v1.services.Relation> related_m = super
+		List<org.ebayopensource.turmeric.repository.v2.services.Relation> related_m = super
 				.getRelatedAsset();
 
-		for (org.ebayopensource.turmeric.repository.v1.services.Relation relation : related_m) {
+		for (org.ebayopensource.turmeric.repository.v2.services.Relation relation : related_m) {
 			related.add(Relation.wrap(relation));
 		}
 		return related;

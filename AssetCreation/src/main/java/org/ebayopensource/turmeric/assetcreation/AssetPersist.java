@@ -12,11 +12,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.JAXBException;
-
-import org.xml.sax.SAXException;
-
-
 import org.ebayopensource.turmeric.assetcreation.artifacts.AssetCreation;
 import org.ebayopensource.turmeric.assetcreation.artifacts.AssetInput;
 import org.ebayopensource.turmeric.assetcreation.exception.AssetPersistException;
@@ -24,7 +19,6 @@ import org.ebayopensource.turmeric.assetcreation.util.CommonUtil;
 import org.ebayopensource.turmeric.assetcreation.util.FileUtil;
 import org.ebayopensource.turmeric.assetdata.artifacts.AssetData;
 import org.ebayopensource.turmeric.assetdata.artifacts.Assets;
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
 
 public class AssetPersist {
 	

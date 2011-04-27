@@ -10,6 +10,11 @@ package org.ebayopensource.turmeric.assetcreation.exception;
 
 public class AssetCreationException extends Exception {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7812204546889051536L;
+	
 	public AssetCreationException()
 	{
 	}

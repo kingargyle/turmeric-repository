@@ -19,18 +19,10 @@
   <artifactId>cachingframework</artifactId>
   <packaging>jar</packaging>
   <name>Repository :: Caching Framework</name>
-  <build>
-    <sourceDirectory>src</sourceDirectory>
-    <resources>
-      <resource>
-        <directory>meta-src</directory>
-      </resource>
-    </resources>
-  </build>
   <dependencies>
     <dependency>
       <groupId>org.ebayopensource.turmeric.intf</groupId>
-	  <artifactId>TurmericRSV1</artifactId>
+	  <artifactId>TurmericRSV2</artifactId>
 	  <version>${project.version}</version>
 	</dependency>
     <dependency>

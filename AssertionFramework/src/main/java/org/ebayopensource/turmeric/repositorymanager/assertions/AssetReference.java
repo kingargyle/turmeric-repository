@@ -75,7 +75,8 @@ public class AssetReference
      * 
      * @return a reference to the asset in the form of Library/AssetName/Version.
      */
-    public String toString()
+    @Override
+	public String toString()
     {
         return "AssetReference["+getAssetReference()+"]";
     }
@@ -87,7 +88,8 @@ public class AssetReference
      * @return true if the argument is an AssetReference with equal
      * library, name and version.
      */
-    public boolean equals(Object o)
+    @Override
+	public boolean equals(Object o)
     {
         if (o == null || !(o instanceof AssetReference))
             return false;
@@ -112,5 +114,6 @@ public class AssetReference
      * 
      * @return the hashCode for this AssetReference.
      */
-    public int hashCode() { return hashCode; }
+    @Override
+	public int hashCode() { return hashCode; }
 }

@@ -11,7 +11,6 @@ package org.ebayopensource.turmeric.repository.wso2;
 
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeTrue;
 
 import java.io.File;
@@ -25,20 +24,20 @@ import org.wso2.carbon.registry.core.Resource;
 import org.wso2.carbon.registry.core.exceptions.RegistryException;
 
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
-import org.ebayopensource.turmeric.repository.v1.services.Artifact;
-import org.ebayopensource.turmeric.repository.v1.services.ArtifactInfo;
-import org.ebayopensource.turmeric.repository.v1.services.ArtifactValueType;
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AssetKey;
-import org.ebayopensource.turmeric.repository.v1.services.AssetLifeCycleInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AttributeNameValue;
-import org.ebayopensource.turmeric.repository.v1.services.BasicAssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.CreateAndSubmitAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.CreateAndSubmitAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.ExtendedAssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.FlattenedRelationship;
-import org.ebayopensource.turmeric.repository.v1.services.Library;
-import org.ebayopensource.turmeric.repository.v1.services.Relation;
+import org.ebayopensource.turmeric.repository.v2.services.Artifact;
+import org.ebayopensource.turmeric.repository.v2.services.ArtifactInfo;
+import org.ebayopensource.turmeric.repository.v2.services.ArtifactValueType;
+import org.ebayopensource.turmeric.repository.v2.services.AssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
+import org.ebayopensource.turmeric.repository.v2.services.AssetLifeCycleInfo;
+import org.ebayopensource.turmeric.repository.v2.services.AttributeNameValue;
+import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.CreateAndSubmitAssetRequest;
+import org.ebayopensource.turmeric.repository.v2.services.CreateAndSubmitAssetResponse;
+import org.ebayopensource.turmeric.repository.v2.services.ExtendedAssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.FlattenedRelationship;
+import org.ebayopensource.turmeric.repository.v2.services.Library;
+import org.ebayopensource.turmeric.repository.v2.services.Relation;
 
 /**
  * @author mgorovoy
@@ -55,7 +54,6 @@ public class CreateSubmitAssetTest extends Wso2Base {
    
     private static final String assetName = "CreateSubmitAssetTest";
     private static final String assetDesc = "CreateSubmitAssetTest description";
-    private static final String assetComment = "CreateSubmitAssetTest comment";
     private static final String libraryName = "http://www.domain.com/assets";
     private static final String baseUrl = "http://www.domain.com/assets/";
     private static final String stringProperty = "a test value";

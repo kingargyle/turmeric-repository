@@ -38,21 +38,24 @@ public class BinaryContent
      * 
      * @return the name of this BinaryContent.
      */
-    public String getName() { return contentName; }
+    @Override
+	public String getName() { return contentName; }
 
     /**
      * Sets the name of this BinaryContent.
      * 
      * @param name the new name of this BinaryContent.
      */
-    public void setName(String contentName) { this.contentName = contentName; }
+    @Override
+	public void setName(String contentName) { this.contentName = contentName; }
 
     /**
      * Returns the source name for this BinaryContent.
      * 
      * @return the source name for this BinaryContent.
      */
-    public String getSourceName() { return sourceName; }
+    @Override
+	public String getSourceName() { return sourceName; }
 
     /**
      * Adds a distinguishing identifier to the source name.
@@ -68,7 +71,8 @@ public class BinaryContent
      */
     public byte[] getContent() { return content; }
 
-    public String toString()
+    @Override
+	public String toString()
     {
         return "BinaryContent["+sourceName+"]";
     }

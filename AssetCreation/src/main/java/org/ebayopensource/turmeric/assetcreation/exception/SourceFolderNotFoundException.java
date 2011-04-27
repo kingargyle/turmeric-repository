@@ -10,6 +10,11 @@ package org.ebayopensource.turmeric.assetcreation.exception;
 
 public class SourceFolderNotFoundException extends AssetCreationException {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4010216960833951024L;
+
 	public SourceFolderNotFoundException() {
 		
 	}

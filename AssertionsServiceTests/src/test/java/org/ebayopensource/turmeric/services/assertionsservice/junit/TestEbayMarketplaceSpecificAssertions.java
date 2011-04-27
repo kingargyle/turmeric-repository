@@ -10,7 +10,7 @@ package org.ebayopensource.turmeric.services.assertionsservice.junit;
 
 import org.junit.Test;
 
-import junit.framework.TestCase;
+import junit.framework.Assert;
 
 /**
  * @author szacharias
@@ -24,7 +24,7 @@ public class TestEbayMarketplaceSpecificAssertions extends BaseIndividualAsserti
 		String assertionAssetName = "soa_wsdlOperationMustHaveGetVersion_assertion";
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testWsdlOperationMustHaveGetVersion_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -33,7 +33,7 @@ public class TestEbayMarketplaceSpecificAssertions extends BaseIndividualAsserti
 		String assertionAssetName = "soa_wsdlOperationMustHaveGetVersion_assertion";
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testWsdlOperationMustHaveGetVersion_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -42,7 +42,7 @@ public class TestEbayMarketplaceSpecificAssertions extends BaseIndividualAsserti
 		String assertionAssetName = "soa_noAnonymousComplexType_assertion";
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testNoAnonymousComplexType_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}	
 	
 	@Test
@@ -51,7 +51,7 @@ public class TestEbayMarketplaceSpecificAssertions extends BaseIndividualAsserti
 		String assertionAssetName = "soa_noAnonymousComplexType_assertion";
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testNoAnonymousComplexType_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -60,7 +60,7 @@ public class TestEbayMarketplaceSpecificAssertions extends BaseIndividualAsserti
 		String assertionAssetName = "soa_xmlDocDefinesOnlyOneNamespace_assertion";
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testXmlDocDefinesOnlyOneNamespace_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -69,7 +69,7 @@ public class TestEbayMarketplaceSpecificAssertions extends BaseIndividualAsserti
 		String assertionAssetName = "soa_xmlDocDefinesOnlyOneNamespace_assertion";
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testXmlDocDefinesOnlyOneNamespace_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -78,7 +78,7 @@ public class TestEbayMarketplaceSpecificAssertions extends BaseIndividualAsserti
 		String assertionAssetName = "soa_datatypeInlineNotImported_assertion";
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testDatatypeInlineNotImported_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -87,7 +87,7 @@ public class TestEbayMarketplaceSpecificAssertions extends BaseIndividualAsserti
 		String assertionAssetName = "soa_datatypeInlineNotImported_assertion";
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testDatatypeInlineNotImported_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -96,7 +96,7 @@ public class TestEbayMarketplaceSpecificAssertions extends BaseIndividualAsserti
 		String assertionAssetName = "soa_simpleTypeHasLt20Enum_assertion";
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testSimpleTypeHasLt20Enum_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -105,7 +105,7 @@ public class TestEbayMarketplaceSpecificAssertions extends BaseIndividualAsserti
 		String assertionAssetName = "soa_simpleTypeHasLt20Enum_assertion";
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testSimpleTypeHasLt20Enum_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -114,7 +114,7 @@ public class TestEbayMarketplaceSpecificAssertions extends BaseIndividualAsserti
 		String assertionAssetName = "soa_operationNameLowercase_assertion";
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testOperationNameLowercase_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -123,7 +123,7 @@ public class TestEbayMarketplaceSpecificAssertions extends BaseIndividualAsserti
 		String assertionAssetName = "soa_operationNameLowercase_assertion";
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testOperationNameLowercase_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -132,7 +132,7 @@ public class TestEbayMarketplaceSpecificAssertions extends BaseIndividualAsserti
 		String assertionAssetName = "soa_schemaTypeStartWithUpperCase_assertion";
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testSchemaTypeStartWithUpperCase_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -141,7 +141,7 @@ public class TestEbayMarketplaceSpecificAssertions extends BaseIndividualAsserti
 		String assertionAssetName = "soa_schemaTypeStartWithUpperCase_assertion";
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testSchemaTypeStartWithUpperCase_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -150,7 +150,7 @@ public class TestEbayMarketplaceSpecificAssertions extends BaseIndividualAsserti
 		String assertionAssetName = "soa_noHypenInSchemaName_assertion";
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testNoHypenInSchemaName_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -159,7 +159,7 @@ public class TestEbayMarketplaceSpecificAssertions extends BaseIndividualAsserti
 		String assertionAssetName = "soa_noHypenInSchemaName_assertion";
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testNoHypenInSchemaName_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -168,7 +168,7 @@ public class TestEbayMarketplaceSpecificAssertions extends BaseIndividualAsserti
 		String assertionAssetName = "soa_attributesAreArrangedInRequiredOrder_assertion";		
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testAttributesAreArrangedInRequiredOrder_Positive: "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -177,7 +177,7 @@ public class TestEbayMarketplaceSpecificAssertions extends BaseIndividualAsserti
 		String assertionAssetName = "soa_attributesAreArrangedInRequiredOrder_assertion";		
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testAttributesAreArrangedInRequiredOrder_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -186,7 +186,7 @@ public class TestEbayMarketplaceSpecificAssertions extends BaseIndividualAsserti
 		String assertionAssetName = "soa_documentationElementWithProperVersion_assertion";		
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testDocumentationElementWithProperVersion_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -195,7 +195,7 @@ public class TestEbayMarketplaceSpecificAssertions extends BaseIndividualAsserti
 		String assertionAssetName = "soa_documentationElementWithProperVersion_assertion";		
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testDocumentationElementWithProperVersion_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -204,7 +204,7 @@ public class TestEbayMarketplaceSpecificAssertions extends BaseIndividualAsserti
 		String assertionAssetName = "soa_requestTypeEndsWithRequest_assertion";		
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testRequestTypeEndsWithRequest_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -213,7 +213,7 @@ public class TestEbayMarketplaceSpecificAssertions extends BaseIndividualAsserti
 		String assertionAssetName = "soa_requestTypeEndsWithRequest_assertion";		
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testrequestTypeEndsWithRequest_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -222,7 +222,7 @@ public class TestEbayMarketplaceSpecificAssertions extends BaseIndividualAsserti
 		String assertionAssetName = "soa_responseTypeEndsWithResponse_assertion";		
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testResponseTypeEndsWithResponse_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -231,7 +231,7 @@ public class TestEbayMarketplaceSpecificAssertions extends BaseIndividualAsserti
 		String assertionAssetName = "soa_responseTypeEndsWithResponse_assertion";		
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testResponseTypeEndsWithResponse_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
   }

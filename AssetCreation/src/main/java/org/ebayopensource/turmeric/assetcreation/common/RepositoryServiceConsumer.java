@@ -14,27 +14,8 @@ import java.net.URL;
 
 import org.apache.log4j.Logger;
 
-import org.ebayopensource.turmeric.repository.v1.services.CreateAndSubmitAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.CreateAndSubmitAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.CreateCompleteAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.CreateCompleteAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetInfoRequest;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetInfoResponse;
-import org.ebayopensource.turmeric.repository.v1.services.GetBasicAssetInfoRequest;
-import org.ebayopensource.turmeric.repository.v1.services.GetBasicAssetInfoResponse;
-import org.ebayopensource.turmeric.repository.v1.services.LockAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.LockAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.RemoveAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.RemoveAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.SubmitForPublishingRequest;
-import org.ebayopensource.turmeric.repository.v1.services.SubmitForPublishingResponse;
-import org.ebayopensource.turmeric.repository.v1.services.UnlockAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.UnlockAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateAssetAttributesRequest;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateAssetAttributesResponse;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateCompleteAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateCompleteAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.repositoryservice.impl.TurmericRSV1;
+import org.ebayopensource.turmeric.repository.v2.services.*;
+import org.ebayopensource.turmeric.repository.v2.services.intf.TurmericRSV2;
 import org.ebayopensource.turmeric.runtime.common.exceptions.ServiceException;
 import org.ebayopensource.turmeric.runtime.sif.service.RequestContext;
 import org.ebayopensource.turmeric.runtime.sif.service.Service;
@@ -82,9 +63,9 @@ public class RepositoryServiceConsumer
      * @return the service proxy object.
      * @throws ServiceException 
      */
-    private TurmericRSV1 getServiceProxy() throws ServiceException
+    private TurmericRSV2 getServiceProxy() throws ServiceException
     {
-    	Service service = ServiceFactory.create("TurmericRSV1", "TurmericRSV1", serviceLocationURL);
+    	Service service = ServiceFactory.create("TurmericRSV2", "TurmericRSV2", serviceLocationURL);
     	
         // get security cookie after first successful login
         if (securityCookie == null) {
@@ -105,7 +86,7 @@ public class RepositoryServiceConsumer
             requestContext.setTransportHeader(
                     "X-TURMERIC-SECURITY-PASSWORD", password);
         }
-        return (TurmericRSV1) service.getProxy();
+        return (TurmericRSV2) service.getProxy();
     }
 
     public CreateCompleteAssetResponse createCompleteAsset(CreateCompleteAssetRequest createCompAssetReq) throws ServiceException

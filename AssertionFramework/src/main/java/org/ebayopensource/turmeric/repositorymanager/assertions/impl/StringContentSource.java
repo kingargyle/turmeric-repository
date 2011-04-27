@@ -44,7 +44,8 @@ public class StringContentSource
      * @return an InputStream for this AssertioContent.
      * @throws IOException
      */
-    public InputStream getContentStream()
+    @Override
+	public InputStream getContentStream()
         throws IOException
     {
         return null;
@@ -57,7 +58,8 @@ public class StringContentSource
      * @return a character stream reader for this AssertionContent or null.
      * @throws IOException
      */
-    public Reader getContentReader()
+    @Override
+	public Reader getContentReader()
         throws IOException
     {
         if (reader == null)
@@ -71,7 +73,8 @@ public class StringContentSource
     {
         RereadableStringReader(String string) { super(string); }
 
-        public void close()
+        @Override
+		public void close()
         {
             // Keep open so that reset() can be used after close
         }

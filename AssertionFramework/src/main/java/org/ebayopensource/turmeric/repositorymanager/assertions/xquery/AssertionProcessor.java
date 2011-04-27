@@ -98,14 +98,16 @@ public class AssertionProcessor
         }
     }
 
-    public String getName() { return assertionProcessorName; }
+    @Override
+	public String getName() { return assertionProcessorName; }
 
     /**
      * Sets the context for this AssertionProcessor.
      * 
      * @param the context for this AssertionProcessor.
      */
-    public void init(AssertionProcessorContext apContext)
+    @Override
+	public void init(AssertionProcessorContext apContext)
     {
         this.context = apContext;
     }
@@ -116,13 +118,15 @@ public class AssertionProcessor
      * @param assertionContent 
      * @return an AssertionContentSource for a given AssertionContent.
      */
-    public AssertionContentSource getAssertionContentSource(
+    @Override
+	public AssertionContentSource getAssertionContentSource(
             AssertionContent assertionContent)
     {
         return context.getAssertionContentSource(assertionContent);
     }
 
-    public void close()
+    @Override
+	public void close()
     {
         try {
             if (xqConnection != null) xqConnection.close();
@@ -131,9 +135,11 @@ public class AssertionProcessor
         }
     }
 
-    public String toString() { return getName(); }
+    @Override
+	public String toString() { return getName(); }
 
-    public AssertableResult applyAssertion(
+    @Override
+	public AssertableResult applyAssertion(
             Assertion assertion,
             List<AssertionContent> content)
         throws IOException
@@ -386,7 +392,8 @@ public class AssertionProcessor
         /**
          * Implements ModuleURIResolver.
          */
-        public StreamSource[] resolve(
+        @Override
+		public StreamSource[] resolve(
                 String href,
                 String base,
                 String[] locations)

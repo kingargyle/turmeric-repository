@@ -16,16 +16,14 @@ import static org.junit.Assume.assumeTrue;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.wso2.carbon.registry.app.RemoteRegistry;
-import org.wso2.carbon.registry.core.exceptions.RegistryException;
-
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
-import org.ebayopensource.turmeric.repository.v1.services.AssetKey;
-import org.ebayopensource.turmeric.repository.v1.services.BasicAssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.CreateAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.CreateAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.Library;
-import org.ebayopensource.turmeric.repository.v1.services.RemoveAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.RemoveAssetResponse;
+import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
+import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.CreateAssetRequest;
+import org.ebayopensource.turmeric.repository.v2.services.CreateAssetResponse;
+import org.ebayopensource.turmeric.repository.v2.services.Library;
+import org.ebayopensource.turmeric.repository.v2.services.RemoveAssetRequest;
+import org.ebayopensource.turmeric.repository.v2.services.RemoveAssetResponse;
 
 /**
  * @author mgorovoy

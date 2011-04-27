@@ -211,7 +211,8 @@ public class RepoExplorer extends Wso2Base {
             }
             else if (content instanceof Map<?, ?>) {
                 System.out.print("{\n");
-                Map<Object, Object> map = (Map<Object, Object>) content;
+                @SuppressWarnings("unchecked")
+				Map<Object, Object> map = (Map<Object, Object>) content;
                 map.entrySet();
                 for (Map.Entry<Object, Object> e : map.entrySet()) {
                     System.out.print(indent + "  " + e.getKey() + '=');
@@ -232,7 +233,8 @@ public class RepoExplorer extends Wso2Base {
                 System.out.print(indent + "]");
             }
             else if (content instanceof java.util.Collection) {
-                java.util.Collection<Object> c = (java.util.Collection<Object>) content;
+                @SuppressWarnings("unchecked")
+				java.util.Collection<Object> c = (java.util.Collection<Object>) content;
                 System.out.print("[\n");
                 for (Object o : c) {
                     System.out.print(indent + "  ");

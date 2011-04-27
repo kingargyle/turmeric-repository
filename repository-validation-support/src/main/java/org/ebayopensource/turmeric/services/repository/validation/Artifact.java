@@ -9,9 +9,9 @@
 package org.ebayopensource.turmeric.services.repository.validation;
 
 /**
- * @deprecated use {@link org.ebayopensource.turmeric.repository.v1.services.Artifact} instead
+ * @deprecated use {@link org.ebayopensource.turmeric.repository.v2.services.Artifact} instead
  */
 @Deprecated
-public class Artifact extends org.ebayopensource.turmeric.repository.v1.services.Artifact {
+public class Artifact extends org.ebayopensource.turmeric.repository.v2.services.Artifact {
 
 }

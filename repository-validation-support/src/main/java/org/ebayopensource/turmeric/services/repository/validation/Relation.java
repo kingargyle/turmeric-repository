@@ -9,16 +9,16 @@
 package org.ebayopensource.turmeric.services.repository.validation;
 
 /**
- * @deprecated use {@link org.ebayopensource.turmeric.repository.v1.services.Relation} instead
+ * @deprecated use {@link org.ebayopensource.turmeric.repository.v2.services.Relation} instead
  */
 @Deprecated
-public class Relation extends org.ebayopensource.turmeric.repository.v1.services.Relation {
+public class Relation extends org.ebayopensource.turmeric.repository.v2.services.Relation {
 
 	/**
 	 * @deprecated
 	 */
 	@Deprecated
-	protected static Relation wrap(org.ebayopensource.turmeric.repository.v1.services.Relation m) {
+	protected static Relation wrap(org.ebayopensource.turmeric.repository.v2.services.Relation m) {
 		Relation relation = new Relation();
 
 		relation.setAssetRelationship(m.getAssetRelationship());

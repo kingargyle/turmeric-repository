@@ -14,6 +14,10 @@ import org.ebayopensource.turmeric.common.v1.types.ErrorMessage;
 
 public class AssertionIllegalArgumentException extends java.lang.IllegalArgumentException 
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3466311003091061462L;
 	private ErrorMessage errorMessage;
 	private Throwable throwable;
 	

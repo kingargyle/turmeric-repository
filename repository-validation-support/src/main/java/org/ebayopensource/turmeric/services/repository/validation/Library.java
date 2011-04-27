@@ -12,6 +12,6 @@ package org.ebayopensource.turmeric.services.repository.validation;
  * @deprecated use {@link org.ebayopensource.turmeric.repository.v1.services.Library} instead
  */
 @Deprecated
-public class Library extends org.ebayopensource.turmeric.repository.v1.services.Library {
+public class Library extends org.ebayopensource.turmeric.repository.v2.services.Library {
 
 }

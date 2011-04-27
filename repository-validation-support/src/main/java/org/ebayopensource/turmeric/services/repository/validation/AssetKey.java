@@ -12,6 +12,6 @@ package org.ebayopensource.turmeric.services.repository.validation;
  * @deprecated use {@link org.ebayopensource.turmeric.repository.v1.services.AssetKey} instead
  */
 @Deprecated
-public class AssetKey extends org.ebayopensource.turmeric.repository.v1.services.AssetKey {
+public class AssetKey extends org.ebayopensource.turmeric.repository.v2.services.AssetKey {
 
 }

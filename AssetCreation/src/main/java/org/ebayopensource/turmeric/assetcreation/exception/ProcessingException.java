@@ -10,6 +10,10 @@ package org.ebayopensource.turmeric.assetcreation.exception;
 
 public class ProcessingException extends Exception {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4729166933278002487L;
 	public ProcessingException()
 	{
 	}

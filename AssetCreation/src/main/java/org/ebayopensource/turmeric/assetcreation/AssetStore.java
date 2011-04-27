@@ -15,10 +15,8 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import org.ebayopensource.turmeric.assetcreation.exception.AssetIdNotFoundException;
-import org.ebayopensource.turmeric.assetcreation.exception.AssetInfoNotFoundException;
-import org.ebayopensource.turmeric.assetcreation.exception.IdNotFoundException;
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
+import org.ebayopensource.turmeric.assetcreation.exception.*;
+import org.ebayopensource.turmeric.repository.v2.services.*;
 
 public class AssetStore {
 	

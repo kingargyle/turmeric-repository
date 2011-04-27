@@ -13,8 +13,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
+import junit.framework.Assert;
 import org.ebayopensource.turmeric.repository.v1.services.ApplyAssertionsRequest;
 import org.ebayopensource.turmeric.repository.v1.services.ArtifactContentTypes;
 import org.ebayopensource.turmeric.repository.v1.services.AssertableArtifact;
@@ -43,7 +42,7 @@ public class TestInternalAssertionAndExternalArtifact extends BaseAssertionsServ
 		String result = processRequest(request, POSITIVE_CASE);
 		System.out.println("testAssertionsRequestWithSingleAssertionAndSingleArtifact : "  + result);
 		
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -61,7 +60,7 @@ public class TestInternalAssertionAndExternalArtifact extends BaseAssertionsServ
 		String result = processRequest(request, POSITIVE_CASE);
 		System.out.println("testAssertionsRequestWithSingleAssertionAndMultipleArtifact : "  + result);
 		
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -79,7 +78,7 @@ public class TestInternalAssertionAndExternalArtifact extends BaseAssertionsServ
 		String result = processRequest(request, POSITIVE_CASE);
 		System.out.println("testAssertionsRequestWithMultipleAssertionAndSingleArtifact : "  + result);
 		
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -97,7 +96,7 @@ public class TestInternalAssertionAndExternalArtifact extends BaseAssertionsServ
 		String result = processRequest(request, POSITIVE_CASE);
 		System.out.println("testAssertionsRequestWithMultipleAssertionAndMultipleArtifact : "  + result);
 		
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -115,7 +114,7 @@ public class TestInternalAssertionAndExternalArtifact extends BaseAssertionsServ
 		String result = processRequest(request, POSITIVE_CASE);
 		System.out.println("testAssertionsRequest_Positive : "  + result);
 		
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -133,7 +132,7 @@ public class TestInternalAssertionAndExternalArtifact extends BaseAssertionsServ
 		String result = processRequest(request, NEGATIVE_CASE);
 		System.out.println("testAssertionsRequest_Negative : "  + result);
 		
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	private Assertion createAssertion(){

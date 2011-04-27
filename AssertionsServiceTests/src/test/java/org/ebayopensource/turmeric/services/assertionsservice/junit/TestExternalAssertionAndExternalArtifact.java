@@ -8,30 +8,10 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.services.assertionsservice.junit;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-import org.ebayopensource.turmeric.repository.v1.services.ApplyAssertionsRequest;
-import org.ebayopensource.turmeric.repository.v1.services.ArtifactAsset;
-import org.ebayopensource.turmeric.repository.v1.services.ArtifactContentTypes;
-import org.ebayopensource.turmeric.repository.v1.services.AssertableArtifact;
-import org.ebayopensource.turmeric.repository.v1.services.Assertion;
-import org.ebayopensource.turmeric.repository.v1.services.AssertionAsset;
-import org.ebayopensource.turmeric.repository.v1.services.AssertionAssetTypes;
-import org.ebayopensource.turmeric.repository.v1.services.AssertionModule;
-import org.ebayopensource.turmeric.repository.v1.services.AssertionModuleAsset;
-import org.ebayopensource.turmeric.repository.v1.services.AssertionModuleAssetTypes;
-import org.ebayopensource.turmeric.repository.v1.services.AssertionProcessorType;
-import org.ebayopensource.turmeric.repository.v1.services.AssertionSeverity;
-import org.ebayopensource.turmeric.repository.v1.services.ContentBindingName;
-import org.ebayopensource.turmeric.repository.v1.services.ExternalArtifact;
-import org.ebayopensource.turmeric.repository.v1.services.ExternalAssertion;
-import org.ebayopensource.turmeric.repository.v1.services.ExternalAssertionModule;
-import org.ebayopensource.turmeric.repository.v1.services.ExternalContent;
+import junit.framework.Assert;
+import org.ebayopensource.turmeric.repository.v1.services.*;
 
 /**
  * @author szacharias
@@ -48,7 +28,7 @@ public class TestExternalAssertionAndExternalArtifact extends BaseAssertionsServ
 		String result = processRequest(request, FAILURE_CASE);
 		System.out.println("testAssertionsRequestWithNullRequest : "  +  result);
 		
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -60,7 +40,7 @@ public class TestExternalAssertionAndExternalArtifact extends BaseAssertionsServ
 		String result = processRequest(request, FAILURE_CASE);
 		System.out.println("testAssertionsRequestWithEmptyRequest : "  +  result);
 		
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	//@Test
@@ -80,7 +60,7 @@ public class TestExternalAssertionAndExternalArtifact extends BaseAssertionsServ
 		String result = processRequest(request, POSITIVE_CASE);
 		System.out.println("testAssertionsRequestWithInternalAndExternalAssertions : "  +  result);
 		
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	//@Test
@@ -99,7 +79,7 @@ public class TestExternalAssertionAndExternalArtifact extends BaseAssertionsServ
 		String result = processRequest(request, POSITIVE_CASE);
 		System.out.println("testAssertionsRequestWithInternalAndExternalArtifacts : "  +  result);
 		
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	private AssertableArtifact createInternalArtifactWithPassingContent(){
@@ -144,7 +124,7 @@ public class TestExternalAssertionAndExternalArtifact extends BaseAssertionsServ
 		String result = processRequest(request, FAILURE_CASE);
 		System.out.println("testAssertionsRequestWithNonWSDLArtifact : "  +  result);
 		
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -162,7 +142,7 @@ public class TestExternalAssertionAndExternalArtifact extends BaseAssertionsServ
 		String result = processRequest(request, FAILURE_CASE);
 		System.out.println("testAssertionsRequestWithInvalidArtifact : "  +  result);
 		
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -180,7 +160,7 @@ public class TestExternalAssertionAndExternalArtifact extends BaseAssertionsServ
 		String result = processRequest(request, POSITIVE_CASE);
 		System.out.println("testAssertionsRequestWithSimpleExternalAssertion_Positive : "  +  result);
 		
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -198,7 +178,7 @@ public class TestExternalAssertionAndExternalArtifact extends BaseAssertionsServ
 		String result = processRequest(request, NEGATIVE_CASE);
 		System.out.println("testAssertionsRequestWithSimpleExternalAssertion_Negative : "  + result);
 		
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	//@Test
@@ -216,7 +196,7 @@ public class TestExternalAssertionAndExternalArtifact extends BaseAssertionsServ
 		String result = processRequest(request, POSITIVE_CASE);
 		System.out.println("testAssertionsRequestWithSimpleExternalAssertionWithIntModule : "  + result);
 		
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -234,7 +214,7 @@ public class TestExternalAssertionAndExternalArtifact extends BaseAssertionsServ
 		String result = processRequest(request, POSITIVE_CASE);
 		System.out.println("testAssertionsRequestWithSimpleExternalAssertionWithExtModule : "  + result);
 		
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	private Assertion createAssertion(){
@@ -349,28 +329,6 @@ public class TestExternalAssertionAndExternalArtifact extends BaseAssertionsServ
 		artifact.setArtifactExternal(artifactExternal);
 		
 		return artifact;
-	}
-	
-	private List<AssertableArtifact> createArtifacts(){
-		
-		List<AssertableArtifact> artifacts  = new ArrayList<AssertableArtifact>();
-		
-		AssertableArtifact artifact = new AssertableArtifact();
-		ExternalArtifact artifactExternal = new ExternalArtifact();
-		artifactExternal.setContentType(ArtifactContentTypes.WSDL);
-		artifactExternal.setBinaryContent(getBinaryContent("TestService.wsdl"));
-		artifact.setArtifactExternal(artifactExternal);
-		
-		AssertableArtifact artifact1 = new AssertableArtifact();
-		ExternalArtifact artifactExternal1 = new ExternalArtifact();
-		artifactExternal1.setContentType(ArtifactContentTypes.WSDL);
-		artifactExternal1.setBinaryContent(getBinaryContent("SampleService.wsdl"));
-		artifact1.setArtifactExternal(artifactExternal1);
-		
-		artifacts.add(artifact);
-		artifacts.add(artifact1);
-		
-		return artifacts;
 	}
 	
 	private AssertableArtifact createArtifactWithFailingContent(){

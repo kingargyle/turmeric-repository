@@ -16,9 +16,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import org.ebayopensource.turmeric.repository.v1.services.Artifact;
-import org.ebayopensource.turmeric.repository.v1.services.ArtifactInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.*;
 import org.ebayopensource.turmeric.repositorymanager.assertions.AssetContent;
 import org.ebayopensource.turmeric.repositorymanager.assertions.AssetReference;
 import org.ebayopensource.turmeric.repositorymanager.assertions.exception.AssertionIllegalArgumentException;
@@ -59,7 +57,8 @@ public class AssetContentSource
      * @return an InputStream for this AssertionContent.
      * @throws IOException
      */
-    public InputStream getContentStream()
+    @Override
+	public InputStream getContentStream()
         throws IOException
     {
         if (inputStream == null) {
@@ -80,7 +79,8 @@ public class AssetContentSource
      * @return a character stream reader for this AssertionContent or null.
      * @throws IOException
      */
-    public Reader getContentReader()
+    @Override
+	public Reader getContentReader()
         throws IOException
     {
         return null;
@@ -91,7 +91,8 @@ public class AssetContentSource
      * 
      * @return the AssetReference for this referent.
      */
-    public AssetReference getAssetReference()
+    @Override
+	public AssetReference getAssetReference()
     {
         return assetContent.getAssetReference();
     }
@@ -101,7 +102,8 @@ public class AssetContentSource
      * 
      * @param context the context for accessing the Repository.
      */
-    public void dereference(AssertionProcessorContext ctx) throws AssertionIllegalArgumentException
+    @Override
+	public void dereference(AssertionProcessorContext ctx) throws AssertionIllegalArgumentException
     {
     	logger.debug("Entered dereference method of AssetContentSource");
         if (ctx != context)

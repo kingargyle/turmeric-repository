@@ -8,7 +8,7 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.assetcreation;
 
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.*;
 
 public class AssetInfoWrapper {
 	private AssetInfo assetInfo;

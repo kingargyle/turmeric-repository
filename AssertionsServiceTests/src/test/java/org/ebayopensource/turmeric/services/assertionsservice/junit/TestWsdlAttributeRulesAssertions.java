@@ -10,7 +10,7 @@ package org.ebayopensource.turmeric.services.assertionsservice.junit;
 
 import org.junit.Test;
 
-import junit.framework.TestCase;
+import junit.framework.Assert;
 
 public class TestWsdlAttributeRulesAssertions extends BaseIndividualAssertionsTest {
 	
@@ -20,7 +20,7 @@ public class TestWsdlAttributeRulesAssertions extends BaseIndividualAssertionsTe
 		String assertionAssetName = "soa_attributesAreUsedForMetaInf_assertion";		
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testAttributesAreUsedForMetaInf_Positive: "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -29,7 +29,7 @@ public class TestWsdlAttributeRulesAssertions extends BaseIndividualAssertionsTe
 		String assertionAssetName = "soa_attributesAreUsedForMetaInf_assertion";		
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testAttributesAreUsedForMetaInf_Negative: "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -38,7 +38,7 @@ public class TestWsdlAttributeRulesAssertions extends BaseIndividualAssertionsTe
 		String assertionAssetName = "soa_useEqualsRequiredNotAllowed_assertion";		
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testUseEqualsRequiredNotAllowed_Positive: "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -47,7 +47,7 @@ public class TestWsdlAttributeRulesAssertions extends BaseIndividualAssertionsTe
 		String assertionAssetName = "soa_useEqualsRequiredNotAllowed_assertion";		
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testUseEqualsRequiredNotAllowed_Negative: "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}  
 	
 	@Test
@@ -56,7 +56,7 @@ public class TestWsdlAttributeRulesAssertions extends BaseIndividualAssertionsTe
 		String assertionAssetName = "soa_nameEndsWithIdIsCaseSensetive_assertion";		
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testNameEndsWithIdIsCaseSensetive_Positive: "  +  result);
-		TestCase.assertEquals(PASS, result);	
+		Assert.assertEquals(PASS, result);	
 	}
 	
 	@Test
@@ -65,7 +65,7 @@ public class TestWsdlAttributeRulesAssertions extends BaseIndividualAssertionsTe
 		String assertionAssetName = "soa_nameEndsWithIdIsCaseSensetive_assertion";		
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testNameEndsWithIdIsCaseSensetive_Negative: "  +  result);
-		TestCase.assertEquals(PASS, result);	
+		Assert.assertEquals(PASS, result);	
 	}
 	
 	@Test
@@ -74,7 +74,7 @@ public class TestWsdlAttributeRulesAssertions extends BaseIndividualAssertionsTe
 		String assertionAssetName = "soa_attributesAreArrangedInRequiredOrder_assertion";		
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testAttributesAreArrangedInRequiredOrder_Positive: "  +  result);
-		TestCase.assertEquals(PASS, result);	
+		Assert.assertEquals(PASS, result);	
 	}
 	
 	@Test
@@ -83,6 +83,6 @@ public class TestWsdlAttributeRulesAssertions extends BaseIndividualAssertionsTe
 		String assertionAssetName = "soa_attributesAreArrangedInRequiredOrder_assertion";		
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testAttributesAreArrangedInRequiredOrder_Negative: "  +  result);
-		TestCase.assertEquals(PASS, result);	
+		Assert.assertEquals(PASS, result);	
 	}
   }

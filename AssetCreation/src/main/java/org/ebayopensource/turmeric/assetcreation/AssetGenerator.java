@@ -9,14 +9,11 @@
 package org.ebayopensource.turmeric.assetcreation;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 
 import javax.xml.bind.JAXBException;
@@ -36,25 +33,13 @@ import org.ebayopensource.turmeric.assetcreation.util.CommonUtil;
 import org.ebayopensource.turmeric.assetcreation.util.FileUtil;
 import org.ebayopensource.turmeric.assetdata.artifacts.AssetData;
 import org.ebayopensource.turmeric.assetdata.artifacts.Assets;
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AssetKey;
-import org.ebayopensource.turmeric.repository.v1.services.AttributeNameValue;
-import org.ebayopensource.turmeric.repository.v1.services.CreateAndSubmitAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.CreateAndSubmitAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetInfoRequest;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetInfoResponse;
-import org.ebayopensource.turmeric.repository.v1.services.Library;
-import org.ebayopensource.turmeric.repository.v1.services.Property;
-import org.ebayopensource.turmeric.repository.v1.services.SubmitForPublishingRequest;
-import org.ebayopensource.turmeric.repository.v1.services.SubmitForPublishingResponse;
+import org.ebayopensource.turmeric.repository.v2.services.*;
 import org.ebayopensource.turmeric.runtime.common.exceptions.ServiceException;
 
 
 public class AssetGenerator {
 	
 	private static Logger s_logger = Logger.getLogger(AssetGenerator.class);
-	private static Properties properties = null;
-	
 	public static AssetStore createAsset(String configFilePath) 
 				throws AssetCreationException 
 	{
@@ -129,28 +114,6 @@ public class AssetGenerator {
 		//displayCachedInfo(assetStore);
 		
 		return assetStore;
-	}
-	
-	private static void displayCachedInfo(AssetStore assetStore)
-	{
-		Map<String, List<AssetIdWrapper>> dispAssetIds = assetStore.getAssetIds();
-		Map<String, List<AssetInfoWrapper>> dispAssetInfos = assetStore.getAssetInfos();
-		
-		//TODO: Display cached Info
-		
-	}
-	
-	private static void loadProperties() throws AssetCreationException
-	{
-		properties = new Properties();
-		try
-		{
-			properties.load(new FileInputStream("src/main/resources/properties/assetcreation.properties"));
-		}
-		catch(IOException e)
-		{
-			throw new AssetCreationException("Unable to load assetcreation.properties",e);
-		}
 	}
 	
 	private static AssetStore createAsset(Map<String,AssetInfo> sourceAssetInfo, AssetCreation assetCreation)

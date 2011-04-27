@@ -9,22 +9,10 @@
 package org.ebayopensource.turmeric.assetcreation.util;
 
 import java.io.File;
-import java.io.IOException;
-
 import javax.xml.bind.JAXB;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-
 import org.apache.log4j.Logger;
-import org.xml.sax.SAXException;
-
 import org.ebayopensource.turmeric.assetdata.artifacts.AssetData;
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.*;
 
 public class CommonUtil {
 	

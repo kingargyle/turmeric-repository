@@ -14,9 +14,7 @@ import java.util.List;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-
+import junit.framework.Assert;
 import org.ebayopensource.turmeric.assetcreation.AssetCreatorFactory;
 import org.ebayopensource.turmeric.assetcreation.AssetCreatorIntf;
 import org.ebayopensource.turmeric.assetcreation.exception.AssetInfoNotFoundException;
@@ -31,7 +29,7 @@ import org.ebayopensource.turmeric.repository.v1.services.AssertionModuleAsset;
 import org.ebayopensource.turmeric.repository.v1.services.AssertionModuleAssetTypes;
 import org.ebayopensource.turmeric.repository.v1.services.AssertionProcessorType;
 import org.ebayopensource.turmeric.repository.v1.services.AssertionSeverity;
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.AssetInfo;
 import org.ebayopensource.turmeric.repository.v1.services.ContentBindingName;
 import org.ebayopensource.turmeric.repository.v1.services.ExternalAssertion;
 import org.ebayopensource.turmeric.repository.v1.services.ExternalAssertionModule;
@@ -74,14 +72,14 @@ public class TestExternalAssertionAndInternalArtifact extends BaseAssertionsServ
 		if(artifact == null)
 		{
 			System.out.println("Unable to get the wsdl artifact");
-			TestCase.fail();
+			Assert.fail();
 		}
 		request.getArtifacts().add(artifact);
 		
 		String result = processRequest(request, FAILURE_CASE);
 		System.out.println("testAssertionsRequestWithErraneousAssertionScript : "  + result);
 		
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -97,14 +95,14 @@ public class TestExternalAssertionAndInternalArtifact extends BaseAssertionsServ
 		if(artifact == null)
 		{
 			System.out.println("Unable to get the wsdl artifact");
-			TestCase.fail();
+			Assert.fail();
 		}
 		request.getArtifacts().add(artifact);
 		
 		String result = processRequest(request, POSITIVE_CASE);
 		System.out.println("testAssertionsRequest_Positive : "  + result);
 		
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -120,14 +118,14 @@ public class TestExternalAssertionAndInternalArtifact extends BaseAssertionsServ
 		if(artifact == null)
 		{
 			System.out.println("Unable to get the wsdl artifact");
-			TestCase.fail();
+			Assert.fail();
 		}
 		request.getArtifacts().add(artifact);
 		
 		String result = processRequest(request, POSITIVE_CASE);
 		System.out.println("testAssertionsRequest_WithInternalModule : "  + result);
 		
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -143,14 +141,14 @@ public class TestExternalAssertionAndInternalArtifact extends BaseAssertionsServ
 		if(artifact == null)
 		{
 			System.out.println("Unable to get the wsdl artifact");
-			TestCase.fail();
+			Assert.fail();
 		}
 		request.getArtifacts().add(artifact);
 		
 		String result = processRequest(request, POSITIVE_CASE);
 		System.out.println("testAssertionsRequest_WithExternalModule : "  + result);
 		
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -168,7 +166,7 @@ public class TestExternalAssertionAndInternalArtifact extends BaseAssertionsServ
 		String result = processRequest(request, NEGATIVE_CASE);
 		System.out.println("testAssertionsRequest_Negative : "  + result);
 		
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -186,7 +184,7 @@ public class TestExternalAssertionAndInternalArtifact extends BaseAssertionsServ
 		String result = processRequest(request, POSITIVE_CASE);
 		System.out.println("testAssertionsRequestWithMultipleArtifacts : "  + result);
 		
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	private Assertion createAssertion(){

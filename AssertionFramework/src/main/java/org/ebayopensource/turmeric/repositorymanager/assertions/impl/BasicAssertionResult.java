@@ -33,7 +33,8 @@ public class BasicAssertionResult
      * 
      * @return the name of the Assertion that generated this result.
      */
-    public String getAssertionName()
+    @Override
+	public String getAssertionName()
     {
         return assertableResult.getAssertable().getName();
     }
@@ -43,7 +44,8 @@ public class BasicAssertionResult
      * 
      * @return the version of the Assertion that generated this result.
      */
-    public String getAssertionVersion()
+    @Override
+	public String getAssertionVersion()
     {
         return assertableResult.getAssertable().getVersion();
     }
@@ -53,7 +55,8 @@ public class BasicAssertionResult
      * 
      * @return the description of the Assertion that generated this result.
      */
-    public String getAssertionDescription()
+    @Override
+	public String getAssertionDescription()
     {
         return assertableResult.getAssertable().getDescription();
     }
@@ -64,7 +67,8 @@ public class BasicAssertionResult
      *
      * @return the validation result for this AssertionResult.
      */
-    public ValidationResult getValidationResult()
+    @Override
+	public ValidationResult getValidationResult()
     {
         return assertableResult.getValidationResult();
     }
@@ -74,7 +78,8 @@ public class BasicAssertionResult
      * 
      * @return a list of failure or warning messages, or null.
      */
-    public List<AssertionResultItem> getResultItems()
+    @Override
+	public List<AssertionResultItem> getResultItems()
     {
         return assertableResult.getResultItems();
     }
@@ -85,12 +90,14 @@ public class BasicAssertionResult
      * 
      * @return the containing AssertionGroups.
      */
-    public Collection<AssertionGroup> getContainingGroups()
+    @Override
+	public Collection<AssertionGroup> getContainingGroups()
     {
         return assertableResult.getContainingGroups();
     }
 
-    public String toString()
+    @Override
+	public String toString()
     {
         return getValidationResult()
             +",Assertion["+getAssertionName()

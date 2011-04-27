@@ -10,7 +10,7 @@ package org.ebayopensource.turmeric.services.assertionsservice.junit;
 
 import org.junit.Test;
 
-import junit.framework.TestCase;
+import junit.framework.Assert;
 
 /**
  * @author szacharias
@@ -24,7 +24,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 		String assertionAssetName = "soa_elementNameBeginWithLowerCase_assertion";
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testElementNameBeginWithLowerCase_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -33,7 +33,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 		String assertionAssetName = "soa_elementNameBeginWithLowerCase_assertion";
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testElementNameBeginWithLowerCase_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -42,7 +42,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 		String assertionAssetName = "soa_elementNameContainingWordURLorURI_assertion";
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testElementNameContainingWordURLorURI_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -51,7 +51,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 		String assertionAssetName = "soa_elementNameContainingWordURLorURI_assertion";
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testElementNameContainingWordURLorURI_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	//This test case requires an input artifact "Sample_WithURL.wsdl" which has an element name containing 
@@ -64,7 +64,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 		String result = testAssertion(assertionAssetName, "Sample_WithURL.wsdl", NEGATIVE_CASE);		
 		
 		System.out.println("testElementNameContainingWordURLorURI_WithURL : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	//This test case requires an input artifact "Sample_WithURI.wsdl" which has an element name containing 
@@ -77,7 +77,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 		String result = testAssertion(assertionAssetName, "Sample_WithURI.wsdl", NEGATIVE_CASE);		
 		
 		System.out.println("testElementNameContainingWordURLorURI_WithURI : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -86,7 +86,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 		String assertionAssetName = "soa_maxoccursValueShouldBeUnbounded_assertion";
 		String result = testAssertionForPositiveScenario(assertionAssetName);
 		System.out.println("testMaxoccursValueShouldBeUnbounded_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -95,7 +95,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 		String assertionAssetName = "soa_maxoccursValueShouldBeUnbounded_assertion";
 		String result = testAssertionForNegativeScenario(assertionAssetName);
 		System.out.println("testMaxoccursValueShouldBeUnbounded_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -107,7 +107,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 
 		
 		System.out.println("testElementNameWhenMaxoccursIsUnbounded_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -119,7 +119,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 
 		
 		System.out.println("testElementNameWhenMaxoccursIsUnbounded_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -131,7 +131,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 
 		
 		System.out.println("testLengthRestrictionOnStrings_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -143,7 +143,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 
 		
 		System.out.println("testLengthRestrictionOnStrings_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -155,7 +155,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 
 		
 		System.out.println("testElementNameEndingWithWordID_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -167,7 +167,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 
 		
 		System.out.println("testElementNameEndingWithWordID_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -179,7 +179,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 	
 		
 		System.out.println("testAmountTypeElementNameStandard_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -191,7 +191,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 	
 		
 		System.out.println("testAmountTypeElementNameStandard_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	//This test case requires an input artifact "Sample_WithAmount.wsdl" which has an element name ending 
@@ -204,7 +204,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 		String result = testAssertion(assertionAssetName, "Sample_WithAmount.wsdl", POSITIVE_CASE);		
 		
 		System.out.println("testAmountTypeElementNameStandard_WithAmount : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	//This test case requires an input artifact "Sample_WithCost.wsdl" which has an element name ending 
@@ -217,7 +217,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 		String result = testAssertion(assertionAssetName, "Sample_WithCost.wsdl", POSITIVE_CASE);		
 		
 		System.out.println("testAmountTypeElementNameStandard_WithCost : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	//This test case requires an input artifact "Sample_WithFee.wsdl" which has an element name ending 
@@ -230,7 +230,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 		String result = testAssertion(assertionAssetName, "Sample_WithFee.wsdl", POSITIVE_CASE);		
 		
 		System.out.println("testAmountTypeElementNameStandard_WithFee : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -242,7 +242,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 		
 		
 		System.out.println("testAmountTypeElementNameStandardConvrse_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -254,7 +254,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 		
 		
 		System.out.println("testAmountTypeElementNameStandardConvrse_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	//This test case requires an input artifact "Sample_WithAmount.wsdl" which has an element name ending 
@@ -267,7 +267,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 		String result = testAssertion(assertionAssetName, "Sample_WithAmount.wsdl", NEGATIVE_CASE);		
 		
 		System.out.println("testAmountTypeElementNameStandardConvrse_WithAmount : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	//This test case requires an input artifact "Sample_WithCost.wsdl" which has an element name ending 
@@ -280,7 +280,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 		String result = testAssertion(assertionAssetName, "Sample_WithCost.wsdl", NEGATIVE_CASE);		
 		
 		System.out.println("testAmountTypeElementNameStandardConvrse_WithCost : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	//This test case requires an input artifact "Sample_WithFee.wsdl" which has an element name ending 
@@ -293,7 +293,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 		String result = testAssertion(assertionAssetName, "Sample_WithFee.wsdl", NEGATIVE_CASE);		
 		
 		System.out.println("testAmountTypeElementNameStandardConvrse_WithFee : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -305,7 +305,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 		
 		
 		System.out.println("testElementNameContainingWordPercent_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -317,7 +317,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 		
 		
 		System.out.println("testElementNameContainingWordPercent_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -329,7 +329,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 		
 		
 		System.out.println("testElementNameEndingWithWordCount_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -341,7 +341,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 	
 		
 		System.out.println("testElementNameEndingWithWordCount_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -353,7 +353,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 	
 		
 		System.out.println("testElementNameEndingWithWordDateOrTime_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -365,7 +365,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 		
 		
 		System.out.println("testElementNameEndingWithWordDateOrTime_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	//This test case requires an input artifact "Sample_WithDate.wsdl" which has an element name ending 
@@ -378,7 +378,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 		String result = testAssertion(assertionAssetName, "Sample_WithDate.wsdl", NEGATIVE_CASE);		
 		
 		System.out.println("testElementNameEndingWithWordDateOrTime_WithDate : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	//This test case requires an input artifact "Sample_WithTime.wsdl" which has an element name ending 
@@ -391,7 +391,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 		String result = testAssertion(assertionAssetName, "Sample_WithTime.wsdl", NEGATIVE_CASE);		
 		
 		System.out.println("testElementNameEndingWithWordDateOrTime_WithTime : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -403,7 +403,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 		
 		
 		System.out.println("testCodeTypeElementNameStandard_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -415,7 +415,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 		
 		
 		System.out.println("testCodeTypeElementNameStandard_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -427,7 +427,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 	
 		
 		System.out.println("testBooleanTypeElementNameStandard_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -439,7 +439,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 	
 		
 		System.out.println("testBooleanTypeElementNameStandard_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	//This test case requires an input artifact "Sample_WithIs.wsdl" which has an element name starting 
@@ -452,7 +452,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 		String result = testAssertion(assertionAssetName, "Sample_WithIs.wsdl", NEGATIVE_CASE);
 		
 		System.out.println("testBooleanTypeElementNameStandard_WithIs : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	//This test case requires an input artifact "Sample_WithHas.wsdl" which has an element name starting 
@@ -465,7 +465,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 		String result = testAssertion(assertionAssetName, "Sample_WithHas.wsdl", NEGATIVE_CASE);
 		
 		System.out.println("testBooleanTypeElementNameStandard_WithHas : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -477,7 +477,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 		
 		
 		System.out.println("testElementNameContainingWordEbay_Positive : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 	
 	@Test
@@ -489,7 +489,7 @@ public class TestElementRuleAssertions extends BaseIndividualAssertionsTest{
 	
 		
 		System.out.println("testElementNameContainingWordEbay_Negative : "  +  result);
-		TestCase.assertEquals(PASS, result);
+		Assert.assertEquals(PASS, result);
 	}
 
   }
