@@ -65,7 +65,7 @@
         </executions>
         <configuration>
           <verbose>true</verbose>
-          <packageName>org.ebayopensource.turmeric.repository.v2.services.intf</packageName>
+          <packageName>org.ebayopensource.turmeric.repository.v2.services.impl</packageName>
           <enableNamespaceFolding>true</enableNamespaceFolding>
         </configuration>
       </plugin>

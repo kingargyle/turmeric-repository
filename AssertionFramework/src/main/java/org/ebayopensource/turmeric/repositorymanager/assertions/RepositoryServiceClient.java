@@ -17,7 +17,7 @@ import java.util.Map;
 import org.ebayopensource.turmeric.common.v1.types.ErrorData;
 import org.ebayopensource.turmeric.common.v1.types.ErrorMessage;
 import org.ebayopensource.turmeric.repository.v2.services.*;
-import org.ebayopensource.turmeric.repository.v2.services.intf.TurmericRSV2;
+import org.ebayopensource.turmeric.repository.v2.services.impl.TurmericRSV2;
 import org.ebayopensource.turmeric.repositorymanager.assertions.exception.AssertionIllegalArgumentException;
 import org.ebayopensource.turmeric.repositorymanager.assertions.exception.AssertionRuntimeException;
 import org.ebayopensource.turmeric.runtime.common.exceptions.ServiceException;

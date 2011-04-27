@@ -31,11 +31,6 @@
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.ebayopensource.turmeric.codegen</groupId>
-      <artifactId>codegen-tools</artifactId>
-      <version>${turmeric-runtime-version}</version>
-    </dependency>
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.4</version>

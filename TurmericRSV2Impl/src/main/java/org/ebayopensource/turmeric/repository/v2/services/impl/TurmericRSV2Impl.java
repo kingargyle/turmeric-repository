@@ -20,7 +20,7 @@ import org.ebayopensource.turmeric.common.v1.types.ErrorParameter;
 import org.ebayopensource.turmeric.common.v1.types.ErrorSeverity;
 import org.ebayopensource.turmeric.errorlibrary.repository.ErrorConstants;
 import org.ebayopensource.turmeric.repository.v2.services.*;
-import org.ebayopensource.turmeric.repository.v2.services.intf.TurmericRSV2;
+import org.ebayopensource.turmeric.repository.v2.services.impl.TurmericRSV2;
 import org.ebayopensource.turmeric.runtime.common.exceptions.ErrorDataFactory;
 import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositoryServiceConstants;
 import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositoryServiceProvider;

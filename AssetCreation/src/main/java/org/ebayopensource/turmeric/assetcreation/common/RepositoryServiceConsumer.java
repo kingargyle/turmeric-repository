@@ -15,7 +15,7 @@ import java.net.URL;
 import org.apache.log4j.Logger;
 
 import org.ebayopensource.turmeric.repository.v2.services.*;
-import org.ebayopensource.turmeric.repository.v2.services.intf.TurmericRSV2;
+import org.ebayopensource.turmeric.repository.v2.services.impl.TurmericRSV2;
 import org.ebayopensource.turmeric.runtime.common.exceptions.ServiceException;
 import org.ebayopensource.turmeric.runtime.sif.service.RequestContext;
 import org.ebayopensource.turmeric.runtime.sif.service.Service;

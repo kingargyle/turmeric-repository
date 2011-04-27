@@ -9,7 +9,7 @@
 <!-- ================================================================== -->
 <service-config group="CommonSOAServiceGroup" xmlns="http://www.ebayopensource.org/turmeric/common/config">
     <service-impl-class-name>org.ebayopensource.turmeric.repository.v2.services.impl.TurmericRSV2Impl</service-impl-class-name>
-    <service-interface-class-name>org.ebayopensource.turmeric.repository.v2.services.intf.TurmericRSV2</service-interface-class-name>
+    <service-interface-class-name>org.ebayopensource.turmeric.repository.v2.services.impl.TurmericRSV2</service-interface-class-name>
     <service-instance-config>
         <protocol-processor version="1.1" name="SOAP11">
             <indicator>
