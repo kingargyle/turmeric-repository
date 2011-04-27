@@ -28,8 +28,18 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.ebayopensource.turmeric.codegen</groupId>
+      <artifactId>codegen-tools</artifactId>
+      <version>${turmeric-runtime-version}</version>
+    </dependency>
+    <dependency>
       <groupId>org.ebayopensource.turmeric.runtime</groupId>
       <artifactId>soa-client</artifactId>
+      <version>${turmeric-runtime-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.ebayopensource.turmeric.typelib</groupId>
+      <artifactId>common-type-library</artifactId>
       <version>${turmeric-runtime-version}</version>
     </dependency>
     <dependency>
@@ -39,6 +49,18 @@
     </dependency>
   </dependencies>
   <build>
+    <sourceDirectory>src</sourceDirectory>
+    <testSourceDirectory>test</testSourceDirectory>
+    <outputDirectory>build/classes</outputDirectory>
+    <testOutputDirectory>build/classes</testOutputDirectory>
+    <resources>
+      <resource>
+        <directory>gen-meta-src</directory>
+      </resource>
+      <resource>
+        <directory>meta-src</directory>
+      </resource>
+    </resources>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -53,6 +75,25 @@
         </configuration>
       </plugin>
       <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>1.0</version>
+        <executions>
+          <execution>
+            <id>add-source</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>gen-src/client</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.ebayopensource.turmeric.maven</groupId>
         <artifactId>turmeric-maven-plugin</artifactId>
         <version>${turmeric-runtime-version}</version>
@@ -65,8 +106,9 @@
         </executions>
         <configuration>
           <verbose>true</verbose>
-          <packageName>org.ebayopensource.turmeric.repository.v1.services.assertionservice.impl</packageName>
-          <enableNamespaceFolding>true</enableNamespaceFolding>
+          <legacy>true</legacy>
+          <resourcesOutputDirectory>${project.basedir}/gen-meta-src</resourcesOutputDirectory>
+          <outputDirectory>${project.basedir}/gen-src/client</outputDirectory>
         </configuration>
       </plugin>
     </plugins>

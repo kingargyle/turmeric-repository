@@ -15,7 +15,7 @@ import org.ebayopensource.turmeric.repository.v1.services.ApplyAssertionGroupsRe
 import org.ebayopensource.turmeric.repository.v1.services.ApplyAssertionGroupsResponse;
 import org.ebayopensource.turmeric.repository.v1.services.ApplyAssertionsRequest;
 import org.ebayopensource.turmeric.repository.v1.services.ApplyAssertionsResponse;
-import org.ebayopensource.turmeric.repository.v1.services.assertionservice.impl.TurmericASV1;
+import org.ebayopensource.turmeric.repository.v1.services.assertionsservice.impl.TurmericASV1;
 
 import org.ebayopensource.turmeric.runtime.common.exceptions.ServiceException;
 import org.ebayopensource.turmeric.runtime.common.exceptions.ServiceRuntimeException;
