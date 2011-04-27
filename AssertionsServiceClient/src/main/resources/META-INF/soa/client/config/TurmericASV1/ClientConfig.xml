@@ -10,7 +10,7 @@
 -->
 <client-config-list name="CommonSOAClientGroup" xmlns="http://www.ebayopensource.org/turmeric/common/config">
     <client-config service-name="{http://www.ebayopensource.org/turmeric/repository/v1/services}TurmericASV1">
-        <service-interface-class-name>org.ebayopensource.turmeric.repository.v1.services.assertionsservice.impl.TurmericASV1</service-interface-class-name>
+        <service-interface-class-name>org.ebayopensource.turmeric.repository.v1.services.assertionservice.intf.TurmericASV1</service-interface-class-name>
         <service-location>http://dev-soa-02:8080/AssertionsService/AssertionsService</service-location>
         <client-instance-config>
             <invocation-options>
