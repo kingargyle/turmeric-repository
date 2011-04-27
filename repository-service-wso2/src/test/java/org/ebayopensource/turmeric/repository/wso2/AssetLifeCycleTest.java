@@ -128,7 +128,7 @@ public class AssetLifeCycleTest extends Wso2Base {
 
         ArtifactInfo wsdlInfo = new ArtifactInfo();
         wsdlInfo.setArtifact(wsdl);
-        wsdlInfo.setArtifactDetail(loadFile("meta-src/META-INF/soa/services/wsdl/CreateServiceTest/CreateServiceTest.wsdl"));
+        wsdlInfo.setArtifactDetail(loadFile("src/main/resources/META-INF/soa/services/wsdl/CreateServiceTest/CreateServiceTest.wsdl"));
         wsdlInfo.setContentType("application/wsdl+xml");
 
         List<ArtifactInfo> artifactList = assetInfo.getArtifactInfo();
