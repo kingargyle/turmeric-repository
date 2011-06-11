@@ -104,7 +104,7 @@
 		<module>RepositoryProviderInterface</module>
 		<module>repository-dist</module>
 		<module>repository-dist-bin</module>
-		<module>assertions-service-uat</module>
+		<!--<module>assertions-service-uat</module>-->
 		<!--<module>repository-service-runner</module>-->
 	</modules>
 	<dependencyManagement>
