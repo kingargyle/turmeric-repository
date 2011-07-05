@@ -87,6 +87,7 @@
 	<modules>
 		<module>assertion-service</module>
                 <module>repository-service</module>
+                <module>distribution</module>
                 <module>integration-tests</module>
 	</modules>
 	<dependencyManagement>
