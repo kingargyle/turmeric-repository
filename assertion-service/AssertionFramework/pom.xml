@@ -12,35 +12,39 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.ebayopensource.turmeric.repository</groupId>
-    <artifactId>turmeric-repository-parent</artifactId>
+    <artifactId>turmeric-assertion-service-parent</artifactId>
     <version>1.0.0.2-SNAPSHOT</version>
   </parent>
   <groupId>org.ebayopensource.turmeric.repository</groupId>
-  <artifactId>assertionsserviceclient</artifactId>
+  <artifactId>assertionframework</artifactId>
   <packaging>jar</packaging>
-  <name>Repository :: Assertions Service :: Client</name>
+  <name>Repository :: Assertion Framework</name>
   <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-    </dependency>
-     <dependency>
-            <groupId>org.ebayopensource.turmeric.runtime</groupId>
-            <artifactId>soa-client</artifactId>
-            <version>${turmeric-runtime-version}</version>
-        </dependency>
-    <dependency>
+  	<dependency>
       <groupId>org.ebayopensource.turmeric.intf</groupId>
-	  <artifactId>TurmericASV1</artifactId>
+	  <artifactId>TurmericRSV2</artifactId>
 	  <version>${project.version}</version>
-	</dependency>
+    </dependency>
+  	<dependency>
+  		<groupId>log4j</groupId>
+  		<artifactId>log4j</artifactId>
+  	</dependency>
+  	<dependency>
+      <groupId>net.sf.saxon</groupId>
+      <artifactId>saxon</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>net.sf.saxon</groupId>
+      <artifactId>saxon-dom</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>net.sf.saxon</groupId>
+      <artifactId>saxon-xqj</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.ebayopensource.turmeric.repository</groupId>
+      <artifactId>cachingframework</artifactId>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
-  <!--
-  <properties>
-    <requiredServices>AssertionsService</requiredServices>
-    <serviceBinding.AssertionsService>HTTP11</serviceBinding.AssertionsService>
-    <baseconsumer-srcdir>src</baseconsumer-srcdir>
-    <serviceLocation.AssertionsService>http://webservices.ebay.com/AssertionsService</serviceLocation.AssertionsService>
-  </properties>
-   -->
 </project>

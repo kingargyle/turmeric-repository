@@ -12,46 +12,35 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.ebayopensource.turmeric.repository</groupId>
-    <artifactId>turmeric-repository-parent</artifactId>
+    <artifactId>turmeric-assertion-service-parent</artifactId>
     <version>1.0.0.2-SNAPSHOT</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
   <groupId>org.ebayopensource.turmeric.repository</groupId>
-  <artifactId>assetcreation</artifactId>
+  <artifactId>assertionsserviceclient</artifactId>
   <packaging>jar</packaging>
-  <name>Repository :: Asset Creation</name>
-  <description>Provides assetId and AssetInfo at runtime</description>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <!-- Disabling Tests
-               They require a C:\assetcreation\assets folder.
-               And access to server http://dev-soa-01/RepositoryService/RepositoryService -->
-          <skip>true</skip>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+  <name>Repository :: Assertions Service :: Client</name>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-    </dependency>
+     <dependency>
+            <groupId>org.ebayopensource.turmeric.runtime</groupId>
+            <artifactId>soa-client</artifactId>
+            <version>${turmeric-runtime-version}</version>
+        </dependency>
     <dependency>
       <groupId>org.ebayopensource.turmeric.intf</groupId>
-	  <artifactId>TurmericRSV2</artifactId>
+	  <artifactId>TurmericASV1</artifactId>
 	  <version>${project.version}</version>
 	</dependency>
   </dependencies>
+  <!--
+  <properties>
+    <requiredServices>AssertionsService</requiredServices>
+    <serviceBinding.AssertionsService>HTTP11</serviceBinding.AssertionsService>
+    <baseconsumer-srcdir>src</baseconsumer-srcdir>
+    <serviceLocation.AssertionsService>http://webservices.ebay.com/AssertionsService</serviceLocation.AssertionsService>
+  </properties>
+   -->
 </project>

@@ -9,27 +9,18 @@
 <!-- ================================================================== -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  
   <parent>
     <groupId>org.ebayopensource.turmeric.repository</groupId>
-    <artifactId>turmeric-repository-parent</artifactId>
+    <artifactId>turmeric-assertion-service-parent</artifactId>
     <version>1.0.0.2-SNAPSHOT</version>
   </parent>
-  
-  <groupId>org.ebayopensource.turmeric.impl</groupId>
-  <artifactId>TurmericASV1Impl</artifactId>
-  <name>Repository :: TurmericASV1Impl</name>
+  <groupId>org.ebayopensource.turmeric.intf</groupId>
+  <artifactId>TurmericASV1</artifactId>
+  <name>Repository :: TurmericASV1</name>
   <properties>
-    <requiredServices />
-    <serviceName>TurmericASV1</serviceName>
-    <serviceGroupID>org.ebayopensource.turmeric.intf</serviceGroupID>
+    <implProjectName>TurmericASV1Impl</implProjectName>
   </properties>
   <dependencies>
-    <dependency>
-      <groupId>org.ebayopensource.turmeric.intf</groupId>
-      <artifactId>TurmericASV1</artifactId>
-      <version>${project.version}</version>
-    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -37,8 +28,8 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.ebayopensource.turmeric.runtime</groupId>
-      <artifactId>soa-server</artifactId>
+      <groupId>org.ebayopensource.turmeric.codegen</groupId>
+      <artifactId>codegen-tools</artifactId>
       <version>${turmeric-runtime-version}</version>
     </dependency>
     <dependency>
@@ -47,30 +38,15 @@
       <version>${turmeric-runtime-version}</version>
     </dependency>
     <dependency>
-		<groupId>org.ebayopensource.turmeric.repository</groupId>
-		<artifactId>repository-service-support</artifactId>
-		<version>${project.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.ebayopensource.turmeric.intf</groupId>
-		<artifactId>TurmericRSV2</artifactId>
-		<version>${project.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.ebayopensource.turmeric.repository</groupId>
-		<artifactId>assertionframework</artifactId>
-		<version>${project.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.ebayopensource.turmeric.repository</groupId>
-		<artifactId>cachingframework</artifactId>
-		<version>${project.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.ebayopensource.turmeric.repository</groupId>
-		<artifactId>assetrepositoryerrorlibrary</artifactId>
-		<version>${project.version}</version>
-	</dependency>
+      <groupId>org.ebayopensource.turmeric.typelib</groupId>
+      <artifactId>common-type-library</artifactId>
+      <version>${turmeric-runtime-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.xml.bind</groupId>
+      <artifactId>jaxb-xjc</artifactId>
+      <version>2.1.2</version>
+    </dependency>
   </dependencies>
   <build>
     <sourceDirectory>src</sourceDirectory>
@@ -83,9 +59,6 @@
       </resource>
       <resource>
         <directory>meta-src</directory>
-      </resource>
-      <resource>
-        <directory>gen-web-content</directory>
       </resource>
     </resources>
     <plugins>
@@ -114,7 +87,6 @@
             </goals>
             <configuration>
               <sources>
-                <source>gen-src/service</source>
                 <source>gen-src/client</source>
               </sources>
             </configuration>
@@ -128,16 +100,15 @@
         <executions>
           <execution>
             <goals>
-              <goal>gen-implementation</goal>
+              <goal>gen-interface-wsdl</goal>
             </goals>
           </execution>
         </executions>
         <configuration>
           <verbose>true</verbose>
           <legacy>true</legacy>
-          <serviceName>${serviceName}</serviceName>
           <resourcesOutputDirectory>${project.basedir}/gen-meta-src</resourcesOutputDirectory>
-          <outputDirectory>${project.basedir}/gen-src/service</outputDirectory>
+          <outputDirectory>${project.basedir}/gen-src/client</outputDirectory>
         </configuration>
       </plugin>
     </plugins>

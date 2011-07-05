@@ -12,39 +12,22 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.ebayopensource.turmeric.repository</groupId>
-    <artifactId>turmeric-repository-parent</artifactId>
+    <artifactId>turmeric-assertion-service-parent</artifactId>
     <version>1.0.0.2-SNAPSHOT</version>
   </parent>
   <groupId>org.ebayopensource.turmeric.repository</groupId>
-  <artifactId>assertionframework</artifactId>
+  <artifactId>cachingframework</artifactId>
   <packaging>jar</packaging>
-  <name>Repository :: Assertion Framework</name>
+  <name>Repository :: Caching Framework</name>
   <dependencies>
-  	<dependency>
+    <dependency>
       <groupId>org.ebayopensource.turmeric.intf</groupId>
 	  <artifactId>TurmericRSV2</artifactId>
 	  <version>${project.version}</version>
-    </dependency>
-  	<dependency>
-  		<groupId>log4j</groupId>
-  		<artifactId>log4j</artifactId>
-  	</dependency>
-  	<dependency>
-      <groupId>net.sf.saxon</groupId>
-      <artifactId>saxon</artifactId>
-    </dependency>
+	</dependency>
     <dependency>
-      <groupId>net.sf.saxon</groupId>
-      <artifactId>saxon-dom</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>net.sf.saxon</groupId>
-      <artifactId>saxon-xqj</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.ebayopensource.turmeric.repository</groupId>
-      <artifactId>cachingframework</artifactId>
-      <version>${project.version}</version>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
     </dependency>
   </dependencies>
 </project>
