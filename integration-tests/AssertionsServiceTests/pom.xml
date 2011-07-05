@@ -11,7 +11,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.ebayopensource.turmeric.repository</groupId>
-		<artifactId>turmeric-repository-parent</artifactId>
+  	        <artifactId>turmeric-repository-it-parent</artifactId>
 		<version>1.0.0.2-SNAPSHOT</version>
 	</parent>
 	<groupId>org.ebayopensource.turmeric.repository</groupId>
