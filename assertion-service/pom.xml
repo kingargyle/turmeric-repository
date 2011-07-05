@@ -17,7 +17,7 @@
 	<groupId>org.ebayopensource.turmeric.repository</groupId>
 	<artifactId>turmeric-assertion-service-parent</artifactId>
 	<version>1.0.0.2-SNAPSHOT</version>
-	<name>Turmeric Parent :: Repository</name>
+	<name>Turmeric Parent :: Repository :: Assertion Service</name>
 	<packaging>pom</packaging>
 	<modules>
 		<module>TurmericASV1</module>
