@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<!-- ================================================================== -->
+<!-- Copyright (c) 2006-2010 eBay Inc. All Rights Reserved. -->
+<!-- Licensed under the Apache License, Version 2.0 (the "License"); -->
+<!-- you may not use this file except in compliance with the License. -->
+<!-- You may obtain a copy of the License at -->
+<!-- -->
+<!-- http://www.apache.org/licenses/LICENSE-2.0 -->
+<!-- ================================================================== -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+	   <artifactId>turmeric-repository-distribution-parent</artifactId>
+	   <groupId>org.ebayopensource.turmeric.repository</groupId>
+	   <version>1.0.0.2-SNAPSHOT</version>
+	</parent>
+	<groupId>org.ebayopensource.turmeric.repository</groupId>
+	<artifactId>turmeric-repository-dist-bin</artifactId>
+	<packaging>pom</packaging>
+	<name>Distribution Bundle</name>
+	<dependencies>
+		<dependency>
+			<groupId>org.ebayopensource.turmeric.intf</groupId>
+			<artifactId>TurmericASV1</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.ebayopensource.turmeric.intf</groupId>
+			<artifactId>TurmericRSV1</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.ebayopensource.turmeric.impl</groupId>
+			<artifactId>TurmericRSV1Impl</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.ebayopensource.turmeric.impl</groupId>
+			<artifactId>TurmericASV1Impl</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.ebayopensource.turmeric.repository</groupId>
+			<artifactId>repository-service-wso2</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.ebayopensource.turmeric.repository</groupId>
+			<artifactId>turmeric-repository-dist</artifactId>
+			<version>${project.version}</version>
+			<type>war</type>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>sources</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<classifier>sources</classifier>
+							<failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
+							<includeGroupIds>org.ebayopensource.turmeric.intf,org.ebayopensource.turmeric.impl,org.ebayopensource.turmeric.client,org.ebayopensource.turmeric.errorlib,org.ebayopensource.turmeric.repository</includeGroupIds>
+							<outputDirectory>${project.build.directory}/sources</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.2</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<descriptors>
+								<descriptor>src/assembly/dist-assembly.xml</descriptor>
+								<descriptor>src/assembly/dist-source-assembly.xml</descriptor>
+							</descriptors>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

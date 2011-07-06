@@ -85,27 +85,10 @@
 		</plugins>
 	</build>
 	<modules>
-		<module>TurmericRSV2</module>
-		<module>TurmericRSV2Impl</module>
-	<!--	<module>TurmericRSV1</module>
-		<module>TurmericRSV1Impl</module>
-        -->
-		<module>TurmericASV1</module>
-		<module>TurmericASV1Impl</module>
-		<module>repository-service-support</module>
-		<module>repository-validation-support</module>
-		<module>AssertionFramework</module>
-		<module>AssertionsServiceClient</module>
-		<module>AssetCreation</module>
-		<module>AssertionsServiceTests</module>
-		<module>CachingFramework</module>
-		<module>repository-service-wso2</module>
-		<module>AssetRepositoryErrorLibrary</module>
-		<module>RepositoryProviderInterface</module>
-		<module>repository-dist</module>
-		<module>repository-dist-bin</module>
-		<!--<module>assertions-service-uat</module>-->
-		<!--<module>repository-service-runner</module>-->
+		<module>assertion-service</module>
+                <module>repository-service</module>
+                <module>distribution</module>
+                <module>integration-tests</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>

@@ -1,0 +1,1773 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2006-2010 eBay Inc. All Rights Reserved.
+    Licensed under the Apache License, Version 2.0 (the "License"); 
+    you may not use this file except in compliance with the License. 
+    You may obtain a copy of the License at 
+   
+       http://www.apache.org/licenses/LICENSE-2.0
+       
+-->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+	xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+	xmlns:tns="http://www.ebay.com/marketplace/shipping/v1/services"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	name="DeliveryEstimateService"
+	targetNamespace="http://www.ebay.com/marketplace/shipping/v1/services">
+	<wsdl:types>
+		<xs:schema attributeFormDefault="unqualified"
+			elementFormDefault="qualified"
+			targetNamespace="http://www.ebay.com/marketplace/shipping/v1/services">
+<!-- 		<xs:element name="getVersionRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="in"
+							type="tns:GetVersionRequest">
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:complexType name="GetVersionRequest">
+				<xs:annotation>
+					<xs:documentation />
+					<xs:appinfo />
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseRequest">
+						<xs:sequence />
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType> -->
+
+			<xs:element name="getVersionRequest" type="tns:GetVersionRequest">
+			</xs:element>
+			<xs:complexType name="GetVersionRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Document goes here
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="1"
+								name="in" type="xs:string" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:element name="getVersionResponse" type="tns:GetVersionResponse">
+			</xs:element>
+			<xs:complexType name="GetVersionResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Document goes here
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="1"
+								name="out" type="xs:string" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource
+							library="MarketPlaceServiceCommonTypeLibrary"
+							namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully,
+								but something occurred that may affect
+								your application or the user.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								not processed successfully. When a
+								serious application-level error occurs,
+								the error is returned instead of the
+								business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="Address">
+				<xs:annotation>
+					<xs:appinfo>
+						<typeLibrarySource
+							library="MarketPlaceServiceCommonTypeLibrary"
+							namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="name"
+						type="xs:string">
+					</xs:element>
+					<xs:element minOccurs="0" name="street1"
+						type="xs:string">
+					</xs:element>
+					<xs:element minOccurs="0" name="street2"
+						type="xs:string">
+					</xs:element>
+					<xs:element minOccurs="0" name="city"
+						type="xs:string">
+					</xs:element>
+					<xs:element minOccurs="0" name="county"
+						type="xs:string">
+					</xs:element>
+					<xs:element minOccurs="0" name="stateOrProvince"
+						type="xs:string">
+					</xs:element>
+					<xs:element minOccurs="0" name="country"
+						type="xs:string">
+					</xs:element>
+					<xs:element minOccurs="0" name="postalCode"
+						type="xs:string">
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0"
+						processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="BaseRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is the base class for request container for
+						all service operations.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource
+							library="MarketPlaceServiceCommonTypeLibrary"
+							namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="extension" type="tns:ExtensionType">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="BaseResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service
+						operations. Contains error information
+						associated with the request.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource
+							library="MarketPlaceServiceCommonTypeLibrary"
+							namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ack" type="tns:AckValue">
+						<xs:annotation>
+							<xs:documentation>
+
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls></AllCalls>
+									<Returned>Always</Returned>
+
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage"
+						type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:documentation>
+								Information for an error or warning that
+								occurred when eBay processed the
+								request.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls></AllCalls>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="version"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls></AllCalls>
+									<Returned>Always</Returned>
+
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="timestamp"
+						type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation></xs:documentation>
+
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls></AllCalls>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="extension" type="tns:ExtensionType">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource
+							library="SOACommonTypeLibrary"
+							namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="System"></xs:enumeration>
+					<xs:enumeration value="Application"></xs:enumeration>
+					<xs:enumeration value="Request"></xs:enumeration>
+				</xs:restriction>
+
+			</xs:simpleType>
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+
+					<xs:appinfo>
+						<typeLibrarySource
+							library="SOACommonTypeLibrary"
+							namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long"></xs:element>
+					<xs:element name="domain" type="xs:string"></xs:element>
+					<xs:element minOccurs="0" name="subdomain"
+						type="xs:string">
+					</xs:element>
+					<xs:element name="severity"
+						type="tns:ErrorSeverity">
+					</xs:element>
+					<xs:element name="category"
+						type="tns:ErrorCategory">
+					</xs:element>
+					<xs:element name="message" type="xs:string"></xs:element>
+					<xs:element minOccurs="0" name="exceptionId"
+						type="xs:token">
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="parameter" type="tns:ErrorParameter">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+
+					<xs:appinfo>
+						<typeLibrarySource
+							library="SOACommonTypeLibrary"
+							namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+
+				<!--
+					<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0"
+					processContents="lax" />
+					</xs:sequence>
+				-->
+
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="error" type="tns:ErrorData">
+					</xs:element>
+				</xs:sequence>
+
+			</xs:complexType>
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+
+					<xs:appinfo>
+						<typeLibrarySource
+							library="SOACommonTypeLibrary"
+							namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string"
+							use="optional">
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource
+							library="SOACommonTypeLibrary"
+							namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="Error"></xs:enumeration>
+					<xs:enumeration value="Warning"></xs:enumeration>
+				</xs:restriction>
+
+			</xs:simpleType>
+			<xs:complexType name="ExtensionType">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+
+					<xs:appinfo>
+						<typeLibrarySource
+							library="MarketPlaceServiceCommonTypeLibrary"
+							namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="id" type="xs:positiveInteger"></xs:element>
+					<xs:element name="version" type="xs:string"></xs:element>
+					<xs:element name="contentType" type="xs:string"></xs:element>
+					<xs:element name="value" type="xs:string"></xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0"
+						processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ComputedDeliveryInfo">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource
+							library="DeliveryEstimateTypeLibrary"
+							namespace="http://www.ebay.com/marketplace/shipping/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0"
+						processContents="lax">
+					</xs:any>
+					<xs:element minOccurs="1" name="id"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								id as passed in request
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										GetDeliveryEstimateByItemAndAddress
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="apiServiceName"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								apiServiceName as defined by eBay API.
+								See appendix B for list of service
+								names. Id + apiService will provide the
+								primary key.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										GetDeliveryEstimateByItemAndAddress
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0"
+						name="getItFast" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+								service in this item is listed as
+								GetItFast
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										GetDeliveryEstimateByItemAndAddress
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="serviceSortOrder"
+						type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>
+								in increments of 1 starting with value
+								1. For item request, it will be same
+								order as stored in item shipping. For
+								transaction request, it will be in the
+								same order as in transaction.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										GetDeliveryEstimateByItemAndAddress
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0"
+						name="minEstimateDeliveryDate" type="xs:date">
+						<xs:annotation>
+							<xs:documentation>
+								Available only if buffer, handlingTime,
+								minTransitEstimateDays,
+								maxTransitEstimateDays and paypment is
+								PayPal transaction. Not available for
+								item request. Available only for
+								transaction. If checkout is complete on
+								transaction, this will remain the same.
+								Before checkout complete, calculation
+								will be based on requestDate as payment
+								date.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										GetDeliveryEstimateByItemAndAddress
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0"
+						name="maxEstimateDeliveryDate" type="xs:date">
+						<xs:annotation>
+							<xs:documentation>
+								Synoynmous with minEstimateDeliveryDate.
+								Available only if buffer, handlingTime,
+								minTransitEstimateDays,
+								maxTransitEstimateDays and paypment is
+								PayPal. Available only for transaction.
+								If checkout is complete on transaction,
+								this message will remain the same.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										GetDeliveryEstimateByItemAndAddress
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0"
+						name="minEstimateDeliveryDays" type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>
+								Available only if buffer, handlingTime,
+								minTransitEstimateDays,
+								maxTransitEstimateDays are present.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										GetDeliveryEstimateByItemAndAddress
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0"
+						name="maxEstimateDeliveryDays" type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>
+								Synoynmous with minEstimateDeliveryDays.
+								Available only if buffer, handlingTime,
+								minTransitEstimateDays,
+								maxTransitEstimateDays are present.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										GetDeliveryEstimateByItemAndAddress
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element
+				name="getDeliveryEstimateByItemAndAddressRequest"
+				type="tns:GetDeliveryEstimateByItemAndAddressRequest" />
+			<xs:complexType
+				name="GetDeliveryEstimateByItemAndAddressRequest">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource
+							library="DeliveryEstimateTypeLibrary"
+							namespace="http://www.ebay.com/marketplace/shipping/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded"
+								minOccurs="1" name="itemRequestInfoList"
+								type="tns:ItemRequestInfo">
+								<xs:annotation>
+									<xs:documentation>
+										Can be used in 2 modes -
+										useEbayItem is True or False.
+										When useEbayItem is False
+										HandlingTime and service list
+										should be passed. Services will
+										be validated for address. When
+										useEbayItem is True Handling
+										time and service list will be
+										retrieved from eBay system.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												GetDeliveryEstimateByItemAndAddress
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="1" name="shipAddress"
+								type="tns:Address">
+								<xs:annotation>
+									<xs:documentation>
+										Based on this address and item
+										location, domestic or Intl type
+										will be determined. If shipping
+										is intl, ship to location
+										filtering will be done.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												GetDeliveryEstimateByItemAndAddress
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="1" name="requestDate"
+								type="xs:date">
+								<xs:annotation>
+									<xs:documentation>
+										Making it a required field for
+										logging purposes. This date will
+										be assumed as the date of
+										payment.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												GetDeliveryEstimateByItemAndAddress
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0"
+								name="version" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										0.1 initial. Live will be 1.0.
+										Backward compatibilty should be
+										supported.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												GetDeliveryEstimateByItemAndAddress
+											</CallName>
+											<RequiredInput>
+												No
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getDeliveryEstimateByOrderRequest"
+				type="tns:GetDeliveryEstimateByOrderRequest" />
+			<xs:complexType name="GetDeliveryEstimateByOrderRequest">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource
+							library="DeliveryEstimateTypeLibrary"
+							namespace="http://www.ebay.com/marketplace/shipping/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded"
+								minOccurs="1" name="orderIdList" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										Occurrences one or more. These
+										are list of orders for which
+										delivery estimate is required.
+										Format of the id is -OrderId.
+										This string should unique across
+										all id's. Validation will be
+										done on the format before
+										accessing the eBay DB.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												GetDeliveryEstimateByOrder
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0"
+								name="version" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										0.1 initial. Live will be 1.0.
+										Backward compatibilty should be
+										supported.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												GetDeliveryEstimateByOrder
+											</CallName>
+											<RequiredInput>
+												No
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getDeliveryEstimateByTransactionRequest"
+				type="tns:GetDeliveryEstimateByTransactionRequest" />
+			<xs:complexType
+				name="GetDeliveryEstimateByTransactionRequest">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource
+							library="DeliveryEstimateTypeLibrary"
+							namespace="http://www.ebay.com/marketplace/shipping/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded"
+								minOccurs="1" name="trackingNumberList" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										Occurrences one or more. These
+										are list of transactions for
+										which delivery estimate is
+										required. Format of the id is -
+										ItemId,TransactionId. Both
+										itemId and TransactionId are
+										required. This string string
+										should unique across all id's.
+										Validation will be done on the
+										format before accessing the eBay
+										DB.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												GetDeliveryEstimateByTransaction
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0"
+								name="version" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										0.1 initial. Live will be 1.0.
+										Backward compatibilty should be
+										supported.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												GetDeliveryEstimateByTransaction
+											</CallName>
+											<RequiredInput>
+												No
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element
+				name="getDeliveryEstimateByItemAndAddressResponse"
+				type="tns:GetDeliveryEstimateResponse"/>
+			<xs:element name="getDeliveryEstimateByTransactionResponse"
+				type="tns:GetDeliveryEstimateResponse" />
+			<xs:element name="getDeliveryEstimateResponse"
+				type="tns:GetDeliveryEstimateResponse" />
+			<xs:complexType name="GetDeliveryEstimateResponse">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource
+							library="DeliveryEstimateTypeLibrary"
+							namespace="http://www.ebay.com/marketplace/shipping/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded"
+								minOccurs="0" name="computedDeliveryInfoList"
+								type="tns:ComputedDeliveryInfo">
+								<xs:annotation>
+									<xs:documentation>
+										List of ComputedDeliveryInfo.
+										One per itemid per service.
+										Based on address domestic or
+										Intl shipping will be determined
+										and only destination matching
+										services will be returned. Ex -
+										Input - If item 1 has 1 domestic
+										and 3 intl service(one with
+										ASIA, second with EU and third
+										with WW) item 2 has 1 domestic
+										and 1 intl service(Asia).
+										Address is UK. Output -For the
+										first item 2 intl services will
+										returned(EU and WW). For the
+										second item, error will be
+										returned without any service.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												GetDeliveryEstimateByOrder,GetDeliveryEstimateByTransaction
+											</CallName>
+											<RequiredInput>
+												No
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getItemDeliverySpecificationRequest"
+				type="tns:GetItemDeliverySpecificationRequest" />
+			<xs:complexType
+				name="GetItemDeliverySpecificationRequest">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource
+							library="DeliveryEstimateTypeLibrary"
+							namespace="http://www.ebay.com/marketplace/shipping/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded"
+								minOccurs="1" name="itemRequestInfoList"
+								type="tns:ItemRequestInfo">
+								<xs:annotation>
+									<xs:documentation>
+										Can be used in 2 modes -
+										useEbayItem is True or False.
+										When useEbayItem is False
+										HandlingTime and service list
+										should be passed. Services will
+										be validated for address. When
+										useEbayItem is True Handling
+										time and service list will be
+										retrieved from eBay system.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												GetItemDeliverySpecification
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="1" name="shipAddress"
+								type="tns:Address">
+								<xs:annotation>
+									<xs:documentation>
+										Based on this address and item
+										location, domestic or Intl type
+										will be determined. If shipping
+										is intl, ship to location
+										filtering will be done.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												GetItemDeliverySpecification
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="1" name="requestDate"
+								type="xs:date">
+								<xs:annotation>
+									<xs:documentation>
+										Making it a required field for
+										logging purposes. This date will
+										be assumed as the date of
+										payment.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												GetItemDeliverySpecification
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0"
+								name="version" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										0.1 initial. Live will be 1.0.
+										Backward compatibilty should be
+										supported.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												GetItemDeliverySpecification
+											</CallName>
+											<RequiredInput>
+												No
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getItemDeliverySpecificationResponse"
+				type="tns:GetItemDeliverySpecificationResponse" />
+			<xs:complexType
+				name="GetItemDeliverySpecificationResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Item has 3 input specs for delivery calculation.
+						Site specific BufferTime, handling time and
+						shipping services. For each service in item,
+						there will be min hours and max hours defined.
+						Open questions - a. Will zone use seller
+						specified min/max range for custom services. B.
+						Will we be using actual times if made available.
+						Require label data.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource
+							library="DeliveryEstimateTypeLibrary"
+							namespace="http://www.ebay.com/marketplace/shipping/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded"
+								minOccurs="0" name="itemDeliverySpecificationList"
+								type="tns:ItemDeliverySpecification">
+								<xs:annotation>
+									<xs:documentation>
+										List of
+										ItemDeliverySpecifications. One
+										DeliverySpecification per itemid
+										per service. Ex - If there 2
+										items first with 2 services and
+										second with 3 services. The
+										output itemDeliverySpecication
+										list size will be 5. If the
+										itemRequestInfo has
+										useEbayItemInfo set to Y - eBay
+										item data will be used. All
+										services domestic + Intl will be
+										returned. If the itemRequestInfo
+										has useEbayItemInfo set to N
+										eBay item info will not be used.
+										Handling time and service info
+										from shipping_service cache will
+										be used. Only specified services
+										will be returned. For each each
+										of the specified service that is
+										not available, error will be
+										returned.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												GetItemDeliverySpecification
+											</CallName>
+											<RequiredInput>
+												No
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element
+				name="getServiceDeliverySpecificationForCountryRequest"
+				type="tns:GetServiceDeliverySpecificationForCountryRequest" />
+			<xs:complexType
+				name="GetServiceDeliverySpecificationForCountryRequest">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource
+							library="DeliveryEstimateTypeLibrary"
+							namespace="http://www.ebay.com/marketplace/shipping/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded"
+								minOccurs="1" name="countryList" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										Occurrences one or more. Valid
+										enum values - 3 digit country
+										ISO code. See Appendix - country
+										list. These are list of
+										icountries for which delivery
+										specifications are required.
+										eBay will support only site id
+										countries. country among this
+										list should be unique.
+										Implementation should validate
+										uniqueness.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												GetServiceDeliverySpecificationForCountry
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="1" name="requestDate"
+								type="xs:date">
+								<xs:annotation>
+									<xs:documentation>
+										Making it a required field for
+										logging purposes. This date will
+										be assumed as the date of
+										payment.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												GetServiceDeliverySpecificationForCountry
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0"
+								name="version" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										0.1 initial. Live will be 1.0.
+										Backward compatibilty should be
+										supported.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												GetServiceDeliverySpecificationForCountry
+											</CallName>
+											<RequiredInput>
+												No
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element
+				name="getServiceDeliverySpecificationForCountryResponse"
+				type="tns:GetServiceDeliverySpecificationForCountryResponse" />
+			<xs:complexType
+				name="GetServiceDeliverySpecificationForCountryResponse">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource
+							library="DeliveryEstimateTypeLibrary"
+							namespace="http://www.ebay.com/marketplace/shipping/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded"
+								minOccurs="0" name="serviceDeliverySpecificationList"
+								type="tns:ServiceDeliverySpecification">
+								<xs:annotation>
+									<xs:documentation>
+										All valid services domestic and
+										Intl for each country will be
+										returned.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												GetServiceDeliverySpecificationForCountry
+											</CallName>
+											<RequiredInput>
+												No
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ItemDeliverySpecification">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource
+							library="DeliveryEstimateTypeLibrary"
+							namespace="http://www.ebay.com/marketplace/shipping/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0"
+						processContents="lax">
+					</xs:any>
+					<xs:element minOccurs="1" name="itemId"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								id as passed in ItemRequestInfo. This
+								will be itemId.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										GetItemDeliverySpecification
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0"
+						name="getItFast" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+								If item is listed as GetItFast.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										GetItemDeliverySpecification
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="serviceDeliverySpecificationList"
+						type="tns:ServiceDeliverySpecification">
+						<xs:annotation>
+							<xs:documentation>
+								Available if item is listed with
+								shipping services. Size will be one per
+								service. Includes domestic and intl
+								services.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										GetItemDeliverySpecification
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0"
+						name="handlingTimeInDays" type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>
+								Available if specified in item.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										GetItemDeliverySpecification
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ItemRequestInfo">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource
+							library="DeliveryEstimateTypeLibrary"
+							namespace="http://www.ebay.com/marketplace/shipping/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0"
+						processContents="lax">
+					</xs:any>
+					<xs:element minOccurs="1" name="itemId"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								ItemId. As in request.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										GetItemDeliverySpecification
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0"
+						name="userEbayItemInfo" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+								Default - Yes. If Yes eBay item will be
+								used to retrieve handling time and list
+								of services. If No handling time and
+								list of services shold be passed.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										GetItemDeliverySpecification
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="country"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Valid enum values - 3 digit ISO country
+								code. If useBEayItem is Y Country
+								associated with the item site should be
+								used. If it doesn't match, error will be
+								returned. Services in item will be
+								returned. If useBEayItem is N Country
+								and service country should match.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										GetItemDeliverySpecification
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0"
+						name="handlingTime" type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>
+								Default - No. Used if if useEbayItemInfo
+								is No. If useEbayItemInfo is Yes, this
+								will be ignored. Warning will be
+								returned. If useEbayItemInfo is Yes,
+								this will be ignored. Warning will be
+								returned.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										GetItemDeliverySpecification
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="apiServiceNameList" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Default - No. Required if
+								useEbayItemInfo is No. If
+								useEbayItemInfo is Yes, this will be
+								ignored. Warning will be returned. If
+								useEbayItemInfo is No, Service will be
+								validated for country from
+								shipping_service cache.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										GetItemDeliverySpecification
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ServiceDeliverySpecification">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource
+							library="DeliveryEstimateTypeLibrary"
+							namespace="http://www.ebay.com/marketplace/shipping/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0"
+						processContents="lax">
+					</xs:any>
+					<xs:element minOccurs="1" name="country"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Valid enum values - 3 digit ISO country
+								code. country associated with the
+								service. If there are N service per
+								country, then we will be N
+								ServiceDelicverySpecification. If no
+								service is available for the country,
+								there will be one
+								ServiceDeliverySpecification entry for
+								the country with errorList populated.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										GetServiceDeliverySpecificationForCountry
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="apiServiceName"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								apiServiceName as defined by eBay API.
+								See appendix B for list of service
+								names. If services are specified in
+								itemRequestInfo input, then only those
+								services will be returned. However if
+								any of these services is not found in
+								item, error will be returned for this
+								service. If inputRequestInfo has no
+								service specified, all services domestic
+								as well as international services will
+								be returned.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										GetServiceDeliverySpecificationForCountry
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="serviceSortOrder"
+						type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>
+								As specified in shipping table.
+								Typically in increments of 1 starting
+								with value 1. Will be in the same
+								ascending order as in item shipping
+								table.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										GetServiceDeliverySpecificationForCountry
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0"
+						name="minServiceTransitInDays" type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>
+								Available if service transit days is
+								specified. Can also have -1 if not
+								available.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										GetServiceDeliverySpecificationForCountry
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0"
+						name="maxServiceTransitInDays" type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>
+								Co exists with minServiceTransitInDays
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										GetServiceDeliverySpecificationForCountry
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<!-- <xs:element minOccurs="0" maxOccurs="unbounded"
+						name="errorList" nillable="true" type="coretype:ErrorData">
+						<xs:annotation>
+						<xs:documentation>
+						If input itemRequestInfo has service specified
+						and if that service does not exist in item,
+						SERVICE_NOT_FOUND will be returned.
+						</xs:documentation>
+						<xs:appinfo>
+						<CallInfo>
+						<CallName>
+						GetServiceDeliverySpecificationForCountry
+						</CallName>
+						<RequiredInput>No</RequiredInput>
+						</CallInfo>
+						</xs:appinfo>
+						</xs:annotation>
+						</xs:element>-->
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message
+		name="getServiceDeliverySpecificationForCountryRequest">
+		<wsdl:part name="parameters"
+			element="tns:getServiceDeliverySpecificationForCountryRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message
+		name="getServiceDeliverySpecificationForCountryResponse">
+		<wsdl:part name="parameters"
+			element="tns:getServiceDeliverySpecificationForCountryResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getItemDeliverySpecificationRequest">
+		<wsdl:part name="parameters"
+			element="tns:getItemDeliverySpecificationRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getItemDeliverySpecificationResponse">
+		<wsdl:part name="parameters"
+			element="tns:getItemDeliverySpecificationResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getDeliveryEstimateByItemAndAddressRequest">
+		<wsdl:part name="parameters"
+			element="tns:getDeliveryEstimateByItemAndAddressRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getDeliveryEstimateByItemAndAddressResponse">
+		<wsdl:part name="parameters"
+			element="tns:getDeliveryEstimateByItemAndAddressResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getDeliveryEstimateByTransactionRequest">
+		<wsdl:part name="parameters"
+			element="tns:getDeliveryEstimateByTransactionRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getDeliveryEstimateByTransactionResponse">
+		<wsdl:part name="parameters"
+			element="tns:getDeliveryEstimateByTransactionResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getDeliveryEstimateByOrderRequest">
+		<wsdl:part name="parameters"
+			element="tns:getDeliveryEstimateByOrderRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getDeliveryEstimateByOrderResponse">
+		<wsdl:part name="parameters"
+			element="tns:getDeliveryEstimateResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getVersionRequest">
+		<wsdl:part name="parameters" element="tns:getVersionRequest"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getVersionResponse">
+		<wsdl:part name="parameters" element="tns:getVersionResponse"></wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="DeliveryEstimateServicePort">
+		<wsdl:operation
+			name="getServiceDeliverySpecificationForCountry">
+			<wsdl:documentation>
+				This operation allows the user to retrieve delivery
+				specifications for shipping services available for a
+				country. Available services will include domestic and
+				international services from that country.
+			</wsdl:documentation>
+			<wsdl:input
+				message="tns:getServiceDeliverySpecificationForCountryRequest">
+			</wsdl:input>
+			<wsdl:output
+				message="tns:getServiceDeliverySpecificationForCountryResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getItemDeliverySpecification">
+			<wsdl:documentation>
+				This operation allows the user to retrieve delivery
+				estimate related specifications for a given eBay item
+				id. It does not give actual delivery estimate.
+			</wsdl:documentation>
+			<wsdl:input
+				message="tns:getItemDeliverySpecificationRequest">
+			</wsdl:input>
+			<wsdl:output
+				message="tns:getItemDeliverySpecificationResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getDeliveryEstimateByItemAndAddress">
+			<wsdl:documentation>
+				This operation allows the user to retrieve delivery
+				estimate for a given ItemRequestInfo and address.
+				Delivery estimate for all valid services based on
+				address will be returned. If handlingTime and services
+				are provided in ItemRequestInfo, then item info in eBay
+				system will not be used for computing delivery estimate.
+				ShipToLocations filtering should be done.
+			</wsdl:documentation>
+			<wsdl:input
+				message="tns:getDeliveryEstimateByItemAndAddressRequest">
+			</wsdl:input>
+			<wsdl:output
+				message="tns:getDeliveryEstimateByItemAndAddressResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getDeliveryEstimateByTransaction">
+			<wsdl:documentation>
+				This operation allows the user to calculate delivery
+				estimate for a given transaction.
+			</wsdl:documentation>
+			<wsdl:input
+				message="tns:getDeliveryEstimateByTransactionRequest">
+			</wsdl:input>
+			<wsdl:output
+				message="tns:getDeliveryEstimateByTransactionResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getDeliveryEstimateByOrder">
+			<wsdl:documentation>
+				This operation allows the user to calculate delivery
+				estimate for a given Order.
+			</wsdl:documentation>
+			<wsdl:input
+				message="tns:getDeliveryEstimateByOrderRequest">
+			</wsdl:input>
+			<wsdl:output
+				message="tns:getDeliveryEstimateByOrderResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getVersion">
+			<wsdl:input message="tns:getVersionRequest"></wsdl:input>
+			<wsdl:output message="tns:getVersionResponse"></wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="DeliveryEstimateServiceHttpBinding"
+		type="tns:DeliveryEstimateServicePort">
+		<http:binding verb="POST" />
+		<wsdl:operation name="getVersion">
+			<http:operation location="getVersion" />
+			<wsdl:input>
+				<mime:content part="params"
+					type="application/x-www-form-urlencoded" />
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="params" type="text/xml" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="DeliveryEstimateServiceSOAPBinding"
+		type="tns:DeliveryEstimateServicePort">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation
+			name="getServiceDeliverySpecificationForCountry">
+			<soap:operation
+				soapAction="http://www.ebay.com/marketplace/shipping/v1/services/getServiceDeliverySpecificationForCountry" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getItemDeliverySpecification">
+			<soap:operation
+				soapAction="http://www.ebay.com/marketplace/shipping/v1/services/getItemDeliverySpecification" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getDeliveryEstimateByItemAndAddress">
+			<soap:operation
+				soapAction="http://www.ebay.com/marketplace/shipping/v1/services/getDeliveryEstimateByItemAndAddress" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getDeliveryEstimateByTransaction">
+			<soap:operation
+				soapAction="http://www.ebay.com/marketplace/shipping/v1/services/getDeliveryEstimateByTransaction" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getDeliveryEstimateByOrder">
+			<soap:operation
+				soapAction="http://www.ebay.com/marketplace/shipping/v1/services/getDeliveryEstimateByOrder" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getVersion">
+			<soap:operation
+				soapAction="http://www.ebay.com/marketplace/shipping/v1/services/getVersion" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="DeliveryEstimateService">
+		<wsdl:documentation>
+			<Version>1.0.0</Version>
+			DeliveryEstimateService
+		</wsdl:documentation>
+		<wsdl:port binding="tns:DeliveryEstimateServiceHttpBinding"
+			name="DeliveryEstimateServiceHttpPort">
+			<http:address
+				location="https://svcs.ebay.com/services/shipping/v1/DeliveryEstimateService" />
+		</wsdl:port>
+		<wsdl:port binding="tns:DeliveryEstimateServiceSOAPBinding"
+			name="DeliveryEstimateServiceSOAPPort">
+			<soap12:address
+				location="https://svcs.ebay.com/services/shipping/v1/DeliveryEstimateService" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
+
