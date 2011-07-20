@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -68,7 +70,7 @@ import org.ebayopensource.turmeric.repository.v2.services.Relation;
 import org.ebayopensource.turmeric.repository.v2.services.RelationForUpdate;
 
 public class RSProviderUtil {
-	private static final String __systemRoot = "/_system/governance";
+	private static final String __systemRoot = "/_system/governance/trunk";
 	private static final String __artifactIdPropName = "registry.artifactId";
 	public static String __artifactVersionPropName = "org.ebayopensource.turmeric.artifactVersion";
 
@@ -239,8 +241,7 @@ public class RSProviderUtil {
 		errorParameter.setName("Error Message");
 		errorParameter.setValue(exception.getMessage());
 		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
-		errorDataList.add(errorDescriptor
-				.newError(errorParameter));
+		errorDataList.add(errorDescriptor.newError(errorParameter));
 
 		if (response.getErrorMessage() == null) {
 			response.setErrorMessage(new ErrorMessage());
@@ -279,8 +280,7 @@ public class RSProviderUtil {
 					libId.append(assetType == null ? "other" : assetType.trim()
 							.toLowerCase().replaceAll(" +", "_"));
 					libId.append("s/");
-					libId.append(library.getLibraryName().replace("://", "/")
-							.replace(".", "/"));
+					libId.append(transformLibraryNameToWso2Path(library));
 					libraryId = libId.toString();
 
 					library.setLibraryId(libraryId);
@@ -316,14 +316,48 @@ public class RSProviderUtil {
 		return assetKey;
 	}
 
+	private static String transformLibraryNameToWso2Path(Library library) {
+		String libraryName = library.getLibraryName();
+		String urlPart = extractUrlPart(libraryName);
+		if(!"".equals(urlPart)){//we need to extract/reverse the url
+			libraryName = libraryName.replace(urlPart, flipTokens(urlPart.replace("http://", "/"),"."));
+		}
+		return libraryName.replace(".", "/");
+	}
+
+	private static CharSequence flipTokens(String stringToFlip,
+			String separator) {
+		String[] tokens = stringToFlip.split("/");
+		StringBuilder result = new StringBuilder();
+		for(int i = tokens.length-1; i >= 0; i--){
+			result.append(tokens[i]);
+		}
+		return result.toString();
+	}
+
+	
+
+	private static String extractUrlPart(String libraryName) {
+		String regex = "\\(?\\b(http://|www[.])[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|]";
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(libraryName);
+		if (m.find()) {
+			String urlStr = m.group();
+			return urlStr;
+		}
+		return "";
+	}
+
 	/**
 	 * @param path
 	 * @return A type derived from a path
 	 */
 	public static String getAssetType(String path) {
 		String type = path;
-		if (type.startsWith("/_system/governance/")) {
-			type = Character.toUpperCase(type.charAt(20)) + type.substring(21);
+		int systemRootLength = __systemRoot.length();
+		if (type.startsWith(__systemRoot)) {
+			type = Character.toUpperCase(type.charAt(systemRootLength))
+					+ type.substring(systemRootLength + 1);
 			type = type.substring(0, type.indexOf("/"));
 			if (type.endsWith("s")) {
 				type = type.substring(0, type.length() - 1);

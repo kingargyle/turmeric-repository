@@ -74,7 +74,7 @@ public class GetBasicAssetInfoTest extends Wso2Base {
 
         AssetKey key = new AssetKey();
         Library lib = new Library();
-        lib.setLibraryId("/_system/governance/services/http/www/ebay/com/marketplace/services");
+        lib.setLibraryId("/_system/governance/trunk/services/com/ebay/www/marketplace/services");
         key.setLibrary(lib);
         key.setAssetName("RepositoryMetadataService");
 
@@ -97,7 +97,7 @@ public class GetBasicAssetInfoTest extends Wso2Base {
         // repository.
 
         AssetKey key = new AssetKey();
-        key.setAssetId("/_system/governance/services/http/www/ebay/com/marketplace/services/RepositoryMetadataService");
+        key.setAssetId("/_system/governance/trunk/services/com/ebay/www/marketplace/services/RepositoryMetadataService");
         GetBasicAssetInfoRequest GetBasicAssetInfoRequest = new GetBasicAssetInfoRequest();
         GetBasicAssetInfoRequest.setAssetKey(key);
 
@@ -118,7 +118,7 @@ public class GetBasicAssetInfoTest extends Wso2Base {
         // repository.
 
         AssetKey key = new AssetKey();
-        key.setAssetId("/_system/governance/testassets/libraryname/NonServiceAsset");
+        key.setAssetId("/_system/governance/trunk/testassets/libraryname/NonServiceAsset");
         GetBasicAssetInfoRequest GetBasicAssetInfoRequest = new GetBasicAssetInfoRequest();
         GetBasicAssetInfoRequest.setAssetKey(key);
 
@@ -139,7 +139,7 @@ public class GetBasicAssetInfoTest extends Wso2Base {
         BasicAssetInfo basic_info = response.getBasicAssetInfo();
 
         System.err.println(basic_info.getAssetName() + " version=" + response.getVersion());
-        assertEquals("/_system/governance/services/http/www/ebay/com/marketplace/services/RepositoryMetadataService",
+        assertEquals("/_system/governance/trunk/services/com/ebay/www/marketplace/services/RepositoryMetadataService",
                         basic_info.getAssetKey().getAssetId());
         assertEquals("RepositoryMetadataService", basic_info.getAssetKey().getAssetName());
         assertEquals("RepositoryMetadataService", basic_info.getAssetName());

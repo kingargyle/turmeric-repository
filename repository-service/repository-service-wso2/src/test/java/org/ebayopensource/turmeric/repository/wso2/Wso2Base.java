@@ -84,12 +84,12 @@ public class Wso2Base {
                             System.getProperty("org.ebayopensource.turmeric.repository.wso2.username"),
                             System.getProperty("org.ebayopensource.turmeric.repository.wso2.password"));
             String assetName = "RepositoryMetadataService";
-            String assetKey = "/_system/governance/services/http/www/ebay/com/marketplace/services/"
+            String assetKey = "/_system/governance/trunk/services/com/ebay/www/marketplace/services/"
                             + assetName;
             String serviceMetadata = null;
             String libraryName = "http://www.ebay.com/marketplace/services";
             String description = "The service description";
-            String wsdlArtifactId = "/_system/governance/wsdls/http/www/ebay/com/marketplace/services/RepositoryMetadataService.wsdl";
+            String wsdlArtifactId = "/_system/governance/trunk/wsdls/http/com/ebay/www/marketplace/services/RepositoryMetadataService.wsdl";
 
             if (!_registry.resourceExists(assetKey)) {
                 Resource asset = RSProviderUtil.newAssetResource();
@@ -141,7 +141,7 @@ public class Wso2Base {
                             System.getProperty("org.ebayopensource.turmeric.repository.wso2.username"),
                             System.getProperty("org.ebayopensource.turmeric.repository.wso2.password"));
             String assetName = "NonServiceAsset";
-            String assetKey = "/_system/governance/testassets/libraryname/" + assetName;
+            String assetKey = "/_system/governance/trunk/testassets/libraryname/" + assetName;
             String description = "The asset description";
             if (!_registry.resourceExists(assetKey)) {
                 Resource asset = RSProviderUtil.newAssetResource();
