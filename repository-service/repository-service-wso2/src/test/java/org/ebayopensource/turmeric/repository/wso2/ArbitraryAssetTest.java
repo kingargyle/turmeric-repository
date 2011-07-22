@@ -46,9 +46,9 @@ public class ArbitraryAssetTest extends Wso2Base {
     // First resource path must be the primary resource created by the test
     // in order for the assumption checks to work correctly.
     private static final String[] resources = {
-            "/_system/governance/arbitrary_assets/http/www/domain/com/arbitrary/ArbitraryAssetCompleteTest",
-            "/_system/governance/arbitrary_assets/http/www/domain/com/arbitrary/UpdatedArbitraryAssetCompleteTest",
-            "/_system/governance/endpoints/http/www/domain/com/arbitrary/url/ep-ArbitraryAssetCompleteTest", };
+            "/_system/governance/trunk/arbitrary_assets/com/domain/www/arbitrary/ArbitraryAssetCompleteTest",
+            "/_system/governance/trunk/arbitrary_assets/com/domain/www/arbitrary/UpdatedArbitraryAssetCompleteTest",
+            "/_system/governance/trunk/endpoints/com/domain/www/arbitrary/url/ep-ArbitraryAssetCompleteTest", };
 
     private static final String assetType = "Arbitrary Asset";
     private static final String assetName = "ArbitraryAssetCompleteTest";

@@ -12,6 +12,8 @@ package org.ebayopensource.turmeric.repository.wso2;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -318,34 +320,37 @@ public class RSProviderUtil {
 
 	private static String transformLibraryNameToWso2Path(Library library) {
 		String libraryName = library.getLibraryName();
-		String urlPart = extractUrlPart(libraryName);
-		if(!"".equals(urlPart)){//we need to extract/reverse the url
-			libraryName = libraryName.replace(urlPart, flipTokens(urlPart.replace("http://", "/"),"."));
+		String domainName = extractDomainName(libraryName);
+		if (domainName != null && !"".equals(domainName)) {// we need to extract/reverse the url
+			libraryName = libraryName.replace(domainName,
+					flipTokens(domainName, "."));
+			libraryName = libraryName.replace("http://", "");
 		}
 		return libraryName.replace(".", "/");
 	}
 
-	private static CharSequence flipTokens(String stringToFlip,
-			String separator) {
-		String[] tokens = stringToFlip.split("/");
+	private static CharSequence flipTokens(String stringToFlip, String separator) {
+		String[] tokens = stringToFlip.split("\\"+separator);
 		StringBuilder result = new StringBuilder();
-		for(int i = tokens.length-1; i >= 0; i--){
-			result.append(tokens[i]);
+		for (int i = tokens.length - 1; i >= 0; i--) {
+			result.append(tokens[i]).append(separator);
+		}
+		if(separator.equals(String.valueOf(result.charAt(result.length()-1)))){
+			result.deleteCharAt(result.length()-1);
 		}
 		return result.toString();
 	}
 
-	
+	private static String extractDomainName(String libraryName) {
 
-	private static String extractUrlPart(String libraryName) {
-		String regex = "\\(?\\b(http://|www[.])[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|]";
-		Pattern p = Pattern.compile(regex);
-		Matcher m = p.matcher(libraryName);
-		if (m.find()) {
-			String urlStr = m.group();
-			return urlStr;
+		String result = "";
+		try {
+			URI uri = new URI(libraryName);
+			result = uri.getHost();
+		} catch (URISyntaxException e) {
+			// don't do anything
 		}
-		return "";
+		return result;
 	}
 
 	/**
@@ -356,9 +361,9 @@ public class RSProviderUtil {
 		String type = path;
 		int systemRootLength = __systemRoot.length();
 		if (type.startsWith(__systemRoot)) {
-			type = Character.toUpperCase(type.charAt(systemRootLength))
-					+ type.substring(systemRootLength + 1);
-			type = type.substring(0, type.indexOf("/"));
+			type = Character.toUpperCase(type.charAt(systemRootLength+1))
+					+ type.substring(systemRootLength + 2);
+			type = type.substring(0, type.indexOf("/", 1));
 			if (type.endsWith("s")) {
 				type = type.substring(0, type.length() - 1);
 			}

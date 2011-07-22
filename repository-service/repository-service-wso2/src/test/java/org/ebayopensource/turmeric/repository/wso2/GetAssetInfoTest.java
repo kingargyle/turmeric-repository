@@ -104,7 +104,7 @@ public class GetAssetInfoTest extends Wso2Base {
 
         AssetKey key = new AssetKey();
         Library lib = new Library();
-        lib.setLibraryId("/_system/governance/services/http/www/ebay/com/marketplace/services");
+        lib.setLibraryId("/_system/governance/trunk/services/com/ebay/www/marketplace/services");
         key.setLibrary(lib);
         key.setAssetName("RepositoryMetadataService");
 
@@ -125,7 +125,7 @@ public class GetAssetInfoTest extends Wso2Base {
         // repository.
 
         AssetKey key = new AssetKey();
-        key.setAssetId("/_system/governance/services/http/www/ebay/com/marketplace/services/RepositoryMetadataService");
+        key.setAssetId("/_system/governance/trunk/services/com/ebay/www/marketplace/services/RepositoryMetadataService");
         GetAssetInfoRequest GetAssetInfoRequest = new GetAssetInfoRequest();
         GetAssetInfoRequest.setAssetKey(key);
 
@@ -145,7 +145,7 @@ public class GetAssetInfoTest extends Wso2Base {
         BasicAssetInfo basic_info = info.getBasicAssetInfo();
 
         System.err.println(basic_info.getAssetName() + " version=" + response.getVersion());
-        assertEquals("/_system/governance/services/http/www/ebay/com/marketplace/services/RepositoryMetadataService",
+        assertEquals("/_system/governance/trunk/services/com/ebay/www/marketplace/services/RepositoryMetadataService",
                         basic_info.getAssetKey().getAssetId());
         assertEquals("RepositoryMetadataService", basic_info.getAssetKey().getAssetName());
         assertEquals("RepositoryMetadataService", basic_info.getAssetName());

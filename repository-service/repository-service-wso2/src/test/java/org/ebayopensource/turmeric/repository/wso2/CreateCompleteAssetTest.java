@@ -46,10 +46,10 @@ public class CreateCompleteAssetTest extends Wso2Base {
     // First resource path must be the primary resource created by the test
     // in order for the assumption checks to work correctly.
     private static final String[] resources = {
-            "/_system/governance/services/http/www/domain/com/assets/CreateCompleteAssetTest",
-            "/_system/governance/endpoints/http/www/domain/com/ep-CreateCompleteAssetTest", };
+            "/_system/governance/trunk/services/com/domain/www/assets/CreateCompleteAssetTest",
+            "/_system/governance/trunk/endpoints/com/domain/www/ep-CreateCompleteAssetTest", };
 
-    private static final String dstAsset = "/_system/governance/services/http/www/domain/com/marketplace/services/RepositoryMetadataService";
+    private static final String dstAsset = "/_system/governance/trunk/services/com/domain/www/marketplace/services/RepositoryMetadataService";
    
     private static final String assetName = "CreateCompleteAssetTest";
     private static final String assetDesc = "CreateCompleteAssetTest description";

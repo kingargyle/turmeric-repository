@@ -29,7 +29,7 @@ import org.ebayopensource.turmeric.repository.v2.services.Library;
  * 
  */
 public class CreateAssetTest extends Wso2Base {
-    private static final String resourcePath = "/_system/governance/services/http/www/domain/com/assets/CreateAssetTest";
+    private static final String resourcePath = "/_system/governance/trunk/services/com/domain/www/assets/CreateAssetTest";
     private static final String assetName = "CreateAssetTest";
     private static final String assetDesc = "CreateAssetTest description";
     private static final String libraryName = "http://www.domain.com/assets";
