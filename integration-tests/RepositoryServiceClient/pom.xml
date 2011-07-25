@@ -33,6 +33,7 @@
 					</includes>
 					<printSummary>tue</printSummary>
 					<summaryFile>target/failsafe-reports/failsafe-summary.xml</summaryFile>
+					<testFailureIgnore>true</testFailureIgnore>
 				</configuration>
 				<executions>
 					<execution>
