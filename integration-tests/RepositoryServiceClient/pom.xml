@@ -258,7 +258,7 @@
 		<org.ebayopensource.turmeric.repository.wso2.url>https://localhost:9443/registry/</org.ebayopensource.turmeric.repository.wso2.url>
 		<org.ebayopensource.turmeric.repository.wso2.username>admin</org.ebayopensource.turmeric.repository.wso2.username>
 		<org.ebayopensource.turmeric.repository.wso2.password>admin</org.ebayopensource.turmeric.repository.wso2.password>
-		<javax.net.ssl.trustStore>client-truststore.jks</javax.net.ssl.trustStore>
+		<javax.net.ssl.trustStore>${basedir}/client-truststore.jks</javax.net.ssl.trustStore>
 		<javax.net.ssl.trustStorePassword>wso2carbon</javax.net.ssl.trustStorePassword>
 		<javax.net.ssl.trustStoreType>JKS</javax.net.ssl.trustStoreType>
 	</properties>
