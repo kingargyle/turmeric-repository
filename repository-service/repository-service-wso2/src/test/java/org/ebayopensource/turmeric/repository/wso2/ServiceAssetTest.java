@@ -45,9 +45,9 @@ public class ServiceAssetTest extends Wso2Base {
     // First resource path must be the primary resource created by the test
     // in order for the assumption checks to work correctly.
     private static final String[] resources = {
-            "/_system/governance/services/http/www/domain/com/services/ServiceAssetCompleteTest",
-            "/_system/governance/services/http/www/domain/com/services/UpdatedServiceAssetCompleteTest",
-            "/_system/governance/endpoints/http/www/domain/com/ep-ServiceAssetCompleteTest", };
+            "/_system/governance/trunk/services/com/domain/www/services/ServiceAssetCompleteTest",
+            "/_system/governance/trunk/services/com/domain/www/services/UpdatedServiceAssetCompleteTest",
+            "/_system/governance/trunk/endpoints/com/domain/www/ep-ServiceAssetCompleteTest", };
 
     private static final String assetType = "Service";
     private static final String assetName = "ServiceAssetCompleteTest";
