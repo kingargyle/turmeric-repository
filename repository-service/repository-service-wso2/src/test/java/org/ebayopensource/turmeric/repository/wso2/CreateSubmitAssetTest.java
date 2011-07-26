@@ -47,10 +47,10 @@ public class CreateSubmitAssetTest extends Wso2Base {
     // First resource path must be the primary resource created by the test
     // in order for the assumption checks to work correctly.
     private static final String[] resources = {
-            "/_system/governance/services/http/www/domain/com/assets/CreateSubmitAssetTest",
-            "/_system/governance/endpoints/http/www/domain/com/ep-CreateSubmitAssetTest", };
+            BASE + "/services/http/www/domain/com/assets/CreateSubmitAssetTest",
+            BASE + "/endpoints/http/www/domain/com/ep-CreateSubmitAssetTest", };
 
-    private static final String dstAsset = "/_system/governance/services/http/www/domain/com/marketplace/services/RepositoryMetadataService";
+    private static final String dstAsset = BASE + "/services/http/www/domain/com/marketplace/services/RepositoryMetadataService";
    
     private static final String assetName = "CreateSubmitAssetTest";
     private static final String assetDesc = "CreateSubmitAssetTest description";

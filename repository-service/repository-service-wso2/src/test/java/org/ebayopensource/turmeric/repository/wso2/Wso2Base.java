@@ -15,6 +15,7 @@ import static org.junit.Assert.fail;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
@@ -46,10 +47,13 @@ import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
 import org.ebayopensource.turmeric.repository.v2.services.ExtendedAssetInfo;
 import org.ebayopensource.turmeric.repository.v2.services.FlattenedRelationship;
 import org.ebayopensource.turmeric.repository.v2.services.Relation;
+import org.ebayopensource.turmeric.repository.wso2.utils.AbstractCarbonIntegrationTestCase;
+import org.junit.Before;
 
 
 
-public class Wso2Base {
+public class Wso2Base extends AbstractCarbonIntegrationTestCase {
+	
     static {
         System.setProperty("javax.net.ssl.trustStore", new File(
                         "src/main/resources/client-truststore.jks").getAbsolutePath());
@@ -60,7 +64,16 @@ public class Wso2Base {
                         "https://127.0.0.1:9443/registry");
         System.setProperty("org.ebayopensource.turmeric.repository.wso2.username", "admin");
         System.setProperty("org.ebayopensource.turmeric.repository.wso2.password", "admin");
+    }
+    
+    public static final String BASE = "/_system/governance/trunk";
+    
+    @Before
+    public void setUp() throws Exception {
+    	super.setUp();
+    	
         createLifecycleInfoInWso2();
+    	
     }
 
     /**
@@ -128,7 +141,6 @@ public class Wso2Base {
             }
         }
         catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -151,7 +163,6 @@ public class Wso2Base {
             }
         }
         catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -351,4 +362,9 @@ public class Wso2Base {
         
         return;
     }
+
+	@Override
+	protected void copyArtifacts() throws IOException {
+		
+	}
 }

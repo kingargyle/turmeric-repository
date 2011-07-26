@@ -9,9 +9,11 @@
 
 package org.ebayopensource.turmeric.repository.wso2;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assume.assumeTrue;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.wso2.carbon.registry.app.RemoteRegistry;
@@ -34,8 +36,10 @@ public class CreateAssetTest extends Wso2Base {
     private static final String assetDesc = "CreateAssetTest description";
     private static final String libraryName = "http://www.domain.com/assets";
 
-    @BeforeClass
-    public static void checkRepository() {
+    @Before
+    public void setUp() throws Exception {
+    	super.setUp();
+    	
         boolean exists = false;
         try {
             exists = RSProviderUtil.getRegistry().resourceExists("/");
@@ -43,7 +47,7 @@ public class CreateAssetTest extends Wso2Base {
         catch (Exception ex) {
         }
 
-        assumeTrue(exists);
+        assertTrue(exists);
     }
 
     private CreateAssetResponse createAsset() {
@@ -78,7 +82,7 @@ public class CreateAssetTest extends Wso2Base {
         }
         catch (RegistryException e) {
         }
-        assumeTrue(!exists);
+        assertTrue(!exists);
 
         CreateAssetResponse response = createAsset();
 
@@ -96,7 +100,7 @@ public class CreateAssetTest extends Wso2Base {
         }
         catch (RegistryException e) {
         }
-        assumeTrue(exists);
+        assertTrue(exists);
 
         CreateAssetResponse response = createAsset();
 

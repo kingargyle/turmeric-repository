@@ -127,7 +127,10 @@ import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositorySer
  * 
  */
 public class RepositoryServiceProviderImpl implements RepositoryServiceProvider {
-    /**
+	
+    private static final String _SYSTEM_GOVERNANCE = "/_system/governance/trunk";
+
+	/**
      * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#getService(org.ebayopensource.turmeric.repository.v1.services.GetServiceRequest)
      */
     @Override
@@ -1044,14 +1047,14 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
             Set<String> libraryIdentifierCollection = new HashSet<String>();
 
             RemoteRegistry wso2 = RSProviderUtil.getRegistry();
-            String prefix = "/_system/governance";
+            String prefix = _SYSTEM_GOVERNANCE;
             Resource services = wso2.get(prefix);
 
             RSProviderUtil.findLibraries((Collection) services, libraryIdentifierCollection);
 
             for (String libraryIdentifier : libraryIdentifierCollection) {
             	//exclude repository libraryIdentifier, being for wso2 internal operations only
-            	if(libraryIdentifier.startsWith("/_system/governance/repository")){
+            	if(libraryIdentifier.startsWith(_SYSTEM_GOVERNANCE + "/repository")){
             		continue;
             	}
                 String name = libraryIdentifier;
