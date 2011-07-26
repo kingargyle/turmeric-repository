@@ -22,5 +22,6 @@
 	<modules>
 		<module>AssertionsServiceTests</module>
                 <module>RepositoryServiceClient</module>
+                <module>wso2-test-utils</module>
 	</modules>
 </project>
