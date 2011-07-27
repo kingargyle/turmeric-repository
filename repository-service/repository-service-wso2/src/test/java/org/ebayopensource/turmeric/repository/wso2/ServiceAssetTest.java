@@ -15,6 +15,7 @@ import static org.junit.Assume.assumeTrue;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.wso2.carbon.registry.app.RemoteRegistry;
 import org.wso2.carbon.registry.core.Resource;
@@ -40,6 +41,7 @@ import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetResponse;
 
 /**
+ * @deprecated  This is being removed for version 2.0.
  */
 public class ServiceAssetTest extends Wso2Base {
     // First resource path must be the primary resource created by the test
@@ -158,6 +160,7 @@ public class ServiceAssetTest extends Wso2Base {
     }
 
     @Test
+    @Ignore
     public void testCreate() throws Exception {
         boolean clean = false;
         try {
@@ -180,6 +183,7 @@ public class ServiceAssetTest extends Wso2Base {
     }
 
     @Test
+    @Ignore
     public void testGet() throws Exception {
         boolean clean = false;
         try {
@@ -216,6 +220,7 @@ public class ServiceAssetTest extends Wso2Base {
     }
 
     @Test
+    @Ignore
     public void testBasicUpdate() throws Exception {
         boolean clean = false;
         try {

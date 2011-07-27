@@ -15,6 +15,7 @@ import static org.junit.Assume.assumeTrue;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.wso2.carbon.registry.app.RemoteRegistry;
 import org.wso2.carbon.registry.core.exceptions.RegistryException;
@@ -245,6 +246,7 @@ public class UpdateAssetAttributesTest extends Wso2Base {
     }
 
     @Test
+    @Ignore
     public void updateReplaceTest() throws Exception {
         boolean clean = false;
         try {
@@ -269,6 +271,7 @@ public class UpdateAssetAttributesTest extends Wso2Base {
     }
 
     @Test
+    @Ignore
     public void mergeCompleteAssetTest() throws Exception {
         boolean clean = false;
         try {
