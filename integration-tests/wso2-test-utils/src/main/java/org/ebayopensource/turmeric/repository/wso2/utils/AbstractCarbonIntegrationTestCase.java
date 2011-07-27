@@ -75,7 +75,7 @@ public abstract class AbstractCarbonIntegrationTestCase {
 
 	public String downloadZip() throws Exception {
 		BufferedInputStream in = new BufferedInputStream(new URL(
-				"http://www.ebayopensource.org/hudson/job/WSO2v40-Download/1/artifact/wso2greg-4.0.0.zip").openStream());
+				"http://dist.wso2.org/products/registry/4.0.0/wso2greg-4.0.0.zip").openStream());
 		String location = System.getProperty("java.io.tmpdir") + "/carbon.zip";
 
 		if (!new File(location).exists()) {
