@@ -166,6 +166,7 @@
 				<configuration>
 					<testFailureIgnore>true</testFailureIgnore>
 					<forkMode>always</forkMode>
+					<runOrder>random</runOrder>
 				</configuration>
 			</plugin>
 		</plugins>

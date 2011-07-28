@@ -16,7 +16,6 @@
 
 package org.ebayopensource.turmeric.repository.wso2.utils;
 
-import org.apache.commons.io.FileUtils;
 import org.wso2.carbon.base.ServerConfigurationException;
 import org.wso2.carbon.utils.ArchiveManipulator;
 import org.wso2.carbon.utils.FileManipulator;
@@ -25,6 +24,7 @@ import org.wso2.carbon.utils.ServerConstants;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
@@ -130,11 +130,12 @@ public class ServerUtils {
     public synchronized static void shutdown() throws Exception {
         if (process != null) {
             process.destroy();
+            InputStream inputstream = null;
             try {
                 String temp;
                 process.destroy();
-                BufferedReader reader = new BufferedReader(
-                        new InputStreamReader(process.getInputStream()));
+                inputstream = process.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputstream));
                 long time = System.currentTimeMillis() + DEFAULT_START_STOP_WAIT_MS;
                 while ((temp = reader.readLine()) != null && System.currentTimeMillis() < time) {
                     if (temp.contains(SERVER_SHUTDOWN_MESSAGE)) {
@@ -143,12 +144,20 @@ public class ServerUtils {
                 }
 
             } catch (IOException ignored) {
+            } finally {
+            	if (inputstream != null) {
+            		inputstream.close();
+            	}
             }
+
             try {
                 consoleLogPrinter.interrupt();
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            
+            
+            
             consoleLogPrinter = null;
             process = null;
             System.clearProperty(ServerConstants.CARBON_HOME);

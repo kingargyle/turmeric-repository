@@ -9,6 +9,7 @@
 
 package org.ebayopensource.turmeric.repository.wso2;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assume.assumeTrue;
 
@@ -54,10 +55,10 @@ public class AssetLifeCycleTest extends Wso2Base {
     // First resource path must be the primary resource created by the test
     // in order for the assumption checks to work correctly.
     private static final String[] resources = {
-            "/_system/governance/services/http/www/domain/com/assets/AssetLifeCycleTest",
-            "/_system/governance/endpoints/http/www/domain/com/ep-AssetLifeCycleTest", };
+            "/_system/governance/trunk/services/http/www/domain/com/assets/AssetLifeCycleTest",
+            "/_system/governance/trunk/endpoints/http/www/domain/com/ep-AssetLifeCycleTest", };
 
-    private static final String dstAsset = "/_system/governance/services/http/www/domain/com/marketplace/services/RepositoryMetadataService";
+    private static final String dstAsset = "/_system/governance/trunk/services/http/www/domain/com/marketplace/services/RepositoryMetadataService";
    
     private static final String assetName = "AssetLifeCycleTest";
     private static final String assetDesc = "AssetLifeCycleTest description";
@@ -66,7 +67,10 @@ public class AssetLifeCycleTest extends Wso2Base {
     private static final String baseUrl = "http://www.domain.com/assets/";
 
     @Before
-    public void checkRepository() {
+    @Override
+    public void setUp() throws Exception {
+    	super.setUp();
+    	
         boolean exists = false;
         try {
             RemoteRegistry wso2 = RSProviderUtil.getRegistry();
@@ -81,7 +85,7 @@ public class AssetLifeCycleTest extends Wso2Base {
         catch (Exception ex) {
         }
 
-        assumeTrue(exists);
+        assertTrue(exists);
     }
 
     private CreateCompleteAssetResponse createAsset() throws Exception {
@@ -177,7 +181,7 @@ public class AssetLifeCycleTest extends Wso2Base {
         }
         catch (RegistryException e) {
         }
-        assumeTrue(clean);
+        assertTrue(clean);
 
         RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
         RemoteRegistry wso2 = RSProviderUtil.getRegistry();
@@ -227,7 +231,7 @@ public class AssetLifeCycleTest extends Wso2Base {
         }
         catch (RegistryException e) {
         }
-        assumeTrue(clean);
+        assertTrue(clean);
 
         RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
         RemoteRegistry wso2 = RSProviderUtil.getRegistry();

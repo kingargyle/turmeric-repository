@@ -35,10 +35,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 
 /**
  * This is the base class of all JUnit TestCases which require starting of a

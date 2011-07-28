@@ -9,11 +9,11 @@
 
 package org.ebayopensource.turmeric.repository.wso2;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assume.assumeTrue;
+import static org.junit.Assert.*;
 
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -47,10 +47,10 @@ public class UpdateAssetAttributesTest extends Wso2Base {
     // First resource path must be the primary resource created by the test
     // in order for the assumption checks to work correctly.
     private static final String[] resources = {
-            "/_system/governance/services/http/www/ebay/com/marketplace/services/UpdateAssetAttributesTest",
-            "/_system/governance/endpoints/http/localhost:8080/ep-UpdateAssetAttributesTest",
-            "/_system/governance/endpoints/http/localhost:8080/ep-UpdateAssetAttributesTest-updated",
-            "/_system/governance/endpoints/http/localhost:8080/ep-UpdateAssetAttributesTest-updated-merge" };
+            "/_system/governance/trunk/services/http/www/ebay/com/marketplace/services/UpdateAssetAttributesTest",
+            "/_system/governance/trunk/endpoints/http/localhost:8080/ep-UpdateAssetAttributesTest",
+            "/_system/governance/trunk/endpoints/http/localhost:8080/ep-UpdateAssetAttributesTest-updated",
+            "/_system/governance/trunk/endpoints/http/localhost:8080/ep-UpdateAssetAttributesTest-updated-merge" };
 
     private static final String assetName = "UpdateAssetAttributesTest";
     private static final String assetDesc = "UpdateAssetAttributesTest description";
@@ -60,7 +60,10 @@ public class UpdateAssetAttributesTest extends Wso2Base {
     private static final Boolean booleanProperty = Boolean.FALSE;
 
     @Before
-    public void checkRepository() {
+    @Override
+    public void setUp() throws Exception {
+    	super.setUp();
+    	
         boolean exists = false;
         try {
             RemoteRegistry wso2 = RSProviderUtil.getRegistry();
@@ -75,7 +78,19 @@ public class UpdateAssetAttributesTest extends Wso2Base {
         catch (Exception ex) {
         }
 
-        assumeTrue(exists);
+        assertTrue(exists);
+    }
+    
+    @After
+    public void cleanUp() throws Exception {
+        RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+
+        for (String resource : resources) {
+            if (wso2.resourceExists(resource)) {
+                wso2.delete(resource);
+            }
+        }
+    	
     }
 
     private CreateCompleteAssetResponse createAsset() throws Exception {
@@ -246,7 +261,6 @@ public class UpdateAssetAttributesTest extends Wso2Base {
     }
 
     @Test
-    @Ignore
     public void updateReplaceTest() throws Exception {
         boolean clean = false;
         try {
@@ -255,7 +269,7 @@ public class UpdateAssetAttributesTest extends Wso2Base {
         }
         catch (RegistryException e) {
         }
-        assumeTrue(clean);
+        assertTrue(clean);
 
         // first, create the complete asset
         CreateCompleteAssetResponse response = createAsset();
@@ -271,7 +285,6 @@ public class UpdateAssetAttributesTest extends Wso2Base {
     }
 
     @Test
-    @Ignore
     public void mergeCompleteAssetTest() throws Exception {
         boolean clean = false;
         try {
@@ -280,7 +293,7 @@ public class UpdateAssetAttributesTest extends Wso2Base {
         }
         catch (RegistryException e) {
         }
-        assumeTrue(clean);
+        assertTrue(clean);
 
         // first, create the complete asset
         CreateCompleteAssetResponse response = createAsset();
