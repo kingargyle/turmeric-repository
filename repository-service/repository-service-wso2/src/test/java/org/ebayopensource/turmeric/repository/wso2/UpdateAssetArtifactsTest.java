@@ -16,6 +16,8 @@ import static org.junit.Assume.assumeTrue;
 
 import java.util.List;
 
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -23,6 +25,7 @@ import org.wso2.carbon.registry.app.RemoteRegistry;
 import org.wso2.carbon.registry.core.exceptions.RegistryException;
 
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
+import org.ebayopensource.turmeric.common.v1.types.CommonErrorData;
 import org.ebayopensource.turmeric.repository.v2.services.Artifact;
 import org.ebayopensource.turmeric.repository.v2.services.ArtifactInfo;
 import org.ebayopensource.turmeric.repository.v2.services.ArtifactValueType;
@@ -40,6 +43,7 @@ import org.ebayopensource.turmeric.repository.v2.services.LockAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.LockAssetResponse;
 import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetArtifactsRequest;
 import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetArtifactsResponse;
+import org.ebayopensource.turmeric.repository.wso2.utils.ServerUtils;
 
 /**
  * @author mgorovoy
@@ -49,10 +53,10 @@ public class UpdateAssetArtifactsTest extends Wso2Base {
     // First resource path must be the primary resource created by the test
     // in order for the assumption checks to work correctly.
     private static final String[] resources = {
-            "/_system/governance/services/http/www/domain/com/assets/UpdateAssetArtifactsTest",
-            "/_system/governance/endpoints/http/www/domain/com/ep-UpdateAssetArtifactsTest",
-            "/_system/governance/endpoints/http/www/domain/com/ep-UpdateAssetArtifactsTest-updated",
-            "/_system/governance/endpoints/http/www/domain/com/ep-UpdateAssetArtifactsTest-updated-merge" };
+            "/_system/governance/trunk/services/http/www/domain/com/assets/UpdateAssetArtifactsTest",
+            "/_system/governance/trunk/endpoints/http/www/domain/com/ep-UpdateAssetArtifactsTest",
+            "/_system/governance/trunk/endpoints/http/www/domain/com/ep-UpdateAssetArtifactsTest-updated",
+            "/_system/governance/trunk/endpoints/http/www/domain/com/ep-UpdateAssetArtifactsTest-updated-merge" };
 
     private static final String assetName = "UpdateAssetArtifactsTest";
     private static final String assetDesc = "UpdateAssetArtifactsTest description";
@@ -60,7 +64,10 @@ public class UpdateAssetArtifactsTest extends Wso2Base {
     private static final String baseUrl = "http://www.domain.com/assets/";
 
     @Before
-    public void checkRepository() {
+    @Override
+    public void setUp() throws Exception {
+    	super.setUp();
+    	
         boolean exists = false;
         try {
             RemoteRegistry wso2 = RSProviderUtil.getRegistry();
@@ -77,6 +84,11 @@ public class UpdateAssetArtifactsTest extends Wso2Base {
 
         assumeTrue(exists);
     }
+    
+    @After
+	public void shutDown() throws Exception {
+		ServerUtils.shutdown();
+	}
 
     private CreateCompleteAssetResponse createAsset() throws Exception {
         AssetKey key = new AssetKey();
@@ -211,7 +223,6 @@ public class UpdateAssetArtifactsTest extends Wso2Base {
     }
 
     @Test
-    @Ignore
     public void updateReplaceTest() throws Exception {
         boolean clean = false;
         try {
@@ -220,7 +231,7 @@ public class UpdateAssetArtifactsTest extends Wso2Base {
         }
         catch (RegistryException e) {
         }
-        assumeTrue(clean);
+        assertTrue(clean);
 
         // first, create the complete asset
         CreateCompleteAssetResponse response = createAsset();
@@ -249,7 +260,6 @@ public class UpdateAssetArtifactsTest extends Wso2Base {
     }
 
     @Test
-    @Ignore
     public void mergeCompleteAssetTest() throws Exception {
         boolean clean = false;
         try {
@@ -258,12 +268,17 @@ public class UpdateAssetArtifactsTest extends Wso2Base {
         }
         catch (RegistryException e) {
         }
-        assumeTrue(clean);
+        assertTrue(clean);
 
         // first, create the complete asset
         CreateCompleteAssetResponse response = createAsset();
-        assertEquals(AckValue.SUCCESS, response.getAck());
-        assertEquals(null, response.getErrorMessage());
+        String errorMessage = null;
+        if (!response.getAck().equals(AckValue.SUCCESS)) {
+        	for (CommonErrorData error : response.getErrorMessage().getError()) {
+        		errorMessage = error.getMessage();
+        		fail("Unable to complete asset creation. " + errorMessage);
+        	}
+        }
 
         // then, update the complete asset, replacing all its related objects
         UpdateAssetArtifactsResponse responseUpdate = mergeAsset(response.getAssetKey().getAssetId());
