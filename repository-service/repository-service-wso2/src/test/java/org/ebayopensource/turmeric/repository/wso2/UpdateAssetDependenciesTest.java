@@ -9,8 +9,7 @@
 
 package org.ebayopensource.turmeric.repository.wso2;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assume.assumeTrue;
+import static org.junit.Assert.*;
 
 import java.util.List;
 
@@ -52,12 +51,12 @@ public class UpdateAssetDependenciesTest extends Wso2Base {
     // First resource path must be the primary resource created by the test
     // in order for the assumption checks to work correctly.
     private static final String[] resources = {
-            "/_system/governance/services/http/www/ebay/com/marketplace/services/UpdateAssetDependenciesTest"
+            "/_system/governance/trunk/services/http/www/ebay/com/marketplace/services/UpdateAssetDependenciesTest"
     };
 
     private static final String[] dstAssets = {
-        "/_system/governance/services/http/www/ebay/com/marketplace/services/RepositoryService",
-        "/_system/governance/services/http/www/ebay/com/marketplace/services/RepositoryMetadataService",
+        "/_system/governance/trunk/services/http/www/ebay/com/marketplace/services/RepositoryService",
+        "/_system/governance/trunk/services/http/www/ebay/com/marketplace/services/RepositoryMetadataService",
     };
     
     private static final String assetName = "UpdateAssetDependenciesTest";
@@ -66,7 +65,9 @@ public class UpdateAssetDependenciesTest extends Wso2Base {
     private static final String baseUrl = "http://www.domain.com/services/";
 
     @Before
-    public void checkRepository() {
+    public void setUp() throws Exception {
+    	super.setUp();
+    	
         boolean exists = false;
         try {
             RemoteRegistry wso2 = RSProviderUtil.getRegistry();
@@ -81,7 +82,7 @@ public class UpdateAssetDependenciesTest extends Wso2Base {
         catch (Exception ex) {
         }
 
-        assumeTrue(exists);
+        assertTrue(exists);
     }
 
     private CreateCompleteAssetResponse createAsset() throws Exception {
@@ -226,7 +227,6 @@ public class UpdateAssetDependenciesTest extends Wso2Base {
     }
 
     @Test
-    @Ignore
     public void updateTest() throws Exception {
         boolean clean = false;
         try {
@@ -235,7 +235,7 @@ public class UpdateAssetDependenciesTest extends Wso2Base {
         }
         catch (RegistryException e) {
         }
-        assumeTrue(clean);
+        assertTrue(clean);
 
         // first, create the complete asset
         CreateCompleteAssetResponse response = createAsset();

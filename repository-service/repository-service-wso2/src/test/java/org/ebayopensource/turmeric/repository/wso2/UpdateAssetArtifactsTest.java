@@ -85,11 +85,6 @@ public class UpdateAssetArtifactsTest extends Wso2Base {
         assumeTrue(exists);
     }
     
-    @After
-	public void shutDown() throws Exception {
-		ServerUtils.shutdown();
-	}
-
     private CreateCompleteAssetResponse createAsset() throws Exception {
         AssetKey key = new AssetKey();
         Library lib = new Library();
@@ -223,7 +218,6 @@ public class UpdateAssetArtifactsTest extends Wso2Base {
     }
 
     @Test
-    @Ignore
     public void updateReplaceTest() throws Exception {
         boolean clean = false;
         try {
@@ -261,7 +255,6 @@ public class UpdateAssetArtifactsTest extends Wso2Base {
     }
 
     @Test
-    @Ignore
     public void mergeCompleteAssetTest() throws Exception {
         boolean clean = false;
         try {

@@ -9,11 +9,10 @@
 
 package org.ebayopensource.turmeric.repository.wso2;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assume.assumeTrue;
+import static org.junit.Assert.*;
 
-import org.junit.BeforeClass;
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.wso2.carbon.registry.app.RemoteRegistry;
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
@@ -30,14 +29,15 @@ import org.ebayopensource.turmeric.repository.v2.services.RemoveAssetResponse;
  * 
  */
 public class RemoveAssetTest extends Wso2Base {
-    private static final String[] resources = {"/_system/governance/services/http/www/domain/com/assets/RemoveAssetTest"};
+    private static final String[] resources = {"/_system/governance/trunk/services/http/www/domain/com/assets/RemoveAssetTest"};
     private static final String assetName = "RemoveAssetTest";
     private static final String assetDesc = "RemoveAssetTest description";
     private static final String libraryName = "http://www.domain.com/assets";
 
 
-    @BeforeClass
-    public static void checkRepository() {
+    @Before
+    public void setUp() throws Exception {
+    	super.setUp();
         boolean exists = false;
         try {
             RemoteRegistry wso2 = RSProviderUtil.getRegistry();
@@ -52,7 +52,7 @@ public class RemoveAssetTest extends Wso2Base {
         catch (Exception ex) {
         }
 
-        assumeTrue(exists);
+        assertTrue(exists);
     }
 
 
@@ -82,6 +82,7 @@ public class RemoveAssetTest extends Wso2Base {
     }
     
     @Test
+    @Ignore
     public void removeAssetTest() {
         CreateAssetResponse response = createAsset();
         

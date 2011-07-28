@@ -69,7 +69,7 @@ public abstract class AbstractCarbonIntegrationTestCase {
 	@AfterClass
 	public static void tearDown() throws Exception {
 		ServerUtils.shutdown();
-		Thread.sleep(3000L);
+		Thread.sleep(15000L);
 	}
 
 	public String downloadZip() throws Exception {

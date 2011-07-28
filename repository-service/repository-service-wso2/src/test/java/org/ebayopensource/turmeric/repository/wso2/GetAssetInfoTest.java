@@ -9,11 +9,9 @@
 
 package org.ebayopensource.turmeric.repository.wso2;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.junit.Assume.assumeTrue;
+import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -29,8 +27,8 @@ import org.ebayopensource.turmeric.repository.v2.services.GetAssetInfoResponse;
 import org.ebayopensource.turmeric.repository.v2.services.Library;
 
 public class GetAssetInfoTest extends Wso2Base {
-    @BeforeClass
-    public static void checkRepository() {
+    @Before
+    public void setUp() {
         boolean exists = false;
         try {
             exists = RSProviderUtil.getRegistry().resourceExists("/");
@@ -38,7 +36,7 @@ public class GetAssetInfoTest extends Wso2Base {
         catch (Exception ex) {
         }
 
-        assumeTrue(exists);
+        assertTrue(exists);
         try {
             createRequiredAssetsInWso2();
         }

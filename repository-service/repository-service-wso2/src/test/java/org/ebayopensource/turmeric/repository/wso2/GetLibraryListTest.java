@@ -9,14 +9,12 @@
 
 package org.ebayopensource.turmeric.repository.wso2;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.junit.Assume.assumeTrue;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -26,8 +24,10 @@ import org.ebayopensource.turmeric.repository.v2.services.GetLibraryListResponse
 import org.ebayopensource.turmeric.repository.v2.services.Library;
 
 public class GetLibraryListTest extends Wso2Base {
-	@BeforeClass
-    public static void checkRepository() {
+	@Before
+    public void setUp() throws Exception {
+		super.setUp();
+		
         boolean exists = false;
         try {
             exists = RSProviderUtil.getRegistry().resourceExists("/");
@@ -35,7 +35,7 @@ public class GetLibraryListTest extends Wso2Base {
         catch (Exception ex) {
         }
 
-        assumeTrue(exists);
+        assertTrue(exists);
         try {
             createRequiredAssetsInWso2();
         }

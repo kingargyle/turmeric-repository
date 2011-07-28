@@ -15,6 +15,7 @@ import static org.junit.Assume.assumeTrue;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.wso2.carbon.registry.app.RemoteRegistry;
 import org.wso2.carbon.registry.core.exceptions.RegistryException;

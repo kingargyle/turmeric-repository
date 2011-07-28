@@ -50,10 +50,10 @@ public class UpdateCompleteAssetTest extends Wso2Base {
     // First resource path must be the primary resource created by the test
     // in order for the assumption checks to work correctly.
     private static final String[] resources = {
-            "/_system/governance/services/http/www/domain/com/assets/UpdateCompleteAssetTest",
-            "/_system/governance/endpoints/http/www/domain/com/ep-UpdateCompleteAssetTest",
-            "/_system/governance/endpoints/http/www/domain/com/ep-UpdateCompleteAssetTest-updated",
-            "/_system/governance/endpoints/http/www/domain/com/ep-UpdateCompleteAssetTest-updated-merge" };
+            "/_system/governance/trunk/services/http/www/domain/com/assets/UpdateCompleteAssetTest",
+            "/_system/governance/trunk/endpoints/http/www/domain/com/ep-UpdateCompleteAssetTest",
+            "/_system/governance/trunk/endpoints/http/www/domain/com/ep-UpdateCompleteAssetTest-updated",
+            "/_system/governance/trunk/endpoints/http/www/domain/com/ep-UpdateCompleteAssetTest-updated-merge" };
 
     private static final String assetName = "UpdateCompleteAssetTest";
     private static final String assetDesc = "UpdateCompleteAssetTest description";
@@ -300,7 +300,7 @@ public class UpdateCompleteAssetTest extends Wso2Base {
         }
         catch (RegistryException e) {
         }
-        assumeTrue(clean);
+        assertTrue(clean);
 
         // first, create the complete asset
         CreateCompleteAssetResponse response = createAsset();
@@ -337,7 +337,7 @@ public class UpdateCompleteAssetTest extends Wso2Base {
         }
         catch (RegistryException e) {
         }
-        assumeTrue(clean);
+        assertTrue(clean);
 
         // first, create the complete asset
         CreateCompleteAssetResponse response = createAsset();

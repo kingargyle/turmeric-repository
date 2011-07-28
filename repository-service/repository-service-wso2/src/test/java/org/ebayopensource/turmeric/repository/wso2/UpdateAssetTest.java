@@ -33,8 +33,8 @@ public class UpdateAssetTest extends Wso2Base {
     // First resource path must be the primary resource created by the test
     // in order for the assumption checks to work correctly.
     private static final String[] resources = {
-            "/_system/governance/services/http/www/ebay/com/marketplace/services/UpdateAssetTest",
-            "/_system/governance/services/http/www/ebay/com/marketplace/services/UpdatedUpdateAssetTest", };
+            "/_system/governance/trunk/services/http/www/ebay/com/marketplace/services/UpdateAssetTest",
+            "/_system/governance/trunk/services/http/www/ebay/com/marketplace/services/UpdatedUpdateAssetTest", };
 
     private static final String assetName = "UpdateAssetTest";
     private static final String assetDesc = "UpdateAssetTest description";

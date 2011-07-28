@@ -10,13 +10,13 @@
 package org.ebayopensource.turmeric.repository.wso2;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assume.assumeTrue;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.wso2.carbon.registry.app.RemoteRegistry;
@@ -60,8 +60,8 @@ public class CreateSubmitAssetTest extends Wso2Base {
     private static final Long longProperty = new Long(1234567l);
     private static final Boolean booleanProperty = Boolean.FALSE;
 
-    @BeforeClass
-    public static void checkRepository() {
+    @Before
+    public void setUp() throws Exception{
         boolean exists = false;
         try {
             RemoteRegistry wso2 = RSProviderUtil.getRegistry();
@@ -76,7 +76,7 @@ public class CreateSubmitAssetTest extends Wso2Base {
         catch (Exception ex) {
         }
 
-        assumeTrue(exists);
+        assertTrue(exists);
     }
 
     private CreateAndSubmitAssetResponse createAndSubmitAsset() throws Exception {
@@ -171,7 +171,7 @@ public class CreateSubmitAssetTest extends Wso2Base {
         }
         catch (RegistryException e) {
         }
-        assumeTrue(clean);
+        assertTrue(clean);
 
         CreateAndSubmitAssetResponse response = createAndSubmitAsset();
 
