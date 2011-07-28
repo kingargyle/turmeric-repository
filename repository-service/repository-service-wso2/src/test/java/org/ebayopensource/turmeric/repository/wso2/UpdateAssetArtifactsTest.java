@@ -223,6 +223,7 @@ public class UpdateAssetArtifactsTest extends Wso2Base {
     }
 
     @Test
+    @Ignore
     public void updateReplaceTest() throws Exception {
         boolean clean = false;
         try {
@@ -260,6 +261,7 @@ public class UpdateAssetArtifactsTest extends Wso2Base {
     }
 
     @Test
+    @Ignore
     public void mergeCompleteAssetTest() throws Exception {
         boolean clean = false;
         try {
