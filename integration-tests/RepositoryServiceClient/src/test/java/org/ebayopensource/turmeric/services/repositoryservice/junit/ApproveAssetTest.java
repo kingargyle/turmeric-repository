@@ -8,6 +8,8 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.services.repositoryservice.junit;
 
+import java.io.IOException;
+
 import junit.framework.Assert;
 
 import org.junit.BeforeClass;
@@ -22,12 +24,14 @@ import org.ebayopensource.turmeric.assetcreation.exception.UpdateCompleteAssetEx
 import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
 import org.ebayopensource.turmeric.repository.v1.services.AssetInfoForUpdate;
 import org.ebayopensource.turmeric.repository.v1.services.AssetKey;
+import org.ebayopensource.turmeric.repository.wso2.utils.AbstractCarbonIntegrationTestCase;
 import org.ebayopensource.turmeric.services.repositoryservice.exception.ProcessingException;
 import org.ebayopensource.turmeric.services.repositoryservice.operation.consumer.ApproveAssetConsumer;
 
 import org.ebayopensource.turmeric.services.repository.validation.exception.InvalidInputException;
 
-public class ApproveAssetTest {
+public class ApproveAssetTest extends AbstractCarbonIntegrationTestCase {
+	
 	public static AssetCreatorIntf assetCreator = AssetCreatorFactory.
 	getAssetCreator("resource/FunctionalDomainAsset.xml");
 	@BeforeClass
@@ -77,6 +81,11 @@ public class ApproveAssetTest {
 			e.printStackTrace();
 			throw e;
 		}
+		
+	}
+	@Override
+	protected void copyArtifacts() throws IOException {
+		// TODO Auto-generated method stub
 		
 	}
 }

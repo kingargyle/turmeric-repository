@@ -21,7 +21,8 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>AssertionsServiceTests</module>
-                <module>RepositoryServiceClient</module>
+                <!-- Re-enable this once AssertionService is using TurmericRSv2 -->
+                <!-- <module>RepositoryServiceClient</module> -->
                 <module>wso2-test-utils</module>
 	</modules>
 </project>
