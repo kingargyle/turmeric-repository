@@ -42,8 +42,6 @@ import org.ebayopensource.turmeric.repository.v2.services.CreateAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.CreateAssetResponse;
 import org.ebayopensource.turmeric.repository.v2.services.CreateCompleteAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.CreateCompleteAssetResponse;
-import org.ebayopensource.turmeric.repository.v2.services.CreateServiceRequest;
-import org.ebayopensource.turmeric.repository.v2.services.CreateServiceResponse;
 import org.ebayopensource.turmeric.repository.v2.services.FlattenedRelationship;
 import org.ebayopensource.turmeric.repository.v2.services.FlattenedRelationshipForUpdate;
 import org.ebayopensource.turmeric.repository.v2.services.GetAllAssetsGroupedByCategoryRequest;
@@ -74,8 +72,6 @@ import org.ebayopensource.turmeric.repository.v2.services.GetCatalogAssetInfoReq
 import org.ebayopensource.turmeric.repository.v2.services.GetCatalogAssetInfoResponse;
 import org.ebayopensource.turmeric.repository.v2.services.GetLibraryListRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetLibraryListResponse;
-import org.ebayopensource.turmeric.repository.v2.services.GetServiceRequest;
-import org.ebayopensource.turmeric.repository.v2.services.GetServiceResponse;
 import org.ebayopensource.turmeric.repository.v2.services.GetSubscriptionRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetSubscriptionResponse;
 import org.ebayopensource.turmeric.repository.v2.services.GetUsersProjectsAndGroupsRequest;
@@ -112,8 +108,6 @@ import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetResponse;
 import org.ebayopensource.turmeric.repository.v2.services.UpdateCompleteAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.UpdateCompleteAssetResponse;
-import org.ebayopensource.turmeric.repository.v2.services.UpdateServiceRequest;
-import org.ebayopensource.turmeric.repository.v2.services.UpdateServiceResponse;
 import org.ebayopensource.turmeric.repository.v2.services.UpdateSubscriptionRequest;
 import org.ebayopensource.turmeric.repository.v2.services.UpdateSubscriptionResponse;
 import org.ebayopensource.turmeric.repository.v2.services.ValidateAssetRequest;
@@ -129,18 +123,6 @@ import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositorySer
 public class RepositoryServiceProviderImpl implements RepositoryServiceProvider {
 	
     private static final String _SYSTEM_GOVERNANCE = "/_system/governance/trunk";
-
-	/**
-     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#getService(org.ebayopensource.turmeric.repository.v1.services.GetServiceRequest)
-     */
-    @Override
-    public GetServiceResponse getService(GetServiceRequest request) {
-        List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
-
-        errorDataList.add(RepositoryServiceErrorDescriptor.UNKNOWN_EXCEPTION.newError());
-        return RSProviderUtil.addErrorsToResponse(errorDataList, new GetServiceResponse());
-
-    }
 
     /**
      * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#lockAsset(org.ebayopensource.turmeric.repository.v1.services.LockAssetRequest)
@@ -495,17 +477,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
             catch (Exception e) {
             }
         }
-    }
-
-    /**
-     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#createService(org.ebayopensource.turmeric.repository.v1.services.CreateServiceRequest)
-     */
-    @Override
-    public CreateServiceResponse createService(CreateServiceRequest request) {
-        List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
-
-        errorDataList.add(RepositoryServiceErrorDescriptor.UNKNOWN_EXCEPTION.newError());
-        return RSProviderUtil.addErrorsToResponse(errorDataList, new CreateServiceResponse());
     }
 
     /**
@@ -1101,17 +1072,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
                     GetAllAssetsGroupedByCategoryRequest request) {
         // TODO Auto-generated method stub
         return null;
-    }
-
-    /**
-     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#updateService(org.ebayopensource.turmeric.repository.v1.services.UpdateServiceRequest)
-     */
-    @Override
-    public UpdateServiceResponse updateService(UpdateServiceRequest request) {
-        List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
-
-        errorDataList.add(RepositoryServiceErrorDescriptor.UNKNOWN_EXCEPTION.newError());
-        return RSProviderUtil.addErrorsToResponse(errorDataList, new UpdateServiceResponse());
     }
 
     /**

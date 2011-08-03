@@ -201,42 +201,6 @@ public class TurmericRSV2Impl implements TurmericRSV2 {
     	return createCompleteAssetResponse;
 	}
 
-	public CreateServiceResponse createService(
-			CreateServiceRequest createServiceRequest) {
-		CreateServiceResponse createServiceResponse = new CreateServiceResponse();
-    	try
-    	{
-    		populateProvider();
-    		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
-    		if (RepositoryServiceValidateUtil.validate(createServiceRequest, errorDataList)) 
-    		{
-    			createServiceResponse = repositoryServiceProvider.createService(createServiceRequest);
-    			if (createServiceResponse.getErrorMessage() != null) 
-    			{
-    				addErrorsToResponse(errorDataList, createServiceResponse);
-    			}
-    			else 
-    			{
-    				setSuccessResponse(createServiceResponse);
-    			}
-    		}
-    		else 
-    		{
-    			addErrorsToResponse(errorDataList, createServiceResponse);
-    		}
-    	}
-    	catch(ServiceProviderException e)
-    	{
-    		handleException(e,createServiceResponse,ErrorConstants.SERVICE_PROVIDER_EXCEPTION);
-    	}
-    	catch (Exception exception) 
-    	{
-			s_logger.error("Uncaught Exception Occured : ",	exception);
-			setExceptionMessageToResponse(exception, createServiceResponse);
-		}
-    	return createServiceResponse;
-	}
-
 	public GetAllAssetsGroupedByCategoryResponse getAllAssetsGroupedByCategory(
 			GetAllAssetsGroupedByCategoryRequest getAllAssetsGroupedByCategoryRequest) {
 
@@ -759,41 +723,6 @@ public class TurmericRSV2Impl implements TurmericRSV2 {
 			setExceptionMessageToResponse(exception, getLibraryListResponse);
 		}
     	return getLibraryListResponse;
-	}
-
-	public GetServiceResponse getService(GetServiceRequest getServiceRequest) {
-		GetServiceResponse getServiceResponse = new GetServiceResponse();
-    	try
-    	{
-    		populateProvider();
-    		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
-    		if (RepositoryServiceValidateUtil.validate(getServiceRequest, errorDataList)) 
-    		{
-    			getServiceResponse = repositoryServiceProvider.getService(getServiceRequest);
-    			if (getServiceResponse.getErrorMessage() != null) 
-    			{
-    				addErrorsToResponse(errorDataList, getServiceResponse);
-    			}
-    			else
-    			{
-    				setSuccessResponse(getServiceResponse);
-    			}
-    		}
-    		else 
-    		{
-    			addErrorsToResponse(errorDataList, getServiceResponse);
-    		}
-    	}
-    	catch(ServiceProviderException e)
-    	{
-    		handleException(e,getServiceResponse,ErrorConstants.SERVICE_PROVIDER_EXCEPTION);
-    	}
-    	catch (Exception exception) 
-    	{
-			s_logger.error("Uncaught Exception Occured : ",	exception);
-			setExceptionMessageToResponse(exception, getServiceResponse);
-		}
-    	return getServiceResponse;
 	}
 
 	public GetSubscriptionResponse getSubscription(
@@ -1358,44 +1287,6 @@ public class TurmericRSV2Impl implements TurmericRSV2 {
 			setExceptionMessageToResponse(exception, updateCompleteAssetResponse);
 		}
     	return updateCompleteAssetResponse;
-		
-	}
-
-	public UpdateServiceResponse updateService(
-			UpdateServiceRequest updateServiceRequest) {
-
-		UpdateServiceResponse updateServiceResponse = new UpdateServiceResponse();
-    	try
-    	{
-    		populateProvider();
-    		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
-    		if (RepositoryServiceValidateUtil.validate(updateServiceRequest, errorDataList)) 
-    		{
-    			updateServiceResponse = repositoryServiceProvider.updateService(updateServiceRequest);
-    			if (updateServiceResponse.getErrorMessage() != null) 
-    			{
-    				addErrorsToResponse(errorDataList, updateServiceResponse);
-    			}
-    			else
-    			{
-    				setSuccessResponse(updateServiceResponse);
-    			}
-    		}
-    		else 
-    		{
-    			addErrorsToResponse(errorDataList, updateServiceResponse);
-    		}
-    	}
-    	catch(ServiceProviderException e)
-    	{
-    		handleException(e,updateServiceResponse,ErrorConstants.SERVICE_PROVIDER_EXCEPTION);
-    	}
-    	catch (Exception exception) 
-    	{
-			s_logger.error("Uncaught Exception Occured : ",	exception);
-			setExceptionMessageToResponse(exception, updateServiceResponse);
-		}
-    	return updateServiceResponse;
 		
 	}
 

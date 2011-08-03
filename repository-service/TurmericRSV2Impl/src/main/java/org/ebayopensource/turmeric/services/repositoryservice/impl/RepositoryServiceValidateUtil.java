@@ -26,7 +26,6 @@ import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
 import org.ebayopensource.turmeric.repository.v2.services.CreateAndSubmitAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.CreateAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.CreateCompleteAssetRequest;
-import org.ebayopensource.turmeric.repository.v2.services.CreateServiceRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetAllAssetsGroupedByCategoryRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetAllProjectsAndGroupsRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetAssetDependenciesByGraphRequest;
@@ -41,7 +40,6 @@ import org.ebayopensource.turmeric.repository.v2.services.GetAssetVersionsReques
 import org.ebayopensource.turmeric.repository.v2.services.GetBasicAssetInfoRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetCatalogAssetInfoRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetLibraryListRequest;
-import org.ebayopensource.turmeric.repository.v2.services.GetServiceRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetUsersProjectsAndGroupsRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GraphRelationship;
 import org.ebayopensource.turmeric.repository.v2.services.LockAssetRequest;
@@ -60,7 +58,6 @@ import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetDependencie
 import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetDependenciesRequest;
 import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.UpdateCompleteAssetRequest;
-import org.ebayopensource.turmeric.repository.v2.services.UpdateServiceRequest;
 import org.ebayopensource.turmeric.repository.v2.services.ValidateAssetRequest;
 import org.ebayopensource.turmeric.runtime.common.exceptions.ErrorDataFactory;
 import org.ebayopensource.turmeric.services.repositoryservice.operation.util.RepositoryServiceOperationValidationUtil;
@@ -302,44 +299,44 @@ public class RepositoryServiceValidateUtil {
     }
     
     
-    public static boolean validate(CreateServiceRequest createServiceRequest,
-    		List<CommonErrorData> errorDataList) 
-	{
-		boolean isValid = true;
-		
-		if(createServiceRequest.getServiceInfo()!=null)
-		{
-			if(createServiceRequest.getServiceInfo().getBasicServiceInfo() != null)
-			{
-				CreateAssetRequest createAssetRequest = new CreateAssetRequest();
-				BasicAssetInfo basicAssetInfo = new BasicAssetInfo();
-				basicAssetInfo.setAssetDescription(createServiceRequest.getServiceInfo().getBasicServiceInfo().getServiceDescription());
-				basicAssetInfo.setAssetKey(createServiceRequest.getServiceInfo().getBasicServiceInfo().getAssetKey());
-				basicAssetInfo.setAssetLongDescription(createServiceRequest.getServiceInfo().getBasicServiceInfo().getServiceLongDescription());
-				basicAssetInfo.setAssetName(createServiceRequest.getServiceInfo().getBasicServiceInfo().getServiceName());
-				basicAssetInfo.setAssetType("Service");
-				basicAssetInfo.setVersion(createServiceRequest.getServiceInfo().getBasicServiceInfo().getServiceVersion());
-				basicAssetInfo.setGroupName(createServiceRequest.getServiceInfo().getBasicServiceInfo().getGroupName());
-				createAssetRequest.setBasicAssetInfo(basicAssetInfo);
-				if(!validate(createAssetRequest, errorDataList))
-				{
-					isValid = false;
-					
-				}
-			}
-			else
-			{
-				isValid = false;
-				errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.BASIC_SERVICE_INFO_MISSING, ErrorConstants.ERRORDOMAIN));
-			}
-		}
-		else
-		{
-			isValid = false;
-			errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.REQUEST_EMPTY, ErrorConstants.ERRORDOMAIN));
-		}
-		return isValid;
-	}
+//    public static boolean validate(RepositoryServiceValidateUtil createServiceRequest,
+//    		List<CommonErrorData> errorDataList) 
+//	{
+//		boolean isValid = true;
+//		
+//		if(createServiceRequest.getServiceInfo()!=null)
+//		{
+//			if(createServiceRequest.getServiceInfo().getBasicServiceInfo() != null)
+//			{
+//				CreateAssetRequest createAssetRequest = new CreateAssetRequest();
+//				BasicAssetInfo basicAssetInfo = new BasicAssetInfo();
+//				basicAssetInfo.setAssetDescription(createServiceRequest.getServiceInfo().getBasicServiceInfo().getServiceDescription());
+//				basicAssetInfo.setAssetKey(createServiceRequest.getServiceInfo().getBasicServiceInfo().getAssetKey());
+//				basicAssetInfo.setAssetLongDescription(createServiceRequest.getServiceInfo().getBasicServiceInfo().getServiceLongDescription());
+//				basicAssetInfo.setAssetName(createServiceRequest.getServiceInfo().getBasicServiceInfo().getServiceName());
+//				basicAssetInfo.setAssetType("Service");
+//				basicAssetInfo.setVersion(createServiceRequest.getServiceInfo().getBasicServiceInfo().getServiceVersion());
+//				basicAssetInfo.setGroupName(createServiceRequest.getServiceInfo().getBasicServiceInfo().getGroupName());
+//				createAssetRequest.setBasicAssetInfo(basicAssetInfo);
+//				if(!validate(createAssetRequest, errorDataList))
+//				{
+//					isValid = false;
+//					
+//				}
+//			}
+//			else
+//			{
+//				isValid = false;
+//				errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.BASIC_SERVICE_INFO_MISSING, ErrorConstants.ERRORDOMAIN));
+//			}
+//		}
+//		else
+//		{
+//			isValid = false;
+//			errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.REQUEST_EMPTY, ErrorConstants.ERRORDOMAIN));
+//		}
+//		return isValid;
+//	}
     
     public static boolean validate(GetAllAssetsGroupedByCategoryRequest getAllAssetsGroupedByCategoryRequest, List<CommonErrorData> errorDataList) {
 		boolean isValid = true;
@@ -702,31 +699,31 @@ public class RepositoryServiceValidateUtil {
 		return true;
 	}
 	
-	/**
-	 * Validates the input
-	 * @param getServiceRequest
-	 * @param errorDataList
-	 * @return
-	 */
-	public static boolean validate(GetServiceRequest getServiceRequest,
-			List<CommonErrorData> errorDataList) {
-		boolean isValid = true;
-		AssetKey assetKey = getServiceRequest.getAssetKey();
-		if (assetKey != null){			
-			if (assetKey.getAssetId() == null && assetKey.getAssetName() ==null)
-				errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.ASSET_NAME_AND_ID_MISSING, ErrorConstants.ERRORDOMAIN));
-			if (assetKey.getLibrary() == null || assetKey.getLibrary().getLibraryName() == null)
-				errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.LIBRARY_NAME_MISSING, ErrorConstants.ERRORDOMAIN));
-		} 
-		else {
-			errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.ASSET_ID_MISSING, ErrorConstants.ERRORDOMAIN));
-			errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.LIBRARY_NAME_MISSING, ErrorConstants.ERRORDOMAIN));
-		}
-		
-		if (errorDataList.size() > 0)
-			isValid = false;
-		return isValid;
-	}
+//	/**
+//	 * Validates the input
+//	 * @param getServiceRequest
+//	 * @param errorDataList
+//	 * @return
+//	 */
+//	public static boolean validate(GetServiceRequest getServiceRequest,
+//			List<CommonErrorData> errorDataList) {
+//		boolean isValid = true;
+//		AssetKey assetKey = getServiceRequest.getAssetKey();
+//		if (assetKey != null){			
+//			if (assetKey.getAssetId() == null && assetKey.getAssetName() ==null)
+//				errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.ASSET_NAME_AND_ID_MISSING, ErrorConstants.ERRORDOMAIN));
+//			if (assetKey.getLibrary() == null || assetKey.getLibrary().getLibraryName() == null)
+//				errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.LIBRARY_NAME_MISSING, ErrorConstants.ERRORDOMAIN));
+//		} 
+//		else {
+//			errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.ASSET_ID_MISSING, ErrorConstants.ERRORDOMAIN));
+//			errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.LIBRARY_NAME_MISSING, ErrorConstants.ERRORDOMAIN));
+//		}
+//		
+//		if (errorDataList.size() > 0)
+//			isValid = false;
+//		return isValid;
+//	}
 	
 	/**
 	 * This validates the request object for the operation to see whether any required parameters are missing.  
@@ -1433,49 +1430,49 @@ public class RepositoryServiceValidateUtil {
 		return isValid;
 	}
 	
-	/**
-	 * Validates the input
-	 * @param updateServiceRequest
-	 * @param errorDataList
-	 * @return
-	 */
-	public static boolean validate(UpdateServiceRequest updateServiceRequest,
-			List<CommonErrorData> errorDataList) {
-		boolean isValid = true;
-		if(updateServiceRequest!= null)
-		{
-			if(updateServiceRequest.getServiceInfo()!=null){
-				if(updateServiceRequest.getServiceInfo().getBasicServiceInfo()!= null){
-					if (updateServiceRequest.getServiceInfo().getBasicServiceInfo().getAssetKey() != null) {
-						if (updateServiceRequest.getServiceInfo().getBasicServiceInfo().getAssetKey().getAssetId() == null)
-							errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.ASSET_ID_MISSING, ErrorConstants.ERRORDOMAIN));
-						if (updateServiceRequest.getServiceInfo().getBasicServiceInfo().getAssetKey().getLibrary().getLibraryName() == null)
-							errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.LIBRARY_NAME_MISSING, ErrorConstants.ERRORDOMAIN));
-					} else {
-						errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.ASSET_ID_MISSING, ErrorConstants.ERRORDOMAIN));
-						errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.LIBRARY_NAME_MISSING, ErrorConstants.ERRORDOMAIN));
-						errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.DEPTH_MISSING, ErrorConstants.ERRORDOMAIN));
-					}
-				}else
-				{
-					isValid = false;
-					errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.REQUEST_EMPTY, ErrorConstants.ERRORDOMAIN));
-				}				
-			}else
-			{
-				isValid = false;
-				errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.REQUEST_EMPTY, ErrorConstants.ERRORDOMAIN));
-			}			
-		}
-		else
-		{
-			isValid = false;
-			errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.REQUEST_EMPTY, ErrorConstants.ERRORDOMAIN));
-		}
-		if (errorDataList.size() > 0)
-			isValid = false;
-		return isValid;
-	}
+//	/**
+//	 * Validates the input
+//	 * @param updateServiceRequest
+//	 * @param errorDataList
+//	 * @return
+//	 */
+//	public static boolean validate(UpdateServiceRequest updateServiceRequest,
+//			List<CommonErrorData> errorDataList) {
+//		boolean isValid = true;
+//		if(updateServiceRequest!= null)
+//		{
+//			if(updateServiceRequest.getServiceInfo()!=null){
+//				if(updateServiceRequest.getServiceInfo().getBasicServiceInfo()!= null){
+//					if (updateServiceRequest.getServiceInfo().getBasicServiceInfo().getAssetKey() != null) {
+//						if (updateServiceRequest.getServiceInfo().getBasicServiceInfo().getAssetKey().getAssetId() == null)
+//							errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.ASSET_ID_MISSING, ErrorConstants.ERRORDOMAIN));
+//						if (updateServiceRequest.getServiceInfo().getBasicServiceInfo().getAssetKey().getLibrary().getLibraryName() == null)
+//							errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.LIBRARY_NAME_MISSING, ErrorConstants.ERRORDOMAIN));
+//					} else {
+//						errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.ASSET_ID_MISSING, ErrorConstants.ERRORDOMAIN));
+//						errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.LIBRARY_NAME_MISSING, ErrorConstants.ERRORDOMAIN));
+//						errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.DEPTH_MISSING, ErrorConstants.ERRORDOMAIN));
+//					}
+//				}else
+//				{
+//					isValid = false;
+//					errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.REQUEST_EMPTY, ErrorConstants.ERRORDOMAIN));
+//				}				
+//			}else
+//			{
+//				isValid = false;
+//				errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.REQUEST_EMPTY, ErrorConstants.ERRORDOMAIN));
+//			}			
+//		}
+//		else
+//		{
+//			isValid = false;
+//			errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.REQUEST_EMPTY, ErrorConstants.ERRORDOMAIN));
+//		}
+//		if (errorDataList.size() > 0)
+//			isValid = false;
+//		return isValid;
+//	}
 	
 	public static boolean validate(ValidateAssetRequest validateAssetRequest, List<CommonErrorData> errorDataList) {
 		

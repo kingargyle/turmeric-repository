@@ -21,11 +21,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
       targetNamespace="http://www.ebayopensource.org/turmeric/repository/v2/services"
       xmlns:xs="http://www.w3.org/2001/XMLSchema">
-         <xs:element name="createServiceRequest" nillable="true"
-         type="tns:CreateServiceRequest" />
-
-         <xs:element name="createServiceResponse" nillable="true"
-         type="tns:CreateServiceResponse" />
 
          <xs:element name="createCompleteAssetRequest" nillable="true"
          type="tns:CreateCompleteAssetRequest" />
@@ -44,12 +39,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
 
          <xs:element name="updateCompleteAssetResponse" nillable="true"
          type="tns:UpdateCompleteAssetResponse" />
-
-         <xs:element name="updateServiceRequest" nillable="true"
-         type="tns:UpdateServiceRequest" />
-
-         <xs:element name="updateServiceResponse" nillable="true"
-         type="tns:UpdateServiceResponse" />
 
          <xs:element name="createAssetRequest" nillable="true"
          type="tns:CreateAssetRequest" />
@@ -216,12 +205,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          <xs:element name="approveAssetResponse" nillable="true"
          type="tns:ApproveAssetResponse" />
 
-         <xs:element name="getServiceRequest" nillable="true"
-         type="tns:GetServiceRequest" />
-
-         <xs:element name="getServiceResponse" nillable="true"
-         type="tns:GetServiceResponse" />
-
          <xs:element name="removeAssetRequest" type="tns:RemoveAssetRequest" />
 
          <xs:element name="removeAssetResponse" type="tns:RemoveAssetResponse" />
@@ -267,26 +250,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
 
          <xs:element name="getCatalogAssetInfoResponse" nillable="true"
          type="tns:GetCatalogAssetInfoResponse" />
-
-         <xs:complexType name="CreateServiceRequest">
-            <xs:complexContent>
-               <xs:extension base="tns:BaseRequest">
-                  <xs:sequence>
-                     <xs:element name="serviceInfo" type="tns:ServiceInfo" />
-                  </xs:sequence>
-               </xs:extension>
-            </xs:complexContent>
-         </xs:complexType>
-
-         <xs:complexType name="CreateServiceResponse">
-            <xs:complexContent>
-               <xs:extension base="tns:BaseResponse">
-                  <xs:sequence>
-                     <xs:element minOccurs="0" name="assetKey" type="tns:AssetKey" />
-                  </xs:sequence>
-               </xs:extension>
-            </xs:complexContent>
-         </xs:complexType>
 
          <xs:complexType name="CreateCompleteAssetRequest">
             <xs:complexContent>
@@ -397,7 +360,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
                         </xs:annotation>
                      </xs:element>
 
-<!-- <xs:element name="captureTemplateName" type="xs:string"> </xs:element> -->
                      <xs:element default="true" name="replaceCurrent" type="xs:boolean">
                         <xs:annotation>
                            <xs:documentation>This indicates if we should replace the
@@ -436,46 +398,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
                            operation</xs:documentation>
                         </xs:annotation>
                      </xs:element>
-                  </xs:sequence>
-               </xs:extension>
-            </xs:complexContent>
-         </xs:complexType>
-
-         <xs:complexType name="UpdateServiceRequest">
-            <xs:complexContent>
-               <xs:extension base="tns:BaseRequest">
-                  <xs:sequence>
-                     <xs:element name="serviceInfo" type="tns:ServiceInfoForUpdate" />
-
-                     <xs:element default="true" name="replaceCurrent" type="xs:boolean">
-                        <xs:annotation>
-                           <xs:documentation>This indicates if we should replace the
-                           existed attributes or artifacts or other fields. If it is set
-                           the false and attribute/artifact/field is existed already, the
-                           service should give warnings without doing the
-                           update</xs:documentation>
-                        </xs:annotation>
-                     </xs:element>
-
-                     <xs:element default="true" name="partialUpdate" type="xs:boolean">
-                        <xs:annotation>
-                           <xs:documentation>This indicates if we allow the partial
-                           update. For example, one attribute/artifact/field update is
-                           successful, but the other one is not, should we commit the
-                           first one or not will depend on this flag</xs:documentation>
-                        </xs:annotation>
-                     </xs:element>
-                  </xs:sequence>
-               </xs:extension>
-            </xs:complexContent>
-         </xs:complexType>
-
-         <xs:complexType name="UpdateServiceResponse">
-            <xs:complexContent>
-               <xs:extension base="tns:BaseResponse">
-                  <xs:sequence>
-                     <xs:element minOccurs="0" name="ServiceInfo"
-                     type="tns:ServiceInfo" />
                   </xs:sequence>
                </xs:extension>
             </xs:complexContent>
@@ -1420,88 +1342,7 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
             </xs:complexContent>
          </xs:complexType>
 
-         <xs:complexType name="GetServiceRequest">
-            <xs:complexContent>
-               <xs:extension base="tns:BaseRequest">
-                  <xs:sequence>
-                     <xs:element name="assetKey" type="tns:AssetKey" />
-                  </xs:sequence>
-               </xs:extension>
-            </xs:complexContent>
-         </xs:complexType>
 
-         <xs:complexType name="GetServiceResponse">
-            <xs:complexContent>
-               <xs:extension base="tns:BaseResponse">
-                  <xs:sequence>
-                     <xs:element minOccurs="0" name="serviceInfo"
-                     type="tns:ServiceInfo" />
-                  </xs:sequence>
-               </xs:extension>
-            </xs:complexContent>
-         </xs:complexType>
-
-         <xs:complexType name="ServiceInfo">
-            <xs:annotation>
-               <xs:documentation>ServiceInfo contains the basic required service info,
-               multiple name-value pair attributes plus design and run time info, the
-               list of artifact and assetLifeCycleInfo and dependent
-               assets</xs:documentation>
-            </xs:annotation>
-
-            <xs:sequence>
-               <xs:element name="basicServiceInfo" type="tns:BasicServiceInfo" />
-
-               <xs:element minOccurs="0" name="extendedServiceInfo"
-               type="tns:ExtendedServiceInfo" />
-
-               <xs:element maxOccurs="unbounded" minOccurs="0" name="artifactInfo"
-               type="tns:ArtifactInfo" />
-
-               <xs:element minOccurs="0" name="assetLifeCycleInfo"
-               type="tns:AssetLifeCycleInfo">
-               </xs:element>
-
-               <xs:element minOccurs="0" name="flattenedRelationship"
-               type="tns:FlattenedRelationship">
-                  <xs:annotation>
-                     <xs:documentation>You can specify the dependent service or data
-                     types in flattenedRelationship</xs:documentation>
-                  </xs:annotation>
-               </xs:element>
-            </xs:sequence>
-         </xs:complexType>
-
-         <xs:complexType name="ServiceInfoForUpdate">
-            <xs:annotation>
-               <xs:documentation>ServiceInfo contains the basic required service info,
-               multiple name-value pair attributes plus design and run time info, the
-               list of artifact and assetLifeCycleInfo and dependent
-               assets</xs:documentation>
-            </xs:annotation>
-
-            <xs:sequence>
-               <xs:element name="basicServiceInfo" type="tns:BasicServiceInfo" />
-
-               <xs:element minOccurs="0" name="extendedServiceInfo"
-               type="tns:ExtendedServiceInfo" />
-
-               <xs:element maxOccurs="unbounded" minOccurs="0" name="artifactInfo"
-               type="tns:ArtifactInfo" />
-
-               <xs:element minOccurs="0" name="assetLifeCycleInfo"
-               type="tns:AssetLifeCycleInfo">
-               </xs:element>
-
-               <xs:element minOccurs="0" name="flattenedRelationshipForUpdate"
-               type="tns:FlattenedRelationshipForUpdate">
-                  <xs:annotation>
-                     <xs:documentation>You can specify the dependent service or data
-                     types in flattenedRelationship</xs:documentation>
-                  </xs:annotation>
-               </xs:element>
-            </xs:sequence>
-         </xs:complexType>
 
          <xs:complexType name="AssetInfo">
             <xs:annotation>
@@ -1563,27 +1404,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
-         </xs:complexType>
-
-         <xs:complexType name="ExtendedServiceInfo">
-            <xs:annotation>
-               <xs:documentation>ExtendedServiceInfo contains service design time and
-               runtime info besides multiple classifier name-values</xs:documentation>
-            </xs:annotation>
-
-            <xs:complexContent>
-               <xs:extension base="tns:ExtendedAssetInfo">
-                  <xs:sequence>
-                     <xs:element minOccurs="0" name="serviceDesignTimeInfo"
-                     type="tns:ServiceDesignTimeInfo">
-                     </xs:element>
-
-                     <xs:element minOccurs="0" name="serviceRunTimeInfo"
-                     type="tns:ServiceRunTimeInfo">
-                     </xs:element>
-                  </xs:sequence>
-               </xs:extension>
-            </xs:complexContent>
          </xs:complexType>
 
          <xs:complexType name="ExtendedAssetInfo">
@@ -3351,11 +3171,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </part>
    </message>
 
-   <message name="createServiceRequest">
-      <part name="parameters" element="tns:createServiceRequest">
-      </part>
-   </message>
-
    <message name="validateAssetRequest">
       <part name="parameters" element="tns:validateAssetRequest">
       </part>
@@ -3431,11 +3246,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </part>
    </message>
 
-   <message name="updateServiceResponse">
-      <part name="parameters" element="tns:updateServiceResponse">
-      </part>
-   </message>
-
    <message name="getAssetDependenciesRequest">
       <part name="parameters" element="tns:getAssetDependenciesRequest">
       </part>
@@ -3443,11 +3253,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
 
    <message name="getUsersProjectsAndGroupsRequest">
       <part name="parameters" element="tns:getUsersProjectsAndGroupsRequest">
-      </part>
-   </message>
-
-   <message name="getServiceRequest">
-      <part name="parameters" element="tns:getServiceRequest">
       </part>
    </message>
 
@@ -3468,11 +3273,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
 
    <message name="getUsersProjectsAndGroupsResponse">
       <part name="parameters" element="tns:getUsersProjectsAndGroupsResponse">
-      </part>
-   </message>
-
-   <message name="getServiceResponse">
-      <part name="parameters" element="tns:getServiceResponse">
       </part>
    </message>
 
@@ -3556,11 +3356,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </part>
    </message>
 
-   <message name="createServiceResponse">
-      <part name="parameters" element="tns:createServiceResponse">
-      </part>
-   </message>
-
    <message name="updateAssetDependenciesRequest">
       <part name="parameters" element="tns:updateAssetDependenciesRequest">
       </part>
@@ -3588,11 +3383,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
 
    <message name="searchAssetsDetailedResponse">
       <part name="parameters" element="tns:searchAssetsDetailedResponse">
-      </part>
-   </message>
-
-   <message name="updateServiceRequest">
-      <part name="parameters" element="tns:updateServiceRequest">
       </part>
    </message>
 
@@ -3887,19 +3677,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          </output>
       </operation>
 
-      <operation name="getService">
-         <wsdl:documentation>This operation is deprecated and will be
-         removed.</wsdl:documentation>
-
-         <input message="tns:getServiceRequest">
-            <wsdl:documentation>Will be removed. Deprecated.</wsdl:documentation>
-         </input>
-
-         <output message="tns:getServiceResponse">
-            <wsdl:documentation>Will be removed. Deprecated.</wsdl:documentation>
-         </output>
-      </operation>
-
       <operation name="createAsset">
          <wsdl:documentation>After the asset is created, this operation locks the asset
          for use by the creator. Possible errors include InvalidData,
@@ -4011,24 +3788,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          </output>
       </operation>
 
-      <operation name="createService">
-         <wsdl:documentation>
-            Deprecated.  Will be removed.  Use createAsset or createCompleteAsset instead.
-         </wsdl:documentation>
-
-         <input message="tns:createServiceRequest">
-            <wsdl:documentation>
-               Deprecated.
-            </wsdl:documentation>
-         </input>
-
-         <output message="tns:createServiceResponse">
-            <wsdl:documentation>
-               Deprecated.
-            </wsdl:documentation>
-         </output>
-      </operation>
-
       <operation name="createCompleteAsset">
          <wsdl:documentation>Creates an asset along with its artifacts.   Possible Errors, etc.
          </wsdl:documentation>
@@ -4056,23 +3815,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          </input>
 
          <output message="tns:updateCompleteAssetResponse">
-         </output>
-      </operation>
-
-      <operation name="updateService">
-         <wsdl:documentation>
-            Deprecated.  Will be removed.  Use updateAsset instead.
-         </wsdl:documentation>
-         <input message="tns:updateServiceRequest">
-            <wsdl:documentation>
-               Deprecated.
-            </wsdl:documentation>
-         </input>
-
-         <output message="tns:updateServiceResponse">
-            <wsdl:documentation>
-               Deprecated.
-            </wsdl:documentation>
          </output>
       </operation>
 
@@ -4403,18 +4145,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          </output>
       </operation>
 
-      <operation name="getService">
-         <http:operation location="RepositoryService/getService" />
-
-         <input>
-            <mime:content part="getService" type="text/xml" />
-         </input>
-
-         <output>
-            <mime:content part="getService" type="text/xml" />
-         </output>
-      </operation>
-
       <operation name="createAsset">
          <http:operation location="RepositoryService/createAsset" />
 
@@ -4511,18 +4241,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          </output>
       </operation>
 
-      <operation name="createService">
-         <http:operation location="RepositoryService/createService" />
-
-         <input>
-            <mime:content part="createService" type="text/xml" />
-         </input>
-
-         <output>
-            <mime:content part="createService" type="text/xml" />
-         </output>
-      </operation>
-
       <operation name="createCompleteAsset">
          <http:operation location="RepositoryService/createCompleteAsset" />
 
@@ -4556,18 +4274,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
 
          <output>
             <mime:content part="updateCompleteAsset" type="text/xml" />
-         </output>
-      </operation>
-
-      <operation name="updateService">
-         <http:operation location="RepositoryService/updateService" />
-
-         <input>
-            <mime:content part="updateService" type="text/xml" />
-         </input>
-
-         <output>
-            <mime:content part="updateService" type="text/xml" />
          </output>
       </operation>
 
@@ -4889,18 +4595,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          </output>
       </operation>
 
-      <operation name="getService">
-         <soap12:operation soapAction="urn:getService" style="document" />
-
-         <input>
-            <soap12:body use="literal" />
-         </input>
-
-         <output>
-            <soap12:body use="literal" />
-         </output>
-      </operation>
-
       <operation name="createAsset">
          <soap12:operation soapAction="urn:createAsset" style="document" />
 
@@ -4997,18 +4691,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          </output>
       </operation>
 
-      <operation name="createService">
-         <soap12:operation soapAction="urn:createService" style="document" />
-
-         <input>
-            <soap12:body use="literal" />
-         </input>
-
-         <output>
-            <soap12:body use="literal" />
-         </output>
-      </operation>
-
       <operation name="createCompleteAsset">
          <soap12:operation soapAction="urn:createCompleteAsset" style="document" />
 
@@ -5044,19 +4726,7 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
             <soap12:body use="literal" />
          </output>
       </operation>
-
-      <operation name="updateService">
-         <soap12:operation soapAction="urn:updateService" style="document" />
-
-         <input>
-            <soap12:body use="literal" />
-         </input>
-
-         <output>
-            <soap12:body use="literal" />
-         </output>
-      </operation>
-
+      
       <operation name="updateAssetDependencies">
          <soap12:operation soapAction="urn:updateAssetDependencies" style="document" />
 

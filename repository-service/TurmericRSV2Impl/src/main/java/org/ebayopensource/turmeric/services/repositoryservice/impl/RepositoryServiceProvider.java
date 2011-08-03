@@ -16,8 +16,6 @@ import org.ebayopensource.turmeric.repository.v2.services.CreateAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.CreateAssetResponse;
 import org.ebayopensource.turmeric.repository.v2.services.CreateCompleteAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.CreateCompleteAssetResponse;
-import org.ebayopensource.turmeric.repository.v2.services.CreateServiceRequest;
-import org.ebayopensource.turmeric.repository.v2.services.CreateServiceResponse;
 import org.ebayopensource.turmeric.repository.v2.services.GetAllAssetsGroupedByCategoryRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetAllAssetsGroupedByCategoryResponse;
 import org.ebayopensource.turmeric.repository.v2.services.GetAllProjectsAndGroupsRequest;
@@ -46,8 +44,6 @@ import org.ebayopensource.turmeric.repository.v2.services.GetCatalogAssetInfoReq
 import org.ebayopensource.turmeric.repository.v2.services.GetCatalogAssetInfoResponse;
 import org.ebayopensource.turmeric.repository.v2.services.GetLibraryListRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetLibraryListResponse;
-import org.ebayopensource.turmeric.repository.v2.services.GetServiceRequest;
-import org.ebayopensource.turmeric.repository.v2.services.GetServiceResponse;
 import org.ebayopensource.turmeric.repository.v2.services.GetSubscriptionRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetSubscriptionResponse;
 import org.ebayopensource.turmeric.repository.v2.services.GetUsersProjectsAndGroupsRequest;
@@ -82,16 +78,12 @@ import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetResponse;
 import org.ebayopensource.turmeric.repository.v2.services.UpdateCompleteAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.UpdateCompleteAssetResponse;
-import org.ebayopensource.turmeric.repository.v2.services.UpdateServiceRequest;
-import org.ebayopensource.turmeric.repository.v2.services.UpdateServiceResponse;
 import org.ebayopensource.turmeric.repository.v2.services.UpdateSubscriptionRequest;
 import org.ebayopensource.turmeric.repository.v2.services.UpdateSubscriptionResponse;
 import org.ebayopensource.turmeric.repository.v2.services.ValidateAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.ValidateAssetResponse;
 
 public interface RepositoryServiceProvider {
-
-	public GetServiceResponse getService(GetServiceRequest getServiceRequest);
 
 	public LockAssetResponse lockAsset(LockAssetRequest lockAssetRequest);
 
@@ -124,9 +116,6 @@ public interface RepositoryServiceProvider {
 
 	public RemoveAssetResponse removeAsset(
 			RemoveAssetRequest removeAssetRequest);
-
-	public CreateServiceResponse createService(
-			CreateServiceRequest createServiceRequest);
 
 	public GetAssetSubmissionPropertiesResponse getAssetSubmissionProperties(
 			GetAssetSubmissionPropertiesRequest getAssetSubmissionPropertiesRequest);
@@ -184,9 +173,6 @@ public interface RepositoryServiceProvider {
 
 	public GetAllAssetsGroupedByCategoryResponse getAllAssetsGroupedByCategory(
 			GetAllAssetsGroupedByCategoryRequest getAllAssetsGroupedByCategoryRequest);
-
-	public UpdateServiceResponse updateService(
-			UpdateServiceRequest updateServiceRequest);
 
 	public UpdateAssetAttributesResponse updateAssetAttributes(
 			UpdateAssetAttributesRequest updateAssetAttributesRequest);

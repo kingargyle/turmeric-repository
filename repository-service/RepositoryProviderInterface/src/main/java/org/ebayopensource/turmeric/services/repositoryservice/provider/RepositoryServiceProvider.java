@@ -12,8 +12,6 @@ import org.ebayopensource.turmeric.repository.v2.services.*;
 
 public interface RepositoryServiceProvider {
 
-	public GetServiceResponse getService(GetServiceRequest getServiceRequest);
-
 	public LockAssetResponse lockAsset(LockAssetRequest lockAssetRequest);
 
 	public UnsubscribeResponse unsubscribe(UnsubscribeRequest unsubscribeRequest);
@@ -45,9 +43,6 @@ public interface RepositoryServiceProvider {
 
 	public RemoveAssetResponse removeAsset(
 			RemoveAssetRequest removeAssetRequest);
-
-	public CreateServiceResponse createService(
-			CreateServiceRequest createServiceRequest);
 
 	public GetAssetSubmissionPropertiesResponse getAssetSubmissionProperties(
 			GetAssetSubmissionPropertiesRequest getAssetSubmissionPropertiesRequest);
@@ -105,9 +100,6 @@ public interface RepositoryServiceProvider {
 
 	public GetAllAssetsGroupedByCategoryResponse getAllAssetsGroupedByCategory(
 			GetAllAssetsGroupedByCategoryRequest getAllAssetsGroupedByCategoryRequest);
-
-	public UpdateServiceResponse updateService(
-			UpdateServiceRequest updateServiceRequest);
 
 	public UpdateAssetAttributesResponse updateAssetAttributes(
 			UpdateAssetAttributesRequest updateAssetAttributesRequest);
