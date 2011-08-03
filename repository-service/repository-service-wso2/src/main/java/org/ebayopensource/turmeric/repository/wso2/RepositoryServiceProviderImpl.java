@@ -46,8 +46,6 @@ import org.ebayopensource.turmeric.repository.v2.services.FlattenedRelationship;
 import org.ebayopensource.turmeric.repository.v2.services.FlattenedRelationshipForUpdate;
 import org.ebayopensource.turmeric.repository.v2.services.GetAllAssetsGroupedByCategoryRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetAllAssetsGroupedByCategoryResponse;
-import org.ebayopensource.turmeric.repository.v2.services.GetAllProjectsAndGroupsRequest;
-import org.ebayopensource.turmeric.repository.v2.services.GetAllProjectsAndGroupsResponse;
 import org.ebayopensource.turmeric.repository.v2.services.GetAssetDependenciesByGraphRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetAssetDependenciesByGraphResponse;
 import org.ebayopensource.turmeric.repository.v2.services.GetAssetDependenciesRequest;
@@ -74,8 +72,6 @@ import org.ebayopensource.turmeric.repository.v2.services.GetLibraryListRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetLibraryListResponse;
 import org.ebayopensource.turmeric.repository.v2.services.GetSubscriptionRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetSubscriptionResponse;
-import org.ebayopensource.turmeric.repository.v2.services.GetUsersProjectsAndGroupsRequest;
-import org.ebayopensource.turmeric.repository.v2.services.GetUsersProjectsAndGroupsResponse;
 import org.ebayopensource.turmeric.repository.v2.services.Library;
 import org.ebayopensource.turmeric.repository.v2.services.LockAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.LockAssetResponse;
@@ -182,16 +178,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
      */
     @Override
     public UnsubscribeResponse unsubscribe(UnsubscribeRequest request) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /**
-     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#getUsersProjectsAndGroups(org.ebayopensource.turmeric.repository.v1.services.GetUsersProjectsAndGroupsRequest)
-     */
-    @Override
-    public GetUsersProjectsAndGroupsResponse getUsersProjectsAndGroups(
-                    GetUsersProjectsAndGroupsRequest request) {
         // TODO Auto-generated method stub
         return null;
     }
@@ -633,16 +619,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
             catch (Exception e) {
             }
         }
-    }
-
-    /**
-     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#getAllProjectsAndGroups(org.ebayopensource.turmeric.repository.v1.services.GetAllProjectsAndGroupsRequest)
-     */
-    @Override
-    public GetAllProjectsAndGroupsResponse getAllProjectsAndGroups(
-                    GetAllProjectsAndGroupsRequest request) {
-        // TODO Auto-generated method stub
-        return null;
     }
 
     /**

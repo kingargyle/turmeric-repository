@@ -16,9 +16,6 @@ public interface RepositoryServiceProvider {
 
 	public UnsubscribeResponse unsubscribe(UnsubscribeRequest unsubscribeRequest);
 
-	public GetUsersProjectsAndGroupsResponse getUsersProjectsAndGroups(
-			GetUsersProjectsAndGroupsRequest getUsersProjectsAndGroupsRequest);
-
 	public SearchAssetsResponse searchAssets(SearchAssetsRequest searchAssetsRequest);
 
 	public UpdateAssetArtifactsResponse updateAssetArtifacts(UpdateAssetArtifactsRequest updateAssetArtifactsRequest);
@@ -52,9 +49,6 @@ public interface RepositoryServiceProvider {
 
 	public RejectAssetResponse rejectAsset(
 			RejectAssetRequest rejectAssetRequest);
-
-	public GetAllProjectsAndGroupsResponse getAllProjectsAndGroups(
-			GetAllProjectsAndGroupsRequest getAllProjectsAndGroupsRequest);
 
 	public SearchAssetsDetailedResponse searchAssetsDetailed(
 			SearchAssetsDetailedRequest searchAssetsDetailedRequest);

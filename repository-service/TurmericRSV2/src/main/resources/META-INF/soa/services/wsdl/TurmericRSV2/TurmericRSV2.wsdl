@@ -215,18 +215,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          <xs:element name="validateAssetResponse" nillable="true"
          type="tns:ValidateAssetResponse" />
 
-         <xs:element name="getAllProjectsAndGroupsRequest" nillable="true"
-         type="tns:GetAllProjectsAndGroupsRequest" />
-
-         <xs:element name="getAllProjectsAndGroupsResponse" nillable="true"
-         type="tns:GetAllProjectsAndGroupsResponse" />
-
-         <xs:element name="getUsersProjectsAndGroupsRequest" nillable="true"
-         type="tns:GetUsersProjectsAndGroupsRequest" />
-
-         <xs:element name="getUsersProjectsAndGroupsResponse" nillable="true"
-         type="tns:GetUsersProjectsAndGroupsResponse" />
-
          <xs:element name="getAssetSubmissionPropertiesRequest" nillable="true"
          type="tns:GetAssetSubmissionPropertiesRequest" />
 
@@ -2783,36 +2771,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
             </xs:restriction>
          </xs:simpleType>
 
-         <xs:complexType name="GetAllProjectsAndGroupsRequest">
-            <xs:complexContent>
-               <xs:extension base="tns:BaseRequest">
-                  <xs:sequence>
-                     <xs:element maxOccurs="1" minOccurs="0" name="library"
-                     type="tns:Library" />
-
-                     <xs:element maxOccurs="1" minOccurs="0"
-                     name="dataRetrievalMethodType" type="tns:DataRetrievalMethodType">
-                        <xs:annotation>
-                           <xs:documentation>Depending on the this value set, the
-                           response object will be returned.</xs:documentation>
-                        </xs:annotation>
-                     </xs:element>
-                  </xs:sequence>
-               </xs:extension>
-            </xs:complexContent>
-         </xs:complexType>
-
-         <xs:complexType name="GetAllProjectsAndGroupsResponse">
-            <xs:complexContent>
-               <xs:extension base="tns:BaseResponse">
-                  <xs:sequence>
-                     <xs:element maxOccurs="unbounded" minOccurs="0" name="groups"
-                     type="tns:Group" />
-                  </xs:sequence>
-               </xs:extension>
-            </xs:complexContent>
-         </xs:complexType>
-
          <xs:simpleType name="DataRetrievalMethodType">
             <xs:annotation>
                <xs:documentation>Indicates the way in which the response object will be
@@ -2923,31 +2881,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
 
                <xs:element name="propertyValue" type="xs:string" />
             </xs:sequence>
-         </xs:complexType>
-
-         <xs:complexType name="GetUsersProjectsAndGroupsRequest">
-            <xs:complexContent>
-               <xs:extension base="tns:BaseRequest">
-                  <xs:sequence>
-                     <xs:element maxOccurs="1" minOccurs="0" name="library"
-                     type="tns:Library" />
-
-                     <xs:element maxOccurs="1" minOccurs="0" name="username"
-                     type="xs:string" />
-                  </xs:sequence>
-               </xs:extension>
-            </xs:complexContent>
-         </xs:complexType>
-
-         <xs:complexType name="GetUsersProjectsAndGroupsResponse">
-            <xs:complexContent>
-               <xs:extension base="tns:BaseResponse">
-                  <xs:sequence>
-                     <xs:element maxOccurs="unbounded" minOccurs="0" name="groups"
-                     type="tns:Group" />
-                  </xs:sequence>
-               </xs:extension>
-            </xs:complexContent>
          </xs:complexType>
 
          <xs:complexType name="AssetsGroupedByCategory">
@@ -3131,11 +3064,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </part>
    </message>
 
-   <message name="getAllProjectsAndGroupsRequest">
-      <part name="parameters" element="tns:getAllProjectsAndGroupsRequest">
-      </part>
-   </message>
-
    <message name="updateSubscriptionRequest">
       <part name="parameters" element="tns:updateSubscriptionRequest">
       </part>
@@ -3251,11 +3179,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </part>
    </message>
 
-   <message name="getUsersProjectsAndGroupsRequest">
-      <part name="parameters" element="tns:getUsersProjectsAndGroupsRequest">
-      </part>
-   </message>
-
    <message name="getAssetDependenciesByGraphResponse">
       <part name="parameters" element="tns:getAssetDependenciesByGraphResponse">
       </part>
@@ -3268,16 +3191,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
 
    <message name="unlockAssetRequest">
       <part name="parameters" element="tns:unlockAssetRequest">
-      </part>
-   </message>
-
-   <message name="getUsersProjectsAndGroupsResponse">
-      <part name="parameters" element="tns:getUsersProjectsAndGroupsResponse">
-      </part>
-   </message>
-
-   <message name="getAllProjectsAndGroupsResponse">
-      <part name="parameters" element="tns:getAllProjectsAndGroupsResponse">
       </part>
    </message>
 
@@ -3862,40 +3775,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          </output>
       </operation>
 
-      <operation name="getAllProjectsAndGroups">
-         <wsdl:documentation>
-            Deprecated.  Will be removed.  No replacement specified.
-         </wsdl:documentation>
-         <input message="tns:getAllProjectsAndGroupsRequest">
-            <wsdl:documentation>
-               Deprecated.
-            </wsdl:documentation>
-         </input>
-
-         <output message="tns:getAllProjectsAndGroupsResponse">
-            <wsdl:documentation>
-               Deprecated.
-            </wsdl:documentation>
-         </output>
-      </operation>
-
-      <operation name="getUsersProjectsAndGroups">
-         <wsdl:documentation>
-            Deprecated.  Will be removed.  No replacement specified.
-         </wsdl:documentation>
-         <input message="tns:getUsersProjectsAndGroupsRequest">
-            <wsdl:documentation>
-               Deprecated.
-            </wsdl:documentation>
-         </input>
-
-         <output message="tns:getUsersProjectsAndGroupsResponse">
-            <wsdl:documentation>
-               Deprecated.
-            </wsdl:documentation>
-         </output>
-      </operation>
-
       <operation name="getAssetSubmissionProperties">
          <wsdl:documentation>
             Needs Documentation.   Possible Errors, etc.
@@ -4361,30 +4240,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          </output>
       </operation>
 
-      <operation name="getAllProjectsAndGroups">
-         <http:operation location="RepositoryService/getAllProjectsAndGroups" />
-
-         <input>
-            <mime:content part="getAllProjectsAndGroups" type="text/xml" />
-         </input>
-
-         <output>
-            <mime:content part="getAllProjectsAndGroups" type="text/xml" />
-         </output>
-      </operation>
-
-      <operation name="getUsersProjectsAndGroups">
-         <http:operation location="RepositoryService/getUsersProjectsAndGroups" />
-
-         <input>
-            <mime:content part="getUsersProjectsAndGroups" type="text/xml" />
-         </input>
-
-         <output>
-            <mime:content part="getUsersProjectsAndGroups" type="text/xml" />
-         </output>
-      </operation>
-
       <operation name="getCatalogAssetInfo">
          <http:operation location="RepositoryService/getCatalogAssetInfo" />
 
@@ -4766,30 +4621,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
 
       <operation name="validateAsset">
          <soap12:operation soapAction="urn:validateAsset" style="document" />
-
-         <input>
-            <soap12:body use="literal" />
-         </input>
-
-         <output>
-            <soap12:body use="literal" />
-         </output>
-      </operation>
-
-      <operation name="getAllProjectsAndGroups">
-         <soap12:operation soapAction="urn:getAllProjectsAndGroups" style="document" />
-
-         <input>
-            <soap12:body use="literal" />
-         </input>
-
-         <output>
-            <soap12:body use="literal" />
-         </output>
-      </operation>
-
-      <operation name="getUsersProjectsAndGroups">
-         <soap12:operation soapAction="urn:getUsersProjectsAndGroups" style="document" />
 
          <input>
             <soap12:body use="literal" />

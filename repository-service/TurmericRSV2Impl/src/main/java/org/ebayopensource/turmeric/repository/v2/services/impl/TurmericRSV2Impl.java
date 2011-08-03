@@ -240,44 +240,6 @@ public class TurmericRSV2Impl implements TurmericRSV2 {
 
 	}
 
-	public GetAllProjectsAndGroupsResponse getAllProjectsAndGroups(
-			GetAllProjectsAndGroupsRequest getAllProjectsAndGroupsRequest) {
-		
-		GetAllProjectsAndGroupsResponse getAllProjectsAndGroupsResponse = new GetAllProjectsAndGroupsResponse();
-    	try
-    	{
-    		populateProvider();
-    		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
-    		if (RepositoryServiceValidateUtil.validate(getAllProjectsAndGroupsRequest, errorDataList)) 
-    		{
-    			getAllProjectsAndGroupsResponse = repositoryServiceProvider
-    			.getAllProjectsAndGroups(getAllProjectsAndGroupsRequest);
-    			if (getAllProjectsAndGroupsResponse.getErrorMessage() != null) 
-    			{
-    				addErrorsToResponse(errorDataList, getAllProjectsAndGroupsResponse);
-    			}
-    			else 
-    			{
-    				setSuccessResponse(getAllProjectsAndGroupsResponse);
-    			}
-    		}
-    		else 
-    		{
-    			addErrorsToResponse(errorDataList, getAllProjectsAndGroupsResponse);
-    		}
-    	}
-    	catch(ServiceProviderException e)
-    	{
-    		handleException(e,getAllProjectsAndGroupsResponse,ErrorConstants.SERVICE_PROVIDER_EXCEPTION);
-    	}
-    	catch (Exception exception) 
-    	{
-			s_logger.error("Uncaught Exception Occured : ",	exception);
-			setExceptionMessageToResponse(exception, getAllProjectsAndGroupsResponse);
-		}
-    	return getAllProjectsAndGroupsResponse;
-	}
-
 	public GetAssetDependenciesResponse getAssetDependencies(
 			GetAssetDependenciesRequest getAssetDependenciesRequest) {
 		
@@ -729,43 +691,6 @@ public class TurmericRSV2Impl implements TurmericRSV2 {
 			GetSubscriptionRequest getSubscriptionRequest) {
 		// Yet to implement
 		return null;
-	}
-
-	public GetUsersProjectsAndGroupsResponse getUsersProjectsAndGroups(
-			GetUsersProjectsAndGroupsRequest getUsersProjectsAndGroupsRequest) {
-		GetUsersProjectsAndGroupsResponse getUsersProjectsAndGroupsResponse = new GetUsersProjectsAndGroupsResponse();
-    	try
-    	{
-    		populateProvider();
-    		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
-    		if (RepositoryServiceValidateUtil.validate(getUsersProjectsAndGroupsRequest, errorDataList)) 
-    		{
-    			getUsersProjectsAndGroupsResponse = repositoryServiceProvider
-    			.getUsersProjectsAndGroups(getUsersProjectsAndGroupsRequest);
-    			if (getUsersProjectsAndGroupsResponse.getErrorMessage() != null) 
-    			{
-    				addErrorsToResponse(errorDataList, getUsersProjectsAndGroupsResponse);
-    			}
-    			else 
-    			{
-    				setSuccessResponse(getUsersProjectsAndGroupsResponse);
-    			}
-    		}
-    		else 
-    		{
-    			addErrorsToResponse(errorDataList, getUsersProjectsAndGroupsResponse);
-    		}
-    	}
-    	catch(ServiceProviderException e)
-    	{
-    		handleException(e,getUsersProjectsAndGroupsResponse,ErrorConstants.SERVICE_PROVIDER_EXCEPTION);
-    	}
-    	catch (Exception exception) 
-    	{
-			s_logger.error("Uncaught Exception Occured : ",	exception);
-			setExceptionMessageToResponse(exception, getUsersProjectsAndGroupsResponse);
-		}
-    	return getUsersProjectsAndGroupsResponse;
 	}
 
 	public LockAssetResponse lockAsset(LockAssetRequest lockAssetRequest) {

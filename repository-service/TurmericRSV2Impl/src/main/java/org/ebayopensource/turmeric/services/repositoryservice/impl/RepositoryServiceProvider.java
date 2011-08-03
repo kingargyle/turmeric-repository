@@ -18,8 +18,6 @@ import org.ebayopensource.turmeric.repository.v2.services.CreateCompleteAssetReq
 import org.ebayopensource.turmeric.repository.v2.services.CreateCompleteAssetResponse;
 import org.ebayopensource.turmeric.repository.v2.services.GetAllAssetsGroupedByCategoryRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetAllAssetsGroupedByCategoryResponse;
-import org.ebayopensource.turmeric.repository.v2.services.GetAllProjectsAndGroupsRequest;
-import org.ebayopensource.turmeric.repository.v2.services.GetAllProjectsAndGroupsResponse;
 import org.ebayopensource.turmeric.repository.v2.services.GetAssetDependenciesByGraphRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetAssetDependenciesByGraphResponse;
 import org.ebayopensource.turmeric.repository.v2.services.GetAssetDependenciesRequest;
@@ -46,8 +44,6 @@ import org.ebayopensource.turmeric.repository.v2.services.GetLibraryListRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetLibraryListResponse;
 import org.ebayopensource.turmeric.repository.v2.services.GetSubscriptionRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetSubscriptionResponse;
-import org.ebayopensource.turmeric.repository.v2.services.GetUsersProjectsAndGroupsRequest;
-import org.ebayopensource.turmeric.repository.v2.services.GetUsersProjectsAndGroupsResponse;
 import org.ebayopensource.turmeric.repository.v2.services.LockAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.LockAssetResponse;
 import org.ebayopensource.turmeric.repository.v2.services.RejectAssetRequest;
@@ -89,9 +85,6 @@ public interface RepositoryServiceProvider {
 
 	public UnsubscribeResponse unsubscribe(UnsubscribeRequest unsubscribeRequest);
 
-	public GetUsersProjectsAndGroupsResponse getUsersProjectsAndGroups(
-			GetUsersProjectsAndGroupsRequest getUsersProjectsAndGroupsRequest);
-
 	public SearchAssetsResponse searchAssets(SearchAssetsRequest searchAssetsRequest);
 
 	public UpdateAssetArtifactsResponse updateAssetArtifacts(UpdateAssetArtifactsRequest updateAssetArtifactsRequest);
@@ -125,9 +118,6 @@ public interface RepositoryServiceProvider {
 
 	public RejectAssetResponse rejectAsset(
 			RejectAssetRequest rejectAssetRequest);
-
-	public GetAllProjectsAndGroupsResponse getAllProjectsAndGroups(
-			GetAllProjectsAndGroupsRequest getAllProjectsAndGroupsRequest);
 
 	public SearchAssetsDetailedResponse searchAssetsDetailed(
 			SearchAssetsDetailedRequest searchAssetsDetailedRequest);

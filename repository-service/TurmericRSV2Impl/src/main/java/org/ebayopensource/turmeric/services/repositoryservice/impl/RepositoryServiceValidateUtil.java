@@ -27,7 +27,6 @@ import org.ebayopensource.turmeric.repository.v2.services.CreateAndSubmitAssetRe
 import org.ebayopensource.turmeric.repository.v2.services.CreateAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.CreateCompleteAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetAllAssetsGroupedByCategoryRequest;
-import org.ebayopensource.turmeric.repository.v2.services.GetAllProjectsAndGroupsRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetAssetDependenciesByGraphRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetAssetDependenciesRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetAssetInfoRequest;
@@ -40,7 +39,6 @@ import org.ebayopensource.turmeric.repository.v2.services.GetAssetVersionsReques
 import org.ebayopensource.turmeric.repository.v2.services.GetBasicAssetInfoRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetCatalogAssetInfoRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetLibraryListRequest;
-import org.ebayopensource.turmeric.repository.v2.services.GetUsersProjectsAndGroupsRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GraphRelationship;
 import org.ebayopensource.turmeric.repository.v2.services.LockAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.RejectAssetRequest;
@@ -297,47 +295,7 @@ public class RepositoryServiceValidateUtil {
     	else
     		return false;
     }
-    
-    
-//    public static boolean validate(RepositoryServiceValidateUtil createServiceRequest,
-//    		List<CommonErrorData> errorDataList) 
-//	{
-//		boolean isValid = true;
-//		
-//		if(createServiceRequest.getServiceInfo()!=null)
-//		{
-//			if(createServiceRequest.getServiceInfo().getBasicServiceInfo() != null)
-//			{
-//				CreateAssetRequest createAssetRequest = new CreateAssetRequest();
-//				BasicAssetInfo basicAssetInfo = new BasicAssetInfo();
-//				basicAssetInfo.setAssetDescription(createServiceRequest.getServiceInfo().getBasicServiceInfo().getServiceDescription());
-//				basicAssetInfo.setAssetKey(createServiceRequest.getServiceInfo().getBasicServiceInfo().getAssetKey());
-//				basicAssetInfo.setAssetLongDescription(createServiceRequest.getServiceInfo().getBasicServiceInfo().getServiceLongDescription());
-//				basicAssetInfo.setAssetName(createServiceRequest.getServiceInfo().getBasicServiceInfo().getServiceName());
-//				basicAssetInfo.setAssetType("Service");
-//				basicAssetInfo.setVersion(createServiceRequest.getServiceInfo().getBasicServiceInfo().getServiceVersion());
-//				basicAssetInfo.setGroupName(createServiceRequest.getServiceInfo().getBasicServiceInfo().getGroupName());
-//				createAssetRequest.setBasicAssetInfo(basicAssetInfo);
-//				if(!validate(createAssetRequest, errorDataList))
-//				{
-//					isValid = false;
-//					
-//				}
-//			}
-//			else
-//			{
-//				isValid = false;
-//				errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.BASIC_SERVICE_INFO_MISSING, ErrorConstants.ERRORDOMAIN));
-//			}
-//		}
-//		else
-//		{
-//			isValid = false;
-//			errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.REQUEST_EMPTY, ErrorConstants.ERRORDOMAIN));
-//		}
-//		return isValid;
-//	}
-    
+        
     public static boolean validate(GetAllAssetsGroupedByCategoryRequest getAllAssetsGroupedByCategoryRequest, List<CommonErrorData> errorDataList) {
 		boolean isValid = true;
 		
@@ -347,34 +305,7 @@ public class RepositoryServiceValidateUtil {
 			errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.REQUEST_EMPTY, ErrorConstants.ERRORDOMAIN));
 		}
 		return isValid;
-	}
-    
-    /**
-	 * This validates the request object for the operation to see whether any required parameters are missing.  
-	 * 
-	 * @param getAllProjectsAndGroupsRequest request to be validated
-	 * @param errorDataList this will hold any errors during validation
-	 * @return boolean indicating success or failure or request object validation
-	 */
-	public static boolean validate(GetAllProjectsAndGroupsRequest getAllProjectsAndGroupsRequest, List<CommonErrorData> errorDataList) {
-		
-		boolean isValid = true;
-		if(getAllProjectsAndGroupsRequest== null)
-		{
-			isValid = false;
-			errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.REQUEST_EMPTY, ErrorConstants.ERRORDOMAIN));
-			
-		}else if(getAllProjectsAndGroupsRequest.getLibrary()!= null){
-			
-			if(getAllProjectsAndGroupsRequest.getLibrary().getLibraryName() == null){
-				isValid = false;
-				errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.LIBRARY_NAME_MISSING, ErrorConstants.ERRORDOMAIN));
-			}
-		}
-		
-		return isValid;
-	}
-    
+	}    
 	
 	/**
 	 * Used to validate the input for GetAssetDependenciesByGraph operation 
@@ -699,58 +630,7 @@ public class RepositoryServiceValidateUtil {
 		return true;
 	}
 	
-//	/**
-//	 * Validates the input
-//	 * @param getServiceRequest
-//	 * @param errorDataList
-//	 * @return
-//	 */
-//	public static boolean validate(GetServiceRequest getServiceRequest,
-//			List<CommonErrorData> errorDataList) {
-//		boolean isValid = true;
-//		AssetKey assetKey = getServiceRequest.getAssetKey();
-//		if (assetKey != null){			
-//			if (assetKey.getAssetId() == null && assetKey.getAssetName() ==null)
-//				errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.ASSET_NAME_AND_ID_MISSING, ErrorConstants.ERRORDOMAIN));
-//			if (assetKey.getLibrary() == null || assetKey.getLibrary().getLibraryName() == null)
-//				errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.LIBRARY_NAME_MISSING, ErrorConstants.ERRORDOMAIN));
-//		} 
-//		else {
-//			errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.ASSET_ID_MISSING, ErrorConstants.ERRORDOMAIN));
-//			errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.LIBRARY_NAME_MISSING, ErrorConstants.ERRORDOMAIN));
-//		}
-//		
-//		if (errorDataList.size() > 0)
-//			isValid = false;
-//		return isValid;
-//	}
-	
-	/**
-	 * This validates the request object for the operation to see whether any required parameters are missing.  
-	 * 
-	 * @param getUsersProjectsAndGroupsRequest request to be validated
-	 * @param errorDataList this will hold any errors during validation
-	 * @return boolean indicating success or failure or request object validation
-	 */
-	public static boolean validate(GetUsersProjectsAndGroupsRequest getUsersProjectsAndGroupsRequest, List<CommonErrorData> errorDataList) {
 		
-		boolean isValid = true;
-		if(getUsersProjectsAndGroupsRequest== null)
-		{
-			isValid = false;
-			errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.REQUEST_EMPTY, ErrorConstants.ERRORDOMAIN));
-			
-		}else if(getUsersProjectsAndGroupsRequest.getLibrary()!= null){
-			
-			if(getUsersProjectsAndGroupsRequest.getLibrary().getLibraryName() == null){
-				isValid = false;
-				errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.LIBRARY_NAME_MISSING, ErrorConstants.ERRORDOMAIN));
-			}
-		}
-		
-		return isValid;
-	}
-	
 	public static boolean validate(LockAssetRequest lockAssetRequest,
 			List<CommonErrorData> errorDataList) 
 	{
