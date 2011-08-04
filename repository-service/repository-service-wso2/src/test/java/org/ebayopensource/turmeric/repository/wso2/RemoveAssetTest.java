@@ -20,7 +20,6 @@ import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
 import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
 import org.ebayopensource.turmeric.repository.v2.services.CreateAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.CreateAssetResponse;
-import org.ebayopensource.turmeric.repository.v2.services.Library;
 import org.ebayopensource.turmeric.repository.v2.services.RemoveAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.RemoveAssetResponse;
 
@@ -58,9 +57,6 @@ public class RemoveAssetTest extends Wso2Base {
 
     private CreateAssetResponse createAsset() {
         AssetKey key = new AssetKey();
-        Library lib = new Library();
-        lib.setLibraryName(libraryName);
-        key.setLibrary(lib);
         key.setAssetName(assetName);
 
         BasicAssetInfo basicInfo = new BasicAssetInfo();

@@ -10,12 +10,7 @@
 package org.ebayopensource.turmeric.repository.wso2;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assume.assumeTrue;
-
 import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.wso2.carbon.registry.app.RemoteRegistry;
 import org.wso2.carbon.registry.core.exceptions.RegistryException;
@@ -25,7 +20,6 @@ import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
 import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
 import org.ebayopensource.turmeric.repository.v2.services.CreateAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.CreateAssetResponse;
-import org.ebayopensource.turmeric.repository.v2.services.Library;
 
 /**
  * @author mgorovoy
@@ -37,7 +31,8 @@ public class CreateAssetTest extends Wso2Base {
     private static final String assetDesc = "CreateAssetTest description";
     private static final String libraryName = "http://www.domain.com/assets";
 
-    @Before
+    @Override
+	@Before
     public void setUp() throws Exception {
     	super.setUp();
     	
@@ -53,9 +48,6 @@ public class CreateAssetTest extends Wso2Base {
 
     private CreateAssetResponse createAsset() {
         AssetKey key = new AssetKey();
-        Library lib = new Library();
-        lib.setLibraryName(libraryName);
-        key.setLibrary(lib);
         key.setAssetName(assetName);
 
         BasicAssetInfo basicInfo = new BasicAssetInfo();

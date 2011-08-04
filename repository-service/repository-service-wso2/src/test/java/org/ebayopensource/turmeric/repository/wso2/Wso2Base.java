@@ -335,7 +335,7 @@ public class Wso2Base extends AbstractCarbonIntegrationTestCase {
     
     public void validateAssetKey(AssetKey assetKey) {
         if(assetKey != null) {
-            if(assetKey.getAssetId() == null || assetKey.getAssetName() == null || assetKey.getLibrary()== null || (assetKey.getLibrary().getLibraryId() == null && assetKey.getLibrary().getLibraryName() == null)) {
+            if(assetKey.getAssetId() == null || assetKey.getAssetName() == null) {
                 fail("invalid assetKey");
             }
             return;

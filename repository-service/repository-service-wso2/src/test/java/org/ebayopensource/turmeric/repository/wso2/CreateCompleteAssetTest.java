@@ -35,7 +35,6 @@ import org.ebayopensource.turmeric.repository.v2.services.CreateCompleteAssetReq
 import org.ebayopensource.turmeric.repository.v2.services.CreateCompleteAssetResponse;
 import org.ebayopensource.turmeric.repository.v2.services.ExtendedAssetInfo;
 import org.ebayopensource.turmeric.repository.v2.services.FlattenedRelationship;
-import org.ebayopensource.turmeric.repository.v2.services.Library;
 import org.ebayopensource.turmeric.repository.v2.services.Relation;
 
 /**
@@ -83,9 +82,6 @@ public class CreateCompleteAssetTest extends Wso2Base {
 
     private CreateCompleteAssetResponse createCompleteAsset() throws Exception {
         AssetKey key = new AssetKey();
-        Library lib = new Library();
-        lib.setLibraryName(libraryName);
-        key.setLibrary(lib);
         key.setAssetName(assetName);
 
         BasicAssetInfo basicInfo = new BasicAssetInfo();

@@ -19,7 +19,6 @@ import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
 import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
 import org.ebayopensource.turmeric.repository.v2.services.GetBasicAssetInfoRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetBasicAssetInfoResponse;
-import org.ebayopensource.turmeric.repository.v2.services.Library;
 
 public class GetBasicAssetInfoTest extends Wso2Base {
     @Before
@@ -42,58 +41,7 @@ public class GetBasicAssetInfoTest extends Wso2Base {
     }
 
     @Test
-    public void getAssetByLibNameAndAssetName() throws Exception {
-        // TODO this test assumes that the RepositoryMetadataService has been loaded into the wso2
-        // repository.
-
-        AssetKey key = new AssetKey();
-        Library lib = new Library();
-        lib.setLibraryName("http://www.ebay.com/marketplace/services");
-        key.setLibrary(lib);
-        key.setAssetName("RepositoryMetadataService");
-
-        GetBasicAssetInfoRequest request = new GetBasicAssetInfoRequest();
-        request.setAssetKey(key);
-        request.setAssetType("Service");
-
-        RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
-        GetBasicAssetInfoResponse response = provider.getBasicAssetInfo(request);
-
-        assertEquals(AckValue.SUCCESS, response.getAck());
-        assertEquals(null, response.getErrorMessage());
-
-        checkIsRespositoryMetadataService(response);
-        validateBasicAssetInfo(response.getBasicAssetInfo());
-    }
-
-    @Test
-    public void getAssetByLibIdAndAssetName() throws Exception {
-        // TODO this test assumes that the RepositoryMetadataService has been loaded into the wso2
-        // repository.
-
-        AssetKey key = new AssetKey();
-        Library lib = new Library();
-        lib.setLibraryId("/_system/governance/trunk/services/com/ebay/www/marketplace/services");
-        key.setLibrary(lib);
-        key.setAssetName("RepositoryMetadataService");
-
-        GetBasicAssetInfoRequest request = new GetBasicAssetInfoRequest();
-        request.setAssetKey(key);
-        RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
-        GetBasicAssetInfoResponse response = provider.getBasicAssetInfo(request);
-
-        assertEquals(AckValue.SUCCESS, response.getAck());
-        assertEquals(null, response.getErrorMessage());
-
-        checkIsRespositoryMetadataService(response);
-        validateBasicAssetInfo(response.getBasicAssetInfo());
-
-    }
-
-    @Test
     public void getAssetByAssetId() throws Exception {
-        // TODO this test assumes that the RepositoryMetadataService has been loaded into the wso2
-        // repository.
 
         AssetKey key = new AssetKey();
         key.setAssetId("/_system/governance/trunk/services/com/ebay/www/marketplace/services/RepositoryMetadataService");
@@ -113,8 +61,6 @@ public class GetBasicAssetInfoTest extends Wso2Base {
 
     @Test
     public void getNonServiceAssetByAssetId() throws Exception {
-        // TODO this test assumes that the RepositoryMetadataService has been loaded into the wso2
-        // repository.
 
         AssetKey key = new AssetKey();
         key.setAssetId("/_system/governance/trunk/testassets/libraryname/NonServiceAsset");

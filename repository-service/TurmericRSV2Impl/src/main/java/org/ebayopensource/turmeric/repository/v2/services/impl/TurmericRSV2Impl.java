@@ -650,43 +650,6 @@ public class TurmericRSV2Impl implements TurmericRSV2 {
     	return getCatalogAssetInfoResponse;
 	}
 
-	public GetLibraryListResponse getLibraryList(
-			GetLibraryListRequest getLibraryListRequest) {
-		
-		GetLibraryListResponse getLibraryListResponse = new GetLibraryListResponse();
-    	try
-    	{
-    		populateProvider();
-    		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
-    		if (RepositoryServiceValidateUtil.validate(getLibraryListRequest, errorDataList)) 
-    		{
-    			getLibraryListResponse = repositoryServiceProvider.getLibraryList(getLibraryListRequest);
-    			if (getLibraryListResponse.getErrorMessage() != null) 
-    			{
-    				addErrorsToResponse(errorDataList, getLibraryListResponse);
-    			}
-    			else 
-    			{
-    				setSuccessResponse(getLibraryListResponse);
-    			}
-    		}
-    		else 
-    		{
-    			addErrorsToResponse(errorDataList, getLibraryListResponse);
-    		}
-    	}
-    	catch(ServiceProviderException e)
-    	{
-    		handleException(e,getLibraryListResponse,ErrorConstants.SERVICE_PROVIDER_EXCEPTION);
-    	}
-    	catch (Exception exception) 
-    	{
-			s_logger.error("Uncaught Exception Occured : ",	exception);
-			setExceptionMessageToResponse(exception, getLibraryListResponse);
-		}
-    	return getLibraryListResponse;
-	}
-
 	public GetSubscriptionResponse getSubscription(
 			GetSubscriptionRequest getSubscriptionRequest) {
 		// Yet to implement

@@ -67,7 +67,6 @@ import org.ebayopensource.turmeric.repository.v2.services.BasicServiceInfo;
 import org.ebayopensource.turmeric.repository.v2.services.ExtendedAssetInfo;
 import org.ebayopensource.turmeric.repository.v2.services.FlattenedRelationship;
 import org.ebayopensource.turmeric.repository.v2.services.FlattenedRelationshipForUpdate;
-import org.ebayopensource.turmeric.repository.v2.services.Library;
 import org.ebayopensource.turmeric.repository.v2.services.Relation;
 import org.ebayopensource.turmeric.repository.v2.services.RelationForUpdate;
 
@@ -272,43 +271,6 @@ public class RSProviderUtil {
 				assetType = getAssetType(assetId);
 			}
 
-			Library library = assetKey.getLibrary();
-			if (library != null) {
-				String libraryId = library.getLibraryId();
-				if (libraryId == null || libraryId.length() == 0) {
-					StringBuilder libId = new StringBuilder();
-					libId.append(__systemRoot);
-					libId.append("/");
-					libId.append(assetType == null ? "other" : assetType.trim()
-							.toLowerCase().replaceAll(" +", "_"));
-					libId.append("s/");
-					libId.append(transformLibraryNameToWso2Path(library));
-					libraryId = libId.toString();
-
-					library.setLibraryId(libraryId);
-				}
-
-				String assetName = assetKey.getAssetName();
-				if ((assetId == null || assetId.length() == 0)
-						&& assetName != null && assetName.length() > 0) {
-					assetId = libraryId + "/" + assetName;
-					assetKey.setAssetId(assetId);
-				}
-
-			} else {
-				if (assetId != null && assetId.length() > 0) {
-					String libraryId = assetId.substring(0,
-							assetId.lastIndexOf('/'));
-					String libraryName = libraryId.substring(libraryId.indexOf(
-							'/', __systemRoot.length() + 1) + 1);
-
-					library = new Library();
-					library.setLibraryId(libraryId);
-					library.setLibraryName(libraryName);
-					assetKey.setLibrary(library);
-				}
-			}
-
 			if (assetKey.getAssetName() == null) {
 				assetKey.setAssetName(assetId.substring(assetId
 						.lastIndexOf('/') + 1));
@@ -316,17 +278,6 @@ public class RSProviderUtil {
 		}
 
 		return assetKey;
-	}
-
-	private static String transformLibraryNameToWso2Path(Library library) {
-		String libraryName = library.getLibraryName();
-		String domainName = extractDomainName(libraryName);
-		if (domainName != null && !"".equals(domainName)) {// we need to extract/reverse the url
-			libraryName = libraryName.replace(domainName,
-					flipTokens(domainName, "."));
-			libraryName = libraryName.replace("http://", "");
-		}
-		return libraryName.replace(".", "/");
 	}
 
 	private static CharSequence flipTokens(String stringToFlip, String separator) {
@@ -677,18 +628,8 @@ public class RSProviderUtil {
 				ArtifactValueType valueType = artifact.getArtifactValueType();
 				byte[] content = artifactInfo.getArtifactDetail();
 
-				Library library = new Library();
-				if (valueType == ArtifactValueType.URL) {
-					String url = new String(content, "UTF-8");
-					library.setLibraryName(url.substring(0,
-							url.lastIndexOf('/')));
-				} else {
-					library.setLibraryName(parentKey.getLibrary()
-							.getLibraryName());
-				}
 				AssetKey artifactKey = new AssetKey();
 				artifactKey.setAssetName(artifact.getArtifactName());
-				artifactKey.setLibrary(library);
 				completeAssetKey(artifactKey, artifact.getArtifactCategory(),
 						null);
 
@@ -881,19 +822,12 @@ public class RSProviderUtil {
 			if (!artifact.getArtifactValueType().equals(ArtifactValueType.URL)) {
 				String artifactCategory = artifact.getArtifactCategory();
 
-				Library oldLibrary = new Library();
-				oldLibrary.setLibraryName(oldAssetKey.getLibrary()
-						.getLibraryName());
 				AssetKey oldArtifactKey = new AssetKey();
 				oldArtifactKey.setAssetName(artifact.getArtifactName());
-				oldArtifactKey.setLibrary(oldLibrary);
 				completeAssetKey(oldArtifactKey, artifactCategory, null);
 
-				Library library = new Library();
-				library.setLibraryName(assetKey.getLibrary().getLibraryName());
 				AssetKey newArtifactKey = new AssetKey();
 				newArtifactKey.setAssetName(artifact.getArtifactName());
-				newArtifactKey.setLibrary(library);
 				completeAssetKey(newArtifactKey, artifactCategory, null);
 
 				String oldArtifactId = oldArtifactKey.getAssetId();
@@ -922,39 +856,6 @@ public class RSProviderUtil {
 		StringWriter sw = new StringWriter();
 		transformer.transform(new DOMSource(doc), new StreamResult(sw));
 		return sw.toString();
-	}
-
-	public static String getBasicAssetInfoXml(BasicAssetInfo basicInfo)
-			throws Exception {
-		Document doc = createXmlDoc(basicInfo.getAssetName(),
-				basicInfo.getAssetDescription(), basicInfo.getAssetKey()
-						.getLibrary().getLibraryName());
-
-		return getXmlString(doc);
-	}
-
-	public static String getAssetInfoXml(AssetInfo assetInfo) throws Exception {
-		BasicAssetInfo basicInfo = assetInfo.getBasicAssetInfo();
-
-		ExtendedAssetInfo extendedInfo = assetInfo.getExtendedAssetInfo();
-		String libraryName = basicInfo.getAssetKey().getLibrary()
-				.getLibraryName();
-		String namespace = getAttribute(extendedInfo, "namespace", libraryName);
-		Document doc = createXmlDoc(basicInfo.getAssetName(),
-				basicInfo.getAssetDescription(), namespace);
-
-		appendLifeCycleXml(doc, assetInfo.getAssetLifeCycleInfo());
-
-		return getXmlString(doc);
-	}
-
-	public static String getBasicServiceInfoXml(BasicServiceInfo basicInfo)
-			throws Exception {
-		Document doc = createXmlDoc(basicInfo.getServiceName(),
-				basicInfo.getServiceDescription(), basicInfo.getAssetKey()
-						.getLibrary().getLibraryName());
-
-		return getXmlString(doc);
 	}
 
 	public static AttributeNameValue newAttribute(String name, String value) {

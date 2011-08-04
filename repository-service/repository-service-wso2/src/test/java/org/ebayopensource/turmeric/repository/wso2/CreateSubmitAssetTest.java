@@ -36,7 +36,6 @@ import org.ebayopensource.turmeric.repository.v2.services.CreateAndSubmitAssetRe
 import org.ebayopensource.turmeric.repository.v2.services.CreateAndSubmitAssetResponse;
 import org.ebayopensource.turmeric.repository.v2.services.ExtendedAssetInfo;
 import org.ebayopensource.turmeric.repository.v2.services.FlattenedRelationship;
-import org.ebayopensource.turmeric.repository.v2.services.Library;
 import org.ebayopensource.turmeric.repository.v2.services.Relation;
 
 /**
@@ -81,9 +80,6 @@ public class CreateSubmitAssetTest extends Wso2Base {
 
     private CreateAndSubmitAssetResponse createAndSubmitAsset() throws Exception {
         AssetKey key = new AssetKey();
-        Library lib = new Library();
-        lib.setLibraryName(libraryName);
-        key.setLibrary(lib);
         key.setAssetName(assetName);
 
         BasicAssetInfo basicInfo = new BasicAssetInfo();

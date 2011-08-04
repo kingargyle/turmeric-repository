@@ -21,7 +21,6 @@ import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
 
 import org.ebayopensource.turmeric.repository.v2.services.FlattenedRelationship;
 import org.ebayopensource.turmeric.repository.v2.services.FlattenedRelationshipForUpdate;
-import org.ebayopensource.turmeric.repository.v2.services.Library;
 import org.ebayopensource.turmeric.repository.v2.services.Relation;
 import org.ebayopensource.turmeric.repository.v2.services.RelationForUpdate;
 import org.ebayopensource.turmeric.runtime.common.exceptions.ErrorDataFactory;
@@ -250,17 +249,6 @@ public class RepositoryServiceOperationValidationUtil {
 			if(assetKey.getAssetName() == null && assetKey.getAssetId() == null) 
 			{
 				errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.ASSET_NAME_AND_ID_MISSING, ErrorConstants.ERRORDOMAIN));
-				isValid = false;
-			}
-			Library sourceLibrary = assetKey.getLibrary();
-			if(sourceLibrary == null)
-			{
-				errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.LIBRARY_MISSING, ErrorConstants.ERRORDOMAIN));
-				isValid = false;
-			}
-			if(sourceLibrary.getLibraryName() == null)
-			{
-				errorDataList.add(ErrorDataFactory.createErrorData(ErrorConstants.LIBRARY_NAME_MISSING, ErrorConstants.ERRORDOMAIN));
 				isValid = false;
 			}
 		}

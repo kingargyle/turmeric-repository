@@ -89,9 +89,6 @@ public interface RepositoryServiceProvider {
 	public GetCatalogAssetInfoResponse getCatalogAssetInfo(
 			GetCatalogAssetInfoRequest getCatalogAssetInfoRequest);
 
-	public GetLibraryListResponse getLibraryList(
-			GetLibraryListRequest getLibraryListRequest);
-
 	public GetAllAssetsGroupedByCategoryResponse getAllAssetsGroupedByCategory(
 			GetAllAssetsGroupedByCategoryRequest getAllAssetsGroupedByCategoryRequest);
 
