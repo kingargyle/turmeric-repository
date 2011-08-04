@@ -166,12 +166,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          		<xs:documentation></xs:documentation>
          	</xs:annotation></xs:element>
 
-         <xs:element name="getLibraryListRequest" nillable="true"
-         type="tns:GetLibraryListRequest" />
-
-         <xs:element name="getLibraryListResponse" nillable="true"
-         type="tns:GetLibraryListResponse" />
-
          <xs:element name="getAssetTypesRequest" nillable="true"
          type="tns:GetAssetTypesRequest" />
 
@@ -610,8 +604,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
                <xs:extension base="tns:BaseRequest">
                   <xs:sequence>
                      <xs:element name="subscription" type="tns:Subscription" />
-
-                     <xs:element name="library" type="tns:Library" />
                   </xs:sequence>
                </xs:extension>
             </xs:complexContent>
@@ -632,8 +624,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
                <xs:extension base="tns:BaseRequest">
                   <xs:sequence>
                      <xs:element name="subscriptionId" type="xs:string" />
-
-                     <xs:element name="library" type="tns:Library" />
                   </xs:sequence>
                </xs:extension>
             </xs:complexContent>
@@ -654,8 +644,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
                <xs:extension base="tns:BaseRequest">
                   <xs:sequence>
                      <xs:element name="subscription" type="tns:Subscription" />
-
-                     <xs:element name="library" type="tns:Library" />
                   </xs:sequence>
                </xs:extension>
             </xs:complexContent>
@@ -755,13 +743,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
                            exact asset type for this request</xs:documentation>
                         </xs:annotation>
                      </xs:element>
-
-                     <xs:element name="library" type="tns:Library">
-                        <xs:annotation>
-                           <xs:documentation>LibraryId or libraryName need be
-                           provided</xs:documentation>
-                        </xs:annotation>
-                     </xs:element>
                   </xs:sequence>
                </xs:extension>
             </xs:complexContent>
@@ -787,19 +768,12 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
             <xs:complexContent>
                <xs:extension base="tns:BaseRequest">
                   <xs:sequence>
-                     <xs:element name="comment" type="xs:string">
-                        <xs:annotation>
-                           <xs:documentation>LibraryId or libraryName need be
-                           provided</xs:documentation>
-                        </xs:annotation>
-                     </xs:element>
+                     <xs:element name="comment" type="xs:string"/>
 
-                     <xs:element name="assetKey" type="tns:AssetKey">
-                     </xs:element>
+                     <xs:element name="assetKey" type="tns:AssetKey"/>
 
                      <xs:element maxOccurs="unbounded" minOccurs="0"
-                     name="requestProperties" type="tns:Property">
-                     </xs:element>
+                     name="requestProperties" type="tns:Property"/>
 
                      <xs:element maxOccurs="1" minOccurs="0" name="publishTemplateName"
                      type="xs:string">
@@ -868,13 +842,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
                   <xs:sequence>
                      <xs:element name="assetQuery" type="tns:AssetQuery" />
 
-                     <xs:element minOccurs="0" name="library" type="tns:Library">
-                        <xs:annotation>
-                           <xs:documentation>If libraryId or libraryName is not provided,
-                           all libraries will be searched</xs:documentation>
-                        </xs:annotation>
-                     </xs:element>
-
                      <xs:element minOccurs="0" name="categorizingClassifer"
                      type="xs:string">
                         <xs:annotation>
@@ -894,14 +861,7 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
                <xs:extension base="tns:BaseRequest">
                   <xs:sequence>
                      <xs:element name="assetQuery" type="tns:AssetQuery" />
-
-                     <xs:element minOccurs="0" name="library" type="tns:Library">
-                        <xs:annotation>
-                           <xs:documentation>If libraryId or libraryName is not provided,
-                           all libraries will be searched</xs:documentation>
-                        </xs:annotation>
-                     </xs:element>
-
+                     
                      <xs:element maxOccurs="unbounded" minOccurs="0" name="searchLevel"
                      type="tns:SearchLevel">
                         <xs:annotation>
@@ -925,14 +885,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
             <xs:complexContent>
                <xs:extension base="tns:BaseRequest">
                   <xs:sequence>
-                     <xs:element maxOccurs="1" minOccurs="1" name="libraryName"
-                     type="xs:string">
-                        <xs:annotation>
-                           <xs:documentation>LibraryId or libraryName need be
-                           provided</xs:documentation>
-                        </xs:annotation>
-                     </xs:element>
-
                      <xs:element maxOccurs="1" minOccurs="0" name="catalogSearchLevel"
                      type="tns:CatalogSearchLevel">
                         <xs:annotation>
@@ -1043,13 +995,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
                <xs:extension base="tns:BaseRequest">
                   <xs:sequence>
                      <xs:element name="assetQuery" type="tns:AssetQuery" />
-
-                     <xs:element minOccurs="0" name="library" type="tns:Library">
-                        <xs:annotation>
-                           <xs:documentation>If libraryId or libraryName is not provided,
-                           all libraries will be searched</xs:documentation>
-                        </xs:annotation>
-                     </xs:element>
                   </xs:sequence>
                </xs:extension>
             </xs:complexContent>
@@ -1177,37 +1122,9 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
             </xs:complexContent>
          </xs:complexType>
 
-         <xs:complexType name="GetLibraryListRequest">
-            <xs:complexContent>
-               <xs:extension base="tns:BaseRequest">
-                  <xs:sequence />
-               </xs:extension>
-            </xs:complexContent>
-         </xs:complexType>
-
-         <xs:complexType name="GetLibraryListResponse">
-            <xs:complexContent>
-               <xs:extension base="tns:BaseResponse">
-                  <xs:sequence>
-                     <xs:element maxOccurs="unbounded" minOccurs="0" name="library"
-                     type="tns:Library" />
-                  </xs:sequence>
-               </xs:extension>
-            </xs:complexContent>
-         </xs:complexType>
-
          <xs:complexType name="GetAssetTypesRequest">
             <xs:complexContent>
-               <xs:extension base="tns:BaseRequest">
-                  <xs:sequence>
-                     <xs:element minOccurs="0" name="library" type="tns:Library">
-                        <xs:annotation>
-                           <xs:documentation>If libraryId or libraryName is not provided,
-                           all libraries will be searched</xs:documentation>
-                        </xs:annotation>
-                     </xs:element>
-                  </xs:sequence>
-               </xs:extension>
+               <xs:extension base="tns:BaseRequest"/>
             </xs:complexContent>
          </xs:complexType>
 
@@ -1229,13 +1146,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
                <xs:extension base="tns:BaseRequest">
                   <xs:sequence>
                      <xs:element name="assetType" type="xs:token" />
-
-                     <xs:element minOccurs="0" name="library" type="tns:Library">
-                        <xs:annotation>
-                           <xs:documentation>If libraryId or libraryName is not provided,
-                           all libraries will be searched</xs:documentation>
-                        </xs:annotation>
-                     </xs:element>
                   </xs:sequence>
                </xs:extension>
             </xs:complexContent>
@@ -1243,22 +1153,8 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
 
          <xs:complexType name="GetAssetLifeCycleStatesResponse">
             <xs:complexContent>
-               <xs:extension base="tns:BaseResponse">
-                  <xs:sequence>
-                     <xs:element maxOccurs="unbounded" minOccurs="0"
-                     name="libraryLifeCycleStates" type="tns:LibraryLifeCycleStates" />
-                  </xs:sequence>
-               </xs:extension>
+               <xs:extension base="tns:BaseResponse"/>
             </xs:complexContent>
-         </xs:complexType>
-
-         <xs:complexType name="LibraryLifeCycleStates">
-            <xs:sequence>
-               <xs:element minOccurs="1" name="libraryName" type="xs:string" />
-
-               <xs:element maxOccurs="unbounded" minOccurs="0" name="lifeCycleState"
-               type="xs:string" />
-            </xs:sequence>
          </xs:complexType>
 
          <xs:complexType name="GetAssetVersionsRequest">
@@ -2021,8 +1917,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
                      </xs:annotation>
                   </xs:element>
                </xs:choice>
-
-               <xs:element name="library" type="tns:Library" />
             </xs:sequence>
          </xs:complexType>
 
@@ -2078,8 +1972,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
                   </xs:annotation>
                </xs:element>
 
-               <xs:element name="library" type="tns:Library" />
-
                <xs:choice>
                   <xs:element name="assetId" type="xs:string" />
 
@@ -2112,32 +2004,11 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
                      have to log a ticket for this with SOA.</xs:documentation>
                   </xs:annotation>
                </xs:element>
-
-               <xs:element name="library" type="tns:Library" />
-
                <xs:choice>
                   <xs:element name="assetId" type="xs:string" />
 
                   <xs:element name="assetDetail" type="tns:AssetDetail" />
                </xs:choice>
-            </xs:sequence>
-         </xs:complexType>
-
-         <xs:complexType name="Library">
-            <xs:sequence>
-               <xs:element name="libraryName" type="xs:string">
-                  <xs:annotation>
-                     <xs:documentation>The library name is unique crossing the
-                     system</xs:documentation>
-                  </xs:annotation>
-               </xs:element>
-
-               <xs:element minOccurs="0" name="libraryId" type="xs:string">
-                  <xs:annotation>
-                     <xs:documentation>The libraryId is unique crossing the
-                     system</xs:documentation>
-                  </xs:annotation>
-               </xs:element>
             </xs:sequence>
          </xs:complexType>
 
@@ -2794,82 +2665,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
             </xs:restriction>
          </xs:simpleType>
 
-         <xs:complexType name="Group">
-            <xs:annotation>
-               <xs:documentation>Represents an organizational group of Users within a
-               library. OrgGroups exist in a hierarchy and may have one parent OrgGroup
-               and multiple child OrgGroups.</xs:documentation>
-            </xs:annotation>
-
-            <xs:sequence>
-               <xs:element name="name" type="xs:string" />
-
-               <xs:element name="description" type="xs:string" />
-
-               <xs:element name="urn" type="xs:string" />
-
-               <xs:element name="owner" type="xs:string" />
-
-               <xs:element name="parent" type="xs:string" />
-
-               <xs:element maxOccurs="unbounded" minOccurs="0" name="children"
-               type="tns:ChildGroup" />
-
-               <xs:element name="isProject" type="xs:boolean" />
-
-               <xs:element maxOccurs="unbounded" minOccurs="0" name="ogas"
-               type="tns:OrgGroupAssociation" />
-
-               <xs:element maxOccurs="unbounded" minOccurs="0" name="properties"
-               type="tns:Property" />
-
-               <xs:element name="libraryId" type="xs:string" />
-
-               <xs:element name="isActive" type="xs:boolean" />
-
-               <xs:element name="activeGroupOrProjectForUser" type="xs:boolean">
-                  <xs:annotation>
-                     <xs:documentation>Indicates whether a group/project is the active
-                     one for a user.</xs:documentation>
-                  </xs:annotation>
-               </xs:element>
-
-               <xs:element maxOccurs="unbounded" minOccurs="0" name="participants"
-               type="xs:string" />
-
-               <xs:element maxOccurs="unbounded" minOccurs="0" name="projectManagers"
-               type="xs:string" />
-            </xs:sequence>
-         </xs:complexType>
-
-         <xs:complexType name="ChildGroup">
-            <xs:annotation>
-               <xs:documentation>Represents an immediate child for a given
-               Group.</xs:documentation>
-            </xs:annotation>
-
-            <xs:sequence>
-               <xs:element name="groupName" type="xs:string" />
-
-               <xs:element name="isProject" type="xs:boolean" />
-            </xs:sequence>
-         </xs:complexType>
-
-         <xs:complexType name="OrgGroupAssociation">
-            <xs:annotation>
-               <xs:documentation>Represents a role relationship between a User and an
-               OrgGroup.</xs:documentation>
-            </xs:annotation>
-
-            <xs:sequence>
-               <xs:element name="role" type="xs:string" />
-
-               <xs:element name="orgGroupURN" type="xs:string" />
-
-               <xs:element name="userURN" type="xs:string" />
-            </xs:sequence>
-         </xs:complexType>
-
          <xs:complexType name="Property">
             <xs:annotation>
                <xs:documentation>Representation of any custom
@@ -3051,11 +2846,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
 
    <message name="getAllAssetsGroupedByCategoryResponse">
       <part name="parameters" element="tns:getAllAssetsGroupedByCategoryResponse">
-      </part>
-   </message>
-
-   <message name="getLibraryListResponse">
-      <part name="parameters" element="tns:getLibraryListResponse">
       </part>
    </message>
 
@@ -3329,11 +3119,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </part>
    </message>
 
-   <message name="getLibraryListRequest">
-      <part name="parameters" element="tns:getLibraryListRequest">
-      </part>
-   </message>
-
    <message name="createAndSubmitAssetRequest">
       <part name="parameters" element="tns:createAndSubmitAssetRequest">
       </part>
@@ -3515,23 +3300,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          </input>
 
          <output message="tns:getAssetDependenciesByGraphResponse">
-         </output>
-      </operation>
-
-      <operation name="getLibraryList">
-         <wsdl:documentation>
-            Deprecated.  Will be removed.
-         </wsdl:documentation>
-         <input message="tns:getLibraryListRequest">
-            <wsdl:documentation>
-               Deprecated.
-            </wsdl:documentation>
-         </input>
-
-         <output message="tns:getLibraryListResponse">
-            <wsdl:documentation>
-               Deprecated.
-            </wsdl:documentation>
          </output>
       </operation>
 
@@ -3952,18 +3720,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          </output>
       </operation>
 
-      <operation name="getLibraryList">
-         <http:operation location="RepositoryService/getLibraryList" />
-
-         <input>
-            <mime:content part="getLibraryList" type="text/xml" />
-         </input>
-
-         <output>
-            <mime:content part="getLibraryList" type="text/xml" />
-         </output>
-      </operation>
-
       <operation name="getAssetTypes">
          <http:operation location="RepositoryService/getAssetTypes" />
 
@@ -4368,18 +4124,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       <operation name="getAssetDependenciesByGraph">
          <soap12:operation soapAction="urn:getAssetDependenciesByGraph"
          style="document" />
-
-         <input>
-            <soap12:body use="literal" />
-         </input>
-
-         <output>
-            <soap12:body use="literal" />
-         </output>
-      </operation>
-
-      <operation name="getLibraryList">
-         <soap12:operation soapAction="urn:getLibraryList" style="document" />
 
          <input>
             <soap12:body use="literal" />
