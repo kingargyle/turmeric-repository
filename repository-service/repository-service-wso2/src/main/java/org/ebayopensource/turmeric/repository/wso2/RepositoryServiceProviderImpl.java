@@ -876,8 +876,8 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	 */
 	@Override
 	public SubscribeResponse subscribe(SubscribeRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		SubscribeResponse rsp = new SubscribeResponse();
+		return rsp;
 	}
 
 	/**
