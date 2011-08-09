@@ -66,8 +66,6 @@ import org.ebayopensource.turmeric.repository.v2.services.GetAssetVersionsReques
 import org.ebayopensource.turmeric.repository.v2.services.GetAssetVersionsResponse;
 import org.ebayopensource.turmeric.repository.v2.services.GetBasicAssetInfoRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetBasicAssetInfoResponse;
-import org.ebayopensource.turmeric.repository.v2.services.GetCatalogAssetInfoRequest;
-import org.ebayopensource.turmeric.repository.v2.services.GetCatalogAssetInfoResponse;
 import org.ebayopensource.turmeric.repository.v2.services.GetSubscriptionRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetSubscriptionResponse;
 import org.ebayopensource.turmeric.repository.v2.services.LockAssetRequest;
@@ -1046,15 +1044,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 		return null;
 	}
 
-	/**
-	 * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#getCatalogAssetInfo(org.ebayopensource.turmeric.repository.v1.services.GetCatalogAssetInfoRequest)
-	 */
-	@Override
-	public GetCatalogAssetInfoResponse getCatalogAssetInfo(
-			GetCatalogAssetInfoRequest getCatalogAssetInfoRequest) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	/**
 	 * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#getAllAssetsGroupedByCategory(org.ebayopensource.turmeric.repository.v1.services.GetAllAssetsGroupedByCategoryRequest)

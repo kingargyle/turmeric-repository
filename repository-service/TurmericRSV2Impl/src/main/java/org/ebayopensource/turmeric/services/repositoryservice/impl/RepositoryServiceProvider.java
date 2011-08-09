@@ -38,8 +38,6 @@ import org.ebayopensource.turmeric.repository.v2.services.GetAssetVersionsReques
 import org.ebayopensource.turmeric.repository.v2.services.GetAssetVersionsResponse;
 import org.ebayopensource.turmeric.repository.v2.services.GetBasicAssetInfoRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetBasicAssetInfoResponse;
-import org.ebayopensource.turmeric.repository.v2.services.GetCatalogAssetInfoRequest;
-import org.ebayopensource.turmeric.repository.v2.services.GetCatalogAssetInfoResponse;
 import org.ebayopensource.turmeric.repository.v2.services.GetSubscriptionRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetSubscriptionResponse;
 import org.ebayopensource.turmeric.repository.v2.services.LockAssetRequest;
@@ -152,9 +150,6 @@ public interface RepositoryServiceProvider {
 
 	public GetAssetLifeCycleStatesResponse getAssetLifeCycleStates(
 			GetAssetLifeCycleStatesRequest getAssetLifeCycleStatesRequest);
-
-	public GetCatalogAssetInfoResponse getCatalogAssetInfo(
-			GetCatalogAssetInfoRequest getCatalogAssetInfoRequest);
 
 	public GetAllAssetsGroupedByCategoryResponse getAllAssetsGroupedByCategory(
 			GetAllAssetsGroupedByCategoryRequest getAllAssetsGroupedByCategoryRequest);

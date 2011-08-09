@@ -86,9 +86,6 @@ public interface RepositoryServiceProvider {
 	public GetAssetLifeCycleStatesResponse getAssetLifeCycleStates(
 			GetAssetLifeCycleStatesRequest getAssetLifeCycleStatesRequest);
 
-	public GetCatalogAssetInfoResponse getCatalogAssetInfo(
-			GetCatalogAssetInfoRequest getCatalogAssetInfoRequest);
-
 	public GetAllAssetsGroupedByCategoryResponse getAllAssetsGroupedByCategory(
 			GetAllAssetsGroupedByCategoryRequest getAllAssetsGroupedByCategoryRequest);
 

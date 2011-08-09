@@ -227,12 +227,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          <xs:element name="submitForPublishingResponse" nillable="true"
          type="tns:SubmitForPublishingResponse" />
 
-         <xs:element name="getCatalogAssetInfoRequest" nillable="true"
-         type="tns:GetCatalogAssetInfoRequest" />
-
-         <xs:element name="getCatalogAssetInfoResponse" nillable="true"
-         type="tns:GetCatalogAssetInfoResponse" />
-
          <xs:complexType name="CreateCompleteAssetRequest">
             <xs:complexContent>
                <xs:extension base="tns:BaseRequest">
@@ -875,70 +869,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
                </xs:extension>
             </xs:complexContent>
          </xs:complexType>
-
-         <xs:complexType name="GetCatalogAssetInfoRequest">
-            <xs:annotation>
-               <xs:documentation>
-               </xs:documentation>
-            </xs:annotation>
-
-            <xs:complexContent>
-               <xs:extension base="tns:BaseRequest">
-                  <xs:sequence>
-                     <xs:element maxOccurs="1" minOccurs="0" name="catalogSearchLevel"
-                     type="tns:CatalogSearchLevel">
-                        <xs:annotation>
-                           <xs:documentation>The searched assets would be populated only
-                           with the requested levels of detail. If nothing is specified
-                           for searchLevel, "all" is taken as the
-                           default.</xs:documentation>
-                        </xs:annotation>
-                     </xs:element>
-                  </xs:sequence>
-               </xs:extension>
-            </xs:complexContent>
-         </xs:complexType>
-
-         <xs:complexType name="GetCatalogAssetInfoResponse">
-            <xs:complexContent>
-               <xs:extension base="tns:BaseResponse">
-                  <xs:sequence>
-                     <xs:element maxOccurs="unbounded" minOccurs="0" name="catalogAssets"
-                     type="tns:BasicAssetInfo">
-                     </xs:element>
-                  </xs:sequence>
-               </xs:extension>
-            </xs:complexContent>
-         </xs:complexType>
-
-         <xs:simpleType name="CatalogSearchLevel">
-            <xs:annotation>
-               <xs:documentation>Indicates the level of Catalog assets to be returned
-               "locked" level -&gt; includes locked Catalog AssetInfo, "edited" level
-               -&gt; includes edited Catalog AssetInfo, "all" level -&gt; includes all
-               the above details i.e. locked + edited</xs:documentation>
-            </xs:annotation>
-
-            <xs:restriction base="xs:string">
-               <xs:enumeration value="locked">
-                  <xs:annotation>
-                     <xs:documentation />
-                  </xs:annotation>
-               </xs:enumeration>
-
-               <xs:enumeration value="edited">
-                  <xs:annotation>
-                     <xs:documentation />
-                  </xs:annotation>
-               </xs:enumeration>
-
-               <xs:enumeration value="all">
-                  <xs:annotation>
-                     <xs:documentation />
-                  </xs:annotation>
-               </xs:enumeration>
-            </xs:restriction>
-         </xs:simpleType>
 
          <xs:simpleType name="SearchLevel">
             <xs:annotation>
@@ -3039,11 +2969,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </part>
    </message>
 
-   <message name="getCatalogAssetInfoRequest">
-      <part name="parameters" element="tns:getCatalogAssetInfoRequest">
-      </part>
-   </message>
-
    <message name="createCompleteAssetRequest">
       <part name="parameters" element="tns:createCompleteAssetRequest">
       </part>
@@ -3066,11 +2991,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
 
    <message name="unsubscribeRequest">
       <part name="parameters" element="tns:unsubscribeRequest">
-      </part>
-   </message>
-
-   <message name="getCatalogAssetInfoResponse">
-      <part name="parameters" element="tns:getCatalogAssetInfoResponse">
       </part>
    </message>
 
@@ -3582,19 +3502,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          </output>
       </operation>
 
-      <operation name="getCatalogAssetInfo">
-         <wsdl:documentation>Operation which would return both edited and touched
-         assets</wsdl:documentation>
-
-         <input message="tns:getCatalogAssetInfoRequest">
-            <wsdl:documentation>Pass Library and Enum that specifies which all catalog
-            asset varieties are needed i.e. only locked assets, only edited assets or
-            both</wsdl:documentation>
-         </input>
-
-         <output message="tns:getCatalogAssetInfoResponse">
-         </output>
-      </operation>
    </portType>
 
    <binding name="RepositoryServiceHttpBinding" type="tns:RepositoryServicePort">
@@ -3995,18 +3902,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
             <mime:content part="getAssetSubmissionProperties" type="text/xml" />
          </output>
       </operation>
-
-      <operation name="getCatalogAssetInfo">
-         <http:operation location="RepositoryService/getCatalogAssetInfo" />
-
-         <input>
-            <mime:content part="getCatalogAssetInfo" type="text/xml" />
-         </input>
-
-         <output>
-            <mime:content part="getCatalogAssetInfo" type="text/xml" />
-         </output>
-      </operation>
    </binding>
 
    <binding name="RepositoryServiceSOAPBinding" type="tns:RepositoryServicePort">
@@ -4402,18 +4297,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
 
       <operation name="submitForPublishing">
          <soap12:operation soapAction="urn:submitForPublishing" style="document" />
-
-         <input>
-            <soap12:body use="literal" />
-         </input>
-
-         <output>
-            <soap12:body use="literal" />
-         </output>
-      </operation>
-
-      <operation name="getCatalogAssetInfo">
-         <soap12:operation soapAction="urn:getCatalogAssetInfo" style="document" />
 
          <input>
             <soap12:body use="literal" />

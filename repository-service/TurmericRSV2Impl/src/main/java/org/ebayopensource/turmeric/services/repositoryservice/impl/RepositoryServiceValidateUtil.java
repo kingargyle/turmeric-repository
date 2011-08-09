@@ -37,7 +37,6 @@ import org.ebayopensource.turmeric.repository.v2.services.GetAssetTreeByAttribut
 import org.ebayopensource.turmeric.repository.v2.services.GetAssetTypesRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetAssetVersionsRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetBasicAssetInfoRequest;
-import org.ebayopensource.turmeric.repository.v2.services.GetCatalogAssetInfoRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GraphRelationship;
 import org.ebayopensource.turmeric.repository.v2.services.LockAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.RejectAssetRequest;
@@ -596,26 +595,6 @@ public class RepositoryServiceValidateUtil {
 			isValid = false;
 		return isValid;
 
-	}
-
-	/**
-	 * Validates if request is null or not and Library Name is provided in the
-	 * request or not
-	 * 
-	 * @param getCatalogAssetInfoRequest
-	 * @param errorDataList
-	 * @return boolean
-	 */
-	public static boolean validate(
-			GetCatalogAssetInfoRequest getCatalogAssetInfoRequest,
-			List<CommonErrorData> errorDataList) {
-		boolean isValid = true;
-		if (getCatalogAssetInfoRequest == null) {
-			isValid = false;
-			errorDataList.add(ErrorDataFactory.createErrorData(
-					ErrorConstants.REQUEST_EMPTY, ErrorConstants.ERRORDOMAIN));
-		}
-		return isValid;
 	}
 
 	public static boolean validate(LockAssetRequest lockAssetRequest,
