@@ -29,5 +29,6 @@
 		<module>repository-validation-support</module>
 		<module>repository-service-wso2</module>
 		<module>RepositoryProviderInterface</module>
+                <module>WSO2EventingV1</module>
 	</modules>
 </project>

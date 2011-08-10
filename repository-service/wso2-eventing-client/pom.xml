@@ -5,9 +5,15 @@
     <groupId>org.ebayopensource.turmeric.repository</groupId>
     <version>1.0.0.2-SNAPSHOT</version>
   </parent>
-  <groupId>org.ebayopensource.turmeric.repository</groupId>
   <artifactId>wso2-eventing-client</artifactId>
-  <version>1.0.0.2-SNAPSHOT</version>
   <name>Turmeric :: Repository :: WSO2 Eventing Client</name>
   <description>A client that can interface with the WSO2 WS-Eventing service to subscribe, check status, and unsubscribe from various asset changes.</description>
+  
+  <dependencies>
+      <dependency>
+         <groupId>org.ebayopensource.turmeric.repository</groupId>
+         <artifactId>WSO2EventingV1</artifactId>
+         <version>${project.version}</version>
+      </dependency>
+  </dependencies>
 </project>

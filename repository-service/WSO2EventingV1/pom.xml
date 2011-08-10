@@ -1,12 +1,44 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <artifactId>turmeric-repository-service-parent</artifactId>
-    <groupId>org.ebayopensource.turmeric.repository</groupId>
-    <version>1.0.0.2-SNAPSHOT</version>
-  </parent>
-  <groupId>org.ebayopensource.turmeric.repository</groupId>
-  <artifactId>WSO2EventingV1</artifactId>
-  <version>1.0.0.2-SNAPSHOT</version>
-  <name>Turmeric :: Repository :: WSO2EventingV1</name>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <artifactId>turmeric-repository-service-parent</artifactId>
+      <groupId>org.ebayopensource.turmeric.repository</groupId>
+      <version>1.0.0.2-SNAPSHOT</version>
+   </parent>
+   <artifactId>WSO2EventingV1</artifactId>
+   <name>Turmeric :: Repository :: WSO2EventingV1</name>
+
+   <build>
+      <plugins>
+         <plugin>
+            <groupId>org.ebayopensource.turmeric.maven</groupId>
+            <artifactId>turmeric-maven-plugin</artifactId>
+            <version>${turmeric-runtime-version}</version>
+            <executions>
+               <execution>
+                  <goals>
+                     <goal>gen-interface-wsdl</goal>
+                  </goals>
+               </execution>
+            </executions>
+            <configuration>
+               <verbose>true</verbose>
+               <packageName>org.wso2.carbon.eventing.impl</packageName>
+               <enableNamespaceFolding>false</enableNamespaceFolding>
+               <serviceName>EventingV1</serviceName>
+               <sharedConsumer>true</sharedConsumer>
+               <adminName>EventingV1</adminName>
+            </configuration>
+         </plugin>
+      </plugins>
+   </build>
+
+   <dependencies>
+      <dependency>
+         <groupId>org.ebayopensource.turmeric.runtime</groupId>
+         <artifactId>soa-client</artifactId>
+         <version>${turmeric-runtime-version}</version>
+      </dependency>
+   </dependencies>
 </project>
