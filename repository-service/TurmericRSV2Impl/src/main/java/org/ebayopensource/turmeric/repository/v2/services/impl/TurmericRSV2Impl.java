@@ -1063,45 +1063,6 @@ public class TurmericRSV2Impl implements TurmericRSV2 {
 
 	}
 
-	public UpdateAssetDependenciesByGraphResponse updateAssetDependenciesByGraph(
-			UpdateAssetDependenciesByGraphRequest updateAssetDependenciesByGraphRequest) {
-		
-		UpdateAssetDependenciesByGraphResponse updateAssetDependenciesByGraphResponse = new UpdateAssetDependenciesByGraphResponse();
-    	try
-    	{
-    		populateProvider();
-    		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
-	    	if (RepositoryServiceValidateUtil.validate(updateAssetDependenciesByGraphRequest, errorDataList)) 
-	    	{
-	    		updateAssetDependenciesByGraphResponse = repositoryServiceProvider
-			    .updateAssetDependenciesByGraph(updateAssetDependenciesByGraphRequest);
-	    		if (updateAssetDependenciesByGraphResponse.getErrorMessage() != null) 
-	    		{
-	    			addErrorsToResponse(errorDataList, updateAssetDependenciesByGraphResponse);
-	    		}
-	    		else 
-	    		{
-	    			setSuccessResponse(updateAssetDependenciesByGraphResponse);
-	    		}
-	    	}
-	    	else 
-	    	{
-	    		addErrorsToResponse(errorDataList, updateAssetDependenciesByGraphResponse);
-	    	}
-    	}	
-    	catch(ServiceProviderException e)
-    	{
-    		handleException(e,updateAssetDependenciesByGraphResponse,ErrorConstants.SERVICE_PROVIDER_EXCEPTION);
-    	}
-    	catch (Exception exception) 
-    	{
-			s_logger.error("Uncaught Exception Occured : ",	exception);
-			setExceptionMessageToResponse(exception, updateAssetDependenciesByGraphResponse);
-		}
-    	return updateAssetDependenciesByGraphResponse;
-		
-	}
-
 	public UpdateCompleteAssetResponse updateCompleteAsset(
 			UpdateCompleteAssetRequest updateCompleteAssetRequest) {
 		

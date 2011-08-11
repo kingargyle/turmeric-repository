@@ -18,43 +18,7 @@ import org.ebayopensource.turmeric.common.v1.types.CommonErrorData;
 import org.ebayopensource.turmeric.common.v1.types.ErrorParameter;
 import org.ebayopensource.turmeric.errorlibrary.repository.ErrorConstants;
 
-import org.ebayopensource.turmeric.repository.v2.services.ApprovalInfo;
-import org.ebayopensource.turmeric.repository.v2.services.ApproveAssetRequest;
-import org.ebayopensource.turmeric.repository.v2.services.ArtifactInfo;
-import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
-import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
-import org.ebayopensource.turmeric.repository.v2.services.CreateAndSubmitAssetRequest;
-import org.ebayopensource.turmeric.repository.v2.services.CreateAssetRequest;
-import org.ebayopensource.turmeric.repository.v2.services.CreateCompleteAssetRequest;
-import org.ebayopensource.turmeric.repository.v2.services.GetAllAssetsGroupedByCategoryRequest;
-import org.ebayopensource.turmeric.repository.v2.services.GetAssetDependenciesByGraphRequest;
-import org.ebayopensource.turmeric.repository.v2.services.GetAssetDependenciesRequest;
-import org.ebayopensource.turmeric.repository.v2.services.GetAssetInfoRequest;
-import org.ebayopensource.turmeric.repository.v2.services.GetAssetLifeCycleStatesRequest;
-import org.ebayopensource.turmeric.repository.v2.services.GetAssetStatusRequest;
-import org.ebayopensource.turmeric.repository.v2.services.GetAssetSubmissionPropertiesRequest;
-import org.ebayopensource.turmeric.repository.v2.services.GetAssetTreeByAttributesRequest;
-import org.ebayopensource.turmeric.repository.v2.services.GetAssetTypesRequest;
-import org.ebayopensource.turmeric.repository.v2.services.GetAssetVersionsRequest;
-import org.ebayopensource.turmeric.repository.v2.services.GetBasicAssetInfoRequest;
-import org.ebayopensource.turmeric.repository.v2.services.GraphRelationship;
-import org.ebayopensource.turmeric.repository.v2.services.LockAssetRequest;
-import org.ebayopensource.turmeric.repository.v2.services.RejectAssetRequest;
-import org.ebayopensource.turmeric.repository.v2.services.RejectionInfo;
-import org.ebayopensource.turmeric.repository.v2.services.RelationForUpdate;
-import org.ebayopensource.turmeric.repository.v2.services.RemoveAssetRequest;
-import org.ebayopensource.turmeric.repository.v2.services.SearchAssetsDetailedRequest;
-import org.ebayopensource.turmeric.repository.v2.services.SearchAssetsRequest;
-import org.ebayopensource.turmeric.repository.v2.services.SubmitForPublishingRequest;
-import org.ebayopensource.turmeric.repository.v2.services.TypedRelationNode;
-import org.ebayopensource.turmeric.repository.v2.services.UnlockAssetRequest;
-import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetArtifactsRequest;
-import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetAttributesRequest;
-import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetDependenciesByGraphRequest;
-import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetDependenciesRequest;
-import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetRequest;
-import org.ebayopensource.turmeric.repository.v2.services.UpdateCompleteAssetRequest;
-import org.ebayopensource.turmeric.repository.v2.services.ValidateAssetRequest;
+import org.ebayopensource.turmeric.repository.v2.services.*;
 import org.ebayopensource.turmeric.runtime.common.exceptions.ErrorDataFactory;
 import org.ebayopensource.turmeric.services.repositoryservice.operation.util.RepositoryServiceOperationValidationUtil;
 
@@ -874,82 +838,6 @@ public class RepositoryServiceValidateUtil {
 		return isValid;
 	}
 
-	public static boolean validate(
-			UpdateAssetDependenciesByGraphRequest updateAssetDependenciesByGraphRequest,
-			List<CommonErrorData> errorDataList) {
-		boolean isValid = true;
-		if (updateAssetDependenciesByGraphRequest.getAssetKey() != null) {
-			AssetKey sourceAsset = updateAssetDependenciesByGraphRequest
-					.getAssetKey();
-			if (sourceAsset.getAssetId() == null) {
-				isValid = false;
-				errorDataList.add(ErrorDataFactory.createErrorData(
-						ErrorConstants.ASSET_ID_MISSING,
-						ErrorConstants.ERRORDOMAIN));
-				errorDataList.add(ErrorDataFactory.createErrorData(
-						ErrorConstants.SOURCE_ASSET_NOT_ENTERED,
-						ErrorConstants.ERRORDOMAIN));
-			}
-			if (updateAssetDependenciesByGraphRequest.getGraphRelationship()
-					.getSourceAsset() == null) {
-				updateAssetDependenciesByGraphRequest.getGraphRelationship()
-						.setSourceAsset(sourceAsset);
-			} else if (isValid) {
-				if (updateAssetDependenciesByGraphRequest
-						.getGraphRelationship().getSourceAsset().getAssetId() == null
-						|| !updateAssetDependenciesByGraphRequest
-								.getGraphRelationship()
-								.getSourceAsset()
-								.getAssetId()
-								.equals(updateAssetDependenciesByGraphRequest
-										.getAssetKey().getAssetId())) {
-					isValid = false;
-
-					List<ErrorParameter> errorParameterList = new ArrayList<ErrorParameter>();
-					ErrorParameter firstAssetKeyErrorParameter = new ErrorParameter();
-					firstAssetKeyErrorParameter.setName("firstAssetKey");
-					firstAssetKeyErrorParameter
-							.setValue("source asset in the Graph Relationship");
-					errorParameterList.add(firstAssetKeyErrorParameter);
-
-					ErrorParameter secondAssetKeyErrorParameter = new ErrorParameter();
-					secondAssetKeyErrorParameter.setName("secondAssetKey");
-					secondAssetKeyErrorParameter
-							.setValue("the updateassetRelationshipByGraphRequest");
-					errorParameterList.add(secondAssetKeyErrorParameter);
-					errorDataList.add(ErrorDataFactory.createErrorData(
-							ErrorConstants.ASSET_KEY_MISMATCH_ERROR,
-							ErrorConstants.ERRORDOMAIN));
-				}
-			}
-		} else {
-			isValid = false;
-			errorDataList.add(ErrorDataFactory.createErrorData(
-					ErrorConstants.SOURCE_ASSET_NOT_ENTERED,
-					ErrorConstants.ERRORDOMAIN));
-		}
-		if (updateAssetDependenciesByGraphRequest.getGraphRelationship() != null) {
-			if (!validateGraphRelationship(
-					updateAssetDependenciesByGraphRequest
-							.getGraphRelationship(),
-					errorDataList)) {
-				isValid = false;
-			}
-			if (updateAssetDependenciesByGraphRequest.getGraphRelationship()
-					.getTargetAsset() == null) {
-				isValid = false;
-				errorDataList.add(ErrorDataFactory.createErrorData(
-						ErrorConstants.RELATIONS_NOT_ENTERED,
-						ErrorConstants.ERRORDOMAIN));
-			}
-		} else {
-			isValid = false;
-			errorDataList.add(ErrorDataFactory.createErrorData(
-					ErrorConstants.RELATIONS_NOT_ENTERED,
-					ErrorConstants.ERRORDOMAIN));
-		}
-		return isValid;
-	}
 
 	private static boolean validateGraphRelationship(
 			GraphRelationship graphRelationship,

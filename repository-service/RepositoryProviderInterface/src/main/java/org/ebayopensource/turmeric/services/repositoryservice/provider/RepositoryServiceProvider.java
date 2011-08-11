@@ -20,10 +20,6 @@ public interface RepositoryServiceProvider {
 
 	public UpdateAssetArtifactsResponse updateAssetArtifacts(UpdateAssetArtifactsRequest updateAssetArtifactsRequest);
 
-
-	public UpdateAssetDependenciesByGraphResponse updateAssetDependenciesByGraph(
-			UpdateAssetDependenciesByGraphRequest updateAssetDependenciesByGraphRequest);
-
 	public ApproveAssetResponse approveAsset(
 			ApproveAssetRequest approveAssetRequest);
 
