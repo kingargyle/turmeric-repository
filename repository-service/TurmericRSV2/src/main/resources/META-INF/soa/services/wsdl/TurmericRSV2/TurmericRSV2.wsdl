@@ -76,12 +76,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          <xs:element name="updateAssetDependenciesResponse" nillable="true"
          type="tns:UpdateAssetDependenciesResponse" />
 
-         <xs:element name="updateAssetDependenciesByGraphRequest" nillable="true"
-         type="tns:UpdateAssetDependenciesByGraphRequest" />
-
-         <xs:element name="updateAssetDependenciesByGraphResponse" nillable="true"
-         type="tns:UpdateAssetDependenciesByGraphResponse" />
-
          <xs:element name="lockAssetRequest" nillable="true"
          type="tns:LockAssetRequest" />
 
@@ -530,28 +524,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
             </xs:complexContent>
          </xs:complexType>
 
-         <xs:complexType name="UpdateAssetDependenciesByGraphRequest">
-            <xs:complexContent>
-               <xs:extension base="tns:BaseRequest">
-                  <xs:sequence>
-                     <xs:element name="assetKey" type="tns:AssetKey" />
-
-                     <xs:element name="graphRelationship" type="tns:GraphRelationship" />
-
-                     <xs:element name="replaceCurrent" type="xs:boolean">
-                     </xs:element>
-                  </xs:sequence>
-               </xs:extension>
-            </xs:complexContent>
-         </xs:complexType>
-
-         <xs:complexType name="UpdateAssetDependenciesByGraphResponse">
-            <xs:complexContent>
-               <xs:extension base="tns:BaseResponse">
-                  <xs:sequence />
-               </xs:extension>
-            </xs:complexContent>
-         </xs:complexType>
 
          <xs:complexType name="LockAssetRequest">
             <xs:complexContent>
@@ -2884,11 +2856,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </part>
    </message>
 
-   <message name="updateAssetDependenciesByGraphResponse">
-      <part name="parameters" element="tns:updateAssetDependenciesByGraphResponse">
-      </part>
-   </message>
-
    <message name="updateAssetResponse">
       <part name="parameters" element="tns:updateAssetResponse">
       </part>
@@ -2941,11 +2908,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
 
    <message name="getAssetInfoResponse">
       <part name="parameters" element="tns:getAssetInfoResponse">
-      </part>
-   </message>
-
-   <message name="updateAssetDependenciesByGraphRequest">
-      <part name="parameters" element="tns:updateAssetDependenciesByGraphRequest">
       </part>
    </message>
 
@@ -3430,17 +3392,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          </output>
       </operation>
 
-      <operation name="updateAssetDependenciesByGraph">
-         <wsdl:documentation>
-            Needs Documentation.   Possible Errors, any pre-conditions requirements (i.e. locks, etc).
-         </wsdl:documentation>
-         <input message="tns:updateAssetDependenciesByGraphRequest">
-         </input>
-
-         <output message="tns:updateAssetDependenciesByGraphResponse">
-         </output>
-      </operation>
-
       <operation name="removeAsset">
          <wsdl:documentation>
             Needs Documentation.   Possible Errors, etc.
@@ -3831,18 +3782,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          </output>
       </operation>
 
-      <operation name="updateAssetDependenciesByGraph">
-         <http:operation location="RepositoryService/updateAssetDependenciesByGraph" />
-
-         <input>
-            <mime:content part="updateAssetDependenciesByGraph" type="text/xml" />
-         </input>
-
-         <output>
-            <mime:content part="updateAssetDependenciesByGraph" type="text/xml" />
-         </output>
-      </operation>
-
       <operation name="removeAsset">
          <http:operation location="RepositoryService/removeAsset" />
 
@@ -4223,19 +4162,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       
       <operation name="updateAssetDependencies">
          <soap12:operation soapAction="urn:updateAssetDependencies" style="document" />
-
-         <input>
-            <soap12:body use="literal" />
-         </input>
-
-         <output>
-            <soap12:body use="literal" />
-         </output>
-      </operation>
-
-      <operation name="updateAssetDependenciesByGraph">
-         <soap12:operation soapAction="urn:updateAssetDependenciesByGraph"
-         style="document" />
 
          <input>
             <soap12:body use="literal" />
