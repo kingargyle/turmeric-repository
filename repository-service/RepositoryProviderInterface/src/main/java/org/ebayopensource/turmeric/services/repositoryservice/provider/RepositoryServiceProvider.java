@@ -20,10 +20,6 @@ public interface RepositoryServiceProvider {
 
 	public UpdateAssetArtifactsResponse updateAssetArtifacts(UpdateAssetArtifactsRequest updateAssetArtifactsRequest);
 
-
-	public UpdateAssetDependenciesByGraphResponse updateAssetDependenciesByGraph(
-			UpdateAssetDependenciesByGraphRequest updateAssetDependenciesByGraphRequest);
-
 	public ApproveAssetResponse approveAsset(
 			ApproveAssetRequest approveAssetRequest);
 
@@ -85,9 +81,6 @@ public interface RepositoryServiceProvider {
 
 	public GetAssetLifeCycleStatesResponse getAssetLifeCycleStates(
 			GetAssetLifeCycleStatesRequest getAssetLifeCycleStatesRequest);
-
-	public GetCatalogAssetInfoResponse getCatalogAssetInfo(
-			GetCatalogAssetInfoRequest getCatalogAssetInfoRequest);
 
 	public GetAllAssetsGroupedByCategoryResponse getAllAssetsGroupedByCategory(
 			GetAllAssetsGroupedByCategoryRequest getAllAssetsGroupedByCategoryRequest);
