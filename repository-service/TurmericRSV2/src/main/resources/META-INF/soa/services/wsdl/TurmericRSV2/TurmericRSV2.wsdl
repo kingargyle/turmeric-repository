@@ -21,7 +21,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
       targetNamespace="http://www.ebayopensource.org/turmeric/repository/v2/services"
       xmlns:xs="http://www.w3.org/2001/XMLSchema">
-
          <xs:element name="createCompleteAssetRequest" nillable="true"
          type="tns:CreateCompleteAssetRequest" />
 
@@ -149,25 +148,30 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          type="tns:GetAssetDependenciesResponse" />
 
          <xs:element name="getAssetDependenciesByGraphRequest" nillable="true"
-         type="tns:GetAssetDependenciesByGraphRequest" >
-         	<xs:annotation>
-         		<xs:documentation>Needs documentation</xs:documentation>
-         	</xs:annotation></xs:element>
+         type="tns:GetAssetDependenciesByGraphRequest">
+            <xs:annotation>
+               <xs:documentation>Needs documentation</xs:documentation>
+            </xs:annotation>
+         </xs:element>
 
          <xs:element name="getAssetDependenciesByGraphResponse" nillable="true"
-         type="tns:GetAssetDependenciesByGraphResponse" >
-         	<xs:annotation>
-         		<xs:documentation></xs:documentation>
-         	</xs:annotation></xs:element>
+         type="tns:GetAssetDependenciesByGraphResponse">
+            <xs:annotation>
+               <xs:documentation>
+               </xs:documentation>
+            </xs:annotation>
+         </xs:element>
 
          <xs:element name="getAssetTypesRequest" nillable="true"
          type="tns:GetAssetTypesRequest" />
 
          <xs:element name="getAssetTypesResponse" nillable="true"
-         type="tns:GetAssetTypesResponse" >
-         	<xs:annotation>
-         		<xs:documentation></xs:documentation>
-         	</xs:annotation></xs:element>
+         type="tns:GetAssetTypesResponse">
+            <xs:annotation>
+               <xs:documentation>
+               </xs:documentation>
+            </xs:annotation>
+         </xs:element>
 
          <xs:element name="getAssetLifeCycleStatesRequest" nillable="true"
          type="tns:GetAssetLifeCycleStatesRequest" />
@@ -227,11 +231,12 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
                   <xs:sequence>
                      <xs:element name="assetInfo" type="tns:AssetInfo">
                         <xs:annotation>
-                        	<xs:documentation>The assetinfo store all details needed for
+                           <xs:documentation>The assetinfo store all details needed for
                            creating the asset. The captureTemplateName store the name of
                            the capture template to be applied on the asset. the groupname
-                           specified the group which will be the owner of the
-                           asset. It also contains the artifacts info for the asset.</xs:documentation>
+                           specified the group which will be the owner of the asset. It
+                           also contains the artifacts info for the
+                           asset.</xs:documentation>
                         </xs:annotation>
                      </xs:element>
 
@@ -524,7 +529,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
             </xs:complexContent>
          </xs:complexType>
 
-
          <xs:complexType name="LockAssetRequest">
             <xs:complexContent>
                <xs:extension base="tns:BaseRequest">
@@ -734,12 +738,12 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
             <xs:complexContent>
                <xs:extension base="tns:BaseRequest">
                   <xs:sequence>
-                     <xs:element name="comment" type="xs:string"/>
+                     <xs:element name="comment" type="xs:string" />
 
-                     <xs:element name="assetKey" type="tns:AssetKey"/>
+                     <xs:element name="assetKey" type="tns:AssetKey" />
 
                      <xs:element maxOccurs="unbounded" minOccurs="0"
-                     name="requestProperties" type="tns:Property"/>
+                     name="requestProperties" type="tns:Property" />
 
                      <xs:element maxOccurs="1" minOccurs="0" name="publishTemplateName"
                      type="xs:string">
@@ -827,7 +831,7 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
                <xs:extension base="tns:BaseRequest">
                   <xs:sequence>
                      <xs:element name="assetQuery" type="tns:AssetQuery" />
-                     
+
                      <xs:element maxOccurs="unbounded" minOccurs="0" name="searchLevel"
                      type="tns:SearchLevel">
                         <xs:annotation>
@@ -996,15 +1000,16 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
             <xs:complexContent>
                <xs:extension base="tns:BaseRequest">
                   <xs:sequence>
-                     <xs:element name="assetKey" type="tns:AssetKey" >
-                     	<xs:annotation>
-                     		<xs:documentation>Needs documentation</xs:documentation>
-                     	</xs:annotation></xs:element>
+                     <xs:element name="assetKey" type="tns:AssetKey">
+                        <xs:annotation>
+                           <xs:documentation>Needs documentation</xs:documentation>
+                        </xs:annotation>
+                     </xs:element>
 
                      <xs:element minOccurs="0" name="depth" type="xs:int">
-                                <xs:annotation>
-                                	<xs:documentation>Needs documentation</xs:documentation>
-                                </xs:annotation>
+                        <xs:annotation>
+                           <xs:documentation>Needs documentation</xs:documentation>
+                        </xs:annotation>
                      </xs:element>
                   </xs:sequence>
                </xs:extension>
@@ -1012,9 +1017,12 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          </xs:complexType>
 
          <xs:complexType name="GetAssetDependenciesByGraphResponse">
-                <xs:annotation>
-                	<xs:documentation>GraphRelationship indicating the dependencies</xs:documentation></xs:annotation>
-                <xs:complexContent>
+            <xs:annotation>
+               <xs:documentation>GraphRelationship indicating the
+               dependencies</xs:documentation>
+            </xs:annotation>
+
+            <xs:complexContent>
                <xs:extension base="tns:BaseResponse">
                   <xs:sequence>
                      <xs:element minOccurs="0" name="graphRelationship"
@@ -1026,14 +1034,16 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
 
          <xs:complexType name="GetAssetTypesRequest">
             <xs:complexContent>
-               <xs:extension base="tns:BaseRequest"/>
+               <xs:extension base="tns:BaseRequest" />
             </xs:complexContent>
          </xs:complexType>
 
          <xs:complexType name="GetAssetTypesResponse">
-                <xs:annotation>
-                	<xs:documentation>List of asset types (String names)</xs:documentation></xs:annotation>
-                <xs:complexContent>
+            <xs:annotation>
+               <xs:documentation>List of asset types (String names)</xs:documentation>
+            </xs:annotation>
+
+            <xs:complexContent>
                <xs:extension base="tns:BaseResponse">
                   <xs:sequence>
                      <xs:element maxOccurs="unbounded" minOccurs="0" name="assetType"
@@ -1055,7 +1065,7 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
 
          <xs:complexType name="GetAssetLifeCycleStatesResponse">
             <xs:complexContent>
-               <xs:extension base="tns:BaseResponse"/>
+               <xs:extension base="tns:BaseResponse" />
             </xs:complexContent>
          </xs:complexType>
 
@@ -1081,15 +1091,20 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          </xs:complexType>
 
          <xs:complexType name="RejectAssetRequest">
-                <xs:annotation>
-                	<xs:documentation>Contains the assetId of the asset to be rejected and the comments for the rejection.</xs:documentation></xs:annotation>
-                <xs:complexContent>
+            <xs:annotation>
+               <xs:documentation>Contains the assetId of the asset to be rejected and the
+               comments for the rejection.</xs:documentation>
+            </xs:annotation>
+
+            <xs:complexContent>
                <xs:extension base="tns:BaseRequest">
                   <xs:sequence>
-                     <xs:element name="rejectionInfo" type="tns:RejectionInfo" >
-                     	<xs:annotation>
-                     		<xs:documentation></xs:documentation>
-                     	</xs:annotation></xs:element>
+                     <xs:element name="rejectionInfo" type="tns:RejectionInfo">
+                        <xs:annotation>
+                           <xs:documentation>
+                           </xs:documentation>
+                        </xs:annotation>
+                     </xs:element>
                   </xs:sequence>
                </xs:extension>
             </xs:complexContent>
@@ -1106,10 +1121,12 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          </xs:complexType>
 
          <xs:complexType name="ApproveAssetRequest">
-                <xs:annotation>
-                	<xs:documentation>Contains the assetId of the asset to be approved and the comments for the approval.</xs:documentation>
-                </xs:annotation>
-                <xs:complexContent>
+            <xs:annotation>
+               <xs:documentation>Contains the assetId of the asset to be approved and the
+               comments for the approval.</xs:documentation>
+            </xs:annotation>
+
+            <xs:complexContent>
                <xs:extension base="tns:BaseRequest">
                   <xs:sequence>
                      <xs:element name="approvalInfo" type="tns:ApprovalInfo" />
@@ -1127,8 +1144,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
                </xs:extension>
             </xs:complexContent>
          </xs:complexType>
-
-
 
          <xs:complexType name="AssetInfo">
             <xs:annotation>
@@ -1800,25 +1815,50 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          <xs:complexType name="AssetKey">
             <xs:annotation>
                <xs:documentation>If only assetName is provided, the assetKey can not
-               identify the asset. It will need more info such as assetType and version
-               to identify the asset.</xs:documentation>
+               identify the asset. It will need more info such as Category and version to
+               identify the asset.</xs:documentation>
             </xs:annotation>
 
             <xs:sequence>
-               <xs:choice>
-                  <xs:element name="assetId" type="xs:string">
-                     <xs:annotation>
-                        <xs:documentation>This should be asset key or id which can
-                        identify the asset with it</xs:documentation>
-                     </xs:annotation>
-                  </xs:element>
-
-                  <xs:element name="assetName" type="xs:string">
-                     <xs:annotation>
-                        <xs:documentation>Name of the Asset.</xs:documentation>
-                     </xs:annotation>
-                  </xs:element>
-               </xs:choice>
+                     <xs:element name="assetId" type="xs:string" minOccurs="1"
+                     maxOccurs="1">
+                        <xs:annotation>
+                           <xs:documentation>A unique identifier for the asset. Each SOA
+                           Repository may have it's own way to uniquely identify a
+                           repository. This id is the primary way to identify. Typically
+                           this may be a numerical value. If a unique identifier is not
+                           provided then the alternateKey is used. Which is a combination
+                           of name, version, and type. Currently this uses the
+                           AssetDetail which contains this information but this may
+                           change and be split in a later release.</xs:documentation>
+                        </xs:annotation>
+                     </xs:element>
+                     <xs:element name="assetName" type="xs:string" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                           <xs:documentation>
+                              The name of the asset.  This should not be null.  If it is the 
+                              service will return a Missing Name error.
+                           </xs:documentation>
+                        </xs:annotation>
+                     </xs:element>
+                     <xs:element name="version" type="xs:string" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                           <xs:documentation>
+                              The version number of the asset.  This is typically used to help
+                              uniquely identify the assset.  If asset Id does not uniquely identify
+                              the asset, then a combination of asset id, assetName, assetVersion, and 
+                              type should.
+                           </xs:documentation>
+                        </xs:annotation>
+                     </xs:element>
+                     <xs:element name="type" type="xs:string" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                           <xs:documentation>
+                              The type of asset.  Used to help uniquely identify the asset if assetId 
+                              is not a unique identifier itself. 
+                           </xs:documentation>
+                        </xs:annotation>
+                     </xs:element>
             </xs:sequence>
          </xs:complexType>
 
@@ -1906,6 +1946,7 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
                      have to log a ticket for this with SOA.</xs:documentation>
                   </xs:annotation>
                </xs:element>
+
                <xs:choice>
                   <xs:element name="assetId" type="xs:string" />
 
@@ -3058,8 +3099,8 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
 
    <portType name="RepositoryServicePort">
       <operation name="getAssetStatus">
-         <wsdl:documentation>Get the status of an asset. Possible errors include InvalidAsset,
-         InsufficientPrivileges.</wsdl:documentation>
+         <wsdl:documentation>Get the status of an asset. Possible errors include
+         InvalidAsset, InsufficientPrivileges.</wsdl:documentation>
 
          <input message="tns:getAssetStatusRequest" />
 
@@ -3083,10 +3124,11 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </operation>
 
       <operation name="getBasicAssetInfo">
-         <wsdl:documentation>
-            The description is same as that of the operation getAssetInfo, except that the returned info is just the basic information.
-            Possible errors include  InvalidAsset, InsufficientPrivileges.
-         </wsdl:documentation>
+         <wsdl:documentation>The description is same as that of the operation
+         getAssetInfo, except that the returned info is just the basic information.
+         Possible errors include InvalidAsset,
+         InsufficientPrivileges.</wsdl:documentation>
+
          <input message="tns:getBasicAssetInfoRequest">
          </input>
 
@@ -3117,9 +3159,9 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </operation>
 
       <operation name="searchAssetsDetailed">
-         <wsdl:documentation>
-            Search for an assets detailed information.
-         </wsdl:documentation>
+         <wsdl:documentation>Search for an assets detailed
+         information.</wsdl:documentation>
+
          <input message="tns:searchAssetsDetailedRequest">
             <wsdl:documentation>An additional search operation for returning assets with
             different levels of detail based on user's need. The Search asset request
@@ -3137,9 +3179,9 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </operation>
 
       <operation name="searchAssets">
-         <wsdl:documentation>
-            Search for an assset. Possible errors include InvalidQuery, InsufficientPrivileges.
-         </wsdl:documentation>
+         <wsdl:documentation>Search for an assset. Possible errors include InvalidQuery,
+         InsufficientPrivileges.</wsdl:documentation>
+
          <input message="tns:searchAssetsRequest">
             <wsdl:documentation>The Search asset request presently only support
             AttributeCriteria of the AssetQuery Object used. ArtifactCriteria and
@@ -3152,9 +3194,10 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </operation>
 
       <operation name="getSubscription">
-         <wsdl:documentation>
-            Get a previously subscribed subscription definition.  Possible errors include InvalidSubscription, InsufficientPrivileges.
-         </wsdl:documentation>
+         <wsdl:documentation>Get a previously subscribed subscription definition.
+         Possible errors include InvalidSubscription,
+         InsufficientPrivileges.</wsdl:documentation>
+
          <input message="tns:getSubscriptionRequest">
          </input>
 
@@ -3163,10 +3206,10 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </operation>
 
       <operation name="getAssetDependencies">
-         <wsdl:documentation>
-            Based on specified criteria return the asset dependencies.  Possible errors include
-            InvalidAsset, InsufficientPrivileges.
-         </wsdl:documentation>
+         <wsdl:documentation>Based on specified criteria return the asset dependencies.
+         Possible errors include InvalidAsset,
+         InsufficientPrivileges.</wsdl:documentation>
+
          <input message="tns:getAssetDependenciesRequest">
          </input>
 
@@ -3175,9 +3218,10 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </operation>
 
       <operation name="getAssetDependenciesByGraph">
-         <wsdl:documentation>
-            Get the dependencies, given an asset, suitable for a graph (i.e, in a tree like format). Possible errors include InvalidAsset, InsufficientPrivileges.
-         </wsdl:documentation>
+         <wsdl:documentation>Get the dependencies, given an asset, suitable for a graph
+         (i.e, in a tree like format). Possible errors include InvalidAsset,
+         InsufficientPrivileges.</wsdl:documentation>
+
          <input message="tns:getAssetDependenciesByGraphRequest">
          </input>
 
@@ -3186,9 +3230,9 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </operation>
 
       <operation name="getAssetTypes">
-         <wsdl:documentation>
-           Get all defined asset types.   Possible errors include InvalidAsset, InsufficientPrivileges.
-         </wsdl:documentation>
+         <wsdl:documentation>Get all defined asset types. Possible errors include
+         InvalidAsset, InsufficientPrivileges.</wsdl:documentation>
+
          <input message="tns:getAssetTypesRequest">
          </input>
 
@@ -3197,9 +3241,9 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </operation>
 
       <operation name="getAssetLifeCycleStates">
-         <wsdl:documentation>
-            Retrieve the life cycle states for an asset.   Possible errors include InvalidAssetType, InsufficientPrivileges.
-         </wsdl:documentation>
+         <wsdl:documentation>Retrieve the life cycle states for an asset. Possible errors
+         include InvalidAssetType, InsufficientPrivileges.</wsdl:documentation>
+
          <input message="tns:getAssetLifeCycleStatesRequest">
          </input>
 
@@ -3208,9 +3252,9 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </operation>
 
       <operation name="getAssetVersions">
-         <wsdl:documentation>
-            Retrieve the versions of an assset.   Possible errors include InvalidAsset, InsufficientPrivileges.
-         </wsdl:documentation>
+         <wsdl:documentation>Retrieve the versions of an assset. Possible errors include
+         InvalidAsset, InsufficientPrivileges.</wsdl:documentation>
+
          <input message="tns:getAssetVersionsRequest">
          </input>
 
@@ -3219,9 +3263,9 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </operation>
 
       <operation name="rejectAsset">
-         <wsdl:documentation>
-            Flags the asset as &quot;rejected&quot; in the repository.   Possible Errors, etc.
-         </wsdl:documentation>
+         <wsdl:documentation>Flags the asset as "rejected" in the repository. Possible
+         Errors, etc.</wsdl:documentation>
+
          <input message="tns:rejectAssetRequest">
          </input>
 
@@ -3230,9 +3274,9 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </operation>
 
       <operation name="approveAsset">
-         <wsdl:documentation>
-            Flags the asset as &quot;rejected&quot; in the repository.    Possible Errors, etc.
-         </wsdl:documentation>
+         <wsdl:documentation>Flags the asset as "rejected" in the repository. Possible
+         Errors, etc.</wsdl:documentation>
+
          <input message="tns:approveAssetRequest">
          </input>
 
@@ -3316,10 +3360,10 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </operation>
 
       <operation name="subscribe">
-         <wsdl:documentation>
-            Subscribe for notifications about changes or workflows regarding an asset based on a particular criteria.
-            Possible errors include InvalidSubscriptionCriteria, InsufficientPrivileges.
-         </wsdl:documentation>
+         <wsdl:documentation>Subscribe for notifications about changes or workflows
+         regarding an asset based on a particular criteria. Possible errors include
+         InvalidSubscriptionCriteria, InsufficientPrivileges.</wsdl:documentation>
+
          <input message="tns:subscribeRequest">
          </input>
 
@@ -3328,10 +3372,10 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </operation>
 
       <operation name="unsubscribe">
-         <wsdl:documentation>
-            Unsubscribe from notification about changes or workflows regarding an asset.  Possible errors include
-             InvalidSubscription, InsufficientPrivileges.
-         </wsdl:documentation>
+         <wsdl:documentation>Unsubscribe from notification about changes or workflows
+         regarding an asset. Possible errors include InvalidSubscription,
+         InsufficientPrivileges.</wsdl:documentation>
+
          <input message="tns:unsubscribeRequest">
          </input>
 
@@ -3340,10 +3384,11 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </operation>
 
       <operation name="updateSubscription">
-         <wsdl:documentation>
-            This operation updates an existing subscription. The same original subscriptionID should be returned as output. 
-            Possible errors include InvalidSubscription, InsufficientPrivileges, InvalidSubscriptionCriteria.
-         </wsdl:documentation>
+         <wsdl:documentation>This operation updates an existing subscription. The same
+         original subscriptionID should be returned as output. Possible errors include
+         InvalidSubscription, InsufficientPrivileges,
+         InvalidSubscriptionCriteria.</wsdl:documentation>
+
          <input message="tns:updateSubscriptionRequest">
          </input>
 
@@ -3352,8 +3397,9 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </operation>
 
       <operation name="createCompleteAsset">
-         <wsdl:documentation>Creates an asset along with its artifacts.   Possible Errors, etc.
-         </wsdl:documentation>
+         <wsdl:documentation>Creates an asset along with its artifacts. Possible Errors,
+         etc.</wsdl:documentation>
+
          <input message="tns:createCompleteAssetRequest">
          </input>
 
@@ -3362,8 +3408,9 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </operation>
 
       <operation name="createAndSubmitAsset">
-         <wsdl:documentation>Same as createCompleteAsset and the asset gets flagged as &quot;submitted&quot;.   Possible Errors, etc.
-         </wsdl:documentation>
+         <wsdl:documentation>Same as createCompleteAsset and the asset gets flagged as
+         "submitted". Possible Errors, etc.</wsdl:documentation>
+
          <input message="tns:createAndSubmitAssetRequest">
          </input>
 
@@ -3372,8 +3419,10 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </operation>
 
       <operation name="updateCompleteAsset">
-         <wsdl:documentation>Updates an asset along with its artifacts. If replaceCurrent is true, then the properties and artifacts related to the asset are overriden. Possible Errors, etc.
-         </wsdl:documentation>
+         <wsdl:documentation>Updates an asset along with its artifacts. If replaceCurrent
+         is true, then the properties and artifacts related to the asset are overriden.
+         Possible Errors, etc.</wsdl:documentation>
+
          <input message="tns:updateCompleteAssetRequest">
          </input>
 
@@ -3382,9 +3431,9 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </operation>
 
       <operation name="updateAssetDependencies">
-         <wsdl:documentation>
-            Needs Documentation.   Possible Errors, etc.
-         </wsdl:documentation>
+         <wsdl:documentation>Needs Documentation. Possible Errors,
+         etc.</wsdl:documentation>
+
          <input message="tns:updateAssetDependenciesRequest">
          </input>
 
@@ -3393,9 +3442,9 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </operation>
 
       <operation name="removeAsset">
-         <wsdl:documentation>
-            Needs Documentation.   Possible Errors, etc.
-         </wsdl:documentation>
+         <wsdl:documentation>Needs Documentation. Possible Errors,
+         etc.</wsdl:documentation>
+
          <input message="tns:removeAssetRequest">
          </input>
 
@@ -3404,9 +3453,9 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </operation>
 
       <operation name="validateAsset">
-         <wsdl:documentation>
-            Needs Documentation.   Possible Errors, etc.
-          </wsdl:documentation>
+         <wsdl:documentation>Needs Documentation. Possible Errors,
+         etc.</wsdl:documentation>
+
          <input message="tns:validateAssetRequest">
          </input>
 
@@ -3415,9 +3464,9 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </operation>
 
       <operation name="getAssetSubmissionProperties">
-         <wsdl:documentation>
-            Needs Documentation.   Possible Errors, etc.
-         </wsdl:documentation>
+         <wsdl:documentation>Needs Documentation. Possible Errors,
+         etc.</wsdl:documentation>
+
          <input message="tns:getAssetSubmissionPropertiesRequest">
          </input>
 
@@ -3426,13 +3475,11 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </operation>
 
       <operation name="getAssetTreeByAttributes">
-         <wsdl:documentation>
-            The getAssetTreeByAttributes will give the enough
-            information so that the next level nodes can be rendered. It will return all
-            possible values for a particular attribute among all assets that belong to an
-            asset type in a specific library. It also returns the number of assets for
-            each value.
-         </wsdl:documentation>
+         <wsdl:documentation>The getAssetTreeByAttributes will give the enough
+         information so that the next level nodes can be rendered. It will return all
+         possible values for a particular attribute among all assets that belong to an
+         asset type in a specific library. It also returns the number of assets for each
+         value.</wsdl:documentation>
 
          <input message="tns:getAssetTreeByAttributesRequest">
          </input>
@@ -3442,9 +3489,7 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </operation>
 
       <operation name="submitForPublishing">
-         <wsdl:documentation>
-            Deprecated, use submit.
-         </wsdl:documentation>
+         <wsdl:documentation>Deprecated, use submit.</wsdl:documentation>
 
          <input message="tns:submitForPublishingRequest">
          </input>
@@ -3452,7 +3497,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          <output message="tns:submitForPublishingResponse">
          </output>
       </operation>
-
    </portType>
 
    <binding name="RepositoryServiceHttpBinding" type="tns:RepositoryServicePort">
@@ -4159,7 +4203,7 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
             <soap12:body use="literal" />
          </output>
       </operation>
-      
+
       <operation name="updateAssetDependencies">
          <soap12:operation soapAction="urn:updateAssetDependencies" style="document" />
 

@@ -56,6 +56,7 @@ import org.ebayopensource.turmeric.common.v1.types.ErrorParameter;
 import org.ebayopensource.turmeric.repository.v2.services.Artifact;
 import org.ebayopensource.turmeric.repository.v2.services.ArtifactInfo;
 import org.ebayopensource.turmeric.repository.v2.services.ArtifactValueType;
+import org.ebayopensource.turmeric.repository.v2.services.AssetDetail;
 import org.ebayopensource.turmeric.repository.v2.services.AssetInfo;
 import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
 import org.ebayopensource.turmeric.repository.v2.services.AssetLifeCycleInfo;

@@ -102,8 +102,7 @@ public class RepositoryServiceValidateUtil {
 
 						(createAssetRequest.getBasicAssetInfo().getAssetKey() == null ||
 
-						createAssetRequest.getBasicAssetInfo().getAssetKey()
-								.getAssetName() == null)) {
+						createAssetRequest.getBasicAssetInfo().getAssetKey().getAssetName()	 == null)) {
 					isValid = false;
 					errorDataList.add(ErrorDataFactory.createErrorData(
 							ErrorConstants.ASSET_NAME_MISSING,
