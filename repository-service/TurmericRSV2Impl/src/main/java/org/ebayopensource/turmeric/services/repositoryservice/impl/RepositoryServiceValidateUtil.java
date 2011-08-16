@@ -85,9 +85,6 @@ public class RepositoryServiceValidateUtil {
 		CreateCompleteAssetRequest createCompleteAssetRequest = new CreateCompleteAssetRequest();
 		createCompleteAssetRequest.setAssetInfo(createAndSubmitAssetRequest
 				.getAssetInfo());
-		createCompleteAssetRequest
-				.setCaptureTemplateName(createAndSubmitAssetRequest
-						.getCaptureTemplateName());
 		return createCompleteAssetRequest;
 	}
 
@@ -216,13 +213,6 @@ public class RepositoryServiceValidateUtil {
 					.validateAssetInfo(
 							createCompleteAssetRequest.getAssetInfo(),
 							errorDataList);
-
-			if (createCompleteAssetRequest.getCaptureTemplateName() == null) {
-				errorDataList.add(ErrorDataFactory.createErrorData(
-						ErrorConstants.CAPTURE_TEMPLATE_NOT_RESOLVED,
-						ErrorConstants.ERRORDOMAIN));
-				isValid = false;
-			}
 		} else {
 			errorDataList.add(ErrorDataFactory
 					.createErrorData(ErrorConstants.NO_REQUEST_PARAM,
