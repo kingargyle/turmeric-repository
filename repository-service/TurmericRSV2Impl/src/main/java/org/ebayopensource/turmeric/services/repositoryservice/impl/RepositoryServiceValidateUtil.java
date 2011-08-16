@@ -284,34 +284,6 @@ public class RepositoryServiceValidateUtil {
 		return isValid;
 	}
 
-	/**
-	 * Used to validate the input for GetAssetDependenciesByGraph operation
-	 * 
-	 * @param getAssetDependenciesByGraphRequest
-	 * @param errorDataList
-	 * @return
-	 */
-	public static boolean validate(
-			GetAssetDependenciesByGraphRequest getAssetDependenciesByGraphRequest,
-			List<CommonErrorData> errorDataList) {
-		boolean isValid = true;
-
-		if (getAssetDependenciesByGraphRequest.getAssetKey() != null) {
-			if (getAssetDependenciesByGraphRequest.getAssetKey().getAssetId() == null) {
-				errorDataList.add(ErrorDataFactory.createErrorData(
-						ErrorConstants.ASSET_ID_MISSING,
-						ErrorConstants.ERRORDOMAIN));
-			}
-		} else {
-			errorDataList.add(ErrorDataFactory
-					.createErrorData(ErrorConstants.ASSET_ID_MISSING,
-							ErrorConstants.ERRORDOMAIN));
-		}
-
-		if (errorDataList.size() > 0)
-			isValid = false;
-		return isValid;
-	}
 
 	public static boolean validate(
 			GetAssetDependenciesRequest getAssetDependenciesRequest,
@@ -834,49 +806,6 @@ public class RepositoryServiceValidateUtil {
 
 		if (errorDataList.size() > 0)
 			isValid = false;
-		return isValid;
-	}
-
-
-	private static boolean validateGraphRelationship(
-			GraphRelationship graphRelationship,
-			List<CommonErrorData> errorDataList) {
-		boolean isValid = true;
-		if (graphRelationship.getSourceAsset() != null) {
-			if (graphRelationship.getSourceAsset().getAssetId() == null) {
-				isValid = false;
-				errorDataList.add(ErrorDataFactory.createErrorData(
-						ErrorConstants.SOURCE_ASSET_NOT_ENTERED,
-						ErrorConstants.ERRORDOMAIN));
-			}
-		} else {
-			isValid = false;
-			errorDataList.add(ErrorDataFactory.createErrorData(
-					ErrorConstants.SOURCE_ASSET_NOT_ENTERED,
-					ErrorConstants.ERRORDOMAIN));
-		}
-		if (graphRelationship.getTargetAsset() != null) {
-			for (TypedRelationNode typedRelationNode : graphRelationship
-					.getTargetAsset()) {
-				if (typedRelationNode.getAssetRelationship() == null) {
-					isValid = false;
-					errorDataList.add(ErrorDataFactory.createErrorData(
-							ErrorConstants.RELATIONSHIP_NAME_NOT_ENTERED,
-							ErrorConstants.ERRORDOMAIN));
-				}
-				if (typedRelationNode.getTarget() != null) {
-					if (!validateGraphRelationship(
-							typedRelationNode.getTarget(), errorDataList)) {
-						isValid = false;
-					}
-				} else {
-					isValid = false;
-					errorDataList.add(ErrorDataFactory.createErrorData(
-							ErrorConstants.RELATIONS_NOT_ENTERED,
-							ErrorConstants.ERRORDOMAIN));
-				}
-			}
-		}
 		return isValid;
 	}
 

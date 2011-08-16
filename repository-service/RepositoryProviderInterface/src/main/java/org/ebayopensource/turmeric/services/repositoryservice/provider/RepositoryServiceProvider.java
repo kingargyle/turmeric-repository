@@ -52,9 +52,6 @@ public interface RepositoryServiceProvider {
 	public GetSubscriptionResponse getSubscription(
 			GetSubscriptionRequest getSubscriptionRequest);
 
-	public GetAssetDependenciesByGraphResponse getAssetDependenciesByGraph(
-			GetAssetDependenciesByGraphRequest getAssetDependenciesByGraphRequest);
-
 	public SubmitForPublishingResponse submitForPublishing(
 			SubmitForPublishingRequest submitForPublishingRequest);
 

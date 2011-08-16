@@ -147,21 +147,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          <xs:element name="getAssetDependenciesResponse" nillable="true"
          type="tns:GetAssetDependenciesResponse" />
 
-         <xs:element name="getAssetDependenciesByGraphRequest" nillable="true"
-         type="tns:GetAssetDependenciesByGraphRequest">
-            <xs:annotation>
-               <xs:documentation>Needs documentation</xs:documentation>
-            </xs:annotation>
-         </xs:element>
-
-         <xs:element name="getAssetDependenciesByGraphResponse" nillable="true"
-         type="tns:GetAssetDependenciesByGraphResponse">
-            <xs:annotation>
-               <xs:documentation>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:element>
-
          <xs:element name="getAssetTypesRequest" nillable="true"
          type="tns:GetAssetTypesRequest" />
 
@@ -996,42 +981,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
             </xs:complexContent>
          </xs:complexType>
 
-         <xs:complexType name="GetAssetDependenciesByGraphRequest">
-            <xs:complexContent>
-               <xs:extension base="tns:BaseRequest">
-                  <xs:sequence>
-                     <xs:element name="assetKey" type="tns:AssetKey">
-                        <xs:annotation>
-                           <xs:documentation>Needs documentation</xs:documentation>
-                        </xs:annotation>
-                     </xs:element>
-
-                     <xs:element minOccurs="0" name="depth" type="xs:int">
-                        <xs:annotation>
-                           <xs:documentation>Needs documentation</xs:documentation>
-                        </xs:annotation>
-                     </xs:element>
-                  </xs:sequence>
-               </xs:extension>
-            </xs:complexContent>
-         </xs:complexType>
-
-         <xs:complexType name="GetAssetDependenciesByGraphResponse">
-            <xs:annotation>
-               <xs:documentation>GraphRelationship indicating the
-               dependencies</xs:documentation>
-            </xs:annotation>
-
-            <xs:complexContent>
-               <xs:extension base="tns:BaseResponse">
-                  <xs:sequence>
-                     <xs:element minOccurs="0" name="graphRelationship"
-                     type="tns:GraphRelationship" />
-                  </xs:sequence>
-               </xs:extension>
-            </xs:complexContent>
-         </xs:complexType>
-
          <xs:complexType name="GetAssetTypesRequest">
             <xs:complexContent>
                <xs:extension base="tns:BaseRequest" />
@@ -1552,20 +1501,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
             </xs:sequence>
          </xs:complexType>
 
-         <xs:complexType name="GraphRelationship">
-            <xs:annotation>
-               <xs:documentation>This is the graph representation of the
-               relationship</xs:documentation>
-            </xs:annotation>
-
-            <xs:sequence>
-               <xs:element name="sourceAsset" type="tns:AssetKey" />
-
-               <xs:element maxOccurs="unbounded" minOccurs="0" name="targetAsset"
-               type="tns:TypedRelationNode" />
-            </xs:sequence>
-         </xs:complexType>
-
          <xs:complexType name="FlattenedRelationship">
             <xs:annotation>
                <xs:documentation>This shows all the relationships shown in flattened
@@ -1612,14 +1547,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
                      the data</xs:documentation>
                   </xs:annotation>
                </xs:element>
-            </xs:sequence>
-         </xs:complexType>
-
-         <xs:complexType name="TypedRelationNode">
-            <xs:sequence>
-               <xs:element name="assetRelationship" type="xs:string" />
-
-               <xs:element name="target" type="tns:GraphRelationship" />
             </xs:sequence>
          </xs:complexType>
 
@@ -2847,10 +2774,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </part>
    </message>
 
-   <message name="getAssetDependenciesByGraphRequest">
-      <part name="parameters" element="tns:getAssetDependenciesByGraphRequest">
-      </part>
-   </message>
 
    <message name="updateAssetAttributesResponse">
       <part name="parameters" element="tns:updateAssetAttributesResponse">
@@ -2904,11 +2827,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
 
    <message name="getAssetDependenciesRequest">
       <part name="parameters" element="tns:getAssetDependenciesRequest">
-      </part>
-   </message>
-
-   <message name="getAssetDependenciesByGraphResponse">
-      <part name="parameters" element="tns:getAssetDependenciesByGraphResponse">
       </part>
    </message>
 
@@ -3214,18 +3132,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          </input>
 
          <output message="tns:getAssetDependenciesResponse">
-         </output>
-      </operation>
-
-      <operation name="getAssetDependenciesByGraph">
-         <wsdl:documentation>Get the dependencies, given an asset, suitable for a graph
-         (i.e, in a tree like format). Possible errors include InvalidAsset,
-         InsufficientPrivileges.</wsdl:documentation>
-
-         <input message="tns:getAssetDependenciesByGraphRequest">
-         </input>
-
-         <output message="tns:getAssetDependenciesByGraphResponse">
          </output>
       </operation>
 
@@ -3610,18 +3516,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          </output>
       </operation>
 
-      <operation name="getAssetDependenciesByGraph">
-         <http:operation location="RepositoryService/getAssetDependenciesByGraph" />
-
-         <input>
-            <mime:content part="getAssetDependenciesByGraph" type="text/xml" />
-         </input>
-
-         <output>
-            <mime:content part="getAssetDependenciesByGraph" type="text/xml" />
-         </output>
-      </operation>
-
       <operation name="getAssetTypes">
          <http:operation location="RepositoryService/getAssetTypes" />
 
@@ -3989,19 +3883,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
 
       <operation name="getAssetDependencies">
          <soap12:operation soapAction="urn:getAssetDependencies" style="document" />
-
-         <input>
-            <soap12:body use="literal" />
-         </input>
-
-         <output>
-            <soap12:body use="literal" />
-         </output>
-      </operation>
-
-      <operation name="getAssetDependenciesByGraph">
-         <soap12:operation soapAction="urn:getAssetDependenciesByGraph"
-         style="document" />
 
          <input>
             <soap12:body use="literal" />

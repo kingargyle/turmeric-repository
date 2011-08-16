@@ -590,16 +590,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	}
 
 	/**
-	 * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#getAssetDependenciesByGraph(org.ebayopensource.turmeric.repository.v1.services.GetAssetDependenciesByGraphRequest)
-	 */
-	@Override
-	public GetAssetDependenciesByGraphResponse getAssetDependenciesByGraph(
-			GetAssetDependenciesByGraphRequest request) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
 	 * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#submitForPublishing(org.ebayopensource.turmeric.repository.v1.services.SubmitForPublishingRequest)
 	 */
 	@Override
