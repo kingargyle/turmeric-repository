@@ -217,16 +217,12 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
                      <xs:element name="assetInfo" type="tns:AssetInfo">
                         <xs:annotation>
                            <xs:documentation>The assetinfo store all details needed for
-                           creating the asset. The captureTemplateName store the name of
-                           the capture template to be applied on the asset. the groupname
-                           specified the group which will be the owner of the asset. It
-                           also contains the artifacts info for the
+                           creating the asset. The groupname  specified the group which will be
+                           the owner of the asset. It also contains the artifacts info for the
                            asset.</xs:documentation>
                         </xs:annotation>
                      </xs:element>
 
-                     <xs:element name="captureTemplateName" type="xs:string">
-                     </xs:element>
                   </xs:sequence>
                </xs:extension>
             </xs:complexContent>
@@ -258,17 +254,17 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
                      <xs:element name="assetInfo" type="tns:AssetInfo">
                         <xs:annotation>
                            <xs:documentation>The assetinfo stores all details needed for
-                           creating the asset. The captureTemplateName stores the name of
-                           the capture template to be applied on the asset. The groupname
-                           specifies the group which will be the owner of the
-                           asset.</xs:documentation>
+                           creating the asset.</xs:documentation>
                         </xs:annotation>
                      </xs:element>
 
-                     <xs:element name="captureTemplateName" type="xs:string">
-                     </xs:element>
-
                      <xs:element name="groupName" type="xs:string">
+                        <xs:annotation>
+                           <xs:documentation>
+                              The groupname specifies the group which will be the owner of the
+                              asset.                           
+                           </xs:documentation>
+                        </xs:annotation>
                      </xs:element>
 
                      <xs:element minOccurs="0" name="comment" type="xs:string">
@@ -369,8 +365,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
                   <xs:sequence>
                      <xs:element name="basicAssetInfo" type="tns:BasicAssetInfo" />
 
-                     <xs:element name="captureTemplateName" type="xs:string">
-                     </xs:element>
                   </xs:sequence>
                </xs:extension>
             </xs:complexContent>
@@ -730,9 +724,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
                      <xs:element maxOccurs="unbounded" minOccurs="0"
                      name="requestProperties" type="tns:Property" />
 
-                     <xs:element maxOccurs="1" minOccurs="0" name="publishTemplateName"
-                     type="xs:string">
-                     </xs:element>
                   </xs:sequence>
                </xs:extension>
             </xs:complexContent>
