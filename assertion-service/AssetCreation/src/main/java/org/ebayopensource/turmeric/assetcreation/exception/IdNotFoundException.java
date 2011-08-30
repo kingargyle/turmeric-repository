@@ -8,6 +8,9 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.assetcreation.exception;
 
+/**
+ * The Class IdNotFoundException.
+ */
 public class IdNotFoundException extends Exception {
 	
 	/**
@@ -15,10 +18,18 @@ public class IdNotFoundException extends Exception {
 	 */
 	private static final long serialVersionUID = 3433761101491317349L;
 
+	/**
+	 * Instantiates a new id not found exception.
+	 */
 	public IdNotFoundException() {
 		
 	}
 	
+	/**
+	 * Instantiates a new id not found exception.
+	 *
+	 * @param message the message
+	 */
 	public IdNotFoundException(String message) {
 		super(message);
 	}

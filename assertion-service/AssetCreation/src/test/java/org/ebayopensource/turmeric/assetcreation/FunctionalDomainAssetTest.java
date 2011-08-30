@@ -21,16 +21,31 @@ import org.ebayopensource.turmeric.assetcreation.exception.AssetPersistException
 import org.ebayopensource.turmeric.assetcreation.exception.IdNotFoundException;
 import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
 
+/**
+ * The Class FunctionalDomainAssetTest.
+ */
 public class FunctionalDomainAssetTest {
 	
+/** The asset creator. */
 public static AssetCreatorIntf assetCreator = AssetCreatorFactory.
 					getAssetCreator("src/test/resources/xml/FunctionalDomainAsset.xml");
 	
+	/**
+	 * One time set up.
+	 *
+	 * @throws AssetCreationException the asset creation exception
+	 */
 	@BeforeClass
     public static void oneTimeSetUp() throws AssetCreationException {
 		assetCreator.createAsset();
     }
 	
+	/**
+	 * Test asset info.
+	 *
+	 * @throws AssetInfoNotFoundException the asset info not found exception
+	 * @throws IdNotFoundException the id not found exception
+	 */
 	@Test
 	public void testAssetInfo() throws  AssetInfoNotFoundException, IdNotFoundException {
 		AssetInfo assetInfo = assetCreator.getAssetAsAssetInfo("102");
@@ -38,12 +53,23 @@ public static AssetCreatorIntf assetCreator = AssetCreatorFactory.
 		System.out.println("Asset ID" + assetInfo.getBasicAssetInfo().getAssetKey().getAssetId());
 	}
 	
+	/**
+	 * Test asset id.
+	 *
+	 * @throws AssetIdNotFoundException the asset id not found exception
+	 * @throws IdNotFoundException the id not found exception
+	 */
 	@Test
 	public void testAssetId() throws AssetIdNotFoundException, IdNotFoundException {
 		String assetId = assetCreator.getAssetAsAssetId("103");
 		System.out.println("NewAssetId = " + assetId);
 	}
 	
+	/**
+	 * One time tear down.
+	 *
+	 * @throws AssetPersistException the asset persist exception
+	 */
 	@AfterClass
     public static void oneTimeTearDown() throws AssetPersistException {
         assetCreator.persist();

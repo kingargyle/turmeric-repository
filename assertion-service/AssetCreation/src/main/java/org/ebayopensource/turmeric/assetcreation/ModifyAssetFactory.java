@@ -10,8 +10,17 @@ package org.ebayopensource.turmeric.assetcreation;
 
 import org.ebayopensource.turmeric.assetcreation.artifacts.AssetInput;
 
+/**
+ * A factory for creating ModifyAsset objects.
+ */
 public class ModifyAssetFactory {
 	
+	/**
+	 * Gets the modify asset.
+	 *
+	 * @param assetInput the asset input
+	 * @return the modify asset
+	 */
 	public static ModifyAsset getModifyAsset(AssetInput assetInput)
 	{
 		String assetType = assetInput.getAssetType().value();

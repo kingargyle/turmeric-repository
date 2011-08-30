@@ -31,10 +31,16 @@ import org.ebayopensource.turmeric.assetcreation.exception.ProcessingException;
 import org.ebayopensource.turmeric.assetcreation.exception.WSDLNotFoundException;
 import org.ebayopensource.turmeric.repository.v1.services.*;
 
+/**
+ * The Class ModifyServiceAsset.
+ */
 public class ModifyServiceAsset extends ModifyAsset {
 	
 	private static Logger s_logger = Logger.getLogger(ModifyServiceAsset.class);
 
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.assetcreation.ModifyAsset#modify(org.ebayopensource.turmeric.repository.v1.services.AssetInfo, org.ebayopensource.turmeric.assetcreation.artifacts.AssetInput)
+	 */
 	@Override
 	public void modify(AssetInfo assetInfo, AssetInput assetInput) throws ProcessingException {
 		modifyAssetName(assetInfo, assetInput);
@@ -53,12 +59,22 @@ public class ModifyServiceAsset extends ModifyAsset {
 		setClassifier(assetInfo);
 	}
 	
+	/**
+	 * Modify source relationship.
+	 *
+	 * @param assetInfo the asset info
+	 */
 	public void modifySourceRelationship(AssetInfo assetInfo)
 	{
 		if(assetInfo.getFlattenedRelationship()!= null)
 			assetInfo.getFlattenedRelationship().setSourceAsset(null);
 	}
 	
+	/**
+	 * Modify artifact.
+	 *
+	 * @param assetInfo the asset info
+	 */
 	public void modifyArtifact(AssetInfo assetInfo)
 	{
 		List<ArtifactInfo> artifactInfos = assetInfo.getArtifactInfo();
@@ -70,6 +86,13 @@ public class ModifyServiceAsset extends ModifyAsset {
 	}
 	
 	
+	/**
+	 * Modify wsdl.
+	 *
+	 * @param assetInfo the asset info
+	 * @param assetInput the asset input
+	 * @throws WSDLNotFoundException the wSDL not found exception
+	 */
 	public void modifyWsdl(AssetInfo assetInfo, AssetInput assetInput) throws WSDLNotFoundException {
 
 		byte[] wsdlDataInBytes = null;

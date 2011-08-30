@@ -8,23 +8,49 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.assetcreation.exception;
 
+/**
+ * The Class ProcessingException.
+ */
 public class ProcessingException extends Exception {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 4729166933278002487L;
+	
+	/**
+	 * Instantiates a new processing exception.
+	 */
 	public ProcessingException()
 	{
 	}
+	
+	/**
+	 * Instantiates a new processing exception.
+	 *
+	 * @param message the message
+	 */
 	public ProcessingException(String message)
 	{
 		super(message);
 	}
+	
+	/**
+	 * Instantiates a new processing exception.
+	 *
+	 * @param cause the cause
+	 */
 	public ProcessingException(Throwable cause)
 	{
 		super(cause);
 	}
+	
+	/**
+	 * Instantiates a new processing exception.
+	 *
+	 * @param message the message
+	 * @param cause the cause
+	 */
 	public ProcessingException(String message, Throwable cause)
 	{
 		super(message,cause);

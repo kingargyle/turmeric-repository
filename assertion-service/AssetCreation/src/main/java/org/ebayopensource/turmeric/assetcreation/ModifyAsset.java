@@ -17,10 +17,19 @@ import org.ebayopensource.turmeric.assetcreation.artifacts.AssetInput;
 import org.ebayopensource.turmeric.assetcreation.exception.ProcessingException;
 import org.ebayopensource.turmeric.repository.v1.services.*;
 
+/**
+ * The Class ModifyAsset.
+ */
 public abstract class ModifyAsset {
 	
 	private static Logger s_logger = Logger.getLogger(ModifyAsset.class);
 	
+	/**
+	 * Modify asset name.
+	 *
+	 * @param assetInfo the asset info
+	 * @param assetInput the asset input
+	 */
 	public void modifyAssetName(AssetInfo assetInfo, AssetInput assetInput)
 	{
 		String prefix = assetInput.getPrefix();
@@ -31,16 +40,32 @@ public abstract class ModifyAsset {
 		s_logger.debug("Trying to create new asset with name"+assetName+" for ID "+assetInput.getId());
 	}
 	
+	/**
+	 * Modify asset id.
+	 *
+	 * @param assetInfo the asset info
+	 */
 	public void modifyAssetId(AssetInfo assetInfo)
 	{
 		assetInfo.getBasicAssetInfo().getAssetKey().setAssetId(null);
 	}
 	
+	/**
+	 * Modify comments.
+	 *
+	 * @param assetInfo the asset info
+	 * @param comments the comments
+	 */
 	public void modifyComments(AssetInfo assetInfo, String comments)
 	{
 		assetInfo.getBasicAssetInfo().setAssetDescription(comments);
 	}
 	
+	/**
+	 * Sets the classifier.
+	 *
+	 * @param assetInfo the new classifier
+	 */
 	public void setClassifier(AssetInfo assetInfo)
 	{
 		boolean isApprovalRequiredClassifierPresent = false;
@@ -64,6 +89,13 @@ public abstract class ModifyAsset {
 		}
 	}
 	
+	/**
+	 * Modify.
+	 *
+	 * @param assetInfo the asset info
+	 * @param assetInput the asset input
+	 * @throws ProcessingException the processing exception
+	 */
 	public abstract void modify(AssetInfo assetInfo, AssetInput assetInput) throws ProcessingException;
 	
 

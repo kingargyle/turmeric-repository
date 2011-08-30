@@ -19,14 +19,21 @@ import org.apache.log4j.Logger;
 import org.ebayopensource.turmeric.assetcreation.artifacts.AssetCreation;
 
 
+/**
+ * The Class ReadConfigFile.
+ */
 public class ReadConfigFile {
 	
 	
 	private static Logger s_logger = Logger.getLogger(ReadConfigFile.class);
 
 	/**
-	 * @param args
-	 * @throws FileNotFoundException 
+	 * Read config.
+	 *
+	 * @param configFilePath the config file path
+	 * @return the asset creation
+	 * @throws JAXBException the jAXB exception
+	 * @throws FileNotFoundException the file not found exception
 	 */
 	public static AssetCreation readConfig(String configFilePath) throws 
 									JAXBException, FileNotFoundException

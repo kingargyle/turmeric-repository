@@ -54,21 +54,25 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class AssetCreation {
 
+    /** The asset destination location. */
     @XmlElement(required = true)
     protected String assetDestinationLocation;
+    
+    /** The repository service end point. */
     @XmlElement(required = true)
     @XmlSchemaType(name = "anyURI")
     protected String repositoryServiceEndPoint;
+    
+    /** The asset input. */
     @XmlElement(required = true)
     protected List<AssetInput> assetInput;
 
     /**
      * Gets the value of the assetDestinationLocation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return the asset destination location
+     * possible object is
+     * {@link String }
      */
     public String getAssetDestinationLocation() {
         return assetDestinationLocation;
@@ -88,11 +92,10 @@ public class AssetCreation {
 
     /**
      * Gets the value of the repositoryServiceEndPoint property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return the repository service end point
+     * possible object is
+     * {@link String }
      */
     public String getRepositoryServiceEndPoint() {
         return repositoryServiceEndPoint;
@@ -122,15 +125,15 @@ public class AssetCreation {
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getAssetInput().add(newItem);
+     * getAssetInput().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
+     *
+     * @return the asset input
      * {@link AssetInput }
-     * 
-     * 
      */
     public List<AssetInput> getAssetInput() {
         if (assetInput == null) {

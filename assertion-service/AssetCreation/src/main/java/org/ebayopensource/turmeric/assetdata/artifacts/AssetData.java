@@ -49,6 +49,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class AssetData {
 
+    /** The assets. */
     @XmlElement(required = true)
     protected List<Assets> assets;
 
@@ -64,15 +65,15 @@ public class AssetData {
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getAssets().add(newItem);
+     * getAssets().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
+     *
+     * @return the assets
      * {@link Assets }
-     * 
-     * 
      */
     public List<Assets> getAssets() {
         if (assets == null) {

@@ -8,17 +8,33 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.assetcreation;
 
+/**
+ * The Class AssetCreationConstants.
+ */
 public class AssetCreationConstants {
 	
+	/** The Constant userId. */
 	public static final String userId = "_regNormalUser";
+	
+	/** The Constant password. */
 	public static final String password = "rm@ebay01";
 	
+	/** The Constant superUserId. */
 	public static final String superUserId = "logidex_adm";
+	
+	/** The Constant superPassword. */
 	public static final String superPassword = "rm@ebay01";
 	
+	/** The Constant IS_APPROVAL_REQUIRED. */
 	public static final String IS_APPROVAL_REQUIRED = "isApprovalRequired";
+	
+	/** The Constant TRUE. */
 	public static final String TRUE = "true";
+	
+	/** The Constant FALSE. */
 	public static final String FALSE = "false";
+	
+	/** The Constant SUCCESS. */
 	public static final String SUCCESS = "Success";
 	
 }

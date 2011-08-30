@@ -50,44 +50,87 @@ import javax.xml.bind.annotation.XmlEnumValue;
 @XmlEnum
 public enum AssetType {
 
+    /** The SERVICE. */
     @XmlEnumValue("Service")
     SERVICE("Service"),
+    
+    /** The FUNCTIONA l_ domain. */
     @XmlEnumValue("Functional Domain")
     FUNCTIONAL_DOMAIN("Functional Domain"),
+    
+    /** The CONSUMER. */
     @XmlEnumValue("Consumer")
     CONSUMER("Consumer"),
+    
+    /** The PROPERTY. */
     @XmlEnumValue("Property")
     PROPERTY("Property"),
+    
+    /** The FLAG. */
     @XmlEnumValue("Flag")
     FLAG("Flag"),
+    
+    /** The FLA g_ set. */
     @XmlEnumValue("Flag Set")
     FLAG_SET("Flag Set"),
+    
+    /** The FEATUR e_ contingency. */
     @XmlEnumValue("Feature Contingency")
     FEATURE_CONTINGENCY("Feature Contingency"),
+    
+    /** The COMMAND. */
     @XmlEnumValue("Command")
     COMMAND("Command"),
+    
+    /** The DELIVERABLE. */
     @XmlEnumValue("Deliverable")
     DELIVERABLE("Deliverable"),
+    
+    /** The SEARC h_ driver. */
     @XmlEnumValue("Search Driver")
     SEARCH_DRIVER("Search Driver"),
+    
+    /** The PAGE. */
     @XmlEnumValue("Page")
     PAGE("Page"),
+    
+    /** The PAG e_ group. */
     @XmlEnumValue("Page Group")
     PAGE_GROUP("Page Group"),
+    
+    /** The TEMPLATE. */
     @XmlEnumValue("Template")
     TEMPLATE("Template"),
+    
+    /** The MODULE. */
     @XmlEnumValue("Module")
     MODULE("Module");
     private final String value;
 
+    /**
+     * Instantiates a new asset type.
+     *
+     * @param v the v
+     */
     AssetType(String v) {
         value = v;
     }
 
+    /**
+     * Value.
+     *
+     * @return the string
+     */
     public String value() {
         return value;
     }
 
+    /**
+     * From value.
+     *
+     * @param v the v
+     * @return the asset type
+     */
     public static AssetType fromValue(String v) {
         for (AssetType c: AssetType.values()) {
             if (c.value.equals(v)) {

@@ -20,8 +20,18 @@ import org.ebayopensource.turmeric.assetcreation.util.FileUtil;
 import org.ebayopensource.turmeric.assetdata.artifacts.AssetData;
 import org.ebayopensource.turmeric.assetdata.artifacts.Assets;
 
+/**
+ * The Class AssetPersist.
+ */
 public class AssetPersist {
 	
+	/**
+	 * Persist.
+	 *
+	 * @param assetStore the asset store
+	 * @param inputFilePath the input file path
+	 * @throws AssetPersistException the asset persist exception
+	 */
 	public static void persist(AssetStore assetStore, String inputFilePath) throws AssetPersistException
 	{
 		try

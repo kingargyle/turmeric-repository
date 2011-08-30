@@ -43,30 +43,59 @@ import javax.xml.bind.annotation.XmlEnumValue;
 @XmlEnum
 public enum LifeCycleState {
 
+    /** The NEW. */
     @XmlEnumValue("New")
     NEW("New"),
+    
+    /** The PROPOSED. */
     @XmlEnumValue("Proposed")
     PROPOSED("Proposed"),
+    
+    /** The I n_ review. */
     @XmlEnumValue("InReview")
     IN_REVIEW("InReview"),
+    
+    /** The APPROVED. */
     @XmlEnumValue("Approved")
     APPROVED("Approved"),
+    
+    /** The DEPLOYED. */
     @XmlEnumValue("Deployed")
     DEPLOYED("Deployed"),
+    
+    /** The DEPRECATED. */
     @XmlEnumValue("Deprecated")
     DEPRECATED("Deprecated"),
+    
+    /** The RETIRED. */
     @XmlEnumValue("Retired")
     RETIRED("Retired");
     private final String value;
 
+    /**
+     * Instantiates a new life cycle state.
+     *
+     * @param v the v
+     */
     LifeCycleState(String v) {
         value = v;
     }
 
+    /**
+     * Value.
+     *
+     * @return the string
+     */
     public String value() {
         return value;
     }
 
+    /**
+     * From value.
+     *
+     * @param v the v
+     * @return the life cycle state
+     */
     public static LifeCycleState fromValue(String v) {
         for (LifeCycleState c: LifeCycleState.values()) {
             if (c.value.equals(v)) {

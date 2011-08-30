@@ -42,31 +42,35 @@ public class ObjectFactory {
     private final static QName _AssetCreation_QNAME = new QName("http://www.ebay.com/AssetCreation", "assetCreation");
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: org.ebayopensource.turmeric.assetcreation
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: org.ebayopensource.turmeric.assetcreation.
      * 
      */
     public ObjectFactory() {
     }
 
     /**
-     * Create an instance of {@link AssetCreation }
-     * 
+     * Create an instance of {@link AssetCreation }.
+     *
+     * @return the asset creation
      */
     public AssetCreation createAssetCreation() {
         return new AssetCreation();
     }
 
     /**
-     * Create an instance of {@link AssetInput }
-     * 
+     * Create an instance of {@link AssetInput }.
+     *
+     * @return the asset input
      */
     public AssetInput createAssetInput() {
         return new AssetInput();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link AssetCreation }{@code >}}
-     * 
+     * Create an instance of {@link JAXBElement }{@code <}{@link AssetCreation }{@code >}}.
+     *
+     * @param value the value
+     * @return the JAXB element< asset creation>
      */
     @XmlElementDecl(namespace = "http://www.ebay.com/AssetCreation", name = "assetCreation")
     public JAXBElement<AssetCreation> createAssetCreation(AssetCreation value) {

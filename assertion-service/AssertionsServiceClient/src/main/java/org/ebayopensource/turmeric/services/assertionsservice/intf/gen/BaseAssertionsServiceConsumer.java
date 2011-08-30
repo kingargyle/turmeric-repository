@@ -38,9 +38,18 @@ public class BaseAssertionsServiceConsumer {
     private String m_authToken = null;
     private Cookie[] m_cookies;
 
+    /**
+     * Instantiates a new base assertions service consumer.
+     */
     public BaseAssertionsServiceConsumer() {
     }
 
+    /**
+     * Sets the service location.
+     *
+     * @param serviceLocation the new service location
+     * @throws MalformedURLException the malformed url exception
+     */
     protected void setServiceLocation(String serviceLocation)
         throws MalformedURLException
     {
@@ -60,21 +69,29 @@ public class BaseAssertionsServiceConsumer {
     }
 
     /**
-     * Use this method to set User Credentials (Token) 
-     * 
+     * Use this method to set User Credentials (Token).
+     *
+     * @param authToken the new auth token
      */
     protected void setAuthToken(String authToken) {
         m_authToken = authToken;
     }
 
     /**
-     * Use this method to set User Credentials (Cookie)
-     * 
+     * Use this method to set User Credentials (Cookie).
+     *
+     * @param cookies the new cookies
      */
     protected void setCookies(Cookie[] cookies) {
         m_cookies = cookies;
     }
 
+    /**
+     * Gets the proxy.
+     *
+     * @return the proxy
+     * @throws ServiceException the service exception
+     */
     protected TurmericASV1 getProxy()
         throws ServiceException
     {
@@ -87,6 +104,12 @@ public class BaseAssertionsServiceConsumer {
         return m_proxy;
     }
 
+    /**
+     * Apply assertion groups.
+     *
+     * @param param0 the param0
+     * @return the apply assertion groups response
+     */
     public ApplyAssertionGroupsResponse applyAssertionGroups(ApplyAssertionGroupsRequest param0) {
         ApplyAssertionGroupsResponse result = null;
         try {
@@ -98,6 +121,12 @@ public class BaseAssertionsServiceConsumer {
         return result;
     }
 
+    /**
+     * Apply assertions.
+     *
+     * @param param0 the param0
+     * @return the apply assertions response
+     */
     public ApplyAssertionsResponse applyAssertions(ApplyAssertionsRequest param0) {
         ApplyAssertionsResponse result = null;
         try {

@@ -8,6 +8,9 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.assetcreation.exception;
 
+/**
+ * The Class WSDLNotFoundException.
+ */
 public class WSDLNotFoundException extends AssetCreationException {
 	
 	/**
@@ -15,10 +18,18 @@ public class WSDLNotFoundException extends AssetCreationException {
 	 */
 	private static final long serialVersionUID = -4666735919661173206L;
 
+	/**
+	 * Instantiates a new wSDL not found exception.
+	 */
 	public WSDLNotFoundException() {
 		
 	}
 	
+	/**
+	 * Instantiates a new wSDL not found exception.
+	 *
+	 * @param message the message
+	 */
 	public WSDLNotFoundException(String message)
 	{
 		super(message);

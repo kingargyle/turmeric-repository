@@ -54,10 +54,13 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 })
 public class Assets {
 
+    /** The id. */
     @XmlElement(required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String id;
+    
+    /** The assetid. */
     @XmlElement(required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
@@ -65,11 +68,10 @@ public class Assets {
 
     /**
      * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return the id
+     * possible object is
+     * {@link String }
      */
     public String getId() {
         return id;
@@ -99,15 +101,15 @@ public class Assets {
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getAssetid().add(newItem);
+     * getAssetid().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
+     *
+     * @return the assetid
      * {@link String }
-     * 
-     * 
      */
     public List<String> getAssetid() {
         if (assetid == null) {

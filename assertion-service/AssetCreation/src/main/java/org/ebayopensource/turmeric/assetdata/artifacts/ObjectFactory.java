@@ -42,31 +42,35 @@ public class ObjectFactory {
     private final static QName _AssetData_QNAME = new QName("http://www.ebay.com/AssetData", "assetData");
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.ebay.assetdata
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.ebay.assetdata.
      * 
      */
     public ObjectFactory() {
     }
 
     /**
-     * Create an instance of {@link AssetData }
-     * 
+     * Create an instance of {@link AssetData }.
+     *
+     * @return the asset data
      */
     public AssetData createAssetData() {
         return new AssetData();
     }
 
     /**
-     * Create an instance of {@link Assets }
-     * 
+     * Create an instance of {@link Assets }.
+     *
+     * @return the assets
      */
     public Assets createAssets() {
         return new Assets();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link AssetData }{@code >}}
-     * 
+     * Create an instance of {@link JAXBElement }{@code <}{@link AssetData }{@code >}}.
+     *
+     * @param value the value
+     * @return the JAXB element< asset data>
      */
     @XmlElementDecl(namespace = "http://www.ebay.com/AssetData", name = "assetData")
     public JAXBElement<AssetData> createAssetData(AssetData value) {

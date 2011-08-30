@@ -37,9 +37,20 @@ import org.ebayopensource.turmeric.repository.v1.services.*;
 import org.ebayopensource.turmeric.runtime.common.exceptions.ServiceException;
 
 
+/**
+ * The Class AssetGenerator.
+ */
 public class AssetGenerator {
 	
 	private static Logger s_logger = Logger.getLogger(AssetGenerator.class);
+	
+	/**
+	 * Creates the asset.
+	 *
+	 * @param configFilePath the config file path
+	 * @return the asset store
+	 * @throws AssetCreationException the asset creation exception
+	 */
 	public static AssetStore createAsset(String configFilePath) 
 				throws AssetCreationException 
 	{
@@ -363,9 +374,10 @@ public class AssetGenerator {
 	}
 	
 	/**
-	 * 
-	 * @param assetCreation
-	 * @return
+	 * Validate id.
+	 *
+	 * @param assetCreation the asset creation
+	 * @return true, if successful
 	 */
 	
 	public static boolean validateId(AssetCreation assetCreation)
@@ -383,6 +395,12 @@ public class AssetGenerator {
 		return validate;
 	}
 	
+	/**
+	 * Valid path location.
+	 *
+	 * @param assetCreation the asset creation
+	 * @return true, if successful
+	 */
 	public static boolean validPathLocation(AssetCreation assetCreation)
 	{
 		s_logger.debug("Inside AssetGenerator.validPathLocation()");
@@ -413,6 +431,14 @@ public class AssetGenerator {
 		return assetInfoRequest;
 	}
 	
+	/**
+	 * Gets the source asset.
+	 *
+	 * @param assetCreation the asset creation
+	 * @return the source asset
+	 * @throws ServiceException the service exception
+	 * @throws AssetCreationException the asset creation exception
+	 */
 	public static Map<String,AssetInfo> getSourceAsset(AssetCreation assetCreation) throws ServiceException, AssetCreationException
 	{
 		s_logger.debug("Inside AssetGenerator.getSourceAsset()");

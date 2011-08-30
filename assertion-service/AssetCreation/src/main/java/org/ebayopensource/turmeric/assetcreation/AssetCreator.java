@@ -31,42 +31,68 @@ import org.ebayopensource.turmeric.repository.v1.services.*;
 import org.ebayopensource.turmeric.runtime.common.exceptions.ServiceException;
 
 
+/**
+ * The Class AssetCreator.
+ */
 public class AssetCreator implements AssetCreatorIntf {
 	
+	/** The input file path. */
 	String inputFilePath;
+	
+	/** The asset store. */
 	AssetStore assetStore;
 	
 	private static Logger s_logger = Logger.getLogger(AssetCreator.class);
 	
+	/**
+	 * Instantiates a new asset creator.
+	 *
+	 * @param inputFilePath the input file path
+	 */
 	public AssetCreator(String inputFilePath)
 	{
 		this.inputFilePath = inputFilePath;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.assetcreation.AssetCreatorIntf#createAsset()
+	 */
 	@Override
 	public void createAsset() throws AssetCreationException {
 		s_logger.debug("Inside AssetCreator.createAsset()");
 		assetStore = AssetGenerator.createAsset(inputFilePath); 
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.assetcreation.AssetCreatorIntf#getAssetAsAssetId(java.lang.String)
+	 */
 	@Override
 	public String getAssetAsAssetId(String id) throws AssetIdNotFoundException, IdNotFoundException {
 		s_logger.debug("Inside AssetCreator.getAssetAsAssetId()");
 		return assetStore.getAssetId(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.assetcreation.AssetCreatorIntf#getAssetAsAssetInfo(java.lang.String)
+	 */
 	@Override
 	public AssetInfo getAssetAsAssetInfo(String id) throws AssetInfoNotFoundException, IdNotFoundException {
 		s_logger.debug("Inside AssetCreator.getAssetAsAssetInfo()");
 		return assetStore.getAssetInfo(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.assetcreation.AssetCreatorIntf#persist()
+	 */
 	@Override
 	public void persist() throws AssetPersistException {
 		s_logger.debug("Inside AssetCreator.persist()");
 		AssetPersist.persist(assetStore,inputFilePath);
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.assetcreation.AssetCreatorIntf#getAssetInfoForUpdate(org.ebayopensource.turmeric.repository.v1.services.AssetInfo)
+	 */
 	@Override
 	public AssetInfoForUpdate getAssetInfoForUpdate(AssetInfo assetInfo) {
 		s_logger.debug("Inside AssetCreator.getAssetInfoForUpdate()");
@@ -76,6 +102,9 @@ public class AssetCreator implements AssetCreatorIntf {
 		return assetInfoForUpdate;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.assetcreation.AssetCreatorIntf#updateCompleteAsset(org.ebayopensource.turmeric.repository.v1.services.AssetInfoForUpdate)
+	 */
 	@Override
 	public UpdateCompleteAssetResponse updateCompleteAsset(AssetInfoForUpdate assetInfoForUpdate) throws UpdateCompleteAssetException {
 		
@@ -98,6 +127,9 @@ public class AssetCreator implements AssetCreatorIntf {
 		return updateAssetResponse;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.assetcreation.AssetCreatorIntf#lockAsset(org.ebayopensource.turmeric.repository.v1.services.AssetKey)
+	 */
 	@Override
 	public LockAssetResponse lockAsset(AssetKey assetKey) throws ProcessingException {
 		
@@ -120,6 +152,9 @@ public class AssetCreator implements AssetCreatorIntf {
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.assetcreation.AssetCreatorIntf#unlockAsset(org.ebayopensource.turmeric.repository.v1.services.AssetKey)
+	 */
 	@Override
 	public UnlockAssetResponse unlockAsset(AssetKey assetKey) throws ProcessingException {
 		
@@ -149,6 +184,9 @@ public class AssetCreator implements AssetCreatorIntf {
 		return unlockAssetResponse;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.assetcreation.AssetCreatorIntf#removeAsset(org.ebayopensource.turmeric.repository.v1.services.AssetKey)
+	 */
 	@Override
 	public RemoveAssetResponse removeAsset(AssetKey assetKey) throws ProcessingException {
 		
@@ -179,6 +217,9 @@ public class AssetCreator implements AssetCreatorIntf {
 		return removeAssetRes;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.assetcreation.AssetCreatorIntf#deleteConsumedAssets()
+	 */
 	@Override
 	public void deleteConsumedAssets() throws ProcessingException
 	{

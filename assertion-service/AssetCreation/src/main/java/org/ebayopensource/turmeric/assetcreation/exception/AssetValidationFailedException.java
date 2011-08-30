@@ -8,6 +8,9 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.assetcreation.exception;
 
+/**
+ * The Class AssetValidationFailedException.
+ */
 public class AssetValidationFailedException extends AssetCreationException {
 	
 	/**
@@ -15,10 +18,18 @@ public class AssetValidationFailedException extends AssetCreationException {
 	 */
 	private static final long serialVersionUID = -5391197579952789496L;
 
+	/**
+	 * Instantiates a new asset validation failed exception.
+	 */
 	public AssetValidationFailedException() {
 		
 	}
 
+	/**
+	 * Instantiates a new asset validation failed exception.
+	 *
+	 * @param message the message
+	 */
 	public AssetValidationFailedException(String message) {
 		super(message);
 	}

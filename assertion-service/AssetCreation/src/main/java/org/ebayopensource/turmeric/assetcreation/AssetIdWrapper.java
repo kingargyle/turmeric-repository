@@ -8,22 +8,45 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.assetcreation;
 
+/**
+ * The Class AssetIdWrapper.
+ */
 public class AssetIdWrapper {
 	private String assetId;
 	private boolean consumed = false;
 	
+	/**
+	 * Instantiates a new asset id wrapper.
+	 *
+	 * @param assetId the asset id
+	 */
 	public AssetIdWrapper(String assetId) {
 		this.assetId = assetId;
 	}
 
+	/**
+	 * Gets the asset id.
+	 *
+	 * @return the asset id
+	 */
 	public String getAssetId() {
 		return assetId;
 	}
 
+	/**
+	 * Checks if is consumed.
+	 *
+	 * @return true, if is consumed
+	 */
 	public boolean isConsumed() {
 		return consumed;
 	}
 
+	/**
+	 * Sets the consumed.
+	 *
+	 * @param consumed the new consumed
+	 */
 	public void setConsumed(boolean consumed) {
 		this.consumed = consumed;
 	}

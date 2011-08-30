@@ -10,14 +10,31 @@ package org.ebayopensource.turmeric.assetcreation.util;
 
 import java.io.File;
 
+/**
+ * The Class FileUtil.
+ */
 public class FileUtil {
 	
+	/**
+	 * Checks if is file exist.
+	 *
+	 * @param assetDestinationLocation the asset destination location
+	 * @param id the id
+	 * @param assetId the asset id
+	 * @return true, if is file exist
+	 */
 	public static boolean isFileExist(String assetDestinationLocation, String id, String assetId)
 	{
 		String filePath = assetDestinationLocation+"/"+id+"/"+assetId+".xml";
 		return (new File(filePath).isFile());
 	}
 	
+	/**
+	 * Find number of assets.
+	 *
+	 * @param dirPath the dir path
+	 * @return the int
+	 */
 	public static int findNumberOfAssets(String dirPath)
 	{
 		int count = 0;
@@ -30,6 +47,12 @@ public class FileUtil {
 		return (count-1);
 	}
 	
+	/**
+	 * Delete dir.
+	 *
+	 * @param dir the dir
+	 * @return true, if successful
+	 */
 	public static boolean deleteDir(File dir)
 	{
 		if (dir.isDirectory())

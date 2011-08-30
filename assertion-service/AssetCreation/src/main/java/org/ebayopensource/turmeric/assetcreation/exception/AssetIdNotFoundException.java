@@ -8,6 +8,9 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.assetcreation.exception;
 
+/**
+ * The Class AssetIdNotFoundException.
+ */
 public class AssetIdNotFoundException extends Exception {
 	
 	/**
@@ -15,10 +18,18 @@ public class AssetIdNotFoundException extends Exception {
 	 */
 	private static final long serialVersionUID = 3449852775731764092L;
 
+	/**
+	 * Instantiates a new asset id not found exception.
+	 */
 	public AssetIdNotFoundException() {
 		
 	}
 	
+	/**
+	 * Instantiates a new asset id not found exception.
+	 *
+	 * @param message the message
+	 */
 	public AssetIdNotFoundException(String message) {
 		super(message);
 	}

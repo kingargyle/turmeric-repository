@@ -8,6 +8,9 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.assetcreation.exception;
 
+/**
+ * The Class AssetCreationException.
+ */
 public class AssetCreationException extends Exception {
 	
 	/**
@@ -15,17 +18,39 @@ public class AssetCreationException extends Exception {
 	 */
 	private static final long serialVersionUID = -7812204546889051536L;
 	
+	/**
+	 * Instantiates a new asset creation exception.
+	 */
 	public AssetCreationException()
 	{
 	}
+	
+	/**
+	 * Instantiates a new asset creation exception.
+	 *
+	 * @param message the message
+	 */
 	public AssetCreationException(String message)
 	{
 		super(message);
 	}
+	
+	/**
+	 * Instantiates a new asset creation exception.
+	 *
+	 * @param cause the cause
+	 */
 	public AssetCreationException(Throwable cause)
 	{
 		super(cause);
 	}
+	
+	/**
+	 * Instantiates a new asset creation exception.
+	 *
+	 * @param message the message
+	 * @param cause the cause
+	 */
 	public AssetCreationException(String message, Throwable cause)
 	{
 		super(message,cause);

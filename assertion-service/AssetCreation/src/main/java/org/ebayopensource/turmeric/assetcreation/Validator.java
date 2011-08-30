@@ -19,10 +19,19 @@ import org.ebayopensource.turmeric.common.v1.types.ErrorData;
 import org.ebayopensource.turmeric.common.v1.types.ErrorMessage;
 import org.ebayopensource.turmeric.repository.v1.services.*;
 
+/**
+ * The Class Validator.
+ */
 public class Validator {
 	
 	private static Logger s_logger = Logger.getLogger(Validator.class);
 
+	/**
+	 * Validate create and submit asset response.
+	 *
+	 * @param submitAssetResponse the submit asset response
+	 * @throws AssetCreationException the asset creation exception
+	 */
 	public static void validateCreateAndSubmitAssetResponse(CreateAndSubmitAssetResponse submitAssetResponse) throws AssetCreationException
 	{
 		s_logger.debug("Inside Validator.validateCreateAndSubmitAssetResponse()");
@@ -71,6 +80,12 @@ public class Validator {
 		}
 	}
 	
+	/**
+	 * Validate submit for publishing response.
+	 *
+	 * @param submitForPubRes the submit for pub res
+	 * @throws AssetCreationException the asset creation exception
+	 */
 	public static void validateSubmitForPublishingResponse(SubmitForPublishingResponse submitForPubRes) throws AssetCreationException
 	{
 		s_logger.debug("Validator.validateSubmitForPublishingResponse()");
@@ -112,6 +127,12 @@ public class Validator {
 		}
 	}
 	
+	/**
+	 * Validate get asset info response.
+	 *
+	 * @param assetResponse the asset response
+	 * @throws AssetCreationException the asset creation exception
+	 */
 	public static void validateGetAssetInfoResponse(GetAssetInfoResponse assetResponse) throws AssetCreationException
 	{
 		s_logger.debug("Inside Validator.validateGetAssetInfoResponse()");

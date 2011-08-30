@@ -14,10 +14,19 @@ import org.apache.log4j.Logger;
 import org.ebayopensource.turmeric.assetdata.artifacts.AssetData;
 import org.ebayopensource.turmeric.repository.v1.services.*;
 
+/**
+ * The Class CommonUtil.
+ */
 public class CommonUtil {
 	
 	private static Logger s_logger = Logger.getLogger(CommonUtil.class);
 	
+	/**
+	 * Un marshal asset info.
+	 *
+	 * @param filePath the file path
+	 * @return the asset info
+	 */
 	public static AssetInfo unMarshalAssetInfo(String filePath)
 	{
 		s_logger.debug("Inside CommonUtil.unMarshalAssetInfo()");
@@ -26,6 +35,12 @@ public class CommonUtil {
 		return assetInfo;
 	}
 	
+	/**
+	 * Un marshal asset data.
+	 *
+	 * @param filePath the file path
+	 * @return the asset data
+	 */
 	public static AssetData unMarshalAssetData(String filePath)
 	{
 		s_logger.debug("Inside CommonUtil.unMarshalAssetData()");
@@ -34,6 +49,12 @@ public class CommonUtil {
 		return assetData;
 	}
 	
+	/**
+	 * Marshal asset info.
+	 *
+	 * @param assetInfo the asset info
+	 * @param filePath the file path
+	 */
 	public static void marshalAssetInfo(AssetInfo assetInfo, String filePath)
 	{
 		s_logger.debug("Inside CommonUtil.marshalAssetInfo()");
@@ -47,6 +68,12 @@ public class CommonUtil {
 		JAXB.marshal(assetInfo, outputXmlFile);
 	}
 	
+	/**
+	 * Marshal asset data.
+	 *
+	 * @param assetData the asset data
+	 * @param filePath the file path
+	 */
 	public static void marshalAssetData(AssetData assetData, String filePath)
 	{
 		s_logger.debug("Inside CommonUtil.marshalAssetData()");

@@ -20,16 +20,31 @@ import org.ebayopensource.turmeric.assetcreation.exception.AssetPersistException
 import org.ebayopensource.turmeric.assetcreation.exception.IdNotFoundException;
 import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
 
+/**
+ * The Class ServiceAssetWithWsdl.
+ */
 public class ServiceAssetWithWsdl {
 	
+	/** The asset creator. */
 	public static AssetCreatorIntf assetCreator = AssetCreatorFactory.
 				getAssetCreator("src/test/resources/xml/ServiceAssetWithWsdl.xml");
 	
+	/**
+	 * One time set up.
+	 *
+	 * @throws AssetCreationException the asset creation exception
+	 */
 	@BeforeClass
     public static void oneTimeSetUp() throws AssetCreationException {
 		assetCreator.createAsset();
     }
 	
+	/**
+	 * Test asset info.
+	 *
+	 * @throws AssetInfoNotFoundException the asset info not found exception
+	 * @throws IdNotFoundException the id not found exception
+	 */
 	@Test
 	public void testAssetInfo() throws  AssetInfoNotFoundException, IdNotFoundException {
 		AssetInfo assetInfo = assetCreator.getAssetAsAssetInfo("104");
@@ -37,6 +52,11 @@ public class ServiceAssetWithWsdl {
 		System.out.println("Asset ID" + assetInfo.getBasicAssetInfo().getAssetKey().getAssetId());
 	}
 	
+	/**
+	 * One time tear down.
+	 *
+	 * @throws AssetPersistException the asset persist exception
+	 */
 	@AfterClass
     public static void oneTimeTearDown() throws AssetPersistException {
         assetCreator.persist();

@@ -8,8 +8,17 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.assetcreation;
 
+/**
+ * A factory for creating AssetCreator objects.
+ */
 public class AssetCreatorFactory {
 	
+	/**
+	 * Gets the asset creator.
+	 *
+	 * @param inputFilePath the input file path
+	 * @return the asset creator
+	 */
 	public static AssetCreatorIntf getAssetCreator(String inputFilePath)
 	{
 		return new AssetCreator(inputFilePath);

@@ -8,6 +8,9 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.assetcreation.exception;
 
+/**
+ * The Class UpdateCompleteAssetException.
+ */
 public class UpdateCompleteAssetException extends Exception {
 	
 	/**
@@ -15,11 +18,19 @@ public class UpdateCompleteAssetException extends Exception {
 	 */
 	private static final long serialVersionUID = 3148640117550423883L;
 
+	/**
+	 * Instantiates a new update complete asset exception.
+	 */
 	public UpdateCompleteAssetException()
 	{
 		
 	}
 	
+	/**
+	 * Instantiates a new update complete asset exception.
+	 *
+	 * @param message the message
+	 */
 	public UpdateCompleteAssetException(String message)
 	{
 		super(message);

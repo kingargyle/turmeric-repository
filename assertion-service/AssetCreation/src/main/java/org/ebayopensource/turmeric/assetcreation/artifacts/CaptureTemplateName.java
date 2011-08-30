@@ -51,46 +51,91 @@ import javax.xml.bind.annotation.XmlEnumValue;
 @XmlEnum
 public enum CaptureTemplateName {
 
+    /** The PROPOS e_ servic e_ template. */
     @XmlEnumValue("Propose Service Template")
     PROPOSE_SERVICE_TEMPLATE("Propose Service Template"),
+    
+    /** The NE w_ servic e_ template. */
     @XmlEnumValue("New Service Template")
     NEW_SERVICE_TEMPLATE("New Service Template"),
+    
+    /** The FUNCTIONA l_ domai n_ template. */
     @XmlEnumValue("Functional Domain Template")
     FUNCTIONAL_DOMAIN_TEMPLATE("Functional Domain Template"),
+    
+    /** The NE w_ consumer. */
     @XmlEnumValue("New Consumer")
     NEW_CONSUMER("New Consumer"),
+    
+    /** The PROPERTY. */
     @XmlEnumValue("Property")
     PROPERTY("Property"),
+    
+    /** The FLAG. */
     @XmlEnumValue("Flag")
     FLAG("Flag"),
+    
+    /** The FLA g_ set. */
     @XmlEnumValue("Flag Set")
     FLAG_SET("Flag Set"),
+    
+    /** The FEATUR e_ contingency. */
     @XmlEnumValue("Feature Contingency")
     FEATURE_CONTINGENCY("Feature Contingency"),
+    
+    /** The COMMAND. */
     @XmlEnumValue("Command")
     COMMAND("Command"),
+    
+    /** The DELIVERABLE. */
     @XmlEnumValue("Deliverable")
     DELIVERABLE("Deliverable"),
+    
+    /** The SEARC h_ driver. */
     @XmlEnumValue("Search Driver")
     SEARCH_DRIVER("Search Driver"),
+    
+    /** The PAGE. */
     @XmlEnumValue("Page")
     PAGE("Page"),
+    
+    /** The PAG e_ group. */
     @XmlEnumValue("Page Group")
     PAGE_GROUP("Page Group"),
+    
+    /** The TEMPLATE. */
     @XmlEnumValue("Template")
     TEMPLATE("Template"),
+    
+    /** The MODULE. */
     @XmlEnumValue("Module")
     MODULE("Module");
     private final String value;
 
+    /**
+     * Instantiates a new capture template name.
+     *
+     * @param v the v
+     */
     CaptureTemplateName(String v) {
         value = v;
     }
 
+    /**
+     * Value.
+     *
+     * @return the string
+     */
     public String value() {
         return value;
     }
 
+    /**
+     * From value.
+     *
+     * @param v the v
+     * @return the capture template name
+     */
     public static CaptureTemplateName fromValue(String v) {
         for (CaptureTemplateName c: CaptureTemplateName.values()) {
             if (c.value.equals(v)) {

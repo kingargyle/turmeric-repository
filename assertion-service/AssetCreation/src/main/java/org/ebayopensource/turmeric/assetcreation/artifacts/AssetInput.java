@@ -78,42 +78,70 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 })
 public class AssetInput {
 
+    /** The id. */
     @XmlElement(required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String id;
+    
+    /** The asset type. */
     @XmlElement(required = true)
     protected AssetType assetType;
+    
+    /** The source asset id. */
     @XmlElement(required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String sourceAssetID;
+    
+    /** The library name. */
     @XmlElement(required = true)
     protected String libraryName;
+    
+    /** The capture template name. */
     @XmlElement(required = true)
     protected CaptureTemplateName captureTemplateName;
+    
+    /** The life cycle state. */
     @XmlElement(required = true)
     protected LifeCycleState lifeCycleState;
+    
+    /** The number of assets. */
     protected int numberOfAssets;
+    
+    /** The prefix. */
     @XmlElement(required = true)
     protected String prefix;
+    
+    /** The suffix. */
     @XmlElement(required = true)
     protected String suffix;
+    
+    /** The comments. */
     @XmlElement(required = true)
     protected String comments;
+    
+    /** The persist. */
     protected boolean persist;
+    
+    /** The need full asset. */
     protected boolean needFullAsset;
+    
+    /** The wsdl document location. */
     protected String wsdlDocumentLocation;
+    
+    /** The published. */
     protected Boolean published;
+    
+    /** The delete consumed assets. */
     protected Boolean deleteConsumedAssets;
 
     /**
      * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return the id
+     * possible object is
+     * {@link String }
      */
     public String getId() {
         return id;
@@ -133,11 +161,10 @@ public class AssetInput {
 
     /**
      * Gets the value of the assetType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AssetType }
-     *     
+     *
+     * @return the asset type
+     * possible object is
+     * {@link AssetType }
      */
     public AssetType getAssetType() {
         return assetType;
@@ -157,11 +184,10 @@ public class AssetInput {
 
     /**
      * Gets the value of the sourceAssetID property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return the source asset id
+     * possible object is
+     * {@link String }
      */
     public String getSourceAssetID() {
         return sourceAssetID;
@@ -181,11 +207,10 @@ public class AssetInput {
 
     /**
      * Gets the value of the libraryName property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return the library name
+     * possible object is
+     * {@link String }
      */
     public String getLibraryName() {
         return libraryName;
@@ -205,11 +230,10 @@ public class AssetInput {
 
     /**
      * Gets the value of the captureTemplateName property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link CaptureTemplateName }
-     *     
+     *
+     * @return the capture template name
+     * possible object is
+     * {@link CaptureTemplateName }
      */
     public CaptureTemplateName getCaptureTemplateName() {
         return captureTemplateName;
@@ -229,11 +253,10 @@ public class AssetInput {
 
     /**
      * Gets the value of the lifeCycleState property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LifeCycleState }
-     *     
+     *
+     * @return the life cycle state
+     * possible object is
+     * {@link LifeCycleState }
      */
     public LifeCycleState getLifeCycleState() {
         return lifeCycleState;
@@ -253,7 +276,8 @@ public class AssetInput {
 
     /**
      * Gets the value of the numberOfAssets property.
-     * 
+     *
+     * @return the number of assets
      */
     public int getNumberOfAssets() {
         return numberOfAssets;
@@ -261,7 +285,8 @@ public class AssetInput {
 
     /**
      * Sets the value of the numberOfAssets property.
-     * 
+     *
+     * @param value the new number of assets
      */
     public void setNumberOfAssets(int value) {
         this.numberOfAssets = value;
@@ -269,11 +294,10 @@ public class AssetInput {
 
     /**
      * Gets the value of the prefix property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return the prefix
+     * possible object is
+     * {@link String }
      */
     public String getPrefix() {
         return prefix;
@@ -293,11 +317,10 @@ public class AssetInput {
 
     /**
      * Gets the value of the suffix property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return the suffix
+     * possible object is
+     * {@link String }
      */
     public String getSuffix() {
         return suffix;
@@ -317,11 +340,10 @@ public class AssetInput {
 
     /**
      * Gets the value of the comments property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return the comments
+     * possible object is
+     * {@link String }
      */
     public String getComments() {
         return comments;
@@ -341,7 +363,8 @@ public class AssetInput {
 
     /**
      * Gets the value of the persist property.
-     * 
+     *
+     * @return true, if is persist
      */
     public boolean isPersist() {
         return persist;
@@ -349,7 +372,8 @@ public class AssetInput {
 
     /**
      * Sets the value of the persist property.
-     * 
+     *
+     * @param value the new persist
      */
     public void setPersist(boolean value) {
         this.persist = value;
@@ -357,7 +381,8 @@ public class AssetInput {
 
     /**
      * Gets the value of the needFullAsset property.
-     * 
+     *
+     * @return true, if is need full asset
      */
     public boolean isNeedFullAsset() {
         return needFullAsset;
@@ -365,7 +390,8 @@ public class AssetInput {
 
     /**
      * Sets the value of the needFullAsset property.
-     * 
+     *
+     * @param value the new need full asset
      */
     public void setNeedFullAsset(boolean value) {
         this.needFullAsset = value;
@@ -373,11 +399,10 @@ public class AssetInput {
 
     /**
      * Gets the value of the wsdlDocumentLocation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return the wsdl document location
+     * possible object is
+     * {@link String }
      */
     public String getWsdlDocumentLocation() {
         return wsdlDocumentLocation;
@@ -397,11 +422,10 @@ public class AssetInput {
 
     /**
      * Gets the value of the published property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     *
+     * @return the boolean
+     * possible object is
+     * {@link Boolean }
      */
     public Boolean isPublished() {
         return published;
@@ -421,11 +445,10 @@ public class AssetInput {
 
     /**
      * Gets the value of the deleteConsumedAssets property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     *
+     * @return the boolean
+     * possible object is
+     * {@link Boolean }
      */
     public Boolean isDeleteConsumedAssets() {
         return deleteConsumedAssets;
