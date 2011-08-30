@@ -8,7 +8,6 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.repositorymanager.assertions;
 
-// TODO: Auto-generated Javadoc
 /**
  * AssertionResultItem contains an AssertionResult failure or warning
  * information.

@@ -13,7 +13,6 @@ import java.net.URI;
 import org.ebayopensource.turmeric.repositorymanager.assertions.AssertionContent;
 
 
-// TODO: Auto-generated Javadoc
 /**
  * StringContent is an AssertionContent with underlying String content.
  * 

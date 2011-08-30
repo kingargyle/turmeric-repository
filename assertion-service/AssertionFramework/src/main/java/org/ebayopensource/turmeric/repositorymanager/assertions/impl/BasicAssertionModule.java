@@ -15,7 +15,6 @@ import org.ebayopensource.turmeric.repositorymanager.assertions.AssertionContent
 import org.ebayopensource.turmeric.repositorymanager.assertions.AssertionModule;
 
 
-// TODO: Auto-generated Javadoc
 /**
  * BasicAssertionModule implements AssertionModule.
  * 

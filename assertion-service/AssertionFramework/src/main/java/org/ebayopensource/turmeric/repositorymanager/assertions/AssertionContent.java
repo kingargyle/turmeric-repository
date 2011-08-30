@@ -11,7 +11,6 @@ package org.ebayopensource.turmeric.repositorymanager.assertions;
 import org.ebayopensource.turmeric.repositorymanager.assertions.impl.AssertionContentSource;
 import org.ebayopensource.turmeric.repositorymanager.assertions.impl.AssertionProcessorContext;
 
-// TODO: Auto-generated Javadoc
 /**
  * AssertionContent represents the content of an assertion or the content
  * an Assertion is applied to.

@@ -17,7 +17,6 @@ import java.io.Reader;
 import org.ebayopensource.turmeric.repositorymanager.assertions.URLContent;
 
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class URLContentSource.
  *

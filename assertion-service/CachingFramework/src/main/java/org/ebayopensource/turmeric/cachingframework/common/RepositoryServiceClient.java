@@ -140,8 +140,6 @@ public class RepositoryServiceClient {
 		assetRequest.setAssetKey(assetKey);
 		assetRequest.setVersion(assetVersion);
 		assetRequest.setAssetType(assetType);
-		// TODO: find what is this line doing here
-		// assetKey.setAssetId("1.0_1232749942227-390605607");
 
 		return getAssetInfo(assetRequest);
 	}

@@ -13,7 +13,6 @@ import org.ebayopensource.turmeric.repositorymanager.assertions.Assertable;
 import org.ebayopensource.turmeric.repositorymanager.assertions.AssertionGroup;
 
 
-// TODO: Auto-generated Javadoc
 /**
  * An AssertionGroup contains a collection of Assertables.
  * Two AssertionGroups with the same name and version are "equal"

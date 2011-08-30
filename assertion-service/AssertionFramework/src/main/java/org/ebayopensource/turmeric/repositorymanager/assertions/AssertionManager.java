@@ -24,7 +24,6 @@ import org.ebayopensource.turmeric.repositorymanager.assertions.impl.AssetRefere
 import org.ebayopensource.turmeric.repositorymanager.assertions.impl.BasicAssertableResult;
 
 
-// TODO: Auto-generated Javadoc
 /**
  * AssertionManager uses AssertionProcessors to validate assertions.
  * 

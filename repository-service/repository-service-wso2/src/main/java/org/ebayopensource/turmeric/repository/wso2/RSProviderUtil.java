@@ -970,7 +970,6 @@ public class RSProviderUtil {
 			boolean found = false;
 			for (AttributeNameValue attr : attributes) {
 				if (attr.getAttributeName().equals(newAttr.getAttributeName())) {
-					// TODO clarify whether both calls are needed
 					attr.setAttributeValueLong(newAttr.getAttributeValueLong());
 					attr.setAttributeValueString(newAttr
 							.getAttributeValueString());

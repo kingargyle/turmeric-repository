@@ -12,7 +12,6 @@ import org.ebayopensource.turmeric.common.v1.types.ErrorMessage;
 
 
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class AssertionIllegalArgumentException.
  */

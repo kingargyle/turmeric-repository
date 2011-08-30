@@ -15,7 +15,6 @@ import org.ebayopensource.turmeric.repositorymanager.assertions.impl.AssertionCo
 import org.ebayopensource.turmeric.repositorymanager.assertions.impl.AssertionProcessorContext;
 
 
-// TODO: Auto-generated Javadoc
 /**
  * An AssertionProcessor processes Assertions with a assertion
  * script language.

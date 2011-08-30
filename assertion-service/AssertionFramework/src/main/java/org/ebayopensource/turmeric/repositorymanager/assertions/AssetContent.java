@@ -8,7 +8,6 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.repositorymanager.assertions;
 
-// TODO: Auto-generated Javadoc
 /**
  * AssetContent is an AssertionContent with an underlying Asset artifact.
  * 

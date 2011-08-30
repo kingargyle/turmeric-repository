@@ -8,7 +8,6 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.repositorymanager.assertions;
 
-// TODO: Auto-generated Javadoc
 /**
  * StringContent is an AssertionContent with underlying String content.
  * 

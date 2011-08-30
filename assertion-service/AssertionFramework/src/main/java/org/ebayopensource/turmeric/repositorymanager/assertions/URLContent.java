@@ -14,7 +14,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-// TODO: Auto-generated Javadoc
 /**
  * URLContent is an AssertionContent with an underlying URL.
  * 

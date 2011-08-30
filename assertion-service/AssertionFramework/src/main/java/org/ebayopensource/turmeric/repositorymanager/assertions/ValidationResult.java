@@ -8,7 +8,6 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.repositorymanager.assertions;
 
-// TODO: Auto-generated Javadoc
 /**
  * Validation severity levels for Assertions that fail.
  */

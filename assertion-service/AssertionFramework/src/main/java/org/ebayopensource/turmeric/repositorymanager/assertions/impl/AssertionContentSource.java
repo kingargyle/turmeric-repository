@@ -15,7 +15,6 @@ import java.io.Reader;
 import org.ebayopensource.turmeric.repositorymanager.assertions.AssertionContent;
 
 
-// TODO: Auto-generated Javadoc
 /**
  * AssertionContentSource produces content from an AssertionContent.
  * 

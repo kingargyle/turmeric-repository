@@ -8,7 +8,6 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.repositorymanager.assertions;
 
-// TODO: Auto-generated Javadoc
 /**
  * Assertions and AssertionGroups are Assertable. An AssertionGroup
  * contains a group of Assertables (Assertions and AssertionGroups).

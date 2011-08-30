@@ -105,7 +105,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	 */
 	@Override
 	public UnsubscribeResponse unsubscribe(UnsubscribeRequest request) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -114,7 +113,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	 */
 	@Override
 	public SearchAssetsResponse searchAssets(SearchAssetsRequest request) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -342,7 +340,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	 */
 	@Override
 	public GetAssetTypesResponse getAssetTypes(GetAssetTypesRequest request) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -352,7 +349,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	@Override
 	public GetAssetTreeByAttributesResponse getAssetTreeByAttributes(
 			GetAssetTreeByAttributesRequest request) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -410,7 +406,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	@Override
 	public GetAssetSubmissionPropertiesResponse getAssetSubmissionProperties(
 			GetAssetSubmissionPropertiesRequest request) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -575,7 +570,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	@Override
 	public SearchAssetsDetailedResponse searchAssetsDetailed(
 			SearchAssetsDetailedRequest request) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -585,7 +579,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	@Override
 	public GetSubscriptionResponse getSubscription(
 			GetSubscriptionRequest request) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -738,7 +731,7 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 //							content.getBytes("UTF-8"));
 //					asset.setContentStream(contentStream);
 //				}
-			} else // TODO handle other known types
+			} else 
 			{
 				asset.setDescription(assetInfo.getBasicAssetInfo()
 						.getAssetDescription());
@@ -780,7 +773,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	 */
 	@Override
 	public SubscribeResponse subscribe(SubscribeRequest request) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -789,7 +781,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	 */
 	@Override
 	public ValidateAssetResponse validateAsset(ValidateAssetRequest request) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -946,7 +937,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	@Override
 	public GetAssetLifeCycleStatesResponse getAssetLifeCycleStates(
 			GetAssetLifeCycleStatesRequest request) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -957,7 +947,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	@Override
 	public GetAllAssetsGroupedByCategoryResponse getAllAssetsGroupedByCategory(
 			GetAllAssetsGroupedByCategoryRequest request) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -1043,7 +1032,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	@Override
 	public GetAssetVersionsResponse getAssetVersions(
 			GetAssetVersionsRequest request) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -1423,7 +1411,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	@Override
 	public UpdateSubscriptionResponse updateSubscription(
 			UpdateSubscriptionRequest request) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

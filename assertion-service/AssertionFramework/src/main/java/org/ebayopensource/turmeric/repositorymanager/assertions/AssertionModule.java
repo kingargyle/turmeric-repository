@@ -10,7 +10,6 @@ package org.ebayopensource.turmeric.repositorymanager.assertions;
 
 import java.util.Collection;
 
-// TODO: Auto-generated Javadoc
 /**
  * An AssertionModule contains reusable scripts that are used by Assertions.
  * 

@@ -16,7 +16,6 @@ import org.ebayopensource.turmeric.repositorymanager.assertions.AssertionModule;
 import org.ebayopensource.turmeric.repositorymanager.assertions.ValidationResult;
 
 
-// TODO: Auto-generated Javadoc
 /**
  * BasicAssertion implements Assertion.  This is a base class that can
  * be extended with other constructors. For example, a class that is

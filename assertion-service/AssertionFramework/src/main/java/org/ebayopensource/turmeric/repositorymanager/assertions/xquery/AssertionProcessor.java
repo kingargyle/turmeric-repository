@@ -100,7 +100,6 @@ public class AssertionProcessor
         try {
             Configuration configuration = new Configuration();
             configuration.setModuleURIResolver(moduleResolver);
-            // TODO - delete - configuration.setLineNumbering(true);
             moduleResolver.addModuleScript(null, CORELIB_SCRIPT);
             XQDataSource xqDataSource = new SaxonXQDataSource(configuration);
 
@@ -367,7 +366,6 @@ public class AssertionProcessor
                 : new InputSource(assertionContentSource.getContentStream());
             // For Saxon SAXSource recommended over DOMSource.
             // Saxon claims TinyTree is faster and smaller than a Dom object.
-            // TODO - delete - SAXSource saxSource = new SAXSource(inputSource);
             AugmentedSource source = 
                 AugmentedSource.makeAugmentedSource(new SAXSource(inputSource));
             source.setTreeModel(Builder.TINY_TREE);

@@ -17,7 +17,6 @@ import java.util.Set;
 import org.ebayopensource.turmeric.repositorymanager.assertions.impl.BasicAssertionResult;
 
 
-// TODO: Auto-generated Javadoc
 /**
  * An AssertionReport represents the result of applying a collection
  * of Assertables.  An AssertionReport derives a flattened set

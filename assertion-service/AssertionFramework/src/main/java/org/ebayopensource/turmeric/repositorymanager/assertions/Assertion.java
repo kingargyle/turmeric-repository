@@ -10,7 +10,6 @@ package org.ebayopensource.turmeric.repositorymanager.assertions;
 
 import java.util.Collection;
 
-// TODO: Auto-generated Javadoc
 /**
  * An Assertion contains an executable script that applies a
  * validation rule. Two assertions with the same name and version

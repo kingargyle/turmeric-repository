@@ -21,8 +21,7 @@ import org.ebayopensource.turmeric.repositorymanager.assertions.AssertionGroup;
 import org.ebayopensource.turmeric.repositorymanager.assertions.AssertionResultItem;
 import org.ebayopensource.turmeric.repositorymanager.assertions.ValidationResult;
 
-
-// TODO: Auto-generated Javadoc
+ 
 /**
  * BasicAssertableResult implements AssertionResult.
  * 
