@@ -16,7 +16,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import org.ebayopensource.turmeric.repository.v2.services.*;
+import org.ebayopensource.turmeric.repository.v1.services.*;
 import org.ebayopensource.turmeric.repositorymanager.assertions.AssetContent;
 import org.ebayopensource.turmeric.repositorymanager.assertions.AssetReference;
 import org.ebayopensource.turmeric.repositorymanager.assertions.exception.AssertionIllegalArgumentException;

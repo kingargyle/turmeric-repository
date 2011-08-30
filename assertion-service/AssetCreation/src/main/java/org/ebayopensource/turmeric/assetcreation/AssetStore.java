@@ -16,7 +16,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import org.ebayopensource.turmeric.assetcreation.exception.*;
-import org.ebayopensource.turmeric.repository.v2.services.*;
+import org.ebayopensource.turmeric.repository.v1.services.*;
 
 public class AssetStore {
 	

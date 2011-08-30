@@ -14,7 +14,7 @@ package org.ebayopensource.turmeric.assetcreation;
  */
 
 import org.ebayopensource.turmeric.assetcreation.exception.*;
-import org.ebayopensource.turmeric.repository.v2.services.*;
+import org.ebayopensource.turmeric.repository.v1.services.*;
 
 
 

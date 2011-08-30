@@ -20,7 +20,7 @@ import org.apache.log4j.Logger;
 import org.ebayopensource.turmeric.cachingframework.assetcapsule.AssetInfoCapsule;
 import org.ebayopensource.turmeric.cachingframework.cacheManager.CacheManager;
 import org.ebayopensource.turmeric.cachingframework.exception.AssetRetrivalException;
-import org.ebayopensource.turmeric.repository.v2.services.*;
+import org.ebayopensource.turmeric.repository.v1.services.*;
 import org.ebayopensource.turmeric.repositorymanager.assertions.Assertable;
 import org.ebayopensource.turmeric.repositorymanager.assertions.Assertion;
 import org.ebayopensource.turmeric.repositorymanager.assertions.AssertionContent;

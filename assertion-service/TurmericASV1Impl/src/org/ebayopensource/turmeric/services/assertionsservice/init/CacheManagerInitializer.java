@@ -19,8 +19,7 @@ import org.ebayopensource.turmeric.cachingframework.exception.AssetRetrivalExcep
 
 import org.ebayopensource.turmeric.assertionsservice.operation.impl.ApplyAssertionGroupsOperationImpl;
 
-import org.ebayopensource.turmeric.repository.v2.services.AssetInfo;
-import org.ebayopensource.turmeric.repository.v2.services.Relation;
+import org.ebayopensource.turmeric.repository.v1.services.*;
 import org.ebayopensource.turmeric.repositorymanager.assertions.impl.AssertionProcessorContext;
 import org.ebayopensource.turmeric.services.assertionsservice.common.AssertionsServiceConstants;
 

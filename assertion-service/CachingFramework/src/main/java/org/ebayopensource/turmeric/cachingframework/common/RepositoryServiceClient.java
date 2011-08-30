@@ -22,8 +22,8 @@ import org.ebayopensource.turmeric.common.v1.types.ErrorData;
 import org.ebayopensource.turmeric.common.v1.types.ErrorMessage;
 
 
-import org.ebayopensource.turmeric.repository.v2.services.*;
-import org.ebayopensource.turmeric.repository.v2.services.impl.TurmericRSV2;
+import org.ebayopensource.turmeric.repository.v1.services.*;
+import org.ebayopensource.turmeric.repository.v1.services.repositoryservice.impl.TurmericRSV1;
 
 import org.ebayopensource.turmeric.runtime.common.exceptions.ServiceException;
 import org.ebayopensource.turmeric.runtime.common.exceptions.ServiceInvocationRuntimeException;
@@ -71,7 +71,7 @@ public class RepositoryServiceClient {
 	 * @return the service proxy object.
 	 * @throws ServiceException
 	 */
-	private TurmericRSV2 getServiceProxy() throws ServiceException {
+	private TurmericRSV1 getServiceProxy() throws ServiceException {
 		logger.error("[JEGAN]Inside CachingFramework RepositoryServiceClient.getServiceProxy Username: "
 				+ userId + " password: " + password);
 		logger.error("RepositoryServiceClient.getServiceProxy serviceLocationURL="+serviceLocationURL);
@@ -97,7 +97,7 @@ public class RepositoryServiceClient {
 			requestContext.setTransportHeader("X-TURMERIC-SECURITY-PASSWORD",
 					password);
 		}
-		return (TurmericRSV2) service.getProxy();
+		return (TurmericRSV1) service.getProxy();
 	}
 
 	/**

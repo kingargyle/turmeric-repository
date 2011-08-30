@@ -22,7 +22,7 @@
   <dependencies>
     <dependency>
       <groupId>org.ebayopensource.turmeric.intf</groupId>
-	  <artifactId>TurmericRSV2</artifactId>
+	  <artifactId>TurmericRSV1</artifactId>
 	  <version>${project.version}</version>
 	</dependency>
     <dependency>

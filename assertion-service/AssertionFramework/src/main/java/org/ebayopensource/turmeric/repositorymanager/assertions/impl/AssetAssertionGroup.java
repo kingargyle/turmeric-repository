@@ -10,7 +10,7 @@ package org.ebayopensource.turmeric.repositorymanager.assertions.impl;
 
 import java.util.ArrayList;
 
-import org.ebayopensource.turmeric.repository.v2.services.*;
+import org.ebayopensource.turmeric.repository.v1.services.*;
 import org.ebayopensource.turmeric.repositorymanager.assertions.Assertable;
 import org.ebayopensource.turmeric.repositorymanager.assertions.AssetReference;
 import org.ebayopensource.turmeric.repositorymanager.assertions.exception.AssertionIllegalArgumentException;

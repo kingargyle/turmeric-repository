@@ -11,7 +11,7 @@ package org.ebayopensource.turmeric.repositorymanager.assertions.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ebayopensource.turmeric.repository.v2.services.*;
+import org.ebayopensource.turmeric.repository.v1.services.*;
 import org.ebayopensource.turmeric.repositorymanager.assertions.Assertion;
 import org.ebayopensource.turmeric.repositorymanager.assertions.AssertionModule;
 import org.ebayopensource.turmeric.repositorymanager.assertions.AssetContent;

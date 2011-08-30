@@ -19,14 +19,7 @@ import org.ebayopensource.turmeric.assetcreation.AssetCreatorFactory;
 import org.ebayopensource.turmeric.assetcreation.AssetCreatorIntf;
 import org.ebayopensource.turmeric.assetcreation.exception.AssetInfoNotFoundException;
 import org.ebayopensource.turmeric.assetcreation.exception.IdNotFoundException;
-import org.ebayopensource.turmeric.repository.v1.services.ApplyAssertionsRequest;
-import org.ebayopensource.turmeric.repository.v1.services.ArtifactAsset;
-import org.ebayopensource.turmeric.repository.v1.services.ArtifactContentTypes;
-import org.ebayopensource.turmeric.repository.v1.services.AssertableArtifact;
-import org.ebayopensource.turmeric.repository.v1.services.Assertion;
-import org.ebayopensource.turmeric.repository.v1.services.AssertionAsset;
-import org.ebayopensource.turmeric.repository.v1.services.AssertionAssetTypes;
-import org.ebayopensource.turmeric.repository.v2.services.AssetInfo;
+import org.ebayopensource.turmeric.repository.v1.services.*;
 
 /**
  * @author szacharias

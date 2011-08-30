@@ -15,14 +15,13 @@
     <artifactId>turmeric-assertion-service-parent</artifactId>
     <version>1.0.0.2-SNAPSHOT</version>
   </parent>
-  <groupId>org.ebayopensource.turmeric.repository</groupId>
   <artifactId>assertionframework</artifactId>
   <packaging>jar</packaging>
   <name>Repository :: Assertion Framework</name>
   <dependencies>
   	<dependency>
       <groupId>org.ebayopensource.turmeric.intf</groupId>
-	  <artifactId>TurmericRSV2</artifactId>
+	  <artifactId>TurmericRSV1</artifactId>
 	  <version>${project.version}</version>
     </dependency>
   	<dependency>

@@ -7,7 +7,7 @@ import org.ebayopensource.turmeric.common.v1.types.ErrorSeverity;
 
 public class ErrorDataCollection {
 
-    private final static String ORGANIZATION = "Turmeric";
+    private final static String ORGANIZATION = "ebayopensource";
     public final static CommonErrorData BASE_ASSETINFO_MISSING = createCommonErrorData(118004L, (ErrorSeverity.ERROR), (ErrorCategory.APPLICATION), "BASE_ASSETINFO_MISSING", "Repository", "RepositoryService", "");
     public final static CommonErrorData ASSET_NAME_MISSING = createCommonErrorData(118006L, (ErrorSeverity.ERROR), (ErrorCategory.APPLICATION), "ASSET_NAME_MISSING", "Repository", "RepositoryService", "");
     public final static CommonErrorData ASSET_VERSION_MISSING = createCommonErrorData(118008L, (ErrorSeverity.ERROR), (ErrorCategory.APPLICATION), "ASSET_VERSION_MISSING", "Repository", "RepositoryService", "");

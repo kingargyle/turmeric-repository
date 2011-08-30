@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
 import org.ebayopensource.turmeric.cachingframework.assetcapsule.intf.AssetCapsuleInterface;
 import org.ebayopensource.turmeric.cachingframework.common.RepositoryServiceClient;
 import org.ebayopensource.turmeric.cachingframework.exception.AssertionRuntimeException;
-import org.ebayopensource.turmeric.repository.v2.services.*;
+import org.ebayopensource.turmeric.repository.v1.services.*;
 import org.ebayopensource.turmeric.runtime.common.exceptions.ServiceException;
 
 

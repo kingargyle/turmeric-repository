@@ -7,7 +7,7 @@ import org.ebayopensource.turmeric.common.v1.types.ErrorSeverity;
 
 public class ErrorDataCollection {
 
-    private final static String ORGANIZATION = "Turmeric";
+    private final static String ORGANIZATION = "ebayopensource";
     public final static CommonErrorData ASSERTION_CONTENT_MISSING = createCommonErrorData(119002L, (ErrorSeverity.ERROR), (ErrorCategory.APPLICATION), "ASSERTION_CONTENT_MISSING", "Assertion", "AssertionsService", "");
     public final static CommonErrorData ASSET_NAME_MISSING = createCommonErrorData(119004L, (ErrorSeverity.ERROR), (ErrorCategory.APPLICATION), "ASSET_NAME_MISSING", "Assertion", "AssertionsService", "");
     public final static CommonErrorData ASSERTIONS_MISSING = createCommonErrorData(119006L, (ErrorSeverity.ERROR), (ErrorCategory.APPLICATION), "ASSERTIONS_MISSING", "Assertion", "AssertionsService", "");

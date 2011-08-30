@@ -33,7 +33,7 @@ import org.ebayopensource.turmeric.assetcreation.util.CommonUtil;
 import org.ebayopensource.turmeric.assetcreation.util.FileUtil;
 import org.ebayopensource.turmeric.assetdata.artifacts.AssetData;
 import org.ebayopensource.turmeric.assetdata.artifacts.Assets;
-import org.ebayopensource.turmeric.repository.v2.services.*;
+import org.ebayopensource.turmeric.repository.v1.services.*;
 import org.ebayopensource.turmeric.runtime.common.exceptions.ServiceException;
 
 

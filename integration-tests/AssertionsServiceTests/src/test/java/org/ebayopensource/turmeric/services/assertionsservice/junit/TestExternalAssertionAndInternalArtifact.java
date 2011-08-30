@@ -19,21 +19,7 @@ import org.ebayopensource.turmeric.assetcreation.AssetCreatorFactory;
 import org.ebayopensource.turmeric.assetcreation.AssetCreatorIntf;
 import org.ebayopensource.turmeric.assetcreation.exception.AssetInfoNotFoundException;
 import org.ebayopensource.turmeric.assetcreation.exception.IdNotFoundException;
-import org.ebayopensource.turmeric.repository.v1.services.ApplyAssertionsRequest;
-import org.ebayopensource.turmeric.repository.v1.services.ArtifactAsset;
-import org.ebayopensource.turmeric.repository.v1.services.ArtifactContentTypes;
-import org.ebayopensource.turmeric.repository.v1.services.AssertableArtifact;
-import org.ebayopensource.turmeric.repository.v1.services.Assertion;
-import org.ebayopensource.turmeric.repository.v1.services.AssertionModule;
-import org.ebayopensource.turmeric.repository.v1.services.AssertionModuleAsset;
-import org.ebayopensource.turmeric.repository.v1.services.AssertionModuleAssetTypes;
-import org.ebayopensource.turmeric.repository.v1.services.AssertionProcessorType;
-import org.ebayopensource.turmeric.repository.v1.services.AssertionSeverity;
-import org.ebayopensource.turmeric.repository.v2.services.AssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.ContentBindingName;
-import org.ebayopensource.turmeric.repository.v1.services.ExternalAssertion;
-import org.ebayopensource.turmeric.repository.v1.services.ExternalAssertionModule;
-import org.ebayopensource.turmeric.repository.v1.services.ExternalContent;
+import org.ebayopensource.turmeric.repository.v1.services.*;
 
 /**
  * @author szacharias

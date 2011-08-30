@@ -20,7 +20,6 @@ import org.ebayopensource.turmeric.assetcreation.AssetCreatorIntf;
 import org.ebayopensource.turmeric.assetcreation.exception.AssetInfoNotFoundException;
 import org.ebayopensource.turmeric.assetcreation.exception.IdNotFoundException;
 import org.ebayopensource.turmeric.repository.v1.services.*;
-import org.ebayopensource.turmeric.repository.v2.services.AssetInfo;
 
 /**
  * @author szacharias

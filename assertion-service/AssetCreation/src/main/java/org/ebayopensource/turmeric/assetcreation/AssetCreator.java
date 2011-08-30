@@ -27,7 +27,7 @@ import org.ebayopensource.turmeric.assetcreation.exception.IdNotFoundException;
 import org.ebayopensource.turmeric.assetcreation.exception.ProcessingException;
 import org.ebayopensource.turmeric.assetcreation.exception.UpdateCompleteAssetException;
 import org.ebayopensource.turmeric.common.v1.types.CommonErrorData;
-import org.ebayopensource.turmeric.repository.v2.services.*;
+import org.ebayopensource.turmeric.repository.v1.services.*;
 import org.ebayopensource.turmeric.runtime.common.exceptions.ServiceException;
 
 

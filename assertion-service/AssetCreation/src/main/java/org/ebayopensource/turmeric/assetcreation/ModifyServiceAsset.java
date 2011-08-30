@@ -29,7 +29,7 @@ import org.w3c.dom.NodeList;
 import org.ebayopensource.turmeric.assetcreation.artifacts.AssetInput;
 import org.ebayopensource.turmeric.assetcreation.exception.ProcessingException;
 import org.ebayopensource.turmeric.assetcreation.exception.WSDLNotFoundException;
-import org.ebayopensource.turmeric.repository.v2.services.*;
+import org.ebayopensource.turmeric.repository.v1.services.*;
 
 public class ModifyServiceAsset extends ModifyAsset {
 	
