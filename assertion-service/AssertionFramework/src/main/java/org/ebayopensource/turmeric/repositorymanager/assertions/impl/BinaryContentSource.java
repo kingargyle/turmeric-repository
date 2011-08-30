@@ -16,14 +16,20 @@ import java.io.Reader;
 import org.ebayopensource.turmeric.repositorymanager.assertions.BinaryContent;
 
 
+// TODO: Auto-generated Javadoc
 /**
- * 
+ * The Class BinaryContentSource.
+ *
  * @author pcopeland
  */
 public class BinaryContentSource
     extends AbstractContentSource
 {
+    
+    /** The binary content. */
     private BinaryContent binaryContent;
+    
+    /** The input stream. */
     private ByteArrayInputStream inputStream = null;
 
     /**
@@ -40,9 +46,9 @@ public class BinaryContentSource
     /**
      * Returns an InputStream for this AssertionContent or null
      * if the content should be read with a character Reader.
-     * 
+     *
      * @return an InputStream for this AssertioContent.
-     * @throws IOException
+     * @throws IOException Signals that an I/O exception has occurred.
      */
     @Override
 	public InputStream getContentStream()
@@ -57,9 +63,9 @@ public class BinaryContentSource
     /**
      * Returns a character stream reader for this AssertionContent or null
      * if the content is not character data.
-     * 
+     *
      * @return a character stream reader for this AssertionContent or null.
-     * @throws IOException
+     * @throws IOException Signals that an I/O exception has occurred.
      */
     @Override
 	public Reader getContentReader()

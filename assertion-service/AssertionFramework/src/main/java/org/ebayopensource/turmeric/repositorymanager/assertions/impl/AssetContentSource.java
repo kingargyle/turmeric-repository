@@ -23,7 +23,8 @@ import org.ebayopensource.turmeric.repositorymanager.assertions.exception.Assert
 
 
 /**
- * 
+ * The Class AssetContentSource.
+ *
  * @author pcopeland
  */
 public class AssetContentSource
@@ -38,8 +39,9 @@ public class AssetContentSource
 
     /**
      * Constructs an AssertionContentSource for an AssetContent.
-     * 
+     *
      * @param assetContent the underlying AssertionContent.
+     * @param context the context
      */
     public AssetContentSource(
             AssetContent assetContent,
@@ -53,9 +55,9 @@ public class AssetContentSource
     /**
      * Returns an InputStream for this AssertionContent or null
      * if the content should be read with a character Reader.
-     * 
+     *
      * @return an InputStream for this AssertionContent.
-     * @throws IOException
+     * @throws IOException Signals that an I/O exception has occurred.
      */
     @Override
 	public InputStream getContentStream()
@@ -75,9 +77,9 @@ public class AssetContentSource
     /**
      * Returns a character stream reader for this AssertionContent or null
      * if the content is not character data.
-     * 
+     *
      * @return a character stream reader for this AssertionContent or null.
-     * @throws IOException
+     * @throws IOException Signals that an I/O exception has occurred.
      */
     @Override
 	public Reader getContentReader()
@@ -99,8 +101,9 @@ public class AssetContentSource
 
     /**
      * Initializes the content of this AssetContentSource.
-     * 
-     * @param context the context for accessing the Repository.
+     *
+     * @param ctx the ctx
+     * @throws AssertionIllegalArgumentException the assertion illegal argument exception
      */
     @Override
 	public void dereference(AssertionProcessorContext ctx) throws AssertionIllegalArgumentException

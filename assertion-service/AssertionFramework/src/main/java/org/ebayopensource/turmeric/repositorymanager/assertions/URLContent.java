@@ -14,6 +14,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+// TODO: Auto-generated Javadoc
 /**
  * URLContent is an AssertionContent with an underlying URL.
  * 
@@ -22,8 +23,14 @@ import java.net.URL;
 public class URLContent
     implements AssertionContent
 {
+    
+    /** The content name. */
     private String contentName;
+    
+    /** The source name. */
     private String sourceName;
+    
+    /** The url. */
     private URL url;
 
     /**
@@ -44,6 +51,13 @@ public class URLContent
         }
     }
     
+    /**
+     * Gets the uRL.
+     *
+     * @param urlSpec the url spec
+     * @return the uRL
+     * @throws MalformedURLException the malformed url exception
+     */
     @SuppressWarnings("deprecation")
 	private URL getURL(String urlSpec) throws MalformedURLException
     {
@@ -144,8 +158,8 @@ public class URLContent
 
     /**
      * Sets the name of this URLContent.
-     * 
-     * @param name the new name of this URLContent.
+     *
+     * @param contentName the new name
      */
     @Override
 	public void setName(String contentName) { this.contentName = contentName; }
@@ -165,6 +179,9 @@ public class URLContent
      */
     public URL getURL() { return url; }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     @Override
 	public String toString()
     {

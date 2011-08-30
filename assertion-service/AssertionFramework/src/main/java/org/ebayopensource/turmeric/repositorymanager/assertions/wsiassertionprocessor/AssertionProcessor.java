@@ -17,7 +17,6 @@ import org.ebayopensource.turmeric.repositorymanager.assertions.AssertionContent
 import org.ebayopensource.turmeric.repositorymanager.assertions.impl.AssertionContentSource;
 import org.ebayopensource.turmeric.repositorymanager.assertions.impl.AssertionProcessorContext;
 
-
 /**
  * The AssertionProcessor for XQuery assertions.
  * 
@@ -27,28 +26,43 @@ public class AssertionProcessor
     implements org.ebayopensource.turmeric.repositorymanager.assertions.AssertionProcessor
 {
 
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.repositorymanager.assertions.AssertionProcessor#applyAssertion(org.ebayopensource.turmeric.repositorymanager.assertions.Assertion, java.util.List)
+	 */
 	@Override
 	public AssertableResult applyAssertion(Assertion assertion,
 			List<AssertionContent> content) throws IOException {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.repositorymanager.assertions.AssertionProcessor#close()
+	 */
 	@Override
 	public void close() {
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.repositorymanager.assertions.AssertionProcessor#getAssertionContentSource(org.ebayopensource.turmeric.repositorymanager.assertions.AssertionContent)
+	 */
 	@Override
 	public AssertionContentSource getAssertionContentSource(
 			AssertionContent assertionContent) {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.repositorymanager.assertions.AssertionProcessor#getName()
+	 */
 	@Override
 	public String getName() {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.repositorymanager.assertions.AssertionProcessor#init(org.ebayopensource.turmeric.repositorymanager.assertions.impl.AssertionProcessorContext)
+	 */
 	@Override
 	public void init(AssertionProcessorContext context) {
 		

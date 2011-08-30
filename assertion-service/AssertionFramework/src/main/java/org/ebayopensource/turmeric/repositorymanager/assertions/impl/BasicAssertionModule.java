@@ -15,6 +15,7 @@ import org.ebayopensource.turmeric.repositorymanager.assertions.AssertionContent
 import org.ebayopensource.turmeric.repositorymanager.assertions.AssertionModule;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * BasicAssertionModule implements AssertionModule.
  * 
@@ -23,21 +24,31 @@ import org.ebayopensource.turmeric.repositorymanager.assertions.AssertionModule;
 public class BasicAssertionModule
     implements AssertionModule
 {
+    
+    /** The name. */
     private String name;
+    
+    /** The version. */
     private String version;
+    
+    /** The description. */
     private String description;
+    
+    /** The module scripts. */
     private Collection<AssertionContent> moduleScripts;
+    
+    /** The assertion processor type. */
     private String assertionProcessorType;
 
     /**
      * Creates a BasicAssertionModule. By default FailureResult = FAILED and
      * AssertionModules = null.
-     * 
+     *
      * @param name name of this BasicAssertionModule.
      * @param version version of this BasicAssertionModule.
      * @param description description of this BasicAssertionModule.
-     * @param scriptContents script contents for this BasicAssertionModule.
-     * @param assertionProcessor assertionProcessor for this BasicAssertionModule.
+     * @param moduleScripts the module scripts
+     * @param assertionProcessorType the assertion processor type
      */
     public BasicAssertionModule(
             String name,
@@ -96,6 +107,9 @@ public class BasicAssertionModule
     @Override
 	public String getAssertionProcessorType() { return assertionProcessorType; }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     @Override
 	public String toString()
     {

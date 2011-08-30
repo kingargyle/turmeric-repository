@@ -51,8 +51,9 @@ public class AssetAssertionGroup
 
     /**
      * Initializes the state of this AssetAssertion.
-     * 
+     *
      * @param context the context for accessing the Repository.
+     * @throws AssertionIllegalArgumentException the assertion illegal argument exception
      */
     @Override
 	public void dereference(AssertionProcessorContext context) throws AssertionIllegalArgumentException
@@ -90,6 +91,9 @@ public class AssetAssertionGroup
         isDereferenced = true;
     }
 
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.repositorymanager.assertions.impl.BasicAssertionGroup#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object o) 
 	{

@@ -29,7 +29,11 @@ public class AssetAssertion
     extends BasicAssertion
     implements Assertion, AssetReferent
 {
+    
+    /** The asset ref. */
     private AssetReference assetRef;
+    
+    /** The is dereferenced. */
     private boolean isDereferenced = false;
 
     /**
@@ -55,8 +59,9 @@ public class AssetAssertion
 
     /**
      * Initializes the state of this AssetAssertion.
-     * 
+     *
      * @param context the context for accessing the Repository.
+     * @throws AssertionIllegalArgumentException the assertion illegal argument exception
      */
     @Override
 	public void dereference(AssertionProcessorContext context) throws AssertionIllegalArgumentException
@@ -110,6 +115,9 @@ public class AssetAssertion
         isDereferenced = true;
     }
 
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.repositorymanager.assertions.impl.BasicAssertion#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object o) 
 	{

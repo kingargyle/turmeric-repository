@@ -13,13 +13,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 
+// TODO: Auto-generated Javadoc
 /**
- * 
+ * The Class ClassResourceContentSource.
+ *
  * @author pcopeland
  */
 public class ClassResourceContentSource
     extends AbstractContentSource
 {
+    
+    /** The class resource content. */
     private ClassResourceContent classResourceContent;
 
     /**
@@ -36,8 +40,9 @@ public class ClassResourceContentSource
 
     /**
      * Returns an InputStream for this ClassResourceAssertionContent.
-     * 
+     *
      * @return an InputStream for this ClassResourceAssertionContent.
+     * @throws IOException Signals that an I/O exception has occurred.
      */
     @Override
 	public InputStream getContentStream()
@@ -52,7 +57,9 @@ public class ClassResourceContentSource
     }
 
     /**
-     * Returns null
+     * Returns null.
+     *
+     * @return the content reader
      */
     @Override
 	public Reader getContentReader() { return null; }

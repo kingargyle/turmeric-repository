@@ -17,13 +17,17 @@ import java.io.Reader;
 import org.ebayopensource.turmeric.repositorymanager.assertions.URLContent;
 
 
+// TODO: Auto-generated Javadoc
 /**
- * 
+ * The Class URLContentSource.
+ *
  * @author pcopeland
  */
 public class URLContentSource
     extends AbstractContentSource
 {
+    
+    /** The url content. */
     private URLContent urlContent;
 
     /**
@@ -40,9 +44,9 @@ public class URLContentSource
     /**
      * Returns an InputStream for this AssertionContent or null
      * if the content should be read with a character Reader.
-     * 
+     *
      * @return an InputStream for this AssertioContent.
-     * @throws IOException
+     * @throws IOException Signals that an I/O exception has occurred.
      */
     @Override
 	public InputStream getContentStream()
@@ -66,9 +70,9 @@ public class URLContentSource
     /**
      * Returns a character stream reader for this AssertionContent or null
      * if the content is not character data.
-     * 
+     *
      * @return a character stream reader for this AssertionContent or null.
-     * @throws IOException
+     * @throws IOException Signals that an I/O exception has occurred.
      */
     @Override
 	public Reader getContentReader()

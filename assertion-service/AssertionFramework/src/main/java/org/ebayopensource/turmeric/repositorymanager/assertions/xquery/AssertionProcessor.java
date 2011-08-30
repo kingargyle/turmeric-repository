@@ -50,7 +50,6 @@ import javax.xml.xquery.XQPreparedExpression;
 import javax.xml.xquery.XQResultSequence;
 import javax.xml.xquery.XQStaticContext;
 
-
 /**
  * The AssertionProcessor for XQuery assertions.
  * 
@@ -59,10 +58,17 @@ import javax.xml.xquery.XQStaticContext;
 public class AssertionProcessor
     implements org.ebayopensource.turmeric.repositorymanager.assertions.AssertionProcessor
 {
+    
+    /** The Constant logger. */
     static private final Logger logger = Logger.getLogger(AssertionProcessor.class); 
+    
+    /** The Constant assertionProcessorName. */
     static private final String assertionProcessorName = "XQueryAssertionProcessor";
+    
+    /** The Constant CORELIB_SCRIPT. */
     static private final AssertionContent CORELIB_SCRIPT;
     //static private final String baseResolverURI = "http://ebay.com/rm/assert/";
+    /** The Constant baseResolverURI. */
     static private final String baseResolverURI = "/assertion/";
     static {
         CORELIB_SCRIPT = new ClassResourceContent(
@@ -71,12 +77,24 @@ public class AssertionProcessor
                 org.ebayopensource.turmeric.repositorymanager.assertions.xquery.AssertionProcessor.class);
     }
 
+    /** The context. */
     private AssertionProcessorContext context;
+    
+    /** The xq connection. */
     private XQConnection xqConnection;
+    
+    /** The xq document type. */
     private XQItemType xqDocumentType;
+    
+    /** The doc item cache. */
     private DocItemCache docItemCache = new DocItemCache();
+    
+    /** The module resolver. */
     private ModuleResolver moduleResolver = new ModuleResolver();
 
+    /**
+     * Instantiates a new assertion processor.
+     */
     public AssertionProcessor()
     {
         try {
@@ -98,13 +116,16 @@ public class AssertionProcessor
         }
     }
 
+    /* (non-Javadoc)
+     * @see org.ebayopensource.turmeric.repositorymanager.assertions.AssertionProcessor#getName()
+     */
     @Override
 	public String getName() { return assertionProcessorName; }
 
     /**
      * Sets the context for this AssertionProcessor.
-     * 
-     * @param the context for this AssertionProcessor.
+     *
+     * @param apContext the ap context
      */
     @Override
 	public void init(AssertionProcessorContext apContext)
@@ -114,8 +135,8 @@ public class AssertionProcessor
 
     /**
      * Returns an AssertionContentSource for a given AssertionContent.
-     * 
-     * @param assertionContent 
+     *
+     * @param assertionContent the assertion content
      * @return an AssertionContentSource for a given AssertionContent.
      */
     @Override
@@ -125,6 +146,9 @@ public class AssertionProcessor
         return context.getAssertionContentSource(assertionContent);
     }
 
+    /* (non-Javadoc)
+     * @see org.ebayopensource.turmeric.repositorymanager.assertions.AssertionProcessor#close()
+     */
     @Override
 	public void close()
     {
@@ -135,9 +159,15 @@ public class AssertionProcessor
         }
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     @Override
 	public String toString() { return getName(); }
 
+    /* (non-Javadoc)
+     * @see org.ebayopensource.turmeric.repositorymanager.assertions.AssertionProcessor#applyAssertion(org.ebayopensource.turmeric.repositorymanager.assertions.Assertion, java.util.List)
+     */
     @Override
 	public AssertableResult applyAssertion(
             Assertion assertion,
@@ -256,10 +286,23 @@ public class AssertionProcessor
     }
 
     // Caches parsed content documents
+    /**
+     * The Class DocItemCache.
+     */
     private class DocItemCache
     {
+        
+        /** The doc items. */
         private Map<QName, XQItem> docItems = new HashMap<QName, XQItem>();
 
+        /**
+         * Sets the content variables.
+         *
+         * @param xqExpr the xq expr
+         * @param content the content
+         * @throws IOException Signals that an I/O exception has occurred.
+         * @throws XQException the xQ exception
+         */
         public void setContentVariables(
                 XQPreparedExpression xqExpr,
                 List<AssertionContent> content)
@@ -302,6 +345,15 @@ public class AssertionProcessor
             }
         }
 
+        /**
+         * Make doc item.
+         *
+         * @param docQName the doc q name
+         * @param assertionContent the assertion content
+         * @return the xQ item
+         * @throws IOException Signals that an I/O exception has occurred.
+         * @throws XQException the xQ exception
+         */
         private XQItem makeDocItem(
                 QName docQName,
                 AssertionContent assertionContent)
@@ -333,11 +385,17 @@ public class AssertionProcessor
         }
     }
 
+    /**
+     * The Class ModuleResolver.
+     */
     public class ModuleResolver
         implements ModuleURIResolver
     {
+        
+        /** The Constant serialVersionUID. */
         private static final long serialVersionUID = 1;
 
+        /** The module scripts. */
         public Map<String, AssertionContent> moduleScripts =
             Collections.synchronizedMap(new HashMap<String, AssertionContent>());
 
@@ -346,9 +404,9 @@ public class AssertionProcessor
          * of the form module-name/module-version/module-script-name.
          * Space in module-name are converted to dash '-' and periods
          * in module-version are converted to dash '-'.
-         * 
+         *
          * @param module the AssertionModule that contains the module script.
-         * @param moduleScript the module script.
+         * @param scriptContent the script content
          */
         public void addModuleScript(
                 AssertionModule module,
@@ -391,6 +449,12 @@ public class AssertionProcessor
 
         /**
          * Implements ModuleURIResolver.
+         *
+         * @param href the href
+         * @param base the base
+         * @param locations the locations
+         * @return the stream source[]
+         * @throws XPathException the x path exception
          */
         @Override
 		public StreamSource[] resolve(

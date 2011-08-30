@@ -17,13 +17,18 @@ import org.ebayopensource.turmeric.repositorymanager.assertions.StringContent;
 
 
 /**
- * 
+ * The Class StringContentSource.
+ *
  * @author pcopeland
  */
 public class StringContentSource
     extends AbstractContentSource
 {
+    
+    /** The string content. */
     private StringContent stringContent;
+    
+    /** The reader. */
     private StringReader reader = null;
 
     /**
@@ -40,9 +45,9 @@ public class StringContentSource
     /**
      * Returns an InputStream for this AssertionContent or null
      * if the content should be read with a character Reader.
-     * 
+     *
      * @return an InputStream for this AssertioContent.
-     * @throws IOException
+     * @throws IOException Signals that an I/O exception has occurred.
      */
     @Override
 	public InputStream getContentStream()
@@ -54,9 +59,9 @@ public class StringContentSource
     /**
      * Returns a character stream reader for this AssertionContent or null
      * if the content is not character data.
-     * 
+     *
      * @return a character stream reader for this AssertionContent or null.
-     * @throws IOException
+     * @throws IOException Signals that an I/O exception has occurred.
      */
     @Override
 	public Reader getContentReader()
@@ -68,11 +73,23 @@ public class StringContentSource
         return reader;
     }
 
+    /**
+     * The Class RereadableStringReader.
+     */
     static class RereadableStringReader
         extends StringReader
     {
+        
+        /**
+         * Instantiates a new rereadable string reader.
+         *
+         * @param string the string
+         */
         RereadableStringReader(String string) { super(string); }
 
+        /* (non-Javadoc)
+         * @see java.io.StringReader#close()
+         */
         @Override
 		public void close()
         {

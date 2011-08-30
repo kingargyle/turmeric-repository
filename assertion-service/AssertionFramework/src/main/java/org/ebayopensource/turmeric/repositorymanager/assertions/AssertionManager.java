@@ -24,6 +24,7 @@ import org.ebayopensource.turmeric.repositorymanager.assertions.impl.AssetRefere
 import org.ebayopensource.turmeric.repositorymanager.assertions.impl.BasicAssertableResult;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * AssertionManager uses AssertionProcessors to validate assertions.
  * 
@@ -31,16 +32,27 @@ import org.ebayopensource.turmeric.repositorymanager.assertions.impl.BasicAssert
  */
 public class AssertionManager
 {
+	
+	/** The s_logger. */
 	private static Logger s_logger = Logger.getLogger(AssertionManager.class);
+    
+    /** The assertion processor classes. */
     static private Map<String, Class<? extends AssertionProcessor>>
         assertionProcessorClasses = Collections.synchronizedMap(
             new HashMap<String, Class<? extends AssertionProcessor>>());
 
+    /** The rs location. */
     private String rsLocation; // RepositoryService URL
 
     // Returns an AssertionProcessor Class. The returned class name is
     // org.ebayopensource.turmeric.repositorymanager.assertions.[assertionProcessorType].AssertionProcessor
     // (with assertionProcessorType converted to lowercase)
+    /**
+     * New assertion processor class.
+     *
+     * @param assertionProcessorType the assertion processor type
+     * @return the class<? extends assertion processor>
+     */
     static private Class<? extends AssertionProcessor> newAssertionProcessorClass(
             String assertionProcessorType)
     {
@@ -70,7 +82,14 @@ public class AssertionManager
     }
 
      // Returns an AssertionProcessor instance for the given type.
-    static private AssertionProcessor newAssertionProcessor(
+    /**
+      * New assertion processor.
+      *
+      * @param assertionProcessorType the assertion processor type
+      * @param context the context
+      * @return the assertion processor
+      */
+     static private AssertionProcessor newAssertionProcessor(
             String assertionProcessorType,
             AssertionProcessorContext context)
     {
@@ -111,11 +130,14 @@ public class AssertionManager
 
     /**
      * Returns an AssertionReport for the input Assertions.
-     * 
+     *
+     * @param userid the userid
+     * @param password the password
      * @param assertions the Assertions to apply to the content.
      * @param content the AssertionContent content to validate.
      * @return an AssertionReport for the input Assertions.
-     * @throws IOException
+     * @throws AssertionIllegalArgumentException the assertion illegal argument exception
+     * @throws IOException Signals that an I/O exception has occurred.
      */
     public AssertionReport applyAssertions(
             String userid, String password,
@@ -129,11 +151,14 @@ public class AssertionManager
 
     /**
      * Returns an AssertionReport for the input AssertionGroups.
-     * 
+     *
+     * @param userid the userid
+     * @param password the password
      * @param groups the AssertionGroups to apply to the content.
      * @param content the AssertionContent content to validate.
      * @return an AssertionReport for the input AssertionGroups.
-     * @throws IOException
+     * @throws AssertionIllegalArgumentException the assertion illegal argument exception
+     * @throws IOException Signals that an I/O exception has occurred.
      */
     public AssertionReport applyAssertionGroups(
             String userid, String password,
@@ -151,16 +176,19 @@ public class AssertionManager
      * the first time. However the result of each Assertable will affect the
      * results of all the groups and groups of groups that contain it anywhere
      * in the input collection.
-     *<p>
+     * <p>
      * The content names are adjusted when the names clash.
      * For instance, if there are several content objects named "WSDL"
      * the names are adjusted so the first one is "WSDL", followed
      * by "WSDL-2", "WSDL-3", etc.
-     * 
+     *
+     * @param userid the userid
+     * @param password the password
      * @param assertables the Assertables to apply to the content.
      * @param content the AssertionContent content to validate.
      * @return an ordered collection of AssertableResults.
-     * @throws IOException
+     * @throws AssertionIllegalArgumentException the assertion illegal argument exception
+     * @throws IOException Signals that an I/O exception has occurred.
      */
     public Collection<AssertableResult> applyAssertables(
             String userid, String password,
@@ -201,6 +229,11 @@ public class AssertionManager
 
     // If more than one content has the same name the duplicate names
     // are modified. The modified names add a -N suffix (-2, -3, etc.).
+    /**
+     * Adjust duplicate content names.
+     *
+     * @param content the content
+     */
     private void adjustDuplicateContentNames(List<AssertionContent> content)
     {
         for (int i = 0; i < content.size() - 1; i++) {
@@ -217,6 +250,18 @@ public class AssertionManager
         }
     }
 
+    /**
+     * Validate assertable.
+     *
+     * @param context the context
+     * @param assertable the assertable
+     * @param content the content
+     * @param assertionProcessors the assertion processors
+     * @param completedAssertables the completed assertables
+     * @return the assertable result
+     * @throws AssertionIllegalArgumentException the assertion illegal argument exception
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     private AssertableResult validateAssertable(
             AssertionProcessorContext context,
             Assertable assertable,

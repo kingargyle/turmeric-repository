@@ -18,11 +18,21 @@ import org.ebayopensource.turmeric.repositorymanager.assertions.AssertionResultI
 import org.ebayopensource.turmeric.repositorymanager.assertions.ValidationResult;
 
 
+/**
+ * The Class BasicAssertionResult.
+ */
 public class BasicAssertionResult
     implements AssertionResult
 {
+    
+    /** The assertable result. */
     private AssertableResult assertableResult;
 
+    /**
+     * Instantiates a new basic assertion result.
+     *
+     * @param assertableResult the assertable result
+     */
     public BasicAssertionResult(AssertableResult assertableResult)
     {
         this.assertableResult = assertableResult;
@@ -96,6 +106,9 @@ public class BasicAssertionResult
         return assertableResult.getContainingGroups();
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     @Override
 	public String toString()
     {

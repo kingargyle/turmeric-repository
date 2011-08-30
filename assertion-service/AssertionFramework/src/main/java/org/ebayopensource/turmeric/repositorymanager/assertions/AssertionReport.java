@@ -17,6 +17,7 @@ import java.util.Set;
 import org.ebayopensource.turmeric.repositorymanager.assertions.impl.BasicAssertionResult;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * An AssertionReport represents the result of applying a collection
  * of Assertables.  An AssertionReport derives a flattened set
@@ -27,8 +28,14 @@ import org.ebayopensource.turmeric.repositorymanager.assertions.impl.BasicAssert
  */
 public class AssertionReport
 {
+    
+    /** The result. */
     private ValidationResult result;
+    
+    /** The content. */
     private List<AssertionContent> content;
+    
+    /** The assertion results. */
     private Set<AssertionResult> assertionResults =
         new LinkedHashSet<AssertionResult>();
 
@@ -36,7 +43,8 @@ public class AssertionReport
      * Returns a formatted list of the AssertionGroup names.
      * This is used th generate the names of containing
      * AssertionGroups that generated an AssertionResult.
-     * 
+     *
+     * @param groups the groups
      * @return a formatted list of the names of ancestor AssertionGroups.
      */
     static public String getContainingGroupNames(Collection<AssertionGroup> groups)
@@ -57,7 +65,8 @@ public class AssertionReport
      * Creates an AssertionReport from the given AssertableResults.
      * Any subsequent changes in the input collection will not be
      * reflected in the report.
-     * 
+     *
+     * @param content the content
      * @param assertableResults collection of AssertableResults.
      */
     public AssertionReport(
@@ -96,6 +105,11 @@ public class AssertionReport
         return assertionResults;
     }
 
+    /**
+     * Inits the validation result.
+     *
+     * @param assertableResults the assertable results
+     */
     private void initValidationResult(
             Collection<AssertableResult> assertableResults)
     {
@@ -112,6 +126,12 @@ public class AssertionReport
         }
 	}
 
+    /**
+     * Inits the assertion results.
+     *
+     * @param assertableResults the assertable results
+     * @param assertableResultSet the assertable result set
+     */
     private void initAssertionResults(
             Collection<AssertableResult> assertableResults,
             Set<AssertableResult> assertableResultSet) 

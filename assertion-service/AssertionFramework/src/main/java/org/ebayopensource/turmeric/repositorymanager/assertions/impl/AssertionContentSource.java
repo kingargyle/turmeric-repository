@@ -15,6 +15,7 @@ import java.io.Reader;
 import org.ebayopensource.turmeric.repositorymanager.assertions.AssertionContent;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * AssertionContentSource produces content from an AssertionContent.
  * 
@@ -32,26 +33,26 @@ public interface AssertionContentSource
     /**
      * Returns an InputStream for this AssertionContentSource or null
      * if the content should be read with a character Reader.
-     * 
+     *
      * @return an InputStream for this AssertionContentSource.
-     * @throws IOException
+     * @throws IOException Signals that an I/O exception has occurred.
      */
     public InputStream getContentStream() throws IOException;
 
     /**
      * Returns a character stream reader for this AssertionContentSource or null
      * if the content is not character data.
-     * 
+     *
      * @return a character stream reader for this AssertionContentSource or null.
-     * @throws IOException
+     * @throws IOException Signals that an I/O exception has occurred.
      */
     public Reader getContentReader() throws IOException;
 
     /**
      * Returns the content as a String.
-     * 
+     *
      * @return the content as a String.
-     * @throws IOException
+     * @throws IOException Signals that an I/O exception has occurred.
      */
     public String getStringContent() throws IOException;
 }

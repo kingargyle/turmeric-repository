@@ -13,6 +13,7 @@ import java.net.URI;
 import org.ebayopensource.turmeric.repositorymanager.assertions.AssertionContent;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * StringContent is an AssertionContent with underlying String content.
  * 
@@ -21,11 +22,26 @@ import org.ebayopensource.turmeric.repositorymanager.assertions.AssertionContent
 public class ClassResourceContent
     implements AssertionContent
 {
+    
+    /** The content name. */
     private String contentName;
+    
+    /** The source name. */
     private String sourceName;
+    
+    /** The resource name. */
     private String resourceName;
+    
+    /** The resource class. */
     private Class<?> resourceClass;
 
+    /**
+     * Instantiates a new class resource content.
+     *
+     * @param contentName the content name
+     * @param resourceName the resource name
+     * @param resourceClass the resource class
+     */
     public ClassResourceContent(
             String contentName,
             String resourceName,
@@ -48,8 +64,8 @@ public class ClassResourceContent
 
     /**
      * Sets the name of this AssertionContent.
-     * 
-     * @param name the new name of this AssertionContent.
+     *
+     * @param contentName the new name
      */
     @Override
 	public void setName(String contentName) { this.contentName = contentName; }
@@ -62,10 +78,23 @@ public class ClassResourceContent
     @Override
 	public String getSourceName() { return sourceName; }
 
+    /**
+     * Gets the resource name.
+     *
+     * @return the resource name
+     */
     public String getResourceName() { return resourceName; }
 
+    /**
+     * Gets the resource class.
+     *
+     * @return the resource class
+     */
     public Class<?> getResourceClass() { return resourceClass; }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     @Override
 	public String toString()
     {

@@ -22,6 +22,7 @@ import org.ebayopensource.turmeric.repositorymanager.assertions.AssertionResultI
 import org.ebayopensource.turmeric.repositorymanager.assertions.ValidationResult;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * BasicAssertableResult implements AssertionResult.
  * 
@@ -30,17 +31,26 @@ import org.ebayopensource.turmeric.repositorymanager.assertions.ValidationResult
 public class BasicAssertableResult
     implements AssertableResult
 {
+    
+    /** The assertable. */
     private Assertable assertable;
+    
+    /** The result. */
     private ValidationResult result = ValidationResult.PASSED;
+    
+    /** The result items. */
     private List<AssertionResultItem> resultItems;
+    
+    /** The member results. */
     private List<AssertableResult> memberResults = null;
+    
+    /** The parent group results. */
     private Set<AssertableResult> parentGroupResults = null;
 
     /**
      * Constructs an AssertableResult for an AssertionGroup.
-     * 
+     *
      * @param assertionGroup the AssertionGroup that generated this result.
-     * @param assertionContent the AssertionContent that is validated.
      */
     public BasicAssertableResult(AssertionGroup assertionGroup)
     {
@@ -94,8 +104,8 @@ public class BasicAssertableResult
 
     /**
      * Adds a group AssertableResult that contains this AssertableResult.
-     * 
-     * @param groupResult the group AssertableResult that contains this member.
+     *
+     * @param groupMemberResult the group member result
      */
     @Override
 	public void addAssertableResult(AssertableResult groupMemberResult)
@@ -151,6 +161,12 @@ public class BasicAssertableResult
         return getContainingGroups(new LinkedHashSet<AssertionGroup>());
     }
 
+    /**
+     * Gets the containing groups.
+     *
+     * @param containingGroups the containing groups
+     * @return the containing groups
+     */
     private Collection<AssertionGroup> getContainingGroups(
             Collection<AssertionGroup> containingGroups)
     {
@@ -172,6 +188,9 @@ public class BasicAssertableResult
         return containingGroups;
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     @Override
 	public String toString()
     {

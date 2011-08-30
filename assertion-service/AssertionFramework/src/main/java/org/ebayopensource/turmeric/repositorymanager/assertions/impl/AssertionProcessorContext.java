@@ -34,8 +34,6 @@ import org.ebayopensource.turmeric.repositorymanager.assertions.URLContent;
 import org.ebayopensource.turmeric.repositorymanager.assertions.exception.AssertionIllegalArgumentException;
 import org.ebayopensource.turmeric.runtime.common.exceptions.ServiceException;
 
-
-
 /**
  * AssertionProcessorContext manages content for one or more
  * AssertionProcessors.
@@ -54,8 +52,11 @@ import org.ebayopensource.turmeric.runtime.common.exceptions.ServiceException;
  */
 public class AssertionProcessorContext {
 	// private RepositoryServiceClient rsClient;
+	/** The Constant logger. */
 	private static final Logger logger = Logger
 			.getLogger(AssertionProcessorContext.class);
+	
+	/** The unique id. */
 	private int uniqueId = 0; // used for keys to String and byte content
 
 	/*
@@ -74,13 +75,25 @@ public class AssertionProcessorContext {
 	 * assetRefCache) or can be found an members of AssertionGroups (lookup in
 	 * assetIdCache).
 	 */
+	/** The content cache. */
 	private Map<String, AssertionContentSource> contentCache = new HashMap<String, AssertionContentSource>();
+	
+	/** The asset ref cache. */
 	private Map<AssetReference, AssetInfo> assetRefCache = new HashMap<AssetReference, AssetInfo>();
+	
+	/** The asset id cache. */
 	private Map<String, AssetInfo> assetIdCache = new HashMap<String, AssetInfo>();
+	
+	/** The module cache. */
 	private Map<String, AssertionModule> moduleCache = new HashMap<String, AssertionModule>();
+	
+	/** The assertable cache. */
 	private Map<String, Assertable> assertableCache = new HashMap<String, Assertable>();
 
+	/** The CAPSUL e_ name. */
 	public static String CAPSULE_NAME = "AssetInfoCapsule";
+	
+	/** The s_cache manager. */
 	private static CacheManager s_cacheManager = null;
 
 	/**
@@ -93,11 +106,10 @@ public class AssertionProcessorContext {
 	/**
 	 * Constructs a AssertionProcessorContext with credentials for the
 	 * RepositoryService.
-	 * 
-	 * @param userid
-	 *            userid for the RepositoryService.
-	 * @param password
-	 *            password for the RepositoryService.
+	 *
+	 * @param userid userid for the RepositoryService.
+	 * @param password password for the RepositoryService.
+	 * @param serviceLocation the service location
 	 * @parm serviceLocation URL for the RepositoryService.
 	 */
 	public AssertionProcessorContext(String userid, String password,
@@ -165,8 +177,8 @@ public class AssertionProcessorContext {
 	 * Returns an AssertionContentSource for a given AssertionContent. The
 	 * returned AssertionContentSource is cached for subsequent calls with the
 	 * same AssertionContent.
-	 * 
-	 * @param assertionContent
+	 *
+	 * @param assertionContent the assertion content
 	 * @return an AssertionContentSource for a given AssertionContent.
 	 */
 	public AssertionContentSource getAssertionContentSource(
@@ -187,7 +199,6 @@ public class AssertionProcessorContext {
 	 * 
 	 * @param assertionContent
 	 *            the AssertionContent to be cached.
-	 * @return the cached AssertionContent.
 	 */
 	public void replaceAssertionContent(AssertionContent assertionContent) {
 		AssertionContentSource acs = newAssertionContentSource(assertionContent);
@@ -196,10 +207,10 @@ public class AssertionProcessorContext {
 
 	/**
 	 * Finds the cached Repository Asset or gets it from the Repository.
-	 * 
-	 * @param referent
-	 *            the referent to populate
-	 * @throws AssetRetrivalException
+	 *
+	 * @param referent the referent to populate
+	 * @return the asset info
+	 * @throws AssertionIllegalArgumentException the assertion illegal argument exception
 	 */
 	public AssetInfo getAssetInfo(AssetReferent referent)
 			throws AssertionIllegalArgumentException {
@@ -219,6 +230,12 @@ public class AssertionProcessorContext {
 		return assetInfo;
 	}
 
+	/**
+	 * Gets the assertion module.
+	 *
+	 * @param assetKey the asset key
+	 * @return the assertion module
+	 */
 	public AssertionModule getAssertionModule(AssetKey assetKey) {
 		String assetId = getPseudoAssetId(assetKey);
 		AssertionModule assertionModule = moduleCache.get(assetId);
@@ -230,11 +247,24 @@ public class AssertionProcessorContext {
 		return assertionModule;
 	}
 
+	/**
+	 * Adds the assertion.
+	 *
+	 * @param assetKey the asset key
+	 * @param assertion the assertion
+	 */
 	public void addAssertion(AssetKey assetKey, AssetAssertion assertion) {
 		String assetId = getPseudoAssetId(assetKey);
 		assertableCache.put(assetId, assertion);
 	}
 
+	/**
+	 * Gets the assertion.
+	 *
+	 * @param assetKey the asset key
+	 * @return the assertion
+	 * @throws AssertionIllegalArgumentException the assertion illegal argument exception
+	 */
 	public Assertion getAssertion(AssetKey assetKey)
 			throws AssertionIllegalArgumentException {
 		String assetId = getPseudoAssetId(assetKey);
@@ -248,11 +278,23 @@ public class AssertionProcessorContext {
 		return assertion;
 	}
 
+	/**
+	 * Adds the assertion group.
+	 *
+	 * @param assetKey the asset key
+	 * @param group the group
+	 */
 	public void addAssertionGroup(AssetKey assetKey, AssetAssertionGroup group) {
 		String assetId = getPseudoAssetId(assetKey);
 		assertableCache.put(assetId, group);
 	}
 
+	/**
+	 * Gets the assertion group.
+	 *
+	 * @param assetKey the asset key
+	 * @return the assertion group
+	 */
 	public AssertionGroup getAssertionGroup(AssetKey assetKey) {
 		String assetId = getPseudoAssetId(assetKey);
 		AssetAssertionGroup group = (AssetAssertionGroup) assertableCache
@@ -265,16 +307,33 @@ public class AssertionProcessorContext {
 		return group;
 	}
 
+	/**
+	 * Gets the unique id.
+	 *
+	 * @return the unique id
+	 */
 	synchronized private int getUniqueId() {
 		return ++uniqueId;
 	}
 
+	/**
+	 * Gets the pseudo asset id.
+	 *
+	 * @param assetKey the asset key
+	 * @return the pseudo asset id
+	 */
 	private String getPseudoAssetId(AssetKey assetKey) {
 		return assetKey.getAssetId() + "#"
 				+ assetKey.getLibrary().getLibraryId();
 	}
 
 	// Finds the cached Repository Asset or gets it from the Repository.
+	/**
+	 * Gets the asset info.
+	 *
+	 * @param assetKey the asset key
+	 * @return the asset info
+	 */
 	private AssetInfo getAssetInfo(AssetKey assetKey) {
 		String assetId = getPseudoAssetId(assetKey);
 		AssetInfo assetInfo = assetIdCache.get(assetId);
@@ -292,6 +351,12 @@ public class AssertionProcessorContext {
 	}
 
 	// Finds the cached Repository Asset or gets it from the Repository.
+	/**
+	 * Gets the asset reference.
+	 *
+	 * @param assetInfo the asset info
+	 * @return the asset reference
+	 */
 	private AssetReference getAssetReference(AssetInfo assetInfo) {
 		BasicAssetInfo basicAssetInfo = assetInfo.getBasicAssetInfo();
 		AssetKey assetKey = basicAssetInfo.getAssetKey();
@@ -304,6 +369,12 @@ public class AssertionProcessorContext {
 				basicAssetInfo.getAssetType());
 	}
 
+	/**
+	 * New assertion content source.
+	 *
+	 * @param assertionContent the assertion content
+	 * @return the assertion content source
+	 */
 	private AssertionContentSource newAssertionContentSource(
 			AssertionContent assertionContent) {
 		AssertionContentSource acs = null;
@@ -328,6 +399,12 @@ public class AssertionProcessorContext {
 		return acs;
 	}
 
+	/**
+	 * New asset assertion module.
+	 *
+	 * @param assetInfo the asset info
+	 * @return the assertion module
+	 */
 	private AssertionModule newAssetAssertionModule(AssetInfo assetInfo) {
 		BasicAssetInfo basicAssetInfo = assetInfo.getBasicAssetInfo();
 		String processorType = null;
@@ -356,6 +433,12 @@ public class AssertionProcessorContext {
 				processorType);
 	}
 
+	/**
+	 * Gets the respository asset info.
+	 *
+	 * @param assetRef the asset ref
+	 * @return the respository asset info
+	 */
 	private AssetInfo getRespositoryAssetInfo(AssetReference assetRef) {
 		/*
 		 * return rsClient.getAssetInfo( assetRef.getLibrary(),
@@ -374,6 +457,12 @@ public class AssertionProcessorContext {
 		}
 	}
 
+	/**
+	 * Gets the respository asset info.
+	 *
+	 * @param assetKey the asset key
+	 * @return the respository asset info
+	 */
 	private AssetInfo getRespositoryAssetInfo(AssetKey assetKey) {
 		if (assetKey.getLibrary().getLibraryName() == null) {
 			logger.error("LibraryName should be provided **************************");
@@ -387,16 +476,31 @@ public class AssertionProcessorContext {
 		}
 	}
 
+	/**
+	 * Gets the cache manager.
+	 *
+	 * @return the cache manager
+	 */
 	public CacheManager getCacheManager() {
 		return s_cacheManager;
 	}
 
+	/**
+	 * Reset cache manager.
+	 */
 	public void resetCacheManager() {
 		if (s_cacheManager != null) {
 			s_cacheManager.resetCache();
 		}
 	}
 
+	/**
+	 * Removes the asset from cache.
+	 *
+	 * @param libraryName the library name
+	 * @param assetName the asset name
+	 * @param assetVersion the asset version
+	 */
 	public void removeAssetFromCache(String libraryName, String assetName,
 			String assetVersion) {
 		if (s_cacheManager != null) {
@@ -405,6 +509,12 @@ public class AssertionProcessorContext {
 		}
 	}
 
+	/**
+	 * Removes the asset from cache.
+	 *
+	 * @param libraryName the library name
+	 * @param assetId the asset id
+	 */
 	public void removeAssetFromCache(String libraryName, String assetId) {
 		if (s_cacheManager != null) {
 			s_cacheManager.removeAssetFromCache(libraryName, assetId);

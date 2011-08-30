@@ -11,6 +11,7 @@ package org.ebayopensource.turmeric.repositorymanager.assertions;
 import java.util.Collection;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * An AssertionGroup contains a collection of Assertables.
  * Two AssertionGroups with the same name and version are "equal"

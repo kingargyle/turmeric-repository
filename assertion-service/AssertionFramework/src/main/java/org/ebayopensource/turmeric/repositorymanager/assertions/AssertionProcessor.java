@@ -15,6 +15,7 @@ import org.ebayopensource.turmeric.repositorymanager.assertions.impl.AssertionCo
 import org.ebayopensource.turmeric.repositorymanager.assertions.impl.AssertionProcessorContext;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * An AssertionProcessor processes Assertions with a assertion
  * script language.
@@ -23,8 +24,14 @@ import org.ebayopensource.turmeric.repositorymanager.assertions.impl.AssertionPr
  */
 public interface AssertionProcessor
 {
+    
+    /** The Constant XQUERY_TYPE. */
     public static final String XQUERY_TYPE = "XQuery";
+    
+    /** The Constant XMLPROLOGVALIDATOR_TYPE. */
     public static final String XMLPROLOGVALIDATOR_TYPE = "XMLPrologValidator";
+    
+    /** The Constant XMLSCHEMAVALIDATOR_TYPE. */
     public static final String XMLSCHEMAVALIDATOR_TYPE = "XMLValidator";
 
     /**
@@ -36,15 +43,15 @@ public interface AssertionProcessor
 
     /**
      * Sets the context for this AssertionProcessor.
-     * 
-     * @param the context for this AssertionProcessor.
+     *
+     * @param context the context
      */
     public void init(AssertionProcessorContext context);
 
     /**
      * Returns an AssertionContentSource for a given AssertionContent.
-     * 
-     * @param assertionContent 
+     *
+     * @param assertionContent the assertion content
      * @return an AssertionContentSource for a given AssertionContent.
      */
     public AssertionContentSource getAssertionContentSource(
@@ -52,11 +59,11 @@ public interface AssertionProcessor
 
     /**
      * Returns the result of applying an Assertion to an AssertionContent.
-     * 
+     *
      * @param assertion the Assertion that is applied.
-     * @param assertionContent the AssertionContent that is validated.
+     * @param content the content
      * @return the result of applying an Assertion to an AssertionContent.
-     * @throws IOException
+     * @throws IOException Signals that an I/O exception has occurred.
      */
     public AssertableResult applyAssertion(
             Assertion assertion,

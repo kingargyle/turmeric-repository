@@ -39,16 +39,33 @@ import org.slf4j.LoggerFactory;
  */
 public class RepositoryServiceClient
 {
+    
+    /** The Constant logger. */
     static private final Logger logger = LoggerFactory.getLogger(RepositoryServiceClient.class);
 
+    /** The user id. */
     private String userId;
+    
+    /** The password. */
     private String password;
+    
+    /** The security cookie. */
     private String securityCookie = null;
     //private Service service;
+    /** The service location url. */
     private URL serviceLocationURL;
     //private RepositoryService serviceProxy = null;
+    /** The library cache. */
     private Map<String, Library> libraryCache = new HashMap<String, Library>();
 
+    /**
+     * Instantiates a new repository service client.
+     *
+     * @param userId the user id
+     * @param password the password
+     * @param serviceLocation the service location
+     * @throws ServiceException the service exception
+     */
     public RepositoryServiceClient(
             String userId,
             String password,
@@ -69,9 +86,9 @@ public class RepositoryServiceClient
 
     /**
      * Returns the service proxy object.
-     * 
+     *
      * @return the service proxy object.
-     * @throws ServiceException 
+     * @throws ServiceException the service exception
      */
     private TurmericRSV1 getServiceProxy() throws ServiceException
     {
@@ -101,9 +118,10 @@ public class RepositoryServiceClient
 
     /**
      * Returns a repository Asset.
-     * 
+     *
      * @param assetKey AssetKey
      * @return a repository Asset.
+     * @throws AssertionIllegalArgumentException the assertion illegal argument exception
      */
     public AssetInfo getAssetInfo(AssetKey assetKey) throws AssertionIllegalArgumentException
     {
@@ -114,11 +132,13 @@ public class RepositoryServiceClient
  
     /**
      * Returns a repository Asset.
-     * 
+     *
      * @param libraryName the library that contains the Asset
      * @param assetName the name of the Asset.
      * @param assetVersion the Asset version.
+     * @param assetType the asset type
      * @return a repository Asset.
+     * @throws AssertionIllegalArgumentException the assertion illegal argument exception
      */
     public AssetInfo getAssetInfo(
             String libraryName,
@@ -144,6 +164,13 @@ public class RepositoryServiceClient
         return getAssetInfo(assetRequest);
     }
  
+    /**
+     * Gets the asset info.
+     *
+     * @param assetRequest the asset request
+     * @return the asset info
+     * @throws AssertionIllegalArgumentException the assertion illegal argument exception
+     */
     private AssetInfo getAssetInfo(GetAssetInfoRequest assetRequest) throws AssertionIllegalArgumentException
     {
         String assetName = assetRequest.getAssetKey().getAssetName();
@@ -243,6 +270,13 @@ public class RepositoryServiceClient
         return libraryList;
     }
 
+    /**
+     * Format error.
+     *
+     * @param errbuf the errbuf
+     * @param errorMessage the error message
+     * @return the string
+     */
     private String formatError(StringBuffer errbuf, ErrorMessage errorMessage)
     {
         for (ErrorData error: errorMessage.getError()) {

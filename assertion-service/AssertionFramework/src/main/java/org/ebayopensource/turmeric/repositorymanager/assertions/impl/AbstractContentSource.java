@@ -15,14 +15,20 @@ import java.io.Reader;
 import org.ebayopensource.turmeric.repositorymanager.assertions.AssertionContent;
 
 
+// TODO: Auto-generated Javadoc
 /**
- * 
+ * The Class AbstractContentSource.
+ *
  * @author pcopeland
  */
 public abstract class AbstractContentSource
     implements AssertionContentSource
 {
+    
+    /** The assertion content. */
     private AssertionContent assertionContent;
+    
+    /** The string content. */
     private String stringContent = null; // lazy evaluation
 
     /**
@@ -43,6 +49,9 @@ public abstract class AbstractContentSource
     @Override
 	public AssertionContent getAssertionContent() { return assertionContent; }
 
+    /* (non-Javadoc)
+     * @see org.ebayopensource.turmeric.repositorymanager.assertions.impl.AssertionContentSource#getStringContent()
+     */
     @Override
 	public String getStringContent()
         throws IOException
@@ -79,6 +88,9 @@ public abstract class AbstractContentSource
         return stringContent;
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     @Override
 	public String toString()
     {

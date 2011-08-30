@@ -16,8 +16,14 @@ package org.ebayopensource.turmeric.repositorymanager.assertions;
 public class BinaryContent
     implements AssertionContent
 {
+    
+    /** The content name. */
     private String contentName;
+    
+    /** The source name. */
     private String sourceName;
+    
+    /** The content. */
     private byte[] content;
 
     /**
@@ -43,8 +49,8 @@ public class BinaryContent
 
     /**
      * Sets the name of this BinaryContent.
-     * 
-     * @param name the new name of this BinaryContent.
+     *
+     * @param contentName the new name
      */
     @Override
 	public void setName(String contentName) { this.contentName = contentName; }
@@ -71,6 +77,9 @@ public class BinaryContent
      */
     public byte[] getContent() { return content; }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     @Override
 	public String toString()
     {

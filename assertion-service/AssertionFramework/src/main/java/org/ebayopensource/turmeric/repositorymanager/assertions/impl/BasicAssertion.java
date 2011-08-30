@@ -16,6 +16,7 @@ import org.ebayopensource.turmeric.repositorymanager.assertions.AssertionModule;
 import org.ebayopensource.turmeric.repositorymanager.assertions.ValidationResult;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * BasicAssertion implements Assertion.  This is a base class that can
  * be extended with other constructors. For example, a class that is
@@ -26,13 +27,29 @@ import org.ebayopensource.turmeric.repositorymanager.assertions.ValidationResult
 public class BasicAssertion
     implements Assertion
 {
+    
+    /** The name. */
     private String name;
+    
+    /** The version. */
     private String version;
+    
+    /** The description. */
     protected String description;
+    
+    /** The error severity. */
     protected ValidationResult errorSeverity = ValidationResult.MUST;
+    
+    /** The assertion script. */
     protected AssertionContent assertionScript;
+    
+    /** The assertion processor type. */
     protected String assertionProcessorType;
+    
+    /** The assertion modules. */
     protected Collection<AssertionModule> assertionModules = null;
+    
+    /** The hash code. */
     private int hashCode;
 
     /**
@@ -52,13 +69,13 @@ public class BasicAssertion
 
     /**
      * Creates a BasicAssertion.
-     * 
+     *
      * @param name name of this BasicAssertion.
      * @param version version of this BasicAssertion.
      * @param description description of this BasicAssertion.
-     * @param assertionScript assertionScript for this BasicAssertion.
      * @param errorSeverity severity level when this assertion fails.
-     * @param assertionProcessor assertionProcessor for this BasicAssertion.
+     * @param assertionScript assertionScript for this BasicAssertion.
+     * @param assertionProcessorType the assertion processor type
      * @param assertionModules AssertionModules for this BasicAssertion.
      */
     public BasicAssertion(
@@ -143,7 +160,8 @@ public class BasicAssertion
 
     /**
      * Returns true if the argument is a Assertion with equal name and version.
-     * 
+     *
+     * @param o the o
      * @return true if the argument is an Assertion with equal name and version.
      */
     @Override
@@ -171,6 +189,9 @@ public class BasicAssertion
     @Override
 	public int hashCode() { return hashCode; }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     @Override
 	public String toString()
     {

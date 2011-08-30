@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.repositorymanager.assertions;
 
+// TODO: Auto-generated Javadoc
 /**
  * AssertionResultItem contains an AssertionResult failure or warning
  * information.
@@ -16,10 +17,23 @@ package org.ebayopensource.turmeric.repositorymanager.assertions;
  */
 public class AssertionResultItem
 {
+    
+    /** The content name. */
     private String contentName;
+    
+    /** The message text. */
     private String messageText;
+    
+    /** The line number. */
     private String lineNumber;
 
+    /**
+     * Instantiates a new assertion result item.
+     *
+     * @param contentName the content name
+     * @param messageText the message text
+     * @param lineNumber the line number
+     */
     public AssertionResultItem(
             String contentName,
             String messageText,
@@ -52,6 +66,9 @@ public class AssertionResultItem
      */
     public String getLineNumber() { return lineNumber; }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     @Override
 	public String toString()
     {

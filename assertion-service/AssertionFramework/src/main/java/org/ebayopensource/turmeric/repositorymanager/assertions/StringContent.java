@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.repositorymanager.assertions;
 
+// TODO: Auto-generated Javadoc
 /**
  * StringContent is an AssertionContent with underlying String content.
  * 
@@ -16,8 +17,14 @@ package org.ebayopensource.turmeric.repositorymanager.assertions;
 public class StringContent
     implements AssertionContent
 {
+    
+    /** The content name. */
     private String contentName;
+    
+    /** The source name. */
     private String sourceName;
+    
+    /** The content. */
     private String content;
 
     /**
@@ -57,8 +64,8 @@ public class StringContent
 
     /**
      * Sets the name of this StringContent.
-     * 
-     * @param name the new name of this StringContent.
+     *
+     * @param contentName the new name
      */
     @Override
 	public void setName(String contentName) { this.contentName = contentName; }
@@ -85,6 +92,9 @@ public class StringContent
      */
     public String getContent() { return content; }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     @Override
 	public String toString()
     {

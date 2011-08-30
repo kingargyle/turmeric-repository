@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.repositorymanager.assertions;
 
+// TODO: Auto-generated Javadoc
 /**
  * An AssetReference references a Repository Manager Asset.
  * 
@@ -15,18 +16,29 @@ package org.ebayopensource.turmeric.repositorymanager.assertions;
  */
 public class AssetReference
 {
+    
+    /** The library. */
     private String library;
+    
+    /** The asset name. */
     private String assetName;
+    
+    /** The version. */
     private String version;
+    
+    /** The asset type. */
     private String assetType;
+    
+    /** The hash code. */
     private int hashCode;
 
     /**
      * Constructs an AssetReference.
-     * 
+     *
      * @param library the Repository Manager library.
      * @param assetName the asset name.
      * @param version the asset version.
+     * @param assetType the asset type
      */
     public AssetReference(String library, String assetName, String version, String assetType)
     {
@@ -58,6 +70,11 @@ public class AssetReference
      */
     public String getVersion() { return version; }
 
+    /**
+     * Gets the asset type.
+     *
+     * @return the asset type
+     */
     public String getAssetType() { return assetType; }
 
     /**
@@ -84,7 +101,8 @@ public class AssetReference
     /**
      * Returns true if the argument is a AssetReference with equal
      * library, name and version.
-     * 
+     *
+     * @param o the o
      * @return true if the argument is an AssetReference with equal
      * library, name and version.
      */

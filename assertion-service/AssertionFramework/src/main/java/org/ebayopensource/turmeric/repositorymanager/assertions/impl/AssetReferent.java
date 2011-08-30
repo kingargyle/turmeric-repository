@@ -10,6 +10,7 @@ package org.ebayopensource.turmeric.repositorymanager.assertions.impl;
 
 import org.ebayopensource.turmeric.repositorymanager.assertions.AssetReference;
 
+// TODO: Auto-generated Javadoc
 /**
  * As AssetReferent has an AssetReference.
  * 

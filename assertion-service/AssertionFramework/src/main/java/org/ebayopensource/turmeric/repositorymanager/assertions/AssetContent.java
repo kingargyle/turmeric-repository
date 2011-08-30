@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.repositorymanager.assertions;
 
+// TODO: Auto-generated Javadoc
 /**
  * AssetContent is an AssertionContent with an underlying Asset artifact.
  * 
@@ -16,10 +17,20 @@ package org.ebayopensource.turmeric.repositorymanager.assertions;
 public class AssetContent
     implements AssertionContent
 {
+    
+    /** The content name. */
     private String contentName;
+    
+    /** The source name. */
     private String sourceName;
+    
+    /** The asset ref. */
     private AssetReference assetRef;
+    
+    /** The artifact name. */
     private String artifactName;
+    
+    /** The artifact display name. */
     private String artifactDisplayName;
 
     /**
@@ -36,6 +47,13 @@ public class AssetContent
         sourceName = assetRef.getAssetReference()+":"+contentName;
     }
     
+    /**
+     * Instantiates a new asset content.
+     *
+     * @param contentName the content name
+     * @param assetRef the asset ref
+     * @param artifactName the artifact name
+     */
     public AssetContent(String contentName, AssetReference assetRef,String artifactName)
     {
         this.contentName = contentName.replace(' ','-');
@@ -54,8 +72,8 @@ public class AssetContent
 
     /**
      * Sets the name of this AssetContent.
-     * 
-     * @param name the new name of this AssetContent.
+     *
+     * @param contentName the new name
      */
     @Override
 	public void setName(String contentName) { this.contentName = contentName; }
@@ -84,16 +102,29 @@ public class AssetContent
      */
     public AssetReference getAssetReference() { return assetRef; }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     @Override
 	public String toString()
     {
         return "AssetContent["+sourceName+"]";
     }
 
+	/**
+	 * Gets the artifact display name.
+	 *
+	 * @return the artifact display name
+	 */
 	public String getArtifactDisplayName() {
 		return artifactDisplayName;
 	}
 
+	/**
+	 * Sets the artifact display name.
+	 *
+	 * @param artifactDisplayName the new artifact display name
+	 */
 	public void setArtifactDisplayName(String artifactDisplayName) {
 		this.artifactDisplayName = artifactDisplayName;
 	}

@@ -13,6 +13,7 @@ import org.ebayopensource.turmeric.repositorymanager.assertions.Assertable;
 import org.ebayopensource.turmeric.repositorymanager.assertions.AssertionGroup;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * An AssertionGroup contains a collection of Assertables.
  * Two AssertionGroups with the same name and version are "equal"
@@ -23,10 +24,20 @@ import org.ebayopensource.turmeric.repositorymanager.assertions.AssertionGroup;
 public class BasicAssertionGroup
     implements AssertionGroup, Assertable
 {
+    
+    /** The name. */
     private String name;
+    
+    /** The version. */
     private String version;
+    
+    /** The description. */
     protected String description;
+    
+    /** The group members. */
     protected Collection<Assertable> groupMembers;
+    
+    /** The hash code. */
     private int hashCode;
 
     /**
@@ -99,7 +110,8 @@ public class BasicAssertionGroup
 
     /**
      * Returns true if the argument is a AssertionGroup with equal name and version.
-     * 
+     *
+     * @param o the o
      * @return true if the argument is an AssertionGroup with equal name and version.
      */
     @Override
@@ -127,6 +139,9 @@ public class BasicAssertionGroup
     @Override
 	public int hashCode() { return hashCode; }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     @Override
 	public String toString()
     {
