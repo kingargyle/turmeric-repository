@@ -21,8 +21,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -41,9 +39,11 @@ import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.wso2.carbon.governance.api.util.GovernanceUtils;
 import org.wso2.carbon.registry.app.RemoteRegistry;
 import org.wso2.carbon.registry.core.Association;
 import org.wso2.carbon.registry.core.Collection;
+import org.wso2.carbon.registry.core.Registry;
 import org.wso2.carbon.registry.core.Resource;
 import org.wso2.carbon.registry.core.exceptions.RegistryException;
 import org.ebayopensource.turmeric.services.common.error.RepositoryServiceErrorDescriptor;
@@ -53,23 +53,7 @@ import org.ebayopensource.turmeric.common.v1.types.BaseResponse;
 import org.ebayopensource.turmeric.common.v1.types.CommonErrorData;
 import org.ebayopensource.turmeric.common.v1.types.ErrorMessage;
 import org.ebayopensource.turmeric.common.v1.types.ErrorParameter;
-import org.ebayopensource.turmeric.repository.v2.services.Artifact;
-import org.ebayopensource.turmeric.repository.v2.services.ArtifactInfo;
-import org.ebayopensource.turmeric.repository.v2.services.ArtifactValueType;
-import org.ebayopensource.turmeric.repository.v2.services.AssetDetail;
-import org.ebayopensource.turmeric.repository.v2.services.AssetInfo;
-import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
-import org.ebayopensource.turmeric.repository.v2.services.AssetLifeCycleInfo;
-import org.ebayopensource.turmeric.repository.v2.services.AttributeNameValue;
-
-import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
-import org.ebayopensource.turmeric.repository.v2.services.BasicServiceInfo;
-
-import org.ebayopensource.turmeric.repository.v2.services.ExtendedAssetInfo;
-import org.ebayopensource.turmeric.repository.v2.services.FlattenedRelationship;
-import org.ebayopensource.turmeric.repository.v2.services.FlattenedRelationshipForUpdate;
-import org.ebayopensource.turmeric.repository.v2.services.Relation;
-import org.ebayopensource.turmeric.repository.v2.services.RelationForUpdate;
+import org.ebayopensource.turmeric.repository.v2.services.*;
 
 public class RSProviderUtil {
 	private static final String __systemRoot = "/_system/governance/trunk";
@@ -78,18 +62,18 @@ public class RSProviderUtil {
 
 	private static final RSProviderUtil __instance = new RSProviderUtil();
 
-	private RemoteRegistry _registry;
+	private Registry _registry;
 
 	/**
 	 * @throws IllegalStateException
 	 */
 	public RSProviderUtil() throws IllegalStateException {
 		try {
-			_registry = new RemoteRegistry(
-					new URL(
-							System.getProperty("org.ebayopensource.turmeric.repository.wso2.url")),
-					System.getProperty("org.ebayopensource.turmeric.repository.wso2.username"),
-					System.getProperty("org.ebayopensource.turmeric.repository.wso2.password"));
+			String username = System.getProperty("org.ebayopensource.turmeric.repository.wso2.username");
+			String password = System.getProperty("org.ebayopensource.turmeric.repository.wso2.password");
+			String url = System.getProperty("org.ebayopensource.turmeric.repository.wso2.url");
+			Registry rootRegistry = new RemoteRegistry(new URL(url), username, password);
+			_registry = GovernanceUtils.getGovernanceUserRegistry(rootRegistry, username);
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -100,7 +84,7 @@ public class RSProviderUtil {
 	/**
 	 * @return
 	 */
-	public static final RemoteRegistry getRegistry() {
+	public static final Registry getRegistry() {
 		return __instance._registry;
 	}
 
@@ -111,7 +95,7 @@ public class RSProviderUtil {
 	 */
 	public static void findLibraries(Collection collection,
 			Set<String> libraries) throws Exception {
-		RemoteRegistry wso2 = getRegistry();
+		Registry wso2 = getRegistry();
 
 		String[] children = collection.getChildren();
 		if (children != null) {
@@ -276,6 +260,20 @@ public class RSProviderUtil {
 				assetKey.setAssetName(assetId.substring(assetId
 						.lastIndexOf('/') + 1));
 			}
+			
+			if (assetId == null && assetKey.getAssetName() != null && assetVersion != null && assetType != null) {
+				assetId = assetKey.getAssetName() + assetType + assetVersion;
+				assetKey.setAssetId(assetId);
+			}
+			
+			if (assetType != null) {
+				assetKey.setType(assetType);
+			}
+			
+			if (assetVersion != null) {
+				assetKey.setVersion(assetVersion);
+			}
+			
 		}
 
 		return assetKey;
@@ -487,7 +485,7 @@ public class RSProviderUtil {
 	public static void retrieveAssociations(List<ArtifactInfo> artifactList,
 			FlattenedRelationship relationship, Resource asset)
 			throws RegistryException {
-		RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+		Registry wso2 = RSProviderUtil.getRegistry();
 		String assetId = asset.getPath();
 
 		Association[] associations = wso2.getAllAssociations(assetId);
@@ -556,7 +554,7 @@ public class RSProviderUtil {
 	}
 
 	private static Document createXmlDoc(String assetName,
-			String assetDescription, String assetNamespace)
+			String assetDescription)
 			throws ParserConfigurationException {
 		// prepare xml document
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -572,16 +570,12 @@ public class RSProviderUtil {
 		Element desc = doc.createElementNS(
 				"http://www.wso2.org/governance/metadata", "description");
 		desc.setTextContent(assetDescription);
-		Element ns = doc.createElementNS(
-				"http://www.wso2.org/governance/metadata", "namespace");
-		ns.setTextContent(assetNamespace);
 
 		// <overview> element
 		Element overview = doc.createElementNS(
 				"http://www.wso2.org/governance/metadata", "overview");
 		overview.appendChild(name);
 		overview.appendChild(desc);
-		overview.appendChild(ns);
 
 		// <serviceMetaData> element
 		Element root = doc.createElementNS(
@@ -621,7 +615,7 @@ public class RSProviderUtil {
 
 	public static void createArtifacts(AssetKey parentKey,
 			List<ArtifactInfo> artifactList) throws Exception {
-		RemoteRegistry wso2 = getRegistry();
+		Registry wso2 = getRegistry();
 
 		if (artifactList != null) {
 			for (ArtifactInfo artifactInfo : artifactList) {
@@ -686,15 +680,16 @@ public class RSProviderUtil {
 	}
 
 	public static void removeArtifacts(String assetId) throws Exception {
-		RemoteRegistry wso2 = getRegistry();
+		Registry wso2 = getRegistry();
 		List<String> assetsToDelete = new ArrayList<String>();
-		Association[] associations = wso2.getAllAssociations(assetId);
+		String path = "/" + assetId;
+		Association[] associations = wso2.getAllAssociations(path);
 		if (associations != null) {
 			for (Association assoc : associations) {
 				String srcPath = assoc.getSourcePath();
 				String dstPath = assoc.getDestinationPath();
 				String type = assoc.getAssociationType();
-				if ((assetId.equals(srcPath) && !dstPath.equals(assetId))
+				if ((assetId.equals(srcPath) && !dstPath.equals(path))
 						&& ("depends".equals(type) || "usedBy".equals(type))) {
 					wso2.removeAssociation(srcPath, dstPath, type);
 					if (wso2.resourceExists(dstPath)) {
@@ -725,7 +720,7 @@ public class RSProviderUtil {
 	public static void createDependencies(AssetKey assetKey,
 			List<Relation> relationList) throws Exception {
 		if (relationList != null) {
-			RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+			Registry wso2 = RSProviderUtil.getRegistry();
 
 			String assetId = assetKey.getAssetId();
 			for (Relation relation : relationList) {
@@ -794,7 +789,7 @@ public class RSProviderUtil {
 	}
 
 	public static void removeDependencies(String assetId) throws Exception {
-		RemoteRegistry wso2 = getRegistry();
+		Registry wso2 = getRegistry();
 
 		Association[] relations = wso2.getAllAssociations(assetId);
 		if (relations != null) {
@@ -815,7 +810,7 @@ public class RSProviderUtil {
 		AssetKey assetKey = basicInfo.getAssetKey();
 		String assetId = assetKey.getAssetId();
 
-		RemoteRegistry wso2 = getRegistry();
+		Registry wso2 = getRegistry();
 
 		List<ArtifactInfo> artifactList = assetInfo.getArtifactInfo();
 		for (ArtifactInfo artifactInfo : artifactList) {
@@ -1047,4 +1042,33 @@ public class RSProviderUtil {
 		asset.setProperty(__artifactIdPropName, UUID.randomUUID().toString());
 		return asset;
 	}
+	
+
+	public static String getBasicAssetInfoXml(BasicAssetInfo basicInfo)
+			throws Exception {
+		Document doc = createXmlDoc(basicInfo.getAssetName(),
+				basicInfo.getAssetDescription());
+
+		return getXmlString(doc);
+	}
+
+	public static String getAssetInfoXml(AssetInfo assetInfo) throws Exception {
+		BasicAssetInfo basicInfo = assetInfo.getBasicAssetInfo();
+
+		ExtendedAssetInfo extendedInfo = assetInfo.getExtendedAssetInfo();
+		Document doc = createXmlDoc(basicInfo.getAssetName(),
+				basicInfo.getAssetDescription());
+
+		appendLifeCycleXml(doc, assetInfo.getAssetLifeCycleInfo());
+
+		return getXmlString(doc);
+	}
+
+	public static String getBasicServiceInfoXml(BasicServiceInfo basicInfo)
+			throws Exception {
+		Document doc = createXmlDoc(basicInfo.getServiceName(),
+				basicInfo.getServiceDescription());
+
+		return getXmlString(doc);
+	}	
 }

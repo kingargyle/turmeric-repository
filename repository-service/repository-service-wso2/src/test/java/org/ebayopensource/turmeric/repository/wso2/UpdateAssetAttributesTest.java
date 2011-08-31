@@ -18,6 +18,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.wso2.carbon.registry.app.RemoteRegistry;
+import org.wso2.carbon.registry.core.Registry;
 import org.wso2.carbon.registry.core.exceptions.RegistryException;
 
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
@@ -65,7 +66,7 @@ public class UpdateAssetAttributesTest extends Wso2Base {
     	
         boolean exists = false;
         try {
-            RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+            Registry wso2 = RSProviderUtil.getRegistry();
             exists = wso2.resourceExists("/");
 
             for (String resource : resources) {
@@ -82,7 +83,7 @@ public class UpdateAssetAttributesTest extends Wso2Base {
     
     @After
     public void cleanUp() throws Exception {
-        RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+        Registry wso2 = RSProviderUtil.getRegistry();
 
         for (String resource : resources) {
             if (wso2.resourceExists(resource)) {
@@ -260,7 +261,7 @@ public class UpdateAssetAttributesTest extends Wso2Base {
     public void updateReplaceTest() throws Exception {
         boolean clean = false;
         try {
-            RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+            Registry wso2 = RSProviderUtil.getRegistry();
             clean = !wso2.resourceExists(resources[0]);
         }
         catch (RegistryException e) {
@@ -284,7 +285,7 @@ public class UpdateAssetAttributesTest extends Wso2Base {
     public void mergeCompleteAssetTest() throws Exception {
         boolean clean = false;
         try {
-            RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+            Registry wso2 = RSProviderUtil.getRegistry();
             clean = !wso2.resourceExists(resources[0]);
         }
         catch (RegistryException e) {

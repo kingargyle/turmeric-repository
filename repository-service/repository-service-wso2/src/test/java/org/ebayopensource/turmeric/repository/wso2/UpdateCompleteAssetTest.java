@@ -18,7 +18,7 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.wso2.carbon.registry.app.RemoteRegistry;
+import org.wso2.carbon.registry.core.Registry;
 import org.wso2.carbon.registry.core.exceptions.RegistryException;
 
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
@@ -66,7 +66,7 @@ public class UpdateCompleteAssetTest extends Wso2Base {
     public void checkRepository() {
         boolean exists = false;
         try {
-            RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+            Registry wso2 = RSProviderUtil.getRegistry();
             exists = wso2.resourceExists("/");
 
             for (String resource : resources) {
@@ -291,7 +291,7 @@ public class UpdateCompleteAssetTest extends Wso2Base {
     public void updateReplaceTest() throws Exception {
         boolean clean = false;
         try {
-            RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+            Registry wso2 = RSProviderUtil.getRegistry();
             clean = !wso2.resourceExists(resources[0]);
         }
         catch (RegistryException e) {
@@ -328,7 +328,7 @@ public class UpdateCompleteAssetTest extends Wso2Base {
     public void mergeCompleteAssetTest() throws Exception {
         boolean clean = false;
         try {
-            RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+            Registry wso2 = RSProviderUtil.getRegistry();
             clean = !wso2.resourceExists(resources[0]);
         }
         catch (RegistryException e) {

@@ -20,6 +20,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.wso2.carbon.registry.app.RemoteRegistry;
+import org.wso2.carbon.registry.core.Registry;
 import org.wso2.carbon.registry.core.Resource;
 import org.wso2.carbon.registry.core.exceptions.RegistryException;
 
@@ -63,7 +64,7 @@ public class CreateSubmitAssetTest extends Wso2Base {
     public void setUp() throws Exception{
         boolean exists = false;
         try {
-            RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+            Registry wso2 = RSProviderUtil.getRegistry();
             exists = wso2.resourceExists("/");
 
             for (String resource : resources) {
@@ -162,7 +163,7 @@ public class CreateSubmitAssetTest extends Wso2Base {
     public void createTest() throws Exception {
         boolean clean = false;
         try {
-            RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+            Registry wso2 = RSProviderUtil.getRegistry();
             clean = !wso2.resourceExists(resources[0]);
         }
         catch (RegistryException e) {
@@ -174,7 +175,7 @@ public class CreateSubmitAssetTest extends Wso2Base {
         assertEquals(AckValue.SUCCESS, response.getAck());
         assertEquals(null, response.getErrorMessage());
 
-        RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+        Registry wso2 = RSProviderUtil.getRegistry();
         Resource asset = wso2.get(resources[0]);
         
         assertEquals(stringProperty, asset.getProperty("stringProperty"));

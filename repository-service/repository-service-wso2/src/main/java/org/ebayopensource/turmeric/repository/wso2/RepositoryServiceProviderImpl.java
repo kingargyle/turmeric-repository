@@ -13,9 +13,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.xpath.XPath;
@@ -23,8 +21,9 @@ import javax.xml.xpath.XPathFactory;
 
 import org.w3c.dom.Document;
 import org.wso2.carbon.registry.app.RemoteRegistry;
-import org.wso2.carbon.registry.core.Collection;
+import org.wso2.carbon.registry.core.Registry;
 import org.wso2.carbon.registry.core.Resource;
+import org.wso2.carbon.registry.core.exceptions.RegistryException;
 
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
 import org.ebayopensource.turmeric.common.v1.types.CommonErrorData;
@@ -46,7 +45,7 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	 */
 	@Override
 	public LockAssetResponse lockAsset(LockAssetRequest request) {
-		RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+		Registry wso2 = RSProviderUtil.getRegistry();
 		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
 		LockAssetResponse response = new LockAssetResponse();
 
@@ -122,7 +121,7 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	@Override
 	public UpdateAssetArtifactsResponse updateAssetArtifacts(
 			UpdateAssetArtifactsRequest request) {
-		RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+		Registry wso2 = RSProviderUtil.getRegistry();
 		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
 		UpdateAssetArtifactsResponse response = new UpdateAssetArtifactsResponse();
 
@@ -198,7 +197,7 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	 */
 	@Override
 	public ApproveAssetResponse approveAsset(ApproveAssetRequest request) {
-		RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+		Registry wso2 = RSProviderUtil.getRegistry();
 		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
 		ApproveAssetResponse response = new ApproveAssetResponse();
 
@@ -250,7 +249,7 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	@Override
 	public CreateAndSubmitAssetResponse createAndSubmitAsset(
 			CreateAndSubmitAssetRequest request) {
-		RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+		Registry wso2 = RSProviderUtil.getRegistry();
 		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
 		CreateAndSubmitAssetResponse response = new CreateAndSubmitAssetResponse();
 
@@ -291,12 +290,12 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 
 			if ("Service".equalsIgnoreCase(assetType)) {
 				asset.setMediaType("application/vnd.wso2-service+xml");
-//				String content = RSProviderUtil.getAssetInfoXml(assetInfo);
-//				if (content != null) {
-//					InputStream contentStream = new ByteArrayInputStream(
-//							content.getBytes("UTF-8"));
-//					asset.setContentStream(contentStream);
-//				}
+				String content = RSProviderUtil.getAssetInfoXml(assetInfo);
+				if (content != null) {
+					InputStream contentStream = new ByteArrayInputStream(
+							content.getBytes("UTF-8"));
+					asset.setContentStream(contentStream);
+				}
 			} else 	{
 				asset.setDescription(assetInfo.getBasicAssetInfo()
 						.getAssetDescription());
@@ -357,7 +356,7 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	 */
 	@Override
 	public RemoveAssetResponse removeAsset(RemoveAssetRequest request) {
-		RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+		Registry wso2 = RSProviderUtil.getRegistry();
 		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
 		RemoveAssetResponse response = new RemoveAssetResponse();
 
@@ -414,7 +413,7 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	 */
 	@Override
 	public UpdateAssetResponse updateAsset(UpdateAssetRequest request) {
-		RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+		Registry wso2 = RSProviderUtil.getRegistry();
 		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
 		UpdateAssetResponse response = new UpdateAssetResponse();
 
@@ -471,12 +470,12 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 							: origBasicInfo.getVersion());
 
 			if ("Service".equals(basicInfo.getAssetType())) {
-	//			String content = RSProviderUtil.getAssetInfoXml(assetInfo);
-	//			if (content != null) {
-	//				InputStream contentStream = new ByteArrayInputStream(
-	//						content.getBytes("UTF-8"));
-	//				asset.setContentStream(contentStream);
-	//			}
+				String content = RSProviderUtil.getAssetInfoXml(assetInfo);
+				if (content != null) {
+					InputStream contentStream = new ByteArrayInputStream(
+	 					content.getBytes("UTF-8"));
+					asset.setContentStream(contentStream);
+				}
 			} else {
 				asset.setDescription(basicInfo.getAssetDescription());
 			}
@@ -518,7 +517,7 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	 */
 	@Override
 	public RejectAssetResponse rejectAsset(RejectAssetRequest request) {
-		RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+		Registry wso2 = RSProviderUtil.getRegistry();
 		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
 		RejectAssetResponse response = new RejectAssetResponse();
 
@@ -588,7 +587,7 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	@Override
 	public SubmitForPublishingResponse submitForPublishing(
 			SubmitForPublishingRequest request) {
-		RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+		Registry wso2 = RSProviderUtil.getRegistry();
 		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
 		SubmitForPublishingResponse response = new SubmitForPublishingResponse();
 
@@ -640,7 +639,7 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	 */
 	@Override
 	public GetAssetStatusResponse getAssetStatus(GetAssetStatusRequest request) {
-		RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+		Registry wso2 = RSProviderUtil.getRegistry();
 		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
 		GetAssetStatusResponse response = new GetAssetStatusResponse();
 
@@ -684,7 +683,7 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	@Override
 	public CreateCompleteAssetResponse createCompleteAsset(
 			CreateCompleteAssetRequest request) {
-		RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+		Registry wso2 = RSProviderUtil.getRegistry();
 		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
 		CreateCompleteAssetResponse response = new CreateCompleteAssetResponse();
 
@@ -725,12 +724,12 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 
 			if ("Service".equalsIgnoreCase(assetType)) {
 				asset.setMediaType("application/vnd.wso2-service+xml");
-//				String content = RSProviderUtil.getAssetInfoXml(assetInfo);
-//				if (content != null) {
-//					InputStream contentStream = new ByteArrayInputStream(
-//							content.getBytes("UTF-8"));
-//					asset.setContentStream(contentStream);
-//				}
+				String content = RSProviderUtil.getAssetInfoXml(assetInfo);
+				if (content != null) {
+					InputStream contentStream = new ByteArrayInputStream(
+							content.getBytes("UTF-8"));
+					asset.setContentStream(contentStream);
+				}
 			} else 
 			{
 				asset.setDescription(assetInfo.getBasicAssetInfo()
@@ -789,7 +788,7 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	 */
 	@Override
 	public UnlockAssetResponse unlockAsset(UnlockAssetRequest request) {
-		RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+		Registry wso2 = RSProviderUtil.getRegistry();
 		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
 		UnlockAssetResponse response = new UnlockAssetResponse();
 
@@ -843,7 +842,7 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	@Override
 	public GetAssetDependenciesResponse getAssetDependencies(
 			GetAssetDependenciesRequest request) {
-		RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+		Registry wso2 = RSProviderUtil.getRegistry();
 		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
 		GetAssetDependenciesResponse response = new GetAssetDependenciesResponse();
 
@@ -888,7 +887,7 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	public GetAssetInfoResponse getAssetInfo(GetAssetInfoRequest request) {
 		System.err
 				.println("RepositoryServiceProviderImpl.getAssetInfo: getting assetInfo");
-		RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+		Registry wso2 = RSProviderUtil.getRegistry();
 		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
 		GetAssetInfoResponse response = new GetAssetInfoResponse();
 
@@ -956,7 +955,7 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	@Override
 	public UpdateAssetAttributesResponse updateAssetAttributes(
 			UpdateAssetAttributesRequest request) {
-		RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+		Registry wso2 = RSProviderUtil.getRegistry();
 		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
 		UpdateAssetAttributesResponse response = new UpdateAssetAttributesResponse();
 
@@ -1041,7 +1040,7 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	@Override
 	public UpdateCompleteAssetResponse updateCompleteAsset(
 			UpdateCompleteAssetRequest request) {
-		RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+		Registry wso2 = RSProviderUtil.getRegistry();
 		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
 		UpdateCompleteAssetResponse response = new UpdateCompleteAssetResponse();
 
@@ -1106,12 +1105,12 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 						basicInfo.getVersion());
 				RSProviderUtil.updateResourceProperties(asset,
 						origAssetInfo.getExtendedAssetInfo());
-//				String content = RSProviderUtil.getAssetInfoXml(origAssetInfo);
-//				if (content != null) {
-//					InputStream contentStream = new ByteArrayInputStream(
-//							content.getBytes("UTF-8"));
-//					asset.setContentStream(contentStream);
-//				}
+				String content = RSProviderUtil.getAssetInfoXml(origAssetInfo);
+				if (content != null) {
+					InputStream contentStream = new ByteArrayInputStream(
+							content.getBytes("UTF-8"));
+					asset.setContentStream(contentStream);
+				}
 				RSProviderUtil.removeArtifacts(assetId);
 				RSProviderUtil.removeDependencies(assetId);
 				// update the resource
@@ -1134,15 +1133,15 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 						basicInfo.getVersion());
 				RSProviderUtil.updateResourceProperties(asset,
 						updateInfo.getExtendedAssetInfo());
-//				if ("Service".equals(basicInfo.getAssetType())) {
-//					String content = RSProviderUtil
-//							.getAssetInfoXml(origAssetInfo);
-//					if (content != null) {
-//						InputStream contentStream = new ByteArrayInputStream(
-//								content.getBytes("UTF-8"));
-//						asset.setContentStream(contentStream);
-//					}
-//				}
+				if ("Service".equals(basicInfo.getAssetType())) {
+					String content = RSProviderUtil
+							.getAssetInfoXml(origAssetInfo);
+					if (content != null) {
+						InputStream contentStream = new ByteArrayInputStream(
+								content.getBytes("UTF-8"));
+						asset.setContentStream(contentStream);
+					}
+				}
 				// update the resource
 				wso2.put(assetId, asset);
 				RSProviderUtil.updateArtifacts(assetKey,
@@ -1189,7 +1188,7 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	 */
 	@Override
 	public CreateAssetResponse createAsset(CreateAssetRequest request) {
-		RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+		Registry wso2 = RSProviderUtil.getRegistry();
 		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
 		CreateAssetResponse response = new CreateAssetResponse();
 
@@ -1206,16 +1205,18 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 			}
 
 			String assetType = basicInfo.getAssetType();
-			assetKey = RSProviderUtil.completeAssetKey(assetKey, assetType,
-					null);
+			String version = basicInfo.getVersion();
+			assetKey = RSProviderUtil.completeAssetKey(assetKey, assetType, version);
 
 			String assetId = assetKey.getAssetId();
-			if (wso2.resourceExists(assetId)) {
-				errorDataList
-						.add(RepositoryServiceErrorDescriptor.DUPLICATE_ASSET
-								.newError());
-				return RSProviderUtil.addErrorsToResponse(errorDataList,
-						response);
+			if (assetId != null) {
+				if (wso2.resourceExists(assetId)) {
+					errorDataList
+							.add(RepositoryServiceErrorDescriptor.DUPLICATE_ASSET
+									.newError());
+					return RSProviderUtil.addErrorsToResponse(errorDataList,
+							response);
+				}
 			}
 
 			wso2.beginTransaction();
@@ -1226,21 +1227,27 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 
 			if ("Service".equalsIgnoreCase(assetType)) {
 				asset.setMediaType("application/vnd.wso2-service+xml");
-//				String content = RSProviderUtil.getBasicAssetInfoXml(basicInfo);
-//				if (content != null) {
-//					InputStream contentStream = new ByteArrayInputStream(
-//							content.getBytes("UTF-8"));
-//					asset.setContentStream(contentStream);
-//				}
+				String content = RSProviderUtil.getBasicAssetInfoXml(basicInfo);
+				if (content != null) {
+					InputStream contentStream = new ByteArrayInputStream(
+							content.getBytes("UTF-8"));
+					asset.setContentStream(contentStream);
+				}
 			} else // TODO handle other known types
 			{
 				asset.setDescription(basicInfo.getAssetDescription());
 			}
 
-			wso2.put(assetId, asset);
+			String actualPath = wso2.put(this._SYSTEM_GOVERNANCE + "/" + assetId, asset);
+			
+			assetKey.setAssetId(actualPath);
 
-			RSProviderUtil.removeArtifacts(assetId);
-			RSProviderUtil.removeDependencies(assetId);
+			try {
+				RSProviderUtil.removeArtifacts(assetId);
+				RSProviderUtil.removeDependencies(assetId);
+			} catch (RegistryException e) {
+				// Ignore as we don't care if it couldn't remove anything since we are creating the asset.
+			}
 
 			// populate the response
 			response.setAssetKey(assetKey);
@@ -1270,7 +1277,7 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	@Override
 	public GetBasicAssetInfoResponse getBasicAssetInfo(
 			GetBasicAssetInfoRequest request) {
-		RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+		Registry wso2 = RSProviderUtil.getRegistry();
 		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
 		GetBasicAssetInfoResponse response = new GetBasicAssetInfoResponse();
 
@@ -1334,7 +1341,7 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	@Override
 	public UpdateAssetDependenciesResponse updateAssetDependencies(
 			UpdateAssetDependenciesRequest request) {
-		RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+		Registry wso2 = RSProviderUtil.getRegistry();
 		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
 		UpdateAssetDependenciesResponse response = new UpdateAssetDependenciesResponse();
 

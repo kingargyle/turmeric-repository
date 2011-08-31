@@ -19,6 +19,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.wso2.carbon.registry.app.RemoteRegistry;
+import org.wso2.carbon.registry.core.Registry;
 import org.wso2.carbon.registry.core.Resource;
 import org.wso2.carbon.registry.core.exceptions.RegistryException;
 
@@ -65,7 +66,7 @@ public class CreateCompleteAssetTest extends Wso2Base {
     	
         boolean exists = false;
         try {
-            RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+            Registry wso2 = RSProviderUtil.getRegistry();
             exists = wso2.resourceExists("/");
 
             for (String resource : resources) {
@@ -164,8 +165,8 @@ public class CreateCompleteAssetTest extends Wso2Base {
     @Test
     public void createTest() throws Exception {
         boolean clean = false;
+        Registry wso2 = RSProviderUtil.getRegistry();
         try {
-            RemoteRegistry wso2 = RSProviderUtil.getRegistry();
             clean = !wso2.resourceExists(resources[0]);
         }
         catch (RegistryException e) {
@@ -176,7 +177,7 @@ public class CreateCompleteAssetTest extends Wso2Base {
 
         assertEquals(AckValue.SUCCESS, response.getAck());
         assertEquals(null, response.getErrorMessage());
-        RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+        
         // get the resource so i can ask for the properties it has
         Resource asset = wso2.get(resources[0]);
         assertEquals(stringProperty, asset.getProperty("stringProperty"));
@@ -189,7 +190,7 @@ public class CreateCompleteAssetTest extends Wso2Base {
     public void createDuplicateTest() throws Exception {
         boolean exists = false;
         try {
-            RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+            Registry wso2 = RSProviderUtil.getRegistry();
             exists = wso2.resourceExists(resources[0]);
         }
         catch (RegistryException e) {

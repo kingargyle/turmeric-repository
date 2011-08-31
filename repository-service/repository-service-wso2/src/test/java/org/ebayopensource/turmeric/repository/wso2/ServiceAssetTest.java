@@ -18,6 +18,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.wso2.carbon.registry.app.RemoteRegistry;
+import org.wso2.carbon.registry.core.Registry;
 import org.wso2.carbon.registry.core.Resource;
 
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
@@ -60,7 +61,7 @@ public class ServiceAssetTest extends Wso2Base {
     @Before
     public void checkRepository() {
         try {
-            RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+            Registry wso2 = RSProviderUtil.getRegistry();
 
             for (String resource : resources) {
                 if (wso2.resourceExists(resource)) {
@@ -156,8 +157,8 @@ public class ServiceAssetTest extends Wso2Base {
     @Ignore
     public void testCreate() throws Exception {
         boolean clean = false;
+        Registry wso2 = RSProviderUtil.getRegistry();
         try {
-            RemoteRegistry wso2 = RSProviderUtil.getRegistry();
             clean = !wso2.resourceExists(resources[0]);
         }
         catch (Exception ce) {
@@ -167,7 +168,6 @@ public class ServiceAssetTest extends Wso2Base {
         CreateCompleteAssetResponse response = createCompleteAsset();
 
         // Retrieve the resource to check property values
-        RemoteRegistry wso2 = RSProviderUtil.getRegistry();
         Resource resource = wso2.get(resources[0]);
         assertEquals(stringProperty, resource.getProperty("stringProperty"));
         assertEquals(longProperty.toString(), resource.getProperty("longProperty"));
@@ -180,7 +180,7 @@ public class ServiceAssetTest extends Wso2Base {
     public void testGet() throws Exception {
         boolean clean = false;
         try {
-            RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+            Registry wso2 = RSProviderUtil.getRegistry();
             clean = !wso2.resourceExists(resources[0]);
         }
         catch (Exception ce) {
@@ -217,7 +217,7 @@ public class ServiceAssetTest extends Wso2Base {
     public void testBasicUpdate() throws Exception {
         boolean clean = false;
         try {
-            RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+            Registry wso2 = RSProviderUtil.getRegistry();
             clean = !wso2.resourceExists(resources[0]);
         }
         catch (Exception e) {

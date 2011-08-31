@@ -20,6 +20,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.wso2.carbon.registry.app.RemoteRegistry;
+import org.wso2.carbon.registry.core.Registry;
 import org.wso2.carbon.registry.core.Resource;
 import org.wso2.carbon.registry.core.exceptions.RegistryException;
 
@@ -72,7 +73,7 @@ public class AssetLifeCycleTest extends Wso2Base {
     	
         boolean exists = false;
         try {
-            RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+            Registry wso2 = RSProviderUtil.getRegistry();
             exists = wso2.resourceExists("/");
 
             for (String resource : resources) {
@@ -171,8 +172,8 @@ public class AssetLifeCycleTest extends Wso2Base {
     @Test
     public void submitApproveTest() throws Exception {
         boolean clean = false;
+        Registry wso2 = RSProviderUtil.getRegistry();
         try {
-            RemoteRegistry wso2 = RSProviderUtil.getRegistry();
             clean = !wso2.resourceExists(resources[0]);
         }
         catch (RegistryException e) {
@@ -180,7 +181,6 @@ public class AssetLifeCycleTest extends Wso2Base {
         assertTrue(clean);
 
         RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
-        RemoteRegistry wso2 = RSProviderUtil.getRegistry();
 
         CreateCompleteAssetResponse responseCreate = createAsset();
         
@@ -221,8 +221,8 @@ public class AssetLifeCycleTest extends Wso2Base {
     @Test
     public void submitRejectTest() throws Exception {
         boolean clean = false;
+        Registry wso2 = RSProviderUtil.getRegistry();
         try {
-            RemoteRegistry wso2 = RSProviderUtil.getRegistry();
             clean = !wso2.resourceExists(resources[0]);
         }
         catch (RegistryException e) {
@@ -230,7 +230,6 @@ public class AssetLifeCycleTest extends Wso2Base {
         assertTrue(clean);
 
         RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
-        RemoteRegistry wso2 = RSProviderUtil.getRegistry();
 
         CreateCompleteAssetResponse responseCreate = createAsset();
         

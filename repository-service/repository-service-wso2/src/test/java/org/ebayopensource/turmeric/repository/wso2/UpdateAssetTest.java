@@ -15,6 +15,7 @@ import static org.junit.Assume.assumeTrue;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.wso2.carbon.registry.app.RemoteRegistry;
+import org.wso2.carbon.registry.core.Registry;
 import org.wso2.carbon.registry.core.exceptions.RegistryException;
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
 import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
@@ -91,7 +92,7 @@ public class UpdateAssetTest extends Wso2Base {
     public void updateTest() throws Exception {
         boolean exists = false;
         try {
-            RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+            Registry wso2 = RSProviderUtil.getRegistry();
             for (String resource : resources) {
                 if (wso2.resourceExists(resource)) {
                     wso2.delete(resource);
@@ -110,7 +111,7 @@ public class UpdateAssetTest extends Wso2Base {
     public void renameTest() throws Exception {
         boolean exists = false;
         try {
-            RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+            Registry wso2 = RSProviderUtil.getRegistry();
             for (String resource : resources) {
                 if (wso2.resourceExists(resource)) {
                     wso2.delete(resource);

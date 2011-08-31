@@ -13,7 +13,9 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.wso2.carbon.registry.app.RemoteRegistry;
+import org.wso2.carbon.registry.core.Registry;
 import org.wso2.carbon.registry.core.exceptions.RegistryException;
+import org.wso2.carbon.utils.WSO2Constants;
 
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
 import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
@@ -55,6 +57,7 @@ public class CreateAssetTest extends Wso2Base {
         basicInfo.setAssetName(assetName);
         basicInfo.setAssetDescription(assetDesc);
         basicInfo.setAssetType("Service");
+        basicInfo.setVersion("1.0.0");
 
         CreateAssetRequest request = new CreateAssetRequest();
         request.setBasicAssetInfo(basicInfo);
@@ -67,7 +70,7 @@ public class CreateAssetTest extends Wso2Base {
     public void createTest() {
         boolean exists = false;
         try {
-            RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+            Registry wso2 = RSProviderUtil.getRegistry();
             if (wso2.resourceExists(resourcePath)) {
                 wso2.delete(resourcePath);
             }
@@ -78,8 +81,13 @@ public class CreateAssetTest extends Wso2Base {
         assertTrue(!exists);
 
         CreateAssetResponse response = createAsset();
+        
+        String errorMsg = "none"; 
+        if (response.getErrorMessage() != null) {
+        	errorMsg = response.getErrorMessage().getError().get(0).getMessage();
+        }
 
-        assertEquals(AckValue.SUCCESS, response.getAck());
+        assertEquals("Error: " + errorMsg, AckValue.SUCCESS, response.getAck());
         assertEquals(null, response.getErrorMessage());
         validateAssetKey(response.getAssetKey());
     }
@@ -87,8 +95,8 @@ public class CreateAssetTest extends Wso2Base {
     @Test
     public void createDuplicateTest() {
         boolean exists = false;
+        Registry wso2 = RSProviderUtil.getRegistry();
         try {
-            RemoteRegistry wso2 = RSProviderUtil.getRegistry();
             exists = wso2.resourceExists(resourcePath);
         }
         catch (RegistryException e) {

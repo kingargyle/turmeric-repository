@@ -20,6 +20,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.wso2.carbon.registry.app.RemoteRegistry;
+import org.wso2.carbon.registry.core.Registry;
 import org.wso2.carbon.registry.core.Resource;
 
 /**
@@ -47,7 +48,7 @@ public class RSLifeCycle {
    
             String lcName = System.getProperty(__lifeCycleProp, "TurmericLifeCycle");
 
-            RemoteRegistry wso2 = RSProviderUtil.getRegistry();
+            Registry wso2 = RSProviderUtil.getRegistry();
             Resource lifecycle = wso2.get(__lifecyclePath+lcName);
             Document lc = DocumentBuilderFactory.newInstance().
                     newDocumentBuilder().parse(lifecycle.getContentStream());
