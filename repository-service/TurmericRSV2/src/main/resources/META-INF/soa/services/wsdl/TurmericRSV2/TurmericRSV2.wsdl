@@ -1489,6 +1489,15 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
                      with the group name provided over here.</xs:documentation>
                   </xs:annotation>
                </xs:element>
+               
+               <xs:element name="namespace" minOccurs="0" maxOccurs="1" type="xs:string">
+                  <xs:annotation>
+                     <xs:documentation>
+                        An optional namespace that a registry can use to help qualify the 
+                        asset.  This is primarily used for services, and schemas.
+                     </xs:documentation>
+                  </xs:annotation>
+               </xs:element>
             </xs:sequence>
          </xs:complexType>
 

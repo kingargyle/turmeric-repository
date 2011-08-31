@@ -31,7 +31,7 @@ public class CreateAssetTest extends Wso2Base {
     private static final String resourcePath = "/_system/governance/trunk/services/com/domain/www/assets/CreateAssetTest";
     private static final String assetName = "CreateAssetTest";
     private static final String assetDesc = "CreateAssetTest description";
-    private static final String libraryName = "http://www.domain.com/assets";
+    private static final String namespace = "http://www.domain.com/assets";
 
     @Override
 	@Before
@@ -58,6 +58,7 @@ public class CreateAssetTest extends Wso2Base {
         basicInfo.setAssetDescription(assetDesc);
         basicInfo.setAssetType("Service");
         basicInfo.setVersion("1.0.0");
+        basicInfo.setNamespace(namespace);
 
         CreateAssetRequest request = new CreateAssetRequest();
         request.setBasicAssetInfo(basicInfo);
@@ -96,15 +97,7 @@ public class CreateAssetTest extends Wso2Base {
     public void createDuplicateTest() {
         boolean exists = false;
         Registry wso2 = RSProviderUtil.getRegistry();
-        try {
-            exists = wso2.resourceExists(resourcePath);
-        }
-        catch (RegistryException e) {
-        }
-        assertTrue(exists);
-
         CreateAssetResponse response = createAsset();
-
         assertEquals(AckValue.FAILURE, response.getAck());
     }
 }
