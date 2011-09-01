@@ -20,6 +20,9 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathFactory;
 
 import org.w3c.dom.Document;
+import org.wso2.carbon.governance.api.common.dataobjects.GovernanceArtifact;
+import org.wso2.carbon.governance.api.exception.GovernanceException;
+import org.wso2.carbon.governance.api.util.GovernanceUtils;
 import org.wso2.carbon.registry.core.Registry;
 import org.wso2.carbon.registry.core.Resource;
 
@@ -1263,7 +1266,7 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	@Override
 	public GetBasicAssetInfoResponse getBasicAssetInfo(
 			GetBasicAssetInfoRequest request) {
-		Registry wso2 = RSProviderUtil.getRegistry();
+		Registry wso2Registry = RSProviderUtil.getRegistry();
 		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
 		GetBasicAssetInfoResponse response = new GetBasicAssetInfoResponse();
 
@@ -1271,42 +1274,19 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 			AssetKey assetKey = RSProviderUtil.completeAssetKey(
 					request.getAssetKey(), request.getAssetType(), null);
 			String assetId = assetKey.getAssetId();
-
-			if (!wso2.resourceExists(assetId)) {
-				errorDataList
-						.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
-								.newError());
-				return RSProviderUtil.addErrorsToResponse(errorDataList,
-						response);
+			
+			GovernanceArtifact asset = GovernanceUtils.retrieveGovernanceArtifactById(wso2Registry, assetId);
+			
+			if (asset == null) {
+				return createAssetNotFoundError(errorDataList, response);
 			}
-
-			Resource asset = wso2.get(assetId);
-
-			String type = RSProviderUtil.getAssetType(assetId);
-
+			
+			String type = asset.getAttribute("type");
+			
 			// Create the basic service info structure
-			BasicAssetInfo basicAssetInfo = new BasicAssetInfo();
-			basicAssetInfo.setAssetKey(assetKey);
-
-			if ("Service".equals(type)) {
-				Document doc = RSProviderUtil.parseContent(asset);
-				XPath xpath = XPathFactory.newInstance().newXPath();
-
-				if (Integer.parseInt(xpath.evaluate("count(/*)", doc)) != 1) {
-					errorDataList
-							.add(RepositoryServiceErrorDescriptor.ASSET_TYPE_EXCEPTION
-									.newError());
-					return RSProviderUtil.addErrorsToResponse(errorDataList,
-							response);
-				}
-
-				RSProviderUtil.completeBasicAssetInfo(basicAssetInfo, asset,
-						doc);
-			} else {
-				RSProviderUtil.completeBasicAssetInfo(basicAssetInfo, asset,
-						null);
-			}
-
+			BasicAssetInfo basicAssetInfo = createBasicAsset(assetKey, asset,
+					type);
+			
 			// populate the response
 			response.setBasicAssetInfo(basicAssetInfo);
 			response.setVersion(basicAssetInfo.getVersion());
@@ -1319,6 +1299,29 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 							new GetBasicAssetInfoResponse(),
 							RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
 		}
+	}
+
+	private BasicAssetInfo createBasicAsset(AssetKey assetKey,
+			GovernanceArtifact asset, String type) throws GovernanceException {
+		BasicAssetInfo basicAssetInfo = new BasicAssetInfo();
+		basicAssetInfo.setAssetKey(assetKey);
+		
+		basicAssetInfo.setAssetName(asset.getAttribute("name"));
+		basicAssetInfo.setAssetType(type);
+		basicAssetInfo.setGroupName(asset.getAttribute("Owner"));
+		basicAssetInfo.setNamespace(asset.getQName().getNamespaceURI());
+		basicAssetInfo.setAssetDescription(asset.getAttribute("description"));
+		return basicAssetInfo;
+	}
+
+	private GetBasicAssetInfoResponse createAssetNotFoundError(
+			List<CommonErrorData> errorDataList,
+			GetBasicAssetInfoResponse response) {
+		errorDataList
+		.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
+				.newError());
+		return RSProviderUtil.addErrorsToResponse(errorDataList,
+				response);
 	}
 
 	/**

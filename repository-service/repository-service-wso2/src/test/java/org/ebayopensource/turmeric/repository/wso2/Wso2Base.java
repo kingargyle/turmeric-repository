@@ -22,6 +22,7 @@ import java.io.StringWriter;
 import java.net.URL;
 import java.util.List;
 
+import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -34,7 +35,10 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.wso2.carbon.governance.api.services.ServiceManager;
+import org.wso2.carbon.governance.api.services.dataobjects.Service;
 import org.wso2.carbon.registry.app.RemoteRegistry;
+import org.wso2.carbon.registry.core.Registry;
 import org.wso2.carbon.registry.core.Resource;
 
 import org.ebayopensource.turmeric.repository.v2.services.Artifact;
@@ -80,69 +84,74 @@ public class Wso2Base extends AbstractCarbonIntegrationTestCase {
      * Utility method used to create a necessary asset in the wso2 registry, before a given test
      * runs
      */
-    public static void createRequiredAssetsInWso2() {
+    public static void createRequiredAssetsInWso2() throws Exception {
         createRequiredServiceAssetInWso2();
-        createRequiredNonServiceAssetInWso2();
+        //createRequiredNonServiceAssetInWso2();
     }
 
     /**
      * Utility method used to create a necessary asset in the wso2 registry, before a given test
      * runs
-     */
-    public static void createRequiredServiceAssetInWso2() {
-        try {
-            RemoteRegistry _registry = new RemoteRegistry(
-                            new URL(
-                                            System.getProperty("org.ebayopensource.turmeric.repository.wso2.url")),
-                            System.getProperty("org.ebayopensource.turmeric.repository.wso2.username"),
-                            System.getProperty("org.ebayopensource.turmeric.repository.wso2.password"));
-            String assetName = "RepositoryMetadataService";
-            String assetKey = "/_system/governance/trunk/services/com/ebay/www/marketplace/services/"
-                            + assetName;
-            String serviceMetadata = null;
-            String libraryName = "http://www.ebay.com/marketplace/services";
-            String description = "The service description";
-            String wsdlArtifactId = "/_system/governance/trunk/wsdls/http/com/ebay/www/marketplace/services/RepositoryMetadataService.wsdl";
+     */ 
+    public static void createRequiredServiceAssetInWso2() throws Exception {
+        	Registry registry = RSProviderUtil.getRegistry();
+        	BasicAssetInfo basicInfo = new BasicAssetInfo();
+        	basicInfo.setNamespace("http://www.ebay.com/marketplace/services");
+        	basicInfo.setAssetName("RepositoryMetadataService");
+        	basicInfo.setAssetDescription("The service description");
+        	basicInfo.setVersion("2.0.0");
+        	basicInfo.setAssetType("Service");
+        	
+        	ServiceAsset serviceAsset = new ServiceAsset(basicInfo, registry);
+        	serviceAsset.createAsset();
+        	serviceAsset.addAsset();
+        	
+        	
+            
+//            String wsdlArtifactId = "/_system/governance/trunk/wsdls/http/com/ebay/www/marketplace/services/RepositoryMetadataService.wsdl";
+//       	
+//        	
+//       	
+//            RemoteRegistry _registry = new RemoteRegistry(
+//                            new URL(
+//                                            System.getProperty("org.ebayopensource.turmeric.repository.wso2.url")),
+//                            System.getProperty("org.ebayopensource.turmeric.repository.wso2.username"),
+//                            System.getProperty("org.ebayopensource.turmeric.repository.wso2.password"));
 
-            if (!_registry.resourceExists(assetKey)) {
-                Resource asset = RSProviderUtil.newAssetResource();
-                asset.setMediaType("application/vnd.wso2-service+xml");
-                Document serviceMetadataXmlDoc = createXmlDoc(assetName, description, libraryName);
-                serviceMetadata = getXmlString(serviceMetadataXmlDoc);
-                if (serviceMetadata.length() > 0) {
-                    InputStream contentStream = new ByteArrayInputStream(
-                                    serviceMetadata.getBytes("UTF-8"));
-                    asset.setContentStream(contentStream);
-                }
-                // asset.setProperty(RSProviderUtil.__artifactVersionPropName, "1.0.0");
-                // _registry.put(assetKey, asset);// i put the RepositoryMetadataService in the wso2
+//            if (!_registry.resourceExists(assetKey)) {
+//                Resource asset = RSProviderUtil.newAssetResource();
+//                asset.setMediaType("application/vnd.wso2-service+xml");
+//                Document serviceMetadataXmlDoc = createXmlDoc(assetName, description, libraryName);
+//               serviceMetadata = getXmlString(serviceMetadataXmlDoc);
+//                if (serviceMetadata.length() > 0) {
+//                    InputStream contentStream = new ByteArrayInputStream(
+//                                    serviceMetadata.getBytes("UTF-8"));
+//                    asset.setContentStream(contentStream);
+//                }
+        	
                 // registry instance
                 // ok, now, let's go to the wsdl artifact.
-                Resource wsdlArtifact = RSProviderUtil.newAssetResource();
-                wsdlArtifact.setMediaType("application/wsdl+xml");
-                InputStream wsdlIstream = Wso2Base.class.getClassLoader().getResourceAsStream(
-                                "RepositoryMetadataService.wsdl");
-                BufferedReader bufReader = new BufferedReader(new InputStreamReader(wsdlIstream));
-                StringBuilder wsdlcontent = new StringBuilder();
-                String wsdlcontentLine = null;
-                while ((wsdlcontentLine = bufReader.readLine()) != null) {
-                    wsdlcontent.append(wsdlcontentLine);
-                }
-                bufReader.close();
-                if (wsdlcontent.length() > 0) {
-                    InputStream contentStream = new ByteArrayInputStream(wsdlcontent.toString()
-                                    .getBytes("UTF-8"));
-                    wsdlArtifact.setContentStream(contentStream);
-                }
-                _registry.put(wsdlArtifactId, wsdlArtifact);
-                asset.setProperty(RSProviderUtil.__artifactVersionPropName, "1.0.0");
-                _registry.put(assetKey, asset);// i put the RepositoryMetadataService in the wso2
+//                Resource wsdlArtifact = RSProviderUtil.newAssetResource();
+//                wsdlArtifact.setMediaType("application/wsdl+xml");
+//                InputStream wsdlIstream = Wso2Base.class.getClassLoader().getResourceAsStream(
+//                                "RepositoryMetadataService.wsdl");
+//                BufferedReader bufReader = new BufferedReader(new InputStreamReader(wsdlIstream));
+//                StringBuilder wsdlcontent = new StringBuilder();
+//                String wsdlcontentLine = null;
+//                while ((wsdlcontentLine = bufReader.readLine()) != null) {
+//                    wsdlcontent.append(wsdlcontentLine);
+//                }
+//                bufReader.close();
+//                if (wsdlcontent.length() > 0) {
+ //                   InputStream contentStream = new ByteArrayInputStream(wsdlcontent.toString()
+//                                    .getBytes("UTF-8"));
+//                    wsdlArtifact.setContentStream(contentStream);
+//                }
+//                _registry.put(wsdlArtifactId, wsdlArtifact);
+//                asset.setProperty(RSProviderUtil.__artifactVersionPropName, "1.0.0");
+//                _registry.put(assetKey, asset);// i put the RepositoryMetadataService in the wso2
 
-            }
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+//            }
     }
 
     public static void createRequiredNonServiceAssetInWso2() {

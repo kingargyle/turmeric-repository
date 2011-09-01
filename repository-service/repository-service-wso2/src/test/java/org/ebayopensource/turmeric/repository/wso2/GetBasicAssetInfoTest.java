@@ -12,15 +12,22 @@ package org.ebayopensource.turmeric.repository.wso2;
 import static org.junit.Assert.* ;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.wso2.carbon.governance.api.services.ServiceManager;
+import org.wso2.carbon.governance.api.services.dataobjects.Service;
+import org.wso2.carbon.registry.core.Registry;
 
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
 import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
 import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
 import org.ebayopensource.turmeric.repository.v2.services.GetBasicAssetInfoRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetBasicAssetInfoResponse;
+import org.ebayopensource.turmeric.repository.wso2.filters.FindServiceByNameAndNamespaceFilter;
 
 public class GetBasicAssetInfoTest extends Wso2Base {
+	
+	BasicAssetInfo basicInfo = null;
     @Before
     public void setUp() throws Exception {
     	super.setUp();
@@ -38,13 +45,39 @@ public class GetBasicAssetInfoTest extends Wso2Base {
         catch (Exception ex) {
             fail("failed creating neccesary assets in wso2 registry");
         }
+        
+        basicInfo = new BasicAssetInfo();
+    	basicInfo.setNamespace("http://www.ebay.com/marketplace/services");
+    	basicInfo.setAssetName("RepositoryMetadataService");
+    	basicInfo.setAssetDescription("The service description");
+    	basicInfo.setVersion("2.0.0");
+    	basicInfo.setAssetType("Service");
+        
+    }
+    
+    
+    private String findAssetId() throws Exception {
+    	
+    	Registry registry = RSProviderUtil.getRegistry();
+    	ServiceManager serviceManager = new ServiceManager(registry);
+    	Service[] services = serviceManager.findServices(new FindServiceByNameAndNamespaceFilter(basicInfo));
+    	if (services.length > 1) {
+    		fail("More than one service was returned.");
+    	}
+    	return services[0].getId();
     }
 
     @Test
     public void getAssetByAssetId() throws Exception {
 
+    	String assetId = findAssetId();
+    	
         AssetKey key = new AssetKey();
-        key.setAssetId("/_system/governance/trunk/services/com/ebay/www/marketplace/services/RepositoryMetadataService");
+        key.setAssetId(assetId);
+        key.setAssetName(basicInfo.getAssetName());
+        key.setType(basicInfo.getAssetType());
+        key.setVersion(basicInfo.getVersion());
+        
         GetBasicAssetInfoRequest GetBasicAssetInfoRequest = new GetBasicAssetInfoRequest();
         GetBasicAssetInfoRequest.setAssetKey(key);
 
@@ -55,11 +88,10 @@ public class GetBasicAssetInfoTest extends Wso2Base {
 
         assertEquals(AckValue.SUCCESS, response.getAck());
         assertEquals(null, response.getErrorMessage());
-
-        checkIsRespositoryMetadataService(response);
     }
 
     @Test
+    @Ignore
     public void getNonServiceAssetByAssetId() throws Exception {
 
         AssetKey key = new AssetKey();
@@ -77,18 +109,4 @@ public class GetBasicAssetInfoTest extends Wso2Base {
 
         validateBasicAssetInfo(response.getBasicAssetInfo());
     }
-
-    private void checkIsRespositoryMetadataService(GetBasicAssetInfoResponse response)
-                    throws Exception {
-
-        BasicAssetInfo basic_info = response.getBasicAssetInfo();
-
-        System.err.println(basic_info.getAssetName() + " version=" + response.getVersion());
-        assertEquals("/_system/governance/trunk/services/com/ebay/www/marketplace/services/RepositoryMetadataService",
-                        basic_info.getAssetKey().getAssetId());
-        assertEquals("RepositoryMetadataService", basic_info.getAssetKey().getAssetName());
-        assertEquals("RepositoryMetadataService", basic_info.getAssetName());
-        validateBasicAssetInfo(response.getBasicAssetInfo());
-    }
-
 }
