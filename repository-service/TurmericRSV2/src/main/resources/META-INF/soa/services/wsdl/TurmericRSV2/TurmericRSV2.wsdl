@@ -1909,6 +1909,12 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
 
                <xs:element maxOccurs="1" minOccurs="0" name="artifactDisplayName"
                type="xs:string" />
+               
+               <xs:element name="targetNamespace" type="xs:string" minOccurs="0" maxOccurs="1">
+                  <xs:annotation>
+                     <xs:documentation>The targetNamespace is primarily used by XML Schemas, and WSDL.  Some repository implementations need the namespace in order to store the artifacts appropriately.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
             </xs:sequence>
          </xs:complexType>
 

@@ -9,6 +9,10 @@
 
 package org.ebayopensource.turmeric.repository.wso2;
 
+import org.ebayopensource.turmeric.repository.v2.services.Artifact;
+import org.ebayopensource.turmeric.repository.v2.services.ArtifactInfo;
+import org.wso2.carbon.governance.api.common.dataobjects.GovernanceArtifact;
+
 public interface Asset {
 
 	/**
@@ -68,6 +72,13 @@ public interface Asset {
 	 * @return
 	 */
 	public String getId();
+	
+	/**
+	 * Given a Repository service artifact, add a relationship to  asset and the artifact.
+	 * @param artifact A repository service artifact
+	 * @return The GovernenanceArtifact that was added
+	 */
+	public GovernanceArtifact addArtifact(ArtifactInfo artifact);
 		
 	
 	

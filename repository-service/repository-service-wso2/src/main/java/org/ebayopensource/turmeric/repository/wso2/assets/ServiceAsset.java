@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2006-2010 eBay Inc. All Rights Reserved.
+ * Copyright (c) 2011 eBay Inc. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -7,13 +7,14 @@
  *    http://www.apache.org/licenses/LICENSE-2.0
  *******************************************************************************/
 
-package org.ebayopensource.turmeric.repository.wso2;
+package org.ebayopensource.turmeric.repository.wso2.assets;
 
 import javax.xml.namespace.QName;
 
-import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
-import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.*;
+import org.ebayopensource.turmeric.repository.wso2.Asset;
 import org.ebayopensource.turmeric.repository.wso2.filters.DuplicateServiceFilter;
+import org.wso2.carbon.governance.api.common.dataobjects.GovernanceArtifact;
 import org.wso2.carbon.governance.api.exception.GovernanceException;
 import org.wso2.carbon.governance.api.services.ServiceManager;
 import org.wso2.carbon.governance.api.services.dataobjects.Service;
@@ -22,13 +23,11 @@ import org.wso2.carbon.registry.core.Registry;
 public class ServiceAsset implements Asset {
 
 	private BasicAssetInfo basicInfo = null;
-	private Registry registry = null;
 	private ServiceManager serviceManager = null;
 	private Service service = null;
 	
 	public ServiceAsset(BasicAssetInfo bi, Registry registry) {
 		this.basicInfo = bi;
-		this.registry = registry;
 		serviceManager =  new ServiceManager(registry);
 	}
 	
@@ -52,12 +51,12 @@ public class ServiceAsset implements Asset {
 		try {
 			service = serviceManager.newService(new QName(
 					basicInfo.getNamespace(), basicInfo.getAssetName()));
-			service.setAttribute("name", basicInfo.getAssetName());
-			service.setAttribute("description",
+			service.setAttribute(ServiceConstants.TURMERIC_SERVICE_NAME, basicInfo.getAssetName());
+			service.setAttribute(ServiceConstants.TURMERIC_SERVICE_DESCRIPTION,
 					basicInfo.getAssetDescription());
-			service.setAttribute("version", basicInfo.getVersion());
-			service.setAttribute("namespace", basicInfo.getNamespace());
-			service.setAttribute("Owner", basicInfo.getGroupName());
+			service.setAttribute(ServiceConstants.TURMERIC_VERSION, basicInfo.getVersion());
+			service.setAttribute(ServiceConstants.TURMERIC_NAMESPACE, basicInfo.getNamespace());
+			service.setAttribute(ServiceConstants.TURMERIC_OWNER, basicInfo.getGroupName());
 		} catch (GovernanceException e) {
 			return false;
 		}
@@ -105,6 +104,11 @@ public class ServiceAsset implements Asset {
 	@Override
 	public String getId() {
 		return basicInfo.getAssetKey().getAssetId();
+	}
+	
+	@Override
+	public GovernanceArtifact addArtifact(ArtifactInfo artifact) {
+		return null;
 	}
 	
 }

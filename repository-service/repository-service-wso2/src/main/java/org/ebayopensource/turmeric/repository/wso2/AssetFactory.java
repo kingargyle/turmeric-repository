@@ -10,6 +10,7 @@
 package org.ebayopensource.turmeric.repository.wso2;
 
 import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
+import org.ebayopensource.turmeric.repository.wso2.assets.ServiceAsset;
 import org.wso2.carbon.registry.core.Registry;
 
 /**

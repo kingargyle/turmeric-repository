@@ -7,7 +7,7 @@
  *    http://www.apache.org/licenses/LICENSE-2.0
  *******************************************************************************/
 
-package org.ebayopensource.turmeric.repository.wso2;
+package org.ebayopensource.turmeric.repository.wso2.assets;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assume.assumeTrue;
@@ -39,6 +39,9 @@ import org.ebayopensource.turmeric.repository.v2.services.LockAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.LockAssetResponse;
 import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetResponse;
+import org.ebayopensource.turmeric.repository.wso2.RSProviderUtil;
+import org.ebayopensource.turmeric.repository.wso2.RepositoryServiceProviderImpl;
+import org.ebayopensource.turmeric.repository.wso2.Wso2Base;
 
 public class ServiceAssetTest extends Wso2Base {
     // First resource path must be the primary resource created by the test

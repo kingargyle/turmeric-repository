@@ -27,6 +27,7 @@ import org.wso2.carbon.registry.core.Registry;
 import org.wso2.carbon.registry.core.Resource;
 
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
+import org.ebayopensource.turmeric.common.v1.types.BaseResponse;
 import org.ebayopensource.turmeric.common.v1.types.CommonErrorData;
 import org.ebayopensource.turmeric.repository.v2.services.*;
 import org.ebayopensource.turmeric.services.common.error.RepositoryServiceErrorDescriptor;
@@ -684,7 +685,7 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	@Override
 	public CreateCompleteAssetResponse createCompleteAsset(
 			CreateCompleteAssetRequest request) {
-		Registry wso2 = RSProviderUtil.getRegistry();
+		Registry wso2Registry = RSProviderUtil.getRegistry();
 		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
 		CreateCompleteAssetResponse response = new CreateCompleteAssetResponse();
 
@@ -692,59 +693,32 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 			AssetInfo assetInfo = request.getAssetInfo();
 			BasicAssetInfo basicInfo = assetInfo.getBasicAssetInfo();
 			AssetKey assetKey = basicInfo.getAssetKey();
+			
+			AssetFactory factory = new AssetFactory(basicInfo, wso2Registry);
+			Asset asset = factory.createAsset();
 
-			if (assetKey.getAssetId() == null
-					&& assetKey.getAssetName() == null) {
-				errorDataList
-						.add(RepositoryServiceErrorDescriptor.ASSET_NAME_MISSING
-								.newError());
-				return RSProviderUtil.addErrorsToResponse(errorDataList,
-						response);
+			if (asset.hasName()) {
+				return createErrorMissingAssetName(errorDataList, response);
 			}
-
-			String assetType = basicInfo.getAssetType();
-			assetKey = RSProviderUtil.completeAssetKey(assetKey, assetType,
-					null);
-			String assetId = assetKey.getAssetId();
-
-			if (wso2.resourceExists(assetId)) {
-				errorDataList
-						.add(RepositoryServiceErrorDescriptor.DUPLICATE_ASSET
-								.newError());
-				return RSProviderUtil.addErrorsToResponse(errorDataList,
-						response);
+			
+			if (asset.hasDuplicates()) {
+				return createErrorDuplicateAsset(errorDataList, response);
 			}
-
-			wso2.beginTransaction();
-			Resource asset = RSProviderUtil.newAssetResource();
-
-			asset.setProperty(RSProviderUtil.__artifactVersionPropName,
-					basicInfo.getVersion());
-			RSProviderUtil.updateResourceProperties(asset,
-					assetInfo.getExtendedAssetInfo());
-
-			if ("Service".equalsIgnoreCase(assetType)) {
-				asset.setMediaType("application/vnd.wso2-service+xml");
-				String content = RSProviderUtil.getAssetInfoXml(assetInfo);
-				if (content != null) {
-					InputStream contentStream = new ByteArrayInputStream(
-							content.getBytes("UTF-8"));
-					asset.setContentStream(contentStream);
-				}
-			} else {
-				asset.setDescription(assetInfo.getBasicAssetInfo()
-						.getAssetDescription());
+			
+			if (!asset.createAsset()) {
+				return createErrorAssetCreation(errorDataList, response);
 			}
-
-			wso2.put(assetId, asset);
-
-			RSProviderUtil.removeArtifacts(assetId);
-			RSProviderUtil.removeDependencies(assetId);
-
-			RSProviderUtil.createArtifacts(assetKey,
-					assetInfo.getArtifactInfo());
-			RSProviderUtil.createDependencies(assetKey,
-					assetInfo.getFlattenedRelationship());
+			
+			List<ArtifactInfo> artifactInfoList = request.getAssetInfo().getArtifactInfo();
+			for (ArtifactInfo artifactInfo : artifactInfoList) {
+				asset.addArtifact(artifactInfo);
+			}
+			
+			asset.addAsset();
+			
+			
+//			RSProviderUtil.createDependencies(assetKey,
+//					assetInfo.getFlattenedRelationship());
 
 			response.setAssetKey(assetKey);
 			return RSProviderUtil.setSuccessResponse(response);
@@ -1231,30 +1205,30 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	}
 
 
-	private CreateAssetResponse createErrorDuplicateAsset(
-			List<CommonErrorData> errorDataList, CreateAssetResponse response) {
+	private <T extends BaseResponse> T createErrorDuplicateAsset(
+			List<CommonErrorData> errorDataList, T response) {
 		errorDataList.add(RepositoryServiceErrorDescriptor.DUPLICATE_ASSET
 				.newError());
 		return RSProviderUtil.addErrorsToResponse(errorDataList, response);
 	}
 
-	private CreateAssetResponse createErrorAssetCreation(
-			List<CommonErrorData> errorDataList, CreateAssetResponse response) {
+	private <T extends BaseResponse> T createErrorAssetCreation(
+			List<CommonErrorData> errorDataList, T response) {
 		errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_CREATION_ERROR
 				.newError());
 		return RSProviderUtil.addErrorsToResponse(errorDataList, response);
 	}
 
-	private CreateAssetResponse createErrorMissingNamespace(
-			List<CommonErrorData> errorDataList, CreateAssetResponse response) {
+	private <T extends BaseResponse> T createErrorMissingNamespace(
+			List<CommonErrorData> errorDataList, T response) {
 		errorDataList
 				.add(RepositoryServiceErrorDescriptor.ASSET_NAMESPACE_MISSING
 						.newError());
 		return RSProviderUtil.addErrorsToResponse(errorDataList, response);
 	}
 
-	private CreateAssetResponse createErrorMissingAssetName(
-			List<CommonErrorData> errorDataList, CreateAssetResponse response) {
+	private <T extends BaseResponse> T createErrorMissingAssetName(
+			List<CommonErrorData> errorDataList, T response) {
 		errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_NAME_MISSING
 				.newError());
 		return RSProviderUtil.addErrorsToResponse(errorDataList, response);
