@@ -13,10 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/*******************************************************************************
+ * Copyright (c) 2011 eBay Inc. All Rights Reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *    
+ *    Original code from WSO2 governance registry WsdlManager class
+ *    copyright header left in tact.
+ *******************************************************************************/
+
 package org.ebayopensource.turmeric.repository.wso2.assets;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.*;
 
 import org.apache.axiom.om.OMAttribute;
@@ -70,6 +80,13 @@ public class WSDLManager {
         return wsdl;
     }
     
+    /**
+     * Create a new WSDL based on content either embedded or passed to a service.
+     * @param registry the associated registry
+     * @param content the wsdl as bytes
+     * @return a new Wsdl object
+     * @throws GovernanceException a GovernanceException is thrown in case the wsdl can't be created.
+     */
     public Wsdl newWsdl(Registry registry, byte[] content) throws GovernanceException {
         String wsdlId = UUID.randomUUID().toString();
     	Wsdl wsdl = new Wsdl(wsdlId, (String)null);
@@ -89,7 +106,6 @@ public class WSDLManager {
         boolean succeeded = false;
         try {
             registry.beginTransaction();
-            String url = wsdl.getUrl();
             Resource wsdlResource = registry.newResource();
             wsdlResource.setMediaType(GovernanceConstants.WSDL_MEDIA_TYPE);
 

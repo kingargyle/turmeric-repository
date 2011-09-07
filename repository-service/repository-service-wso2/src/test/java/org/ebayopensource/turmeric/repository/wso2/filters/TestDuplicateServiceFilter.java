@@ -12,6 +12,7 @@ package org.ebayopensource.turmeric.repository.wso2.filters;
 import javax.xml.namespace.QName;
 
 import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
+import org.ebayopensource.turmeric.repository.wso2.assets.ServiceConstants;
 import org.wso2.carbon.governance.api.exception.GovernanceException;
 import org.wso2.carbon.governance.api.services.dataobjects.Service;
 
@@ -36,12 +37,12 @@ public class TestDuplicateServiceFilter {
 		basicInfo.setNamespace("http://www.example.org");
 		basicInfo.setGroupName("TestGroup");
 		
-		service.setAttribute("name", basicInfo.getAssetName());
-		service.setAttribute("description",
+		service.setAttribute(ServiceConstants.TURMERIC_SERVICE_NAME, basicInfo.getAssetName());
+		service.setAttribute(ServiceConstants.TURMERIC_SERVICE_DESCRIPTION,
 				basicInfo.getAssetDescription());
-		service.setAttribute("version", basicInfo.getVersion());
-		service.setAttribute("namespace", basicInfo.getNamespace());
-		service.setAttribute("Owner", basicInfo.getGroupName());
+		service.setAttribute(ServiceConstants.TURMERIC_VERSION, basicInfo.getVersion());
+		service.setAttribute(ServiceConstants.TURMERIC_OWNER, basicInfo.getNamespace());
+		service.setAttribute(ServiceConstants.TURMERIC_OWNER, basicInfo.getGroupName());
 		
 		
 	}
