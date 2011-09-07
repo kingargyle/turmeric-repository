@@ -81,5 +81,7 @@ public interface Asset {
 	public GovernanceArtifact addArtifact(ArtifactInfo artifact);
 		
 	
+	public GovernanceArtifact getGovernanceArtifact();
+	
 	
 }

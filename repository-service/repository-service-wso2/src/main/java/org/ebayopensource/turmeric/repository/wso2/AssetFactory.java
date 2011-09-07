@@ -9,13 +9,16 @@
 
 package org.ebayopensource.turmeric.repository.wso2;
 
+import org.ebayopensource.turmeric.repository.v2.services.ArtifactInfo;
 import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
+import org.ebayopensource.turmeric.repository.wso2.assets.NullAsset;
 import org.ebayopensource.turmeric.repository.wso2.assets.ServiceAsset;
+import org.ebayopensource.turmeric.repository.wso2.assets.WSDLAsset;
 import org.wso2.carbon.registry.core.Registry;
 
 /**
  * This creates one of several asset types depending on the information passed to it
- * from the BasicAssetInfo.  The asset can the be used during the creation/update/removal process.
+ * from the BasicAssetInfo/ArtifactInfo.  The asset can the be used during the creation/update/removal process.
  * 
  * @author dcarver
  *
@@ -23,7 +26,9 @@ import org.wso2.carbon.registry.core.Registry;
 public class AssetFactory {
 	
 	private static final String ASSET_TYPE_SERVICE = "Service";
+	private static final String ASSET_TYPE_WSDL = "WSDL";
 	private BasicAssetInfo basicInfo = null;
+	private ArtifactInfo artifactInfo = null;
 	private Registry registry = null;
 	
 	/**
@@ -36,6 +41,11 @@ public class AssetFactory {
 		this.basicInfo = basicInfo;
 	}
 	
+	public AssetFactory(ArtifactInfo artifactInfo, Registry registry) {
+		this.artifactInfo = artifactInfo;
+		this.registry = registry;
+	}
+	
 	/**
 	 * Creates an simple asset.
 	 * @return
@@ -46,8 +56,19 @@ public class AssetFactory {
 		if (ASSET_TYPE_SERVICE.equals(basicInfo.getAssetType())) {
 			return new ServiceAsset(basicInfo, registry);
 		}
-		
+				
 		return asset;
+	}
+	
+	public Asset createArtifactAsset() {
+		String category = artifactInfo.getArtifact().getArtifactCategory();
+		if (ASSET_TYPE_WSDL.equalsIgnoreCase(category)) {
+			try {
+				return new WSDLAsset(artifactInfo, registry);
+			} catch (Exception e) {
+			}
+		} 
+		return new NullAsset();
 	}
 
 }

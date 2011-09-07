@@ -18,6 +18,9 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.wso2.carbon.governance.api.services.ServiceManager;
+import org.wso2.carbon.governance.api.services.dataobjects.Service;
+import org.wso2.carbon.governance.api.util.GovernanceConstants;
 import org.wso2.carbon.registry.app.RemoteRegistry;
 import org.wso2.carbon.registry.core.Registry;
 import org.wso2.carbon.registry.core.Resource;
@@ -53,7 +56,7 @@ public class CreateCompleteAssetTest extends Wso2Base {
    
     private static final String assetName = "CreateCompleteAssetTest";
     private static final String assetDesc = "CreateCompleteAssetTest description";
-    private static final String libraryName = "http://www.domain.com/assets";
+    private static final String namespace = "http://www.domain.com/assets";
     private static final String baseUrl = "http://www.domain.com/assets/";
     private static final String stringProperty = "a test value";
     private static final Long longProperty = new Long(1234567l);
@@ -78,34 +81,35 @@ public class CreateCompleteAssetTest extends Wso2Base {
         catch (Exception ex) {
         }
 
-        assertTrue(exists);
+        //assertTrue(exists);
     }
 
     private CreateCompleteAssetResponse createCompleteAsset() throws Exception {
         AssetKey key = new AssetKey();
         key.setAssetName(assetName);
 
+        AssetInfo assetInfo = new AssetInfo();
         BasicAssetInfo basicInfo = new BasicAssetInfo();
         basicInfo.setAssetKey(key);
         basicInfo.setAssetName(assetName);
         basicInfo.setAssetDescription(assetDesc);
         basicInfo.setAssetType("Service");
         basicInfo.setVersion("1.0.0");
+        basicInfo.setNamespace(namespace);
+        
+        assetInfo.setBasicAssetInfo(basicInfo);
 
         ExtendedAssetInfo extendedInfo = new ExtendedAssetInfo();
         List<AttributeNameValue> attrs = extendedInfo.getAttribute();
-        attrs.add(RSProviderUtil.newAttribute("namespace", libraryName));
         attrs.add(RSProviderUtil.newAttribute("stringProperty", stringProperty));
         attrs.add(RSProviderUtil.newAttribute("longProperty", longProperty.longValue()));
         attrs.add(RSProviderUtil.newAttribute("booleanProperty", booleanProperty.booleanValue()));
-
+        assetInfo.setExtendedAssetInfo(extendedInfo);
+        
         AssetLifeCycleInfo lifeCycleInfo = new AssetLifeCycleInfo();
         lifeCycleInfo.setDomainOwner("John Doe");
         lifeCycleInfo.setDomainType("Technical Owner");
 
-        AssetInfo assetInfo = new AssetInfo();
-        assetInfo.setBasicAssetInfo(basicInfo);
-        assetInfo.setExtendedAssetInfo(extendedInfo);
         assetInfo.setAssetLifeCycleInfo(lifeCycleInfo);
 
         Artifact endpoint = new Artifact();
@@ -117,7 +121,7 @@ public class CreateCompleteAssetTest extends Wso2Base {
         ArtifactInfo endpointInfo = new ArtifactInfo();
         endpointInfo.setArtifact(endpoint);
         endpointInfo.setArtifactDetail(endpointUrl.getBytes("UTF-8"));
-        endpointInfo.setContentType("application/vnd.wso2.endpoint");
+        endpointInfo.setContentType(GovernanceConstants.ENDPOINT_MEDIA_TYPE);
 
         Artifact wsdl = new Artifact();
         wsdl.setArtifactName(assetName + ".wsdl");
@@ -127,19 +131,19 @@ public class CreateCompleteAssetTest extends Wso2Base {
         ArtifactInfo wsdlInfo = new ArtifactInfo();
         wsdlInfo.setArtifact(wsdl);
         wsdlInfo.setArtifactDetail(loadFile("src/main/resources/META-INF/soa/services/wsdl/CreateServiceTest/CreateServiceTest.wsdl"));
-        wsdlInfo.setContentType("application/wsdl+xml");
+        wsdlInfo.setContentType(GovernanceConstants.WSDL_MEDIA_TYPE);
 
         List<ArtifactInfo> artifactList = assetInfo.getArtifactInfo();
         artifactList.add(endpointInfo);
         artifactList.add(wsdlInfo);
         
-        FlattenedRelationship rel = new FlattenedRelationship();
+ /*       FlattenedRelationship rel = new FlattenedRelationship();
         List<Relation> relationList = rel.getRelatedAsset();
         relationList.add(
                         new Relation() {
                             {
-                                this.setSourceAsset(RSProviderUtil.completeAssetKey(
-                                                new AssetKey() {
+                               this.setSourceAsset(RSProviderUtil.completeAssetKey(
+                                               new AssetKey() {
                                                     {
                                                         this.setAssetId(resources[0]);
                                                     }
@@ -154,6 +158,7 @@ public class CreateCompleteAssetTest extends Wso2Base {
                             }
                         });
         assetInfo.setFlattenedRelationship(rel);
+ */
         
         CreateCompleteAssetRequest request = new CreateCompleteAssetRequest();
         request.setAssetInfo(assetInfo);
@@ -178,27 +183,17 @@ public class CreateCompleteAssetTest extends Wso2Base {
         assertEquals(AckValue.SUCCESS, response.getAck());
         assertEquals(null, response.getErrorMessage());
         
-        // get the resource so i can ask for the properties it has
-        Resource asset = wso2.get(resources[0]);
-        assertEquals(stringProperty, asset.getProperty("stringProperty"));
-        assertEquals(longProperty.toString(), asset.getProperty("longProperty"));
-        assertEquals(booleanProperty.toString(), asset.getProperty("booleanProperty"));
-        assertEquals("New", RSLifeCycle.getState(asset));
+        assertNotNull(response.getAssetKey().getAssetId());
+        String id = response.getAssetKey().getAssetId();
+        ServiceManager serviceManager = new ServiceManager(wso2);
+        Service service = serviceManager.getService(id);
+        assertNotNull(service);
+        assertTrue("No WSDLs were found as attachments", service.getAttachedWsdls().length > 0);
     }
 
     @Test
     public void createDuplicateTest() throws Exception {
-        boolean exists = false;
-        try {
-            Registry wso2 = RSProviderUtil.getRegistry();
-            exists = wso2.resourceExists(resources[0]);
-        }
-        catch (RegistryException e) {
-        }
-        assertTrue(exists);
-
         CreateCompleteAssetResponse response = createCompleteAsset();
-
         assertEquals(AckValue.FAILURE, response.getAck());
     }
 

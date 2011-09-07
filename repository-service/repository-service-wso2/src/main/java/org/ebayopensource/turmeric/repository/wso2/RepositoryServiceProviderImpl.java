@@ -697,7 +697,7 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 			AssetFactory factory = new AssetFactory(basicInfo, wso2Registry);
 			Asset asset = factory.createAsset();
 
-			if (asset.hasName()) {
+			if (!asset.hasName()) {
 				return createErrorMissingAssetName(errorDataList, response);
 			}
 			
@@ -708,13 +708,15 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 			if (!asset.createAsset()) {
 				return createErrorAssetCreation(errorDataList, response);
 			}
-			
+						
+			asset.addAsset();
+
+			// Attach items to the asset after it has been added.
 			List<ArtifactInfo> artifactInfoList = request.getAssetInfo().getArtifactInfo();
 			for (ArtifactInfo artifactInfo : artifactInfoList) {
 				asset.addArtifact(artifactInfo);
 			}
-			
-			asset.addAsset();
+						
 			
 			
 //			RSProviderUtil.createDependencies(assetKey,
@@ -729,15 +731,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 							response,
 							RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
 		} finally {
-			try {
-				if (response.getAck() == AckValue.SUCCESS
-						&& response.getErrorMessage() == null) {
-					wso2.commitTransaction();
-				} else {
-					wso2.rollbackTransaction();
-				}
-			} catch (Exception e) {
-			}
 		}
 	}
 

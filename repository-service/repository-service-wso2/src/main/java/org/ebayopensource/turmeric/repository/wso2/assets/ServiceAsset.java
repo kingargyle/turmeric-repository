@@ -13,11 +13,15 @@ import javax.xml.namespace.QName;
 
 import org.ebayopensource.turmeric.repository.v2.services.*;
 import org.ebayopensource.turmeric.repository.wso2.Asset;
+import org.ebayopensource.turmeric.repository.wso2.AssetFactory;
 import org.ebayopensource.turmeric.repository.wso2.filters.DuplicateServiceFilter;
 import org.wso2.carbon.governance.api.common.dataobjects.GovernanceArtifact;
 import org.wso2.carbon.governance.api.exception.GovernanceException;
 import org.wso2.carbon.governance.api.services.ServiceManager;
 import org.wso2.carbon.governance.api.services.dataobjects.Service;
+import org.wso2.carbon.governance.api.util.GovernanceConstants;
+import org.wso2.carbon.governance.api.wsdls.WsdlManager;
+import org.wso2.carbon.governance.api.wsdls.dataobjects.Wsdl;
 import org.wso2.carbon.registry.core.Registry;
 
 public class ServiceAsset implements Asset {
@@ -25,9 +29,11 @@ public class ServiceAsset implements Asset {
 	private BasicAssetInfo basicInfo = null;
 	private ServiceManager serviceManager = null;
 	private Service service = null;
+	private Registry registry = null;
 	
 	public ServiceAsset(BasicAssetInfo bi, Registry registry) {
 		this.basicInfo = bi;
+		this.registry = registry;
 		serviceManager =  new ServiceManager(registry);
 	}
 	
@@ -108,7 +114,30 @@ public class ServiceAsset implements Asset {
 	
 	@Override
 	public GovernanceArtifact addArtifact(ArtifactInfo artifact) {
+		AssetFactory factory = new AssetFactory(artifact, registry);
+		Asset asset = factory.createArtifactAsset();
+		
+		asset.createAsset();
+		asset.addAsset();		
+		if (asset.getGovernanceArtifact() != null) {
+			if ("WSDL".equalsIgnoreCase(asset.getType())) {
+				try {
+					String artifactId = asset.getId();
+					WsdlManager manager = new WsdlManager(registry);
+					Wsdl wsdl = manager.getWsdl(artifactId);
+					service.attachWSDL(wsdl);
+					return asset.getGovernanceArtifact();
+				} catch (GovernanceException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 		return null;
+	}
+
+	@Override
+	public GovernanceArtifact getGovernanceArtifact() {
+		return service;
 	}
 	
 }

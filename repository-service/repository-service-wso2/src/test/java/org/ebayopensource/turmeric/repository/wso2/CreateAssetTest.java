@@ -95,8 +95,6 @@ public class CreateAssetTest extends Wso2Base {
 
     @Test
     public void createDuplicateTest() {
-        boolean exists = false;
-        Registry wso2 = RSProviderUtil.getRegistry();
         CreateAssetResponse response = createAsset();
         assertEquals(AckValue.FAILURE, response.getAck());
     }

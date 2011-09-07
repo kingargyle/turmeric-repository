@@ -42,8 +42,7 @@ public class WSDLAssetTest extends Wso2Base {
         
         WSDLAsset wsdlAsset = new WSDLAsset(wsdlInfo, wso2Registry);
         assertTrue("WSDL was not created.", wsdlAsset.createAsset());
-        
-
+        assertTrue("WSDL was not added.", wsdlAsset.addAsset());
     }
     
     private byte[] loadFile(String pathname) throws Exception {
