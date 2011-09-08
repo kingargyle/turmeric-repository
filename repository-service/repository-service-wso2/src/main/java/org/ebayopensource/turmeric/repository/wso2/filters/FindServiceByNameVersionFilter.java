@@ -9,13 +9,11 @@
 
 package org.ebayopensource.turmeric.repository.wso2.filters;
 
-import javax.xml.namespace.QName;
-
 import org.wso2.carbon.governance.api.exception.GovernanceException;
 import org.wso2.carbon.governance.api.services.ServiceFilter;
 import org.wso2.carbon.governance.api.services.dataobjects.Service;
 import org.ebayopensource.turmeric.repository.v2.services.*;
-import org.ebayopensource.turmeric.repository.wso2.assets.ServiceConstants;
+import org.ebayopensource.turmeric.repository.wso2.assets.AssetConstants;
 
 /**
  * Provides a WSO2 search filter to locate any duplicates.
@@ -45,8 +43,8 @@ public class FindServiceByNameVersionFilter implements ServiceFilter {
 	@Override
 	public boolean matches(Service service) throws GovernanceException {
 		
-		if (service.getAttribute(ServiceConstants.TURMERIC_SERVICE_NAME).equals(basicInfo.getAssetKey().getAssetName()) &&
-			service.getAttribute(ServiceConstants.TURMERIC_VERSION).equals(basicInfo.getVersion())) {
+		if (service.getAttribute(AssetConstants.TURMERIC_NAME).equals(basicInfo.getAssetKey().getAssetName()) &&
+			service.getAttribute(AssetConstants.TURMERIC_VERSION).equals(basicInfo.getVersion())) {
 			return true;
 		}
 		return false;

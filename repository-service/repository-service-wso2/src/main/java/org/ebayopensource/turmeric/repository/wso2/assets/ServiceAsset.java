@@ -24,6 +24,11 @@ import org.wso2.carbon.governance.api.wsdls.WsdlManager;
 import org.wso2.carbon.governance.api.wsdls.dataobjects.Wsdl;
 import org.wso2.carbon.registry.core.Registry;
 
+/**
+ * This represents a Service asset.
+ * @author dcarver
+ *
+ */
 public class ServiceAsset implements Asset {
 
 	private BasicAssetInfo basicInfo = null;
@@ -57,12 +62,12 @@ public class ServiceAsset implements Asset {
 		try {
 			service = serviceManager.newService(new QName(
 					basicInfo.getNamespace(), basicInfo.getAssetName()));
-			service.setAttribute(ServiceConstants.TURMERIC_SERVICE_NAME, basicInfo.getAssetName());
-			service.setAttribute(ServiceConstants.TURMERIC_SERVICE_DESCRIPTION,
+			service.setAttribute(AssetConstants.TURMERIC_NAME, basicInfo.getAssetName());
+			service.setAttribute(AssetConstants.TURMERIC_DESCRIPTION,
 					basicInfo.getAssetDescription());
-			service.setAttribute(ServiceConstants.TURMERIC_VERSION, basicInfo.getVersion());
-			service.setAttribute(ServiceConstants.TURMERIC_NAMESPACE, basicInfo.getNamespace());
-			service.setAttribute(ServiceConstants.TURMERIC_OWNER, basicInfo.getGroupName());
+			service.setAttribute(AssetConstants.TURMERIC_VERSION, basicInfo.getVersion());
+			service.setAttribute(AssetConstants.TURMERIC_NAMESPACE, basicInfo.getNamespace());
+			service.setAttribute(AssetConstants.TURMERIC_OWNER, basicInfo.getGroupName());
 		} catch (GovernanceException e) {
 			return false;
 		}
@@ -94,7 +99,7 @@ public class ServiceAsset implements Asset {
 	@Override
 	public boolean addAsset() {
 		try {
-			serviceManager.addService(service);			
+			serviceManager.addService(service);
 		} catch (GovernanceException e) {
 			return false;
 		}
@@ -174,6 +179,7 @@ public class ServiceAsset implements Asset {
 		if (assetKey.getAssetId() != null) {
 			try {
 				service = serviceManager.getService(assetKey.getAssetId());
+				return;
 			} catch (GovernanceException e) {
 			}
 		}
@@ -191,6 +197,56 @@ public class ServiceAsset implements Asset {
 		} catch (GovernanceException e) {
 		}
 		return services;
+	}
+
+	@Override
+	public void lockAsset() {
+		try {
+			String lock = service.getAttribute("turmeric-lock");
+			if (lock == null) {
+				service.addAttribute("turmeric-lock", "true");
+				return;
+			}
+			service.setAttribute("turmeric-lock", "true");
+		} catch (GovernanceException e) {
+		}
+		
+	}
+
+	@Override
+	public void unlock() {
+		try {
+			String lock = service.getAttribute("turmeric-lock");
+			if (lock == null) {
+				service.addAttribute("turmeric-lock", "false");
+				return;
+			}
+			service.setAttribute("turmeric-lock", "false");
+		} catch (GovernanceException e) {
+		}
+		
+	}
+
+	@Override
+	public boolean isLocked() {
+		try {
+			String lock = service.getAttribute("turmeric-lock");
+			if (lock == null || lock.equals("false")) {
+				return false;
+			}
+		} catch (GovernanceException e) {
+		}
+		return true;
+	}
+	
+	@Override
+	public boolean save() {
+		try {
+			serviceManager.updateService(service);
+		} catch (GovernanceException e) {
+			return false;
+		}
+		return true;
 	}
 	
 }

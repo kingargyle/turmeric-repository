@@ -15,7 +15,7 @@ import org.wso2.carbon.governance.api.exception.GovernanceException;
 import org.wso2.carbon.governance.api.services.ServiceFilter;
 import org.wso2.carbon.governance.api.services.dataobjects.Service;
 import org.ebayopensource.turmeric.repository.v2.services.*;
-import org.ebayopensource.turmeric.repository.wso2.assets.ServiceConstants;
+import org.ebayopensource.turmeric.repository.wso2.assets.AssetConstants;
 
 /**
  * Provides a WSO2 search filter to locate any duplicates.
@@ -46,7 +46,7 @@ public class DuplicateServiceFilter implements ServiceFilter {
 	public boolean matches(Service service) throws GovernanceException {
 		QName qname = new QName(basicInfo.getNamespace(), basicInfo.getAssetName());
 		if (service.getQName().equals(qname) &&
-			service.getAttribute(ServiceConstants.TURMERIC_VERSION).equals(basicInfo.getVersion())) {
+			service.getAttribute(AssetConstants.TURMERIC_VERSION).equals(basicInfo.getVersion())) {
 			return true;
 		}
 		return false;

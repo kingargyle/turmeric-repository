@@ -10,16 +10,12 @@
 package org.ebayopensource.turmeric.repository.wso2;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assume.assumeTrue;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.wso2.carbon.registry.app.RemoteRegistry;
 import org.wso2.carbon.registry.core.Registry;
 import org.wso2.carbon.registry.core.Resource;
 import org.wso2.carbon.registry.core.exceptions.RegistryException;

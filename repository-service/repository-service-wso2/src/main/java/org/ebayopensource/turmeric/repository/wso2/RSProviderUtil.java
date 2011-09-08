@@ -9,30 +9,15 @@
 
 package org.ebayopensource.turmeric.repository.wso2;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Properties;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.parsers.*;
+import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
+import javax.xml.xpath.*;
 
 import org.apache.tools.ant.filters.StringInputStream;
 import org.w3c.dom.DOMImplementation;
@@ -49,11 +34,7 @@ import org.wso2.carbon.registry.core.Resource;
 import org.wso2.carbon.registry.core.exceptions.RegistryException;
 import org.ebayopensource.turmeric.services.common.error.RepositoryServiceErrorDescriptor;
 
-import org.ebayopensource.turmeric.common.v1.types.AckValue;
-import org.ebayopensource.turmeric.common.v1.types.BaseResponse;
-import org.ebayopensource.turmeric.common.v1.types.CommonErrorData;
-import org.ebayopensource.turmeric.common.v1.types.ErrorMessage;
-import org.ebayopensource.turmeric.common.v1.types.ErrorParameter;
+import org.ebayopensource.turmeric.common.v1.types.*;
 import org.ebayopensource.turmeric.repository.v2.services.*;
 
 public class RSProviderUtil {
@@ -260,7 +241,7 @@ public class RSProviderUtil {
 			if (assetKey.getAssetName() == null) {
 				assetKey.setAssetName(assetId.substring(assetId
 						.lastIndexOf('/') + 1));
-			}
+			}	
 			
 			if (assetId == null && assetKey.getAssetName() != null && assetVersion != null && assetType != null) {
 				assetId = assetKey.getAssetName() + assetType + assetVersion;
@@ -278,30 +259,6 @@ public class RSProviderUtil {
 		}
 
 		return assetKey;
-	}
-
-	private static CharSequence flipTokens(String stringToFlip, String separator) {
-		String[] tokens = stringToFlip.split("\\"+separator);
-		StringBuilder result = new StringBuilder();
-		for (int i = tokens.length - 1; i >= 0; i--) {
-			result.append(tokens[i]).append(separator);
-		}
-		if(separator.equals(String.valueOf(result.charAt(result.length()-1)))){
-			result.deleteCharAt(result.length()-1);
-		}
-		return result.toString();
-	}
-
-	private static String extractDomainName(String libraryName) {
-
-		String result = "";
-		try {
-			URI uri = new URI(libraryName);
-			result = uri.getHost();
-		} catch (URISyntaxException e) {
-			// don't do anything
-		}
-		return result;
 	}
 
 	/**
@@ -621,7 +578,6 @@ public class RSProviderUtil {
 		if (artifactList != null) {
 			for (ArtifactInfo artifactInfo : artifactList) {
 				Artifact artifact = artifactInfo.getArtifact();
-				ArtifactValueType valueType = artifact.getArtifactValueType();
 				byte[] content = artifactInfo.getArtifactDetail();
 
 				AssetKey artifactKey = new AssetKey();
@@ -1089,7 +1045,6 @@ public class RSProviderUtil {
 	public static String getAssetInfoXml(AssetInfo assetInfo) throws Exception {
 		BasicAssetInfo basicInfo = assetInfo.getBasicAssetInfo();
 
-		ExtendedAssetInfo extendedInfo = assetInfo.getExtendedAssetInfo();
 		Document doc = createXmlDoc(basicInfo.getAssetName(),
 				basicInfo.getAssetDescription());
 

@@ -9,7 +9,6 @@
 
 package org.ebayopensource.turmeric.repository.wso2;
 
-import org.ebayopensource.turmeric.repository.v2.services.Artifact;
 import org.ebayopensource.turmeric.repository.v2.services.ArtifactInfo;
 import org.wso2.carbon.governance.api.common.dataobjects.GovernanceArtifact;
 
@@ -100,5 +99,30 @@ public interface Asset {
 	 */
 	public void findAsset();
 	
+	/**
+	 * Lock the asset.  The asset should be saved for this to take affect.
+	 */
+	public void lockAsset();
 	
+	
+	/**
+	 * Unlock the asset. The asset should be saved for this to take affect.
+	 */
+	
+	public void unlock();
+	
+	/**
+	 * Is the asset Locked.
+	 * 
+	 * @return true or false.
+	 */
+	public boolean isLocked();
+	
+	/**
+	 * Saves the service after it has been added.  This is equivalant to an update.
+	 * 
+	 * @return true or false if it was saved successfully.
+	 */
+	public boolean save();
+
 }

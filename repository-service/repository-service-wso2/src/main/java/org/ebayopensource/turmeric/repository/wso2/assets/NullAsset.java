@@ -89,7 +89,6 @@ public class NullAsset implements Asset {
 
 	@Override
 	public boolean exists() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -99,6 +98,26 @@ public class NullAsset implements Asset {
 	@Override
 	public void findAsset() {
 		
+	}
+
+	@Override
+	public void lockAsset() {
+		
+	}
+
+	@Override
+	public void unlock() {
+		
+	}
+
+	@Override
+	public boolean isLocked() {
+		return false;
+	}
+
+	@Override
+	public boolean save() {
+		return true;
 	}
 
 }

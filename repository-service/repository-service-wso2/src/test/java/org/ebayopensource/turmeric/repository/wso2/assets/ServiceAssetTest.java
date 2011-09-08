@@ -11,14 +11,9 @@ package org.ebayopensource.turmeric.repository.wso2.assets;
 
 import static org.junit.Assert.*;
 
-import java.io.File;
-import java.io.FileInputStream;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.wso2.carbon.governance.api.services.ServiceManager;
-import org.wso2.carbon.governance.api.services.dataobjects.Service;
-import org.wso2.carbon.governance.api.util.GovernanceConstants;
 import org.wso2.carbon.registry.core.Registry;
 
 import org.ebayopensource.turmeric.repository.v2.services.*;

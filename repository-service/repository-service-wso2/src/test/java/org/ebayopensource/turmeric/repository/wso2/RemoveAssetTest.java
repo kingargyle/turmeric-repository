@@ -12,17 +12,10 @@ package org.ebayopensource.turmeric.repository.wso2;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.wso2.carbon.registry.app.RemoteRegistry;
 import org.wso2.carbon.registry.core.Registry;
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
-import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
-import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
-import org.ebayopensource.turmeric.repository.v2.services.CreateAssetRequest;
-import org.ebayopensource.turmeric.repository.v2.services.CreateAssetResponse;
-import org.ebayopensource.turmeric.repository.v2.services.RemoveAssetRequest;
-import org.ebayopensource.turmeric.repository.v2.services.RemoveAssetResponse;
+import org.ebayopensource.turmeric.repository.v2.services.*;
 
 /**
  * @author mgorovoy
@@ -32,10 +25,10 @@ public class RemoveAssetTest extends Wso2Base {
     private static final String[] resources = {"/_system/governance/trunk/services/http/www/domain/com/assets/RemoveAssetTest"};
     private static final String assetName = "RemoveAssetTest";
     private static final String assetDesc = "RemoveAssetTest description";
-    private static final String libraryName = "http://www.domain.com/assets";
 
 
-    @Before
+    @Override
+	@Before
     public void setUp() throws Exception {
     	super.setUp();
         boolean exists = false;
@@ -79,7 +72,6 @@ public class RemoveAssetTest extends Wso2Base {
     }
     
     @Test
-    @Ignore
     public void removeAssetTest() {
         CreateAssetResponse response = createAsset();
         

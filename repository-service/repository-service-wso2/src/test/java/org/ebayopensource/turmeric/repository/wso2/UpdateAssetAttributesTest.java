@@ -15,9 +15,7 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.wso2.carbon.registry.app.RemoteRegistry;
 import org.wso2.carbon.registry.core.Registry;
 import org.wso2.carbon.registry.core.exceptions.RegistryException;
 
@@ -125,9 +123,9 @@ public class UpdateAssetAttributesTest extends Wso2Base {
         return provider.createCompleteAsset(request);
     }
 
-    private UpdateCompleteAssetResponse replaceAsset(String assetId) throws Exception {
-        AssetKey key = new AssetKey();
-        key.setAssetId(assetId);
+    private UpdateCompleteAssetResponse replaceAsset(AssetKey assetKey) throws Exception {
+        AssetKey key = assetKey;
+        key.setType("Service");
 
         LockAssetRequest lockReq = new LockAssetRequest();
         lockReq.setAssetKey(key);
@@ -274,7 +272,7 @@ public class UpdateAssetAttributesTest extends Wso2Base {
         assertEquals(null, response.getErrorMessage());
 
         // then, update the complete asset, replacing all its related objects
-        UpdateCompleteAssetResponse responseUpdate = replaceAsset(response.getAssetKey().getAssetId());
+        UpdateCompleteAssetResponse responseUpdate = replaceAsset(response.getAssetKey());
         assertEquals(AckValue.SUCCESS, responseUpdate.getAck());
         assertEquals(null, responseUpdate.getErrorMessage());
 

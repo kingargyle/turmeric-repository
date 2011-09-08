@@ -9,15 +9,12 @@
 
 package org.ebayopensource.turmeric.repository.wso2.assets;
 
-import java.util.UUID;
-
 import org.ebayopensource.turmeric.repository.v2.services.ArtifactInfo;
 import org.ebayopensource.turmeric.repository.wso2.Asset;
 import org.wso2.carbon.governance.api.common.dataobjects.GovernanceArtifact;
 import org.wso2.carbon.governance.api.exception.GovernanceException;
 import org.wso2.carbon.governance.api.wsdls.dataobjects.Wsdl;
 import org.wso2.carbon.registry.core.Registry;
-import org.wso2.carbon.registry.core.exceptions.RegistryException;
 
 /**
  * Represents a WSDL asset.
@@ -80,9 +77,9 @@ public class WSDLAsset implements Asset {
 	public boolean createAsset() {
 		try {
 			wsdl = wsdlManager.newWsdl(registry, artifactInfo.getArtifactDetail()); 
-			wsdl.setAttribute(WSDLConstants.WSDL_NAME, artifactInfo.getArtifact().getArtifactName());
-			wsdl.setAttribute(WSDLConstants.WSDL_DISPLAY_NAME, artifactInfo.getArtifact().getArtifactDisplayName());
-			wsdl.setAttribute(WSDLConstants.WSDL_CATEGORY,artifactInfo.getArtifact().getArtifactCategory());
+			wsdl.setAttribute(AssetConstants.TURMERIC_NAME, artifactInfo.getArtifact().getArtifactName());
+			wsdl.setAttribute(AssetConstants.TURMERIC_DISPLAY_NAME, artifactInfo.getArtifact().getArtifactDisplayName());
+			wsdl.setAttribute(AssetConstants.TURMERIC_ARTIFACT_CATEGORY,artifactInfo.getArtifact().getArtifactCategory());
 			
 		} catch (Exception ex) {
 			return false;
@@ -130,6 +127,58 @@ public class WSDLAsset implements Asset {
 	@Override
 	public void findAsset() {
 		
+	}
+
+	@Override
+	public void lockAsset() {
+		try {
+			String lock = wsdl.getAttribute(AssetConstants.TURMERIC_LOCK);
+			if (lock == null) {
+				wsdl.addAttribute(AssetConstants.TURMERIC_LOCK, "true");
+				return;
+			}
+			wsdl.setAttribute(AssetConstants.TURMERIC_LOCK, "true");
+		} catch (GovernanceException e) {
+		}
+		
+	}
+
+	@Override
+	public void unlock() {
+		try {
+			String lock = wsdl.getAttribute(AssetConstants.TURMERIC_LOCK);
+			if (lock == null) {
+				wsdl.addAttribute(AssetConstants.TURMERIC_LOCK, "false");
+				return;
+			}
+			wsdl.setAttribute(AssetConstants.TURMERIC_LOCK, "false");
+		} catch (GovernanceException e) {
+		}
+		
+	}
+
+	@Override
+	public boolean isLocked() {
+		String lock = null;
+		try {
+			lock = wsdl.getAttribute(AssetConstants.TURMERIC_LOCK);
+			if (lock == null) {
+				return false;
+			}
+		} catch (GovernanceException ex) {
+			return false;
+		}
+		return lock.equals("true");
+	}
+
+	@Override
+	public boolean save() {
+		try {
+			wsdlManager.updateWsdl(wsdl);
+		} catch (GovernanceException ex) {
+			return false;
+		}
+		return true;
 	}
 
 }

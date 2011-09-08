@@ -14,9 +14,7 @@ import static org.junit.Assert.*;
 import java.util.List;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.wso2.carbon.registry.app.RemoteRegistry;
 import org.wso2.carbon.registry.core.Registry;
 import org.wso2.carbon.registry.core.exceptions.RegistryException;
 
@@ -64,7 +62,8 @@ public class UpdateAssetDependenciesTest extends Wso2Base {
     private static final String libraryName = "http://www.ebay.com/marketplace/services";
     private static final String baseUrl = "http://www.domain.com/services/";
 
-    @Before
+    @Override
+	@Before
     public void setUp() throws Exception {
     	super.setUp();
     	

@@ -31,7 +31,7 @@ public class WSDLAssetTest extends Wso2Base {
         Registry wso2Registry = RSProviderUtil.getRegistry();        
         Artifact wsdl = new Artifact();
         wsdl.setArtifactName(ASSETNAME + ".wsdl");
-        wsdl.setArtifactCategory(WSDLConstants.WSDL_TYPE);
+        wsdl.setArtifactCategory(AssetConstants.TURMERIC_TYPE);
         wsdl.setArtifactValueType(ArtifactValueType.FILE);
         wsdl.setTargetNamespace("http://www.example.org/" + ASSETNAME);
 

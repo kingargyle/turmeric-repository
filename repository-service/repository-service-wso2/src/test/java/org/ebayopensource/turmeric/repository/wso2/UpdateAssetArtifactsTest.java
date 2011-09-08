@@ -16,12 +16,8 @@ import static org.junit.Assume.assumeTrue;
 
 import java.util.List;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.wso2.carbon.registry.app.RemoteRegistry;
 import org.wso2.carbon.registry.core.Registry;
 import org.wso2.carbon.registry.core.exceptions.RegistryException;
 
@@ -43,7 +39,6 @@ import org.ebayopensource.turmeric.repository.v2.services.LockAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.LockAssetResponse;
 import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetArtifactsRequest;
 import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetArtifactsResponse;
-import org.ebayopensource.turmeric.repository.wso2.utils.ServerUtils;
 
 /**
  * @author mgorovoy
@@ -60,7 +55,6 @@ public class UpdateAssetArtifactsTest extends Wso2Base {
 
     private static final String assetName = "UpdateAssetArtifactsTest";
     private static final String assetDesc = "UpdateAssetArtifactsTest description";
-    private static final String libraryName = "http://www.domain.com/assets";
     private static final String baseUrl = "http://www.domain.com/assets/";
 
     @Before

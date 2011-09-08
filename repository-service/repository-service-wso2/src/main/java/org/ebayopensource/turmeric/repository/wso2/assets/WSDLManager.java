@@ -112,7 +112,7 @@ public class WSDLManager {
             // setting the wsdl content
             setContent(wsdl, wsdlResource);
             
-            String name = wsdl.getAttribute(WSDLConstants.WSDL_NAME);
+            String name = wsdl.getAttribute(AssetConstants.TURMERIC_NAME);
             
             if (!name.endsWith(".wsdl")) {
             	name = name + ".wsdl";

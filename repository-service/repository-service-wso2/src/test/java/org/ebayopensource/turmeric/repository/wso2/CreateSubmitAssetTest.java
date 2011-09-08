@@ -17,9 +17,7 @@ import java.io.FileInputStream;
 import java.util.List;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.wso2.carbon.registry.app.RemoteRegistry;
 import org.wso2.carbon.registry.core.Registry;
 import org.wso2.carbon.registry.core.Resource;
 import org.wso2.carbon.registry.core.exceptions.RegistryException;
@@ -60,7 +58,8 @@ public class CreateSubmitAssetTest extends Wso2Base {
     private static final Long longProperty = new Long(1234567l);
     private static final Boolean booleanProperty = Boolean.FALSE;
 
-    @Before
+    @Override
+	@Before
     public void setUp() throws Exception{
         boolean exists = false;
         try {

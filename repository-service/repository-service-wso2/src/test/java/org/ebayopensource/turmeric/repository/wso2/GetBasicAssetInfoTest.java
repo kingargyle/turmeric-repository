@@ -28,7 +28,8 @@ import org.ebayopensource.turmeric.repository.wso2.filters.FindServiceByNameAndN
 public class GetBasicAssetInfoTest extends Wso2Base {
 	
 	BasicAssetInfo basicInfo = null;
-    @Before
+    @Override
+	@Before
     public void setUp() throws Exception {
     	super.setUp();
         boolean exists = false;

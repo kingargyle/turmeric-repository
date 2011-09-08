@@ -18,39 +18,14 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.StringWriter;
 import java.net.URL;
 import java.util.List;
 
-import javax.xml.namespace.QName;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
-import org.w3c.dom.DOMImplementation;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.wso2.carbon.governance.api.services.ServiceManager;
-import org.wso2.carbon.governance.api.services.dataobjects.Service;
 import org.wso2.carbon.registry.app.RemoteRegistry;
 import org.wso2.carbon.registry.core.Registry;
 import org.wso2.carbon.registry.core.Resource;
 
-import org.ebayopensource.turmeric.repository.v2.services.Artifact;
-import org.ebayopensource.turmeric.repository.v2.services.ArtifactInfo;
-import org.ebayopensource.turmeric.repository.v2.services.AssetInfo;
-import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
-import org.ebayopensource.turmeric.repository.v2.services.AssetLifeCycleInfo;
-import org.ebayopensource.turmeric.repository.v2.services.AttributeNameValue;
-import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
-import org.ebayopensource.turmeric.repository.v2.services.ExtendedAssetInfo;
-import org.ebayopensource.turmeric.repository.v2.services.FlattenedRelationship;
-import org.ebayopensource.turmeric.repository.v2.services.Relation;
+import org.ebayopensource.turmeric.repository.v2.services.*;
 import org.ebayopensource.turmeric.repository.wso2.assets.ServiceAsset;
 import org.ebayopensource.turmeric.repository.wso2.utils.AbstractCarbonIntegrationTestCase;
 import org.junit.Before;
@@ -73,7 +48,8 @@ public class Wso2Base extends AbstractCarbonIntegrationTestCase {
     
     public static final String BASE = "/_system/governance/trunk";
     
-    @Before
+    @Override
+	@Before
     public void setUp() throws Exception {
     	super.setUp();
     	
@@ -219,53 +195,7 @@ public class Wso2Base extends AbstractCarbonIntegrationTestCase {
         }
     }
 
-    private static Document createXmlDoc(String assetName, String assetDescription,
-                    String assetNamespace) throws ParserConfigurationException {
-        // prepare xml document
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        DOMImplementation impl = builder.getDOMImplementation();
-
-        Document doc = impl.createDocument(null, null, null);
-
-        Element name = doc.createElement("name");
-        name.setTextContent(assetName);
-        Element desc = doc.createElement("description");
-        desc.setTextContent(assetDescription);
-        Element ns = doc.createElement("namespace");
-        ns.setTextContent(assetNamespace);
-
-        // <overview> element
-        Element overview = doc.createElement("overview");
-        overview.appendChild(name);
-        overview.appendChild(desc);
-        overview.appendChild(ns);
-
-        // <serviceMetaData> element
-        Element root = doc.createElement("serviceMetaData");
-        root.setAttribute("xmlns", "http://www.wso2.org/governance/metadata");
-        root.appendChild(overview);
-
-        doc.appendChild(root);
-
-        return doc;
-    }
-
-    public static String getXmlString(Document doc) throws Exception {
-        // transform the Document into a String
-        TransformerFactory tf = TransformerFactory.newInstance();
-        Transformer transformer = tf.newTransformer();
-        transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-        transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-
-        StringWriter sw = new StringWriter();
-        transformer.transform(new DOMSource(doc), new StreamResult(sw));
-        return sw.toString();
-    }
-
-    
+   
 
     public void validateBasicAssetInfo(BasicAssetInfo basicAssetInfo) {
         boolean result = true;

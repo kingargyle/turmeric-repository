@@ -12,26 +12,21 @@ package org.ebayopensource.turmeric.repository.wso2;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.wso2.carbon.governance.api.services.ServiceManager;
 import org.wso2.carbon.governance.api.services.dataobjects.Service;
 import org.wso2.carbon.registry.core.Registry;
 
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
-import org.ebayopensource.turmeric.repository.v2.services.ArtifactInfo;
-import org.ebayopensource.turmeric.repository.v2.services.AssetInfo;
 import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
-import org.ebayopensource.turmeric.repository.v2.services.AttributeNameValue;
 import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
-import org.ebayopensource.turmeric.repository.v2.services.ExtendedAssetInfo;
 import org.ebayopensource.turmeric.repository.v2.services.GetAssetInfoRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetAssetInfoResponse;
 import org.ebayopensource.turmeric.repository.wso2.filters.FindServiceByNameVersionFilter;
 
 public class GetAssetInfoTest extends Wso2Base {
-    @Before
+    @Override
+	@Before
     public void setUp() throws Exception {
     	super.setUp();
         boolean exists = false;
@@ -106,36 +101,5 @@ public class GetAssetInfoTest extends Wso2Base {
 
         assertEquals(AckValue.SUCCESS, response.getAck());
         assertEquals(null, response.getErrorMessage());
-
-        //checkIsRespositoryMetadataService(response);
-    }
-
-    private void checkIsRespositoryMetadataService(GetAssetInfoResponse response) throws Exception {
-        AssetInfo info = response.getAssetInfo();
-        BasicAssetInfo basic_info = info.getBasicAssetInfo();
-
-        System.err.println(basic_info.getAssetName() + " version=" + response.getVersion());
-        assertEquals("/_system/governance/trunk/services/com/ebay/www/marketplace/services/RepositoryMetadataService",
-                        basic_info.getAssetKey().getAssetId());
-        assertEquals("RepositoryMetadataService", basic_info.getAssetKey().getAssetName());
-        assertEquals("RepositoryMetadataService", basic_info.getAssetName());
-
-        ExtendedAssetInfo extended = info.getExtendedAssetInfo();
-        System.err.println("Extended Attributes: " + extended.getAttribute().size());
-        for (AttributeNameValue attr : extended.getAttribute()) {
-            System.err.println("Extended attr " + attr.getAttributeName() + " = "
-                            + attr.getAttributeValueString());
-        }
-
-        boolean wsdl = false;
-        for (ArtifactInfo ai : info.getArtifactInfo()) {
-
-            wsdl |= "application/wsdl+xml".equals(ai.getContentType())
-                            && "RepositoryMetadataService.wsdl".equals(ai.getArtifact()
-                                            .getArtifactName())
-                            && new String(ai.getArtifactDetail(), "utf-8").indexOf("<wsdl:") > 0;
-        }
-        assertTrue(wsdl);
-        validateAssetInfo(info);
     }
 }

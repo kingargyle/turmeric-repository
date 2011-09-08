@@ -15,31 +15,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.wso2.carbon.governance.api.services.ServiceManager;
 import org.wso2.carbon.governance.api.services.dataobjects.Service;
 import org.wso2.carbon.governance.api.util.GovernanceConstants;
-import org.wso2.carbon.registry.app.RemoteRegistry;
 import org.wso2.carbon.registry.core.Registry;
-import org.wso2.carbon.registry.core.Resource;
 import org.wso2.carbon.registry.core.exceptions.RegistryException;
 
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
-import org.ebayopensource.turmeric.repository.v2.services.Artifact;
-import org.ebayopensource.turmeric.repository.v2.services.ArtifactInfo;
-import org.ebayopensource.turmeric.repository.v2.services.ArtifactValueType;
-import org.ebayopensource.turmeric.repository.v2.services.AssetInfo;
-import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
-import org.ebayopensource.turmeric.repository.v2.services.AssetLifeCycleInfo;
-import org.ebayopensource.turmeric.repository.v2.services.AttributeNameValue;
-import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
-import org.ebayopensource.turmeric.repository.v2.services.CreateCompleteAssetRequest;
-import org.ebayopensource.turmeric.repository.v2.services.CreateCompleteAssetResponse;
-import org.ebayopensource.turmeric.repository.v2.services.ExtendedAssetInfo;
-import org.ebayopensource.turmeric.repository.v2.services.FlattenedRelationship;
-import org.ebayopensource.turmeric.repository.v2.services.Relation;
+import org.ebayopensource.turmeric.repository.v2.services.*;
 
 /**
  * @author mgorovoy
@@ -52,8 +36,6 @@ public class CreateCompleteAssetTest extends Wso2Base {
             "/_system/governance/trunk/services/com/domain/www/assets/CreateCompleteAssetTest",
             "/_system/governance/trunk/endpoints/com/domain/www/ep-CreateCompleteAssetTest", };
 
-    private static final String dstAsset = "/_system/governance/trunk/services/com/domain/www/marketplace/services/RepositoryMetadataService";
-   
     private static final String assetName = "CreateCompleteAssetTest";
     private static final String assetDesc = "CreateCompleteAssetTest description";
     private static final String namespace = "http://www.domain.com/assets";
@@ -61,28 +43,6 @@ public class CreateCompleteAssetTest extends Wso2Base {
     private static final String stringProperty = "a test value";
     private static final Long longProperty = new Long(1234567l);
     private static final Boolean booleanProperty = Boolean.FALSE;
-
-    @Before
-    @Override
-    public void setUp() throws Exception {
-    	super.setUp();
-    	
-        boolean exists = false;
-        try {
-            Registry wso2 = RSProviderUtil.getRegistry();
-            exists = wso2.resourceExists("/");
-
-            for (String resource : resources) {
-                if (wso2.resourceExists(resource)) {
-                    wso2.delete(resource);
-                }
-            }
-        }
-        catch (Exception ex) {
-        }
-
-        //assertTrue(exists);
-    }
 
     private CreateCompleteAssetResponse createCompleteAsset() throws Exception {
         AssetKey key = new AssetKey();
