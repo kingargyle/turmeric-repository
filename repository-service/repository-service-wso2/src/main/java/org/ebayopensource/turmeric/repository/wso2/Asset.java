@@ -83,5 +83,22 @@ public interface Asset {
 	
 	public GovernanceArtifact getGovernanceArtifact();
 	
+	/**
+	 * Whether the asset exists or not in the Registry
+	 * 
+	 * @return true or false;
+	 */
+	public boolean exists();
+	
+	
+	/**
+	 * This method finds the asset within the registry.
+	 * 
+	 * It is up to the individual asset to know how best to find itself, adopters
+	 * should call exists to make sure the assset exists in the registry.  After
+	 * finding the asset, a GovernanceArtifact can be returned.
+	 */
+	public void findAsset();
+	
 	
 }

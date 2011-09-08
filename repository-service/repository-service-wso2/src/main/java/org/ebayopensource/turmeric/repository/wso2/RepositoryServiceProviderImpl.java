@@ -852,34 +852,36 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	 */
 	@Override
 	public GetAssetInfoResponse getAssetInfo(GetAssetInfoRequest request) {
-		System.err
-				.println("RepositoryServiceProviderImpl.getAssetInfo: getting assetInfo");
 		Registry wso2 = RSProviderUtil.getRegistry();
 		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
 		GetAssetInfoResponse response = new GetAssetInfoResponse();
 
 		try {
-			AssetKey assetKey = RSProviderUtil.completeAssetKey(
-					request.getAssetKey(), request.getAssetType(), null);
+			AssetKey assetKey = request.getAssetKey();
 			String assetId = assetKey.getAssetId();
+			BasicAssetInfo basicInfo = new BasicAssetInfo();
+			basicInfo.setAssetKey(assetKey);
+			basicInfo.setAssetName(assetKey.getAssetName());
+			basicInfo.setAssetType(assetKey.getType());
+			basicInfo.setVersion(assetKey.getVersion());
+			
+			AssetFactory factory = new AssetFactory(basicInfo, wso2);
+			Asset asset = factory.createAsset();
 
-			if (!wso2.resourceExists(assetId)) {
-				errorDataList
-						.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
-								.newError());
-				return RSProviderUtil.addErrorsToResponse(errorDataList,
-						response);
+			if (!asset.exists()) {
+				return createAssetNotFoundError(errorDataList, response);
 			}
+			
+			asset.findAsset();
 
-			Resource asset = wso2.get(assetId);
-			AssetInfo assetInfo = RSProviderUtil.getAssetInfo(assetKey, asset);
+			if (asset.getGovernanceArtifact() == null) {
+				return createAssetNotFoundError(errorDataList, response);
+			}
+			
+			AssetInfo assetInfo = RSProviderUtil.getAssetInfo(assetKey, asset.getGovernanceArtifact());
 
 			if (assetInfo == null) {
-				errorDataList
-						.add(RepositoryServiceErrorDescriptor.ASSET_TYPE_EXCEPTION
-								.newError());
-				return RSProviderUtil.addErrorsToResponse(errorDataList,
-						response);
+				return createAssetTypeException(errorDataList, response);
 			}
 
 			// populate the response
@@ -895,6 +897,15 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 							response,
 							RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
 		}
+	}
+
+	private GetAssetInfoResponse createAssetTypeException(
+			List<CommonErrorData> errorDataList, GetAssetInfoResponse response) {
+		errorDataList
+				.add(RepositoryServiceErrorDescriptor.ASSET_TYPE_EXCEPTION
+						.newError());
+		return RSProviderUtil.addErrorsToResponse(errorDataList,
+				response);
 	}
 
 	/**
@@ -1281,9 +1292,9 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 		return basicAssetInfo;
 	}
 
-	private GetBasicAssetInfoResponse createAssetNotFoundError(
+	private <T extends BaseResponse> T createAssetNotFoundError(
 			List<CommonErrorData> errorDataList,
-			GetBasicAssetInfoResponse response) {
+			T response) {
 		errorDataList
 		.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
 				.newError());

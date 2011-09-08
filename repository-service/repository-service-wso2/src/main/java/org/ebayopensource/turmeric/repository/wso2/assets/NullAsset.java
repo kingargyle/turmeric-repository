@@ -87,4 +87,18 @@ public class NullAsset implements Asset {
 		return null;
 	}
 
+	@Override
+	public boolean exists() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/**
+	 * We will always return a Null for governance artifact.
+	 */
+	@Override
+	public void findAsset() {
+		
+	}
+
 }

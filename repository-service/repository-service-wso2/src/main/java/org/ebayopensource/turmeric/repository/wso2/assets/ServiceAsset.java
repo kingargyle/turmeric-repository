@@ -15,6 +15,7 @@ import org.ebayopensource.turmeric.repository.v2.services.*;
 import org.ebayopensource.turmeric.repository.wso2.Asset;
 import org.ebayopensource.turmeric.repository.wso2.AssetFactory;
 import org.ebayopensource.turmeric.repository.wso2.filters.DuplicateServiceFilter;
+import org.ebayopensource.turmeric.repository.wso2.filters.FindServiceByNameVersionFilter;
 import org.wso2.carbon.governance.api.common.dataobjects.GovernanceArtifact;
 import org.wso2.carbon.governance.api.exception.GovernanceException;
 import org.wso2.carbon.governance.api.services.ServiceManager;
@@ -137,6 +138,59 @@ public class ServiceAsset implements Asset {
 	@Override
 	public GovernanceArtifact getGovernanceArtifact() {
 		return service;
+	}
+
+	@Override
+	public boolean exists() {
+		if (basicInfo.getAssetKey().getAssetId() != null) {
+			if (findByID() != null){
+				return true;
+			}
+		}
+		
+		Service[] services = findService();
+		if (services == null) {
+			return false;
+		}
+		return services.length > 0;
+	}
+
+	private Service findByID() {
+		Service s = null;
+		try {
+			s = serviceManager.getService(basicInfo.getAssetKey().getAssetId());
+		} catch (GovernanceException e) {
+		}
+		return s;
+	}
+
+	@Override
+	public void findAsset() {
+		AssetKey assetKey = null;
+		if (basicInfo.getAssetKey() != null) {
+			assetKey = basicInfo.getAssetKey();
+		}
+		
+		if (assetKey.getAssetId() != null) {
+			try {
+				service = serviceManager.getService(assetKey.getAssetId());
+			} catch (GovernanceException e) {
+			}
+		}
+		
+		findService();
+	}
+
+	private Service[] findService() {
+		Service[] services = null;
+		try {
+			services = serviceManager.findServices(new FindServiceByNameVersionFilter(basicInfo));
+			if (services.length > 0) {
+				service = services[0]; 
+			}
+		} catch (GovernanceException e) {
+		}
+		return services;
 	}
 	
 }

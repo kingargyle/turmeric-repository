@@ -122,4 +122,14 @@ public class WSDLAsset implements Asset {
 		return wsdl;
 	}
 
+	@Override
+	public boolean exists() {
+		return hasDuplicates();
+	}
+	
+	@Override
+	public void findAsset() {
+		
+	}
+
 }

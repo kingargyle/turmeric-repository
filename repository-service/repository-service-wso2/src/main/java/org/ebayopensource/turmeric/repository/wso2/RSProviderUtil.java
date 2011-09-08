@@ -39,6 +39,7 @@ import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.wso2.carbon.governance.api.common.dataobjects.GovernanceArtifact;
 import org.wso2.carbon.governance.api.util.GovernanceUtils;
 import org.wso2.carbon.registry.app.RemoteRegistry;
 import org.wso2.carbon.registry.core.Association;
@@ -940,6 +941,39 @@ public class RSProviderUtil {
 
 		return assetInfo;
 	}
+	
+	public static AssetInfo getAssetInfo(AssetKey assetKey, GovernanceArtifact asset)
+			throws Exception {
+
+
+		// Create the basic service info structure
+		BasicAssetInfo basicAssetInfo = new BasicAssetInfo();
+		basicAssetInfo.setAssetKey(assetKey);
+		
+		
+
+		// Create the extended service info structure
+		ExtendedAssetInfo extendedAssetInfo = new ExtendedAssetInfo();
+
+		// do the lifecycle stuff
+		AssetLifeCycleInfo assetLifeCycleInfo = new AssetLifeCycleInfo();
+
+		// create relationship info
+		FlattenedRelationship relationship = new FlattenedRelationship();
+		relationship.setDepth(0);
+		relationship.setSourceAsset(assetKey);
+
+		// populate asset info
+		AssetInfo assetInfo = new AssetInfo();
+		assetInfo.setBasicAssetInfo(basicAssetInfo);
+		assetInfo.setExtendedAssetInfo(extendedAssetInfo);
+		assetInfo.setAssetLifeCycleInfo(assetLifeCycleInfo);
+		assetInfo.setFlattenedRelationship(relationship);
+
+
+		return assetInfo;
+	}
+	
 
 	public static void lock(Resource service) {
 		// TODO locking cannot be a boolean, needs to be a user.
