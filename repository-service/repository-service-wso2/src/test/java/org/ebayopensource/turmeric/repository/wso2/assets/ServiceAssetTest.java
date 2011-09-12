@@ -51,7 +51,6 @@ public class ServiceAssetTest extends Wso2Base {
     @Test
     public void testCreateService() throws Exception {
     	assertTrue(service.createAsset());
-    	service.createAsset();
     	assertTrue(service.addAsset());
     	assertNotNull(service.getId());
     	assertNotNull(service.getGovernanceArtifact());
@@ -60,6 +59,7 @@ public class ServiceAssetTest extends Wso2Base {
     @Test
     public void testLock() throws Exception {
     	service.createAsset();
+    	service.addAsset();
     	String assetId = service.getId();
     	
     	service.lockAsset();
@@ -73,6 +73,7 @@ public class ServiceAssetTest extends Wso2Base {
     @Test
     public void testunLock() throws Exception {
     	service.createAsset();
+    	service.addAsset();
     	String assetId = service.getId();
     	
     	service.unlock();
