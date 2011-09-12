@@ -14,6 +14,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.wso2.carbon.governance.api.services.ServiceManager;
+import org.wso2.carbon.governance.api.services.dataobjects.Service;
 import org.wso2.carbon.registry.core.Registry;
 
 import org.ebayopensource.turmeric.repository.v2.services.*;
@@ -54,5 +56,32 @@ public class ServiceAssetTest extends Wso2Base {
     	assertNotNull(service.getId());
     	assertNotNull(service.getGovernanceArtifact());
     }
+    
+    @Test
+    public void testLock() throws Exception {
+    	service.createAsset();
+    	String assetId = service.getId();
+    	
+    	service.lockAsset();
+    	service.save();
+    	
+    	ServiceManager serviceManager = new ServiceManager(registry);
+    	Service updatedService = serviceManager.getService(assetId);
+    	assertEquals("true",updatedService.getAttribute(AssetConstants.TURMERIC_LOCK));
+    }
+    
+    @Test
+    public void testunLock() throws Exception {
+    	service.createAsset();
+    	String assetId = service.getId();
+    	
+    	service.unlock();
+    	service.save();
+    	
+    	ServiceManager serviceManager = new ServiceManager(registry);
+    	Service updatedService = serviceManager.getService(assetId);
+    	assertEquals("false",updatedService.getAttribute(AssetConstants.TURMERIC_LOCK));
+    }
+    
         	    	
 }

@@ -68,6 +68,7 @@ public class ServiceAsset implements Asset {
 			service.setAttribute(AssetConstants.TURMERIC_VERSION, basicInfo.getVersion());
 			service.setAttribute(AssetConstants.TURMERIC_NAMESPACE, basicInfo.getNamespace());
 			service.setAttribute(AssetConstants.TURMERIC_OWNER, basicInfo.getGroupName());
+			service.setAttribute(AssetConstants.TURMERIC_LOCK, "false");
 		} catch (GovernanceException e) {
 			return false;
 		}
@@ -114,7 +115,7 @@ public class ServiceAsset implements Asset {
 
 	@Override
 	public String getId() {
-		return basicInfo.getAssetKey().getAssetId();
+		return service.getId();
 	}
 	
 	@Override
@@ -202,12 +203,7 @@ public class ServiceAsset implements Asset {
 	@Override
 	public void lockAsset() {
 		try {
-			String lock = service.getAttribute("turmeric-lock");
-			if (lock == null) {
-				service.addAttribute("turmeric-lock", "true");
-				return;
-			}
-			service.setAttribute("turmeric-lock", "true");
+			service.setAttribute(AssetConstants.TURMERIC_LOCK, "true");
 		} catch (GovernanceException e) {
 		}
 		
@@ -216,12 +212,7 @@ public class ServiceAsset implements Asset {
 	@Override
 	public void unlock() {
 		try {
-			String lock = service.getAttribute("turmeric-lock");
-			if (lock == null) {
-				service.addAttribute("turmeric-lock", "false");
-				return;
-			}
-			service.setAttribute("turmeric-lock", "false");
+			service.setAttribute(AssetConstants.TURMERIC_LOCK, "false");
 		} catch (GovernanceException e) {
 		}
 		
@@ -230,7 +221,7 @@ public class ServiceAsset implements Asset {
 	@Override
 	public boolean isLocked() {
 		try {
-			String lock = service.getAttribute("turmeric-lock");
+			String lock = service.getAttribute(AssetConstants.TURMERIC_LOCK);
 			if (lock == null || lock.equals("false")) {
 				return false;
 			}
