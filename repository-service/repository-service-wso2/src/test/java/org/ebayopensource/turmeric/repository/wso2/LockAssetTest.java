@@ -104,8 +104,6 @@ public class LockAssetTest extends Wso2Base {
         assertEquals(AckValue.SUCCESS, response.getAck());
         assertEquals(null, response.getErrorMessage());
         
-        String cAssetId = response.getAssetKey().getAssetId();
-
         // then, update the complete asset, replacing all its related objects
         LockAssetResponse responseLock = lockAsset(response.getAssetKey());
         assertEquals(AckValue.SUCCESS, responseLock.getAck());
@@ -113,7 +111,6 @@ public class LockAssetTest extends Wso2Base {
         
         ServiceManager manager = new ServiceManager(RSProviderUtil.getRegistry());
         String assetId = responseLock.getAssetInfo().getBasicAssetInfo().getAssetKey().getAssetId();
-        assertEquals(cAssetId, assetId);
         Service service = manager.getService(assetId);
         String lock = service.getAttribute(AssetConstants.TURMERIC_LOCK);
         assertEquals("Missing expected lock value", "true", lock);

@@ -14,6 +14,7 @@ import javax.xml.namespace.QName;
 import org.ebayopensource.turmeric.repository.v2.services.*;
 import org.ebayopensource.turmeric.repository.wso2.Asset;
 import org.ebayopensource.turmeric.repository.wso2.AssetFactory;
+import org.ebayopensource.turmeric.repository.wso2.RSProviderUtil;
 import org.ebayopensource.turmeric.repository.wso2.filters.DuplicateServiceFilter;
 import org.ebayopensource.turmeric.repository.wso2.filters.FindServiceByNameVersionFilter;
 import org.wso2.carbon.governance.api.common.dataobjects.GovernanceArtifact;
@@ -179,7 +180,8 @@ public class ServiceAsset implements Asset {
 		
 		if (assetKey.getAssetId() != null) {
 			try {
-				service = serviceManager.getService(assetKey.getAssetId());
+				ServiceManager manager = new ServiceManager(RSProviderUtil.getRegistry());
+				service = manager.getService(assetKey.getAssetId());
 				return;
 			} catch (GovernanceException e) {
 			}
@@ -234,6 +236,9 @@ public class ServiceAsset implements Asset {
 	public boolean save() {
 		try {
 			serviceManager.updateService(service);
+	    	ServiceManager serviceManager = new ServiceManager(registry);
+	    	Service updatedService = serviceManager.getService(service.getId());
+	    	service = updatedService;
 		} catch (GovernanceException e) {
 			return false;
 		}

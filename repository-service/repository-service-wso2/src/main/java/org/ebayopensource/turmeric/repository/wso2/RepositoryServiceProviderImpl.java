@@ -60,11 +60,11 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 			
 			if (!asset.isLocked()) {
 				asset.lockAsset();
-				if (!asset.save()) {
-					throw new GovernanceException("Unable to save/update asset.");
-				}
+				asset.save();
 			}
-
+						
+			asset.findAsset();
+			
 			AssetInfo assetInfo = RSProviderUtil.getAssetInfo(assetKey, asset.getGovernanceArtifact());
 
 			// populate the response
