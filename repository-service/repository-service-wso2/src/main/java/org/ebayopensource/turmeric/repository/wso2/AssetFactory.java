@@ -13,6 +13,7 @@ import org.ebayopensource.turmeric.repository.v2.services.ArtifactInfo;
 import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
 import org.ebayopensource.turmeric.repository.wso2.assets.EndPointAsset;
 import org.ebayopensource.turmeric.repository.wso2.assets.NullAsset;
+import org.ebayopensource.turmeric.repository.wso2.assets.SchemaAsset;
 import org.ebayopensource.turmeric.repository.wso2.assets.ServiceAsset;
 import org.ebayopensource.turmeric.repository.wso2.assets.WSDLAsset;
 import org.wso2.carbon.registry.core.Registry;
@@ -29,6 +30,7 @@ public class AssetFactory {
 	private static final String ASSET_TYPE_SERVICE = "Service";
 	private static final String ASSET_TYPE_WSDL = "WSDL";
 	private static final String ASSET_TYPE_ENDPOINT = "Endpoint";
+	private static final String ASSET_TYPE_SCHEMA = "Schema";
 	private BasicAssetInfo basicInfo = null;
 	private ArtifactInfo artifactInfo = null;
 	private Registry registry = null;
@@ -73,7 +75,14 @@ public class AssetFactory {
 				return new WSDLAsset(artifactInfo, registry);
 			} catch (Exception e) {
 			}
-		} 
+		}
+		
+		if (ASSET_TYPE_SCHEMA.equalsIgnoreCase(category)) {
+			try {
+				return new SchemaAsset(artifactInfo, registry);
+			} catch (Exception e) {
+			}
+		}
 		return new NullAsset();
 	}
 
