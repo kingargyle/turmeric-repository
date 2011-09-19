@@ -11,6 +11,7 @@ package org.ebayopensource.turmeric.repository.wso2;
 
 import org.ebayopensource.turmeric.repository.v2.services.ArtifactInfo;
 import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
+import org.ebayopensource.turmeric.repository.wso2.assets.EndPointAsset;
 import org.ebayopensource.turmeric.repository.wso2.assets.NullAsset;
 import org.ebayopensource.turmeric.repository.wso2.assets.ServiceAsset;
 import org.ebayopensource.turmeric.repository.wso2.assets.WSDLAsset;
@@ -27,6 +28,7 @@ public class AssetFactory {
 	
 	private static final String ASSET_TYPE_SERVICE = "Service";
 	private static final String ASSET_TYPE_WSDL = "WSDL";
+	private static final String ASSET_TYPE_ENDPOINT = "Endpoint";
 	private BasicAssetInfo basicInfo = null;
 	private ArtifactInfo artifactInfo = null;
 	private Registry registry = null;
@@ -53,8 +55,12 @@ public class AssetFactory {
 	public Asset createAsset() {
 		Asset asset = null;
 		
-		if (ASSET_TYPE_SERVICE.equals(basicInfo.getAssetType())) {
+		if (ASSET_TYPE_SERVICE.equalsIgnoreCase(basicInfo.getAssetType())) {
 			return new ServiceAsset(basicInfo, registry);
+		}
+		
+		if (ASSET_TYPE_ENDPOINT.equalsIgnoreCase(basicInfo.getAssetType())) {
+			return new EndPointAsset(basicInfo, registry);
 		}
 				
 		return asset;
