@@ -27,6 +27,7 @@ public class ServiceAssetTest extends Wso2Base {
 	private ServiceAsset service = null;
 	private Registry registry = null;
 	
+	@Override
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();

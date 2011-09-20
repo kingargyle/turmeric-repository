@@ -358,7 +358,8 @@ public class WSDLManager {
                 Arrays.asList(GovernanceUtils.getResultPaths(registry,
                         GovernanceConstants.WSDL_MEDIA_TYPE));
         Collections.sort(wsdlPaths, new Comparator<String>() {
-            public int compare(String o1, String o2) {
+            @Override
+			public int compare(String o1, String o2) {
                 // First order by name
                 int result = RegistryUtils.getResourceName(o1).compareToIgnoreCase(
                         RegistryUtils.getResourceName(o2));

@@ -13,7 +13,6 @@ import javax.xml.namespace.QName;
 
 import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
 import org.ebayopensource.turmeric.repository.wso2.assets.AssetConstants;
-import org.wso2.carbon.governance.api.exception.GovernanceException;
 import org.wso2.carbon.governance.api.services.dataobjects.Service;
 
 import org.junit.After;

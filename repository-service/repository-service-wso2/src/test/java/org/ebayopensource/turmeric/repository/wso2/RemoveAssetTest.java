@@ -13,11 +13,8 @@ import static org.junit.Assert.*;
 
 import java.util.UUID;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.wso2.carbon.governance.api.exception.GovernanceException;
 import org.wso2.carbon.governance.api.util.GovernanceUtils;
-import org.wso2.carbon.registry.core.Registry;
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
 import org.ebayopensource.turmeric.repository.v2.services.*;
 

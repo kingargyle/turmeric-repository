@@ -9,22 +9,13 @@
 
 package org.ebayopensource.turmeric.repository.wso2.assets;
 
-import javax.xml.namespace.QName;
-
 import org.ebayopensource.turmeric.repository.v2.services.*;
 import org.ebayopensource.turmeric.repository.wso2.Asset;
-import org.ebayopensource.turmeric.repository.wso2.AssetFactory;
 import org.ebayopensource.turmeric.repository.wso2.RSProviderUtil;
-import org.ebayopensource.turmeric.repository.wso2.filters.DuplicateServiceFilter;
-import org.ebayopensource.turmeric.repository.wso2.filters.FindServiceByNameVersionFilter;
 import org.wso2.carbon.governance.api.common.dataobjects.GovernanceArtifact;
 import org.wso2.carbon.governance.api.endpoints.EndpointManager;
 import org.wso2.carbon.governance.api.endpoints.dataobjects.Endpoint;
 import org.wso2.carbon.governance.api.exception.GovernanceException;
-import org.wso2.carbon.governance.api.services.ServiceManager;
-import org.wso2.carbon.governance.api.services.dataobjects.Service;
-import org.wso2.carbon.governance.api.wsdls.WsdlManager;
-import org.wso2.carbon.governance.api.wsdls.dataobjects.Wsdl;
 import org.wso2.carbon.registry.core.Registry;
 
 /**

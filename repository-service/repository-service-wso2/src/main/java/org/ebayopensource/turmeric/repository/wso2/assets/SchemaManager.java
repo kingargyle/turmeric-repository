@@ -347,7 +347,8 @@ public class SchemaManager {
                 Arrays.asList(GovernanceUtils.getResultPaths(registry,
                         GovernanceConstants.SCHEMA_MEDIA_TYPE));
         Collections.sort(schemaPaths, new Comparator<String>() {
-            public int compare(String o1, String o2) {
+            @Override
+			public int compare(String o1, String o2) {
                 // First order by name
                 int result = RegistryUtils.getResourceName(o1).compareToIgnoreCase(
                         RegistryUtils.getResourceName(o2));
