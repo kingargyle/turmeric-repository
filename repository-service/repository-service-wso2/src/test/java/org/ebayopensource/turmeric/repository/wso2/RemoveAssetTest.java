@@ -11,6 +11,8 @@ package org.ebayopensource.turmeric.repository.wso2;
 
 import static org.junit.Assert.*;
 
+import java.util.UUID;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.wso2.carbon.governance.api.exception.GovernanceException;
@@ -70,5 +72,17 @@ public class RemoveAssetTest extends Wso2Base {
         
         String path = GovernanceUtils.getArtifactPath(RSProviderUtil.getRegistry(), response.getAssetKey().getAssetId());
         assertNull("Path was returned, meaing id was found", path);
+    }
+    
+    @Test
+    public void removeNonExistantAsset() throws Exception {
+        RemoveAssetRequest request = new RemoveAssetRequest();
+        AssetKey assetKey = new AssetKey();
+        assetKey.setAssetId(UUID.randomUUID().toString());
+        request.setAssetKey(assetKey);
+        RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+        RemoveAssetResponse responseRemove = provider.removeAsset(request);
+
+        assertEquals(AckValue.FAILURE, responseRemove.getAck());
     }
 }

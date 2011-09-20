@@ -363,29 +363,21 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 		try {
 			AssetKey assetKey = request.getAssetKey();
 			String assetId = assetKey.getAssetId();
+			String path = null;
+			path = GovernanceUtils.getArtifactPath(wso2, assetId);
 			
-			try {
-				GovernanceUtils.getArtifactPath(wso2, assetId);
-			} catch (GovernanceException ex) {
+			if (path == null) {
 				return createAssetNotFoundError(errorDataList, response);
 			}
 			
-			try {
-				GovernanceUtils.removeArtifact(wso2, assetId);
-			} catch (GovernanceException ex) {
-				return RSProviderUtil
-						.handleException(
-								ex,
-								response,
-								RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
-			}
+			GovernanceUtils.removeArtifact(wso2, assetId);
 
 			return RSProviderUtil.setSuccessResponse(response);
 		} catch (Exception ex) {
 			return RSProviderUtil
 					.handleException(
 							ex,
-							new RemoveAssetResponse(),
+							response,
 							RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
 		}
 	}
