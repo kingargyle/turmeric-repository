@@ -13,6 +13,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.wso2.carbon.governance.api.exception.GovernanceException;
+import org.wso2.carbon.governance.api.util.GovernanceUtils;
 import org.wso2.carbon.registry.core.Registry;
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
 import org.ebayopensource.turmeric.repository.v2.services.*;
@@ -22,42 +24,22 @@ import org.ebayopensource.turmeric.repository.v2.services.*;
  * 
  */
 public class RemoveAssetTest extends Wso2Base {
-    private static final String[] resources = {"/_system/governance/trunk/services/http/www/domain/com/assets/RemoveAssetTest"};
     private static final String assetName = "RemoveAssetTest";
     private static final String assetDesc = "RemoveAssetTest description";
-
-
-    @Override
-	@Before
-    public void setUp() throws Exception {
-    	super.setUp();
-        boolean exists = false;
-        try {
-            Registry wso2 = RSProviderUtil.getRegistry();
-            exists = wso2.resourceExists("/");
-
-            for (String resource : resources) {
-                if (wso2.resourceExists(resource)) {
-                    wso2.delete(resource);
-                }
-            }
-        }
-        catch (Exception ex) {
-        }
-
-        assertTrue(exists);
-    }
-
 
     private CreateAssetResponse createAsset() {
         AssetKey key = new AssetKey();
         key.setAssetName(assetName);
+        key.setType("Service");
+        key.setVersion("1.0.0");
 
         BasicAssetInfo basicInfo = new BasicAssetInfo();
         basicInfo.setAssetKey(key);
         basicInfo.setAssetName(assetName);
         basicInfo.setAssetDescription(assetDesc);
-        basicInfo.setAssetType("Service");
+        basicInfo.setAssetType(key.getType());
+        basicInfo.setVersion(key.getVersion());
+        basicInfo.setNamespace("http://www.example.org");
 
         CreateAssetRequest request = new CreateAssetRequest();
         request.setBasicAssetInfo(basicInfo);
@@ -72,7 +54,7 @@ public class RemoveAssetTest extends Wso2Base {
     }
     
     @Test
-    public void removeAssetTest() {
+    public void removeAssetTest() throws Exception {
         CreateAssetResponse response = createAsset();
         
         AssetKey key = new AssetKey();
@@ -85,10 +67,8 @@ public class RemoveAssetTest extends Wso2Base {
 
         assertEquals(AckValue.SUCCESS, responseRemove.getAck());
         assertEquals(null, responseRemove.getErrorMessage());
-        try {
-            assertFalse(RSProviderUtil.getRegistry().resourceExists(resources[0]));
-        }
-        catch (Exception e) {
-        }
+        
+        String path = GovernanceUtils.getArtifactPath(RSProviderUtil.getRegistry(), response.getAssetKey().getAssetId());
+        assertNull("Path was returned, meaing id was found", path);
     }
 }

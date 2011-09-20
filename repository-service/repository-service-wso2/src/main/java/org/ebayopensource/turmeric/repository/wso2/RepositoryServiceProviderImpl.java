@@ -361,23 +361,24 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 		RemoveAssetResponse response = new RemoveAssetResponse();
 
 		try {
-			AssetKey assetKey = RSProviderUtil.completeAssetKey(
-					request.getAssetKey(), null, null);
+			AssetKey assetKey = request.getAssetKey();
 			String assetId = assetKey.getAssetId();
-
-			if (!wso2.resourceExists(assetId)) {
-				errorDataList
-						.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
-								.newError());
-				return RSProviderUtil.addErrorsToResponse(errorDataList,
-						response);
+			
+			try {
+				GovernanceUtils.getArtifactPath(wso2, assetId);
+			} catch (GovernanceException ex) {
+				return createAssetNotFoundError(errorDataList, response);
 			}
-
-			wso2.beginTransaction();
-			RSProviderUtil.removeArtifacts(assetId);
-			RSProviderUtil.removeDependencies(assetId);
-
-			wso2.delete(assetId);
+			
+			try {
+				GovernanceUtils.removeArtifact(wso2, assetId);
+			} catch (GovernanceException ex) {
+				return RSProviderUtil
+						.handleException(
+								ex,
+								response,
+								RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
+			}
 
 			return RSProviderUtil.setSuccessResponse(response);
 		} catch (Exception ex) {
@@ -386,16 +387,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 							ex,
 							new RemoveAssetResponse(),
 							RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
-		} finally {
-			try {
-				if (response.getAck() == AckValue.SUCCESS
-						&& response.getErrorMessage() == null) {
-					wso2.commitTransaction();
-				} else {
-					wso2.rollbackTransaction();
-				}
-			} catch (Exception e) {
-			}
 		}
 	}
 
