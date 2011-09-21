@@ -30,6 +30,8 @@ import org.ebayopensource.turmeric.services.common.error.RepositoryServiceErrorD
 
 import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositoryServiceProvider;
 
+import edu.emory.mathcs.backport.java.util.Arrays;
+
 /**
  * @author mgorovoy
  * 
@@ -339,7 +341,12 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 	 */
 	@Override
 	public GetAssetTypesResponse getAssetTypes(GetAssetTypesRequest request) {
-		return null;
+		GetAssetTypesResponse response = new GetAssetTypesResponse();
+				
+		String[] assetTypes = {"Service", "Endpoint", "WSDL", "Schema"};
+		response.getAssetType().addAll(Arrays.asList(assetTypes));
+		response.setAck(AckValue.SUCCESS);
+		return response;
 	}
 
 	/**
