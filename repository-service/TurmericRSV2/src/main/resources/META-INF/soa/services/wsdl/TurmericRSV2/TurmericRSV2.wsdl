@@ -2966,12 +2966,12 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </part>
    </message>
 
-<!--   <message name="createAndSubmitAssetRequest">
+   <message name="createAndSubmitAssetRequest">
       <part name="parameters" element="tns:createAndSubmitAssetRequest">
       </part>
 
    </message>
--->
+
 
    <message name="updateAssetDependenciesResponse">
       <part name="parameters" element="tns:updateAssetDependenciesResponse">
@@ -3325,7 +3325,7 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          <wsdl:documentation>Same as createCompleteAsset and the asset gets flagged as
          "submitted". Possible Errors, etc.</wsdl:documentation>
 
-         <input message="tns:createCompleteAssetRequest">
+         <input message="tns:createAndSubmitAssetRequest">
          </input>
 
          <output message="tns:createAndSubmitAssetResponse">
