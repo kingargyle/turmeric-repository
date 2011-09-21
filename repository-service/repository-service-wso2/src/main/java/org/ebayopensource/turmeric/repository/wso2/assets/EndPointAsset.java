@@ -28,11 +28,9 @@ public class EndPointAsset implements Asset {
 	private BasicAssetInfo basicInfo = null;
 	private EndpointManager epManager = null;
 	private Endpoint endpoint = null;
-	private Registry registry = null;
 	
 	public EndPointAsset(BasicAssetInfo bi, Registry registry) {
 		this.basicInfo = bi;
-		this.registry = registry;
 		epManager =  new EndpointManager(registry);
 	}
 	
@@ -130,9 +128,6 @@ public class EndPointAsset implements Asset {
 		}
 		
 		Endpoint endpoint = findEndpoint();
-		if (endpoint == null) {
-			return false;
-		}
 		return endpoint != null;
 	}
 
@@ -152,7 +147,7 @@ public class EndPointAsset implements Asset {
 			assetKey = basicInfo.getAssetKey();
 		}
 		
-		if (assetKey.getAssetId() != null) {
+		if (hasAssetId(assetKey)) {
 			try {
 				EndpointManager manager = new EndpointManager(RSProviderUtil.getRegistry());
 				endpoint = manager.getEndpoint(assetKey.getAssetId());
@@ -162,6 +157,10 @@ public class EndPointAsset implements Asset {
 		}
 		
 		endpoint = findEndpoint();
+	}
+
+	private boolean hasAssetId(AssetKey assetKey) {
+		return assetKey != null && assetKey.getAssetId() != null;
 	}
 
 	private Endpoint findEndpoint() {

@@ -164,6 +164,7 @@ public class CreateCompleteAssetTest extends Wso2Base {
 
         FileInputStream fin = new FileInputStream(file);
         fin.read(content, 0, size);
+        fin.close();
         return content;
     }
 }

@@ -1155,7 +1155,7 @@ public class TurmericRSV2Impl implements TurmericRSV2 {
 		String fileName = stackTraceElements[index].getFileName();
 		String className = stackTraceElements[index].getClassName();
 		String methodName = stackTraceElements[index].getMethodName();
-		String lineNo = new Integer(stackTraceElements[index].getLineNumber()).toString();
+		String lineNo = Integer.valueOf(stackTraceElements[index].getLineNumber()).toString();
 		String message = exception.getMessage();
 		
 		String[] params = new String[]{exceptionClass,fileName,className,methodName,lineNo,message}; 

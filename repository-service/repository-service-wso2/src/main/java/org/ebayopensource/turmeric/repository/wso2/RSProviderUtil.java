@@ -180,8 +180,8 @@ public class RSProviderUtil {
 
 		ErrorParameter lineNoErrorParameter = new ErrorParameter();
 		lineNoErrorParameter.setName("lineNo");
-		lineNoErrorParameter.setValue((new Integer(stackTraceElements[index]
-				.getLineNumber())).toString());
+		int linenum = stackTraceElements[index].getLineNumber();
+		lineNoErrorParameter.setValue(Integer.valueOf(linenum).toString());
 		errorDataList.add(lineNoErrorParameter);
 
 		ErrorParameter messageErrorParameter = new ErrorParameter();

@@ -178,7 +178,7 @@ public class ServiceAsset implements Asset {
 			assetKey = basicInfo.getAssetKey();
 		}
 		
-		if (assetKey.getAssetId() != null) {
+		if (assetKey != null && assetKey.getAssetId() != null) {
 			try {
 				ServiceManager manager = new ServiceManager(RSProviderUtil.getRegistry());
 				service = manager.getService(assetKey.getAssetId());
