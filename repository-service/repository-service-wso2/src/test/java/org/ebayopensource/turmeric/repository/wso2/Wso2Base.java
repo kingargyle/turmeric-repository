@@ -15,6 +15,7 @@ import static org.junit.Assert.fail;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -305,5 +306,23 @@ public class Wso2Base extends AbstractCarbonIntegrationTestCase {
 	@Override
 	protected void copyArtifacts() throws IOException {
 		
+	}
+
+	/**
+	 * Given a path to a file, load it's content into a byte array.
+	 *
+	 * @param pathname the fullpath to the file.
+	 * @return a byte array with the contents of the file
+	 * @throws Exception an exception if any occurs
+	 */
+	protected byte[] loadFile(String pathname) throws Exception {
+	    File file = new File(pathname);
+	    int size = (int) file.length();
+	    byte[] content = new byte[size];
+	
+	    FileInputStream fin = new FileInputStream(file);
+	    fin.read(content, 0, size);
+	    fin.close();
+	    return content;
 	}
 }

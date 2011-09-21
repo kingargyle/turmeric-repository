@@ -11,8 +11,6 @@ package org.ebayopensource.turmeric.repository.wso2.assets;
 
 import static org.junit.Assert.*;
 
-import java.io.File;
-import java.io.FileInputStream;
 
 import org.junit.Test;
 import org.wso2.carbon.governance.api.util.GovernanceConstants;
@@ -44,16 +42,5 @@ public class SchemaAssetTest extends Wso2Base {
         assertTrue("Schema was not created.", schemaAsset.createAsset());
         assertTrue("Schema was not added.", schemaAsset.addAsset());
         assertTrue("Schema doesn't exist.", schemaAsset.exists());
-    }
-    
-    private byte[] loadFile(String pathname) throws Exception {
-        File file = new File(pathname);
-        int size = (int) file.length();
-        byte[] content = new byte[size];
-
-        FileInputStream fin = new FileInputStream(file);
-        fin.read(content, 0, size);
-        fin.close();
-        return content;
     }
 }

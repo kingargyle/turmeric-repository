@@ -11,8 +11,6 @@ package org.ebayopensource.turmeric.repository.wso2;
 
 import static org.junit.Assert.*;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.util.List;
 
 import org.junit.Test;
@@ -155,16 +153,5 @@ public class CreateCompleteAssetTest extends Wso2Base {
     public void createDuplicateTest() throws Exception {
         CreateCompleteAssetResponse response = createCompleteAsset();
         assertEquals(AckValue.FAILURE, response.getAck());
-    }
-
-    private byte[] loadFile(String pathname) throws Exception {
-        File file = new File(pathname);
-        int size = (int) file.length();
-        byte[] content = new byte[size];
-
-        FileInputStream fin = new FileInputStream(file);
-        fin.read(content, 0, size);
-        fin.close();
-        return content;
     }
 }

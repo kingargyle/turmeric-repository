@@ -1168,7 +1168,7 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 		errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_NAME_MISSING
 				.newError());
 		return RSProviderUtil.addErrorsToResponse(errorDataList, response);
-	}
+	}	
 
 	/**
 	 * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#getBasicAssetInfo(org.ebayopensource.turmeric.repository.v1.services.GetBasicAssetInfoRequest)

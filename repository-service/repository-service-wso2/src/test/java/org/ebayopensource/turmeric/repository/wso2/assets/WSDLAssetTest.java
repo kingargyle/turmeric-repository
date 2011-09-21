@@ -11,8 +11,6 @@ package org.ebayopensource.turmeric.repository.wso2.assets;
 
 import static org.junit.Assert.*;
 
-import java.io.File;
-import java.io.FileInputStream;
 
 import org.junit.Test;
 import org.wso2.carbon.governance.api.util.GovernanceConstants;
@@ -43,16 +41,5 @@ public class WSDLAssetTest extends Wso2Base {
         WSDLAsset wsdlAsset = new WSDLAsset(wsdlInfo, wso2Registry);
         assertTrue("WSDL was not created.", wsdlAsset.createAsset());
         assertTrue("WSDL was not added.", wsdlAsset.addAsset());
-    }
-    
-    private byte[] loadFile(String pathname) throws Exception {
-        File file = new File(pathname);
-        int size = (int) file.length();
-        byte[] content = new byte[size];
-
-        FileInputStream fin = new FileInputStream(file);
-        fin.read(content, 0, size);
-        fin.close();
-        return content;
     }
 }
