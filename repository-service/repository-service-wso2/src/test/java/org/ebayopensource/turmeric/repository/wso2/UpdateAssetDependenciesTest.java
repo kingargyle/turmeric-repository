@@ -40,6 +40,7 @@ import org.ebayopensource.turmeric.repository.v2.services.Relation;
 import org.ebayopensource.turmeric.repository.v2.services.RelationForUpdate;
 import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetDependenciesRequest;
 import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetDependenciesResponse;
+import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositoryServiceProvider;
 
 /**
  * @author mgorovoy
@@ -123,27 +124,27 @@ public class UpdateAssetDependenciesTest extends Wso2Base {
 
         FlattenedRelationship relationship = new FlattenedRelationship();
         List<Relation> relationList = relationship.getRelatedAsset();
-        relationList.add(new Relation() {
-            {
-                this.setSourceAsset(RSProviderUtil.completeAssetKey(new AssetKey() {
-                    {
-                        this.setAssetId(resources[0]);
-                    }
-                }, null, null));
-                this.setTargetAsset(RSProviderUtil.completeAssetKey(new AssetKey() {
-                    {
-                        this.setAssetId(dstAssets[0]);
-                    }
-                }, null, null));
-                this.setAssetRelationship("DependsOn");
-            }
-        });
+//        relationList.add(new Relation() {
+//            {
+//                this.setSourceAsset(RSProviderUtil.completeAssetKey(new AssetKey() {
+//                    {
+//                        this.setAssetId(resources[0]);
+//                    }
+//                }, null, null));
+//                this.setTargetAsset(RSProviderUtil.completeAssetKey(new AssetKey() {
+//                    {
+//                        this.setAssetId(dstAssets[0]);
+//                    }
+//                }, null, null));
+//                this.setAssetRelationship("DependsOn");
+//            }
+//        });
         assetInfo.setFlattenedRelationship(relationship);
 
         CreateCompleteAssetRequest request = new CreateCompleteAssetRequest();
         request.setAssetInfo(assetInfo);
 
-        RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
         return provider.createCompleteAsset(request);
     }
 
@@ -154,7 +155,7 @@ public class UpdateAssetDependenciesTest extends Wso2Base {
         LockAssetRequest lockReq = new LockAssetRequest();
         lockReq.setAssetKey(key);
 
-        RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
         LockAssetResponse lockRes = provider.lockAsset(lockReq);
         assertEquals(AckValue.SUCCESS, lockRes.getAck());
 
@@ -162,35 +163,35 @@ public class UpdateAssetDependenciesTest extends Wso2Base {
         relationship.setDepth(1);
         relationship.setSourceAsset(key);
         List<RelationForUpdate> relationList = relationship.getRelatedAsset();
-        relationList.add(new RelationForUpdate() {
-            {
-                this.setCurrentSourceAsset(RSProviderUtil.completeAssetKey(new AssetKey() {
-                    {
-                        this.setAssetId(resources[0]);
-                    }
-                }, null, null));
-                this.setCurrentTargetAsset(RSProviderUtil.completeAssetKey(new AssetKey() {
-                    {
-                        this.setAssetId(dstAssets[0]);
-                    }
-                }, null, null));
-                this.setNewRelation(new Relation() {
-                    {
-                        this.setSourceAsset(RSProviderUtil.completeAssetKey(new AssetKey() {
-                            {
-                                this.setAssetId(resources[0]);
-                            }
-                        }, null, null));
-                        this.setTargetAsset(RSProviderUtil.completeAssetKey(new AssetKey() {
-                            {
-                                this.setAssetId(dstAssets[1]);
-                            }
-                        }, null, null));
-                        this.setAssetRelationship("DependsOn");
-                    }
-                });
-            }
-        });
+//        relationList.add(new RelationForUpdate() {
+//            {
+//                this.setCurrentSourceAsset(RSProviderUtil.completeAssetKey(new AssetKey() {
+//                    {
+//                        this.setAssetId(resources[0]);
+//                    }
+//                }, null, null));
+//                this.setCurrentTargetAsset(RSProviderUtil.completeAssetKey(new AssetKey() {
+//                    {
+//                        this.setAssetId(dstAssets[0]);
+//                    }
+//                }, null, null));
+//                this.setNewRelation(new Relation() {
+//                    {
+//                        this.setSourceAsset(RSProviderUtil.completeAssetKey(new AssetKey() {
+//                            {
+//                                this.setAssetId(resources[0]);
+//                            }
+//                        }, null, null));
+//                        this.setTargetAsset(RSProviderUtil.completeAssetKey(new AssetKey() {
+//                            {
+//                                this.setAssetId(dstAssets[1]);
+//                            }
+//                        }, null, null));
+//                        this.setAssetRelationship("DependsOn");
+//                    }
+//                });
+//            }
+//        });
 
         UpdateAssetDependenciesRequest request = new UpdateAssetDependenciesRequest();
         request.setAssetKey(key);
@@ -207,7 +208,7 @@ public class UpdateAssetDependenciesTest extends Wso2Base {
      */
     private AssetInfo validateAsset(String assetId) {
         // now, i search the service to get all its related objects
-        RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
 
         GetAssetInfoRequest request = new GetAssetInfoRequest();
         AssetKey key = new AssetKey();

@@ -17,11 +17,12 @@ import org.junit.Test;
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
 import org.ebayopensource.turmeric.repository.v2.services.GetAssetTypesRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetAssetTypesResponse;
+import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositoryServiceProvider;
 
 public class GetAssetTypesTest {
 	
 	GetAssetTypesRequest request = null;
-	RepositoryServiceProviderImpl provider = null;
+	RepositoryServiceProvider provider = null;
 	@Before
     public void setUp() throws Exception {
 		request = new GetAssetTypesRequest();
@@ -31,7 +32,7 @@ public class GetAssetTypesTest {
     
     @Test
     public void getAssetTypes() throws Exception {
-    	RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+    	RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
     	GetAssetTypesResponse response = provider.getAssetTypes(request);
         assertEquals(AckValue.SUCCESS, response.getAck());
         assertEquals(null, response.getErrorMessage());
@@ -39,35 +40,35 @@ public class GetAssetTypesTest {
     
     @Test
     public void getAssetTypesNotEmpty() throws Exception {
-    	RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+    	RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
     	GetAssetTypesResponse response = provider.getAssetTypes(request);
     	assertFalse(response.getAssetType().isEmpty());
     }
     
     @Test
     public void getAssetTypesHasService() throws Exception {
-    	RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+    	RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
     	GetAssetTypesResponse response = provider.getAssetTypes(request);
     	assertTrue(response.getAssetType().contains("Service"));
     }
     
     @Test
     public void getAssetTypesHasEndpoint() throws Exception {
-    	RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+    	RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
     	GetAssetTypesResponse response = provider.getAssetTypes(request);
     	assertTrue(response.getAssetType().contains("Endpoint"));
     }
     
     @Test
     public void getAssetTypesHasWSDL() throws Exception {
-    	RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+    	RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
     	GetAssetTypesResponse response = provider.getAssetTypes(request);
     	assertTrue(response.getAssetType().contains("WSDL"));
     }
     
     @Test
     public void getAssetTypesHasSchema() {
-    	RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+    	RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
     	GetAssetTypesResponse response = provider.getAssetTypes(request);
     	assertTrue(response.getAssetType().contains("Schema"));
     }

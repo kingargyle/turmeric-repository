@@ -40,6 +40,7 @@ import org.ebayopensource.turmeric.repository.v2.services.RejectionInfo;
 import org.ebayopensource.turmeric.repository.v2.services.Relation;
 import org.ebayopensource.turmeric.repository.v2.services.SubmitForPublishingRequest;
 import org.ebayopensource.turmeric.repository.v2.services.SubmitForPublishingResponse;
+import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositoryServiceProvider;
 
 /**
  * @author mgorovoy
@@ -132,30 +133,30 @@ public class AssetLifeCycleTest extends Wso2Base {
         
         FlattenedRelationship rel = new FlattenedRelationship();
         List<Relation> relationList = rel.getRelatedAsset();
-        relationList.add(
-                        new Relation() {
-                            {
-                                this.setSourceAsset(RSProviderUtil.completeAssetKey(
-                                                new AssetKey() {
-                                                    {
-                                                        this.setAssetId(resources[0]);
-                                                    }
-                                                }, null, null));
-                                this.setTargetAsset(RSProviderUtil.completeAssetKey(
-                                                new AssetKey() {
-                                                    {
-                                                        this.setAssetId(dstAsset);
-                                                    }
-                                                }, null, null));
-                                this.setAssetRelationship("DependsOn");
-                            }
-                        });
+//        relationList.add(
+//                        new Relation() {
+//                            {
+//                                this.setSourceAsset(RSProviderUtil.completeAssetKey(
+//                                                new AssetKey() {
+//                                                    {
+//                                                        this.setAssetId(resources[0]);
+//                                                    }
+//                                                }, null, null));
+//                                this.setTargetAsset(RSProviderUtil.completeAssetKey(
+//                                                new AssetKey() {
+//                                                    {
+//                                                        this.setAssetId(dstAsset);
+//                                                    }
+//                                                }, null, null));
+//                                this.setAssetRelationship("DependsOn");
+//                            }
+//                        });
         assetInfo.setFlattenedRelationship(rel);
         
         CreateCompleteAssetRequest request = new CreateCompleteAssetRequest();
         request.setAssetInfo(assetInfo);
 
-        RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
         CreateCompleteAssetResponse response = provider.createCompleteAsset(request);
 
         assertEquals(AckValue.SUCCESS, response.getAck());
@@ -174,7 +175,7 @@ public class AssetLifeCycleTest extends Wso2Base {
         }
         assertTrue(clean);
 
-        RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
 
         CreateCompleteAssetResponse responseCreate = createAsset();
         
@@ -223,7 +224,7 @@ public class AssetLifeCycleTest extends Wso2Base {
         }
         assertTrue(clean);
 
-        RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
 
         CreateCompleteAssetResponse responseCreate = createAsset();
         

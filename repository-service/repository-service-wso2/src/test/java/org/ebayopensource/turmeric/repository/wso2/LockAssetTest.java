@@ -29,6 +29,7 @@ import org.ebayopensource.turmeric.repository.v2.services.ExtendedAssetInfo;
 import org.ebayopensource.turmeric.repository.v2.services.LockAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.LockAssetResponse;
 import org.ebayopensource.turmeric.repository.wso2.assets.AssetConstants;
+import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositoryServiceProvider;
 
 
 /**
@@ -80,7 +81,7 @@ public class LockAssetTest extends Wso2Base {
         CreateCompleteAssetRequest request = new CreateCompleteAssetRequest();
         request.setAssetInfo(assetInfo);
 
-        RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
         return provider.createCompleteAsset(request);
     }
 
@@ -91,7 +92,7 @@ public class LockAssetTest extends Wso2Base {
         LockAssetRequest lockReq = new LockAssetRequest();
         lockReq.setAssetKey(key);
 
-        RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
         LockAssetResponse lockRes = provider.lockAsset(lockReq);
         return lockRes; 
     }

@@ -132,27 +132,27 @@ public class Wso2Base extends AbstractCarbonIntegrationTestCase {
 //            }
     }
 
-    public static void createRequiredNonServiceAssetInWso2() {
-        try {
-            RemoteRegistry _registry = new RemoteRegistry(
-                            new URL(
-                                            System.getProperty("org.ebayopensource.turmeric.repository.wso2.url")),
-                            System.getProperty("org.ebayopensource.turmeric.repository.wso2.username"),
-                            System.getProperty("org.ebayopensource.turmeric.repository.wso2.password"));
-            String assetName = "NonServiceAsset";
-            String assetKey = "/_system/governance/trunk/testassets/libraryname/" + assetName;
-            String description = "The asset description";
-            if (!_registry.resourceExists(assetKey)) {
-                Resource asset = RSProviderUtil.newAssetResource();
-                asset.setDescription(description);
-                asset.setProperty(RSProviderUtil.__artifactVersionPropName, "1.0.0");
-                _registry.put(assetKey, asset);
-            }
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public static void createRequiredNonServiceAssetInWso2() {
+//        try {
+//            RemoteRegistry _registry = new RemoteRegistry(
+//                            new URL(
+//                                            System.getProperty("org.ebayopensource.turmeric.repository.wso2.url")),
+//                            System.getProperty("org.ebayopensource.turmeric.repository.wso2.username"),
+//                            System.getProperty("org.ebayopensource.turmeric.repository.wso2.password"));
+//            String assetName = "NonServiceAsset";
+//            String assetKey = "/_system/governance/trunk/testassets/libraryname/" + assetName;
+//            String description = "The asset description";
+//            if (!_registry.resourceExists(assetKey)) {
+//                Resource asset = RSProviderUtil.newAssetResource();
+//                asset.setDescription(description);
+//                asset.setProperty(RSProviderUtil.__artifactVersionPropName, "1.0.0");
+//                _registry.put(assetKey, asset);
+//            }
+//        }
+//        catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     /**
      * Utility method used to create a necessary asset in the wso2 registry, before a given test

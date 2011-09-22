@@ -17,6 +17,7 @@ import org.junit.Test;
 import org.wso2.carbon.governance.api.util.GovernanceUtils;
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
 import org.ebayopensource.turmeric.repository.v2.services.*;
+import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositoryServiceProvider;
 
 /**
  * @author mgorovoy
@@ -43,7 +44,7 @@ public class RemoveAssetTest extends Wso2Base {
         CreateAssetRequest request = new CreateAssetRequest();
         request.setBasicAssetInfo(basicInfo);
 
-        RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
         CreateAssetResponse response = provider.createAsset(request);
         
         assertEquals(AckValue.SUCCESS, response.getAck());
@@ -61,7 +62,7 @@ public class RemoveAssetTest extends Wso2Base {
 
         RemoveAssetRequest request = new RemoveAssetRequest();
         request.setAssetKey(key);
-        RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
         RemoveAssetResponse responseRemove = provider.removeAsset(request);
 
         assertEquals(AckValue.SUCCESS, responseRemove.getAck());
@@ -77,7 +78,7 @@ public class RemoveAssetTest extends Wso2Base {
         AssetKey assetKey = new AssetKey();
         assetKey.setAssetId(UUID.randomUUID().toString());
         request.setAssetKey(assetKey);
-        RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
         RemoveAssetResponse responseRemove = provider.removeAsset(request);
 
         assertEquals(AckValue.FAILURE, responseRemove.getAck());

@@ -19,6 +19,7 @@ import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
 import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
 import org.ebayopensource.turmeric.repository.v2.services.CreateAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.CreateAssetResponse;
+import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositoryServiceProvider;
 
 /**
  * @author mgorovoy
@@ -60,7 +61,7 @@ public class CreateAssetTest extends Wso2Base {
         CreateAssetRequest request = new CreateAssetRequest();
         request.setBasicAssetInfo(basicInfo);
 
-        RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
         return provider.createAsset(request);
     }
 

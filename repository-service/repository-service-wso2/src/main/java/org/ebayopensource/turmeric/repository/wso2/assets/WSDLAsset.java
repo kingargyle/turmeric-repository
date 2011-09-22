@@ -10,6 +10,7 @@
 package org.ebayopensource.turmeric.repository.wso2.assets;
 
 import org.ebayopensource.turmeric.repository.v2.services.ArtifactInfo;
+import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
 import org.ebayopensource.turmeric.repository.wso2.Asset;
 import org.wso2.carbon.governance.api.common.dataobjects.GovernanceArtifact;
 import org.wso2.carbon.governance.api.exception.GovernanceException;
@@ -25,6 +26,8 @@ import org.wso2.carbon.registry.core.Registry;
 public class WSDLAsset implements Asset {
 
 	private ArtifactInfo artifactInfo = null;
+	private BasicAssetInfo assetInfo = null;
+	
 	private WSDLManager wsdlManager = null;
 	private Wsdl wsdl;
 	private Registry registry = null;
@@ -37,8 +40,14 @@ public class WSDLAsset implements Asset {
 	 * @param registry the associated registry
 	 * @throws Exception any exception that could be thrown
 	 */
-	public WSDLAsset(ArtifactInfo ai, Registry registry) throws Exception{
+	public WSDLAsset(ArtifactInfo ai, Registry registry) throws Exception {
 		artifactInfo = ai;
+		this.registry = registry;
+		wsdlManager = new WSDLManager(registry);
+	}
+	
+	public WSDLAsset(BasicAssetInfo bi, Registry registry) throws Exception {
+		assetInfo = bi;
 		this.registry = registry;
 		wsdlManager = new WSDLManager(registry);
 	}

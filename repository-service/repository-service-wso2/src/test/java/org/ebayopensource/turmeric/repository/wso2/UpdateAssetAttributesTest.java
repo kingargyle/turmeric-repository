@@ -35,6 +35,7 @@ import org.ebayopensource.turmeric.repository.v2.services.LockAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.LockAssetResponse;
 import org.ebayopensource.turmeric.repository.v2.services.UpdateCompleteAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.UpdateCompleteAssetResponse;
+import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositoryServiceProvider;
 
 
 /**
@@ -119,7 +120,7 @@ public class UpdateAssetAttributesTest extends Wso2Base {
         CreateCompleteAssetRequest request = new CreateCompleteAssetRequest();
         request.setAssetInfo(assetInfo);
 
-        RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
         return provider.createCompleteAsset(request);
     }
 
@@ -130,7 +131,7 @@ public class UpdateAssetAttributesTest extends Wso2Base {
         LockAssetRequest lockReq = new LockAssetRequest();
         lockReq.setAssetKey(key);
 
-        RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
         LockAssetResponse lockRes = provider.lockAsset(lockReq);
         assertEquals(AckValue.SUCCESS, lockRes.getAck());
 
@@ -171,7 +172,7 @@ public class UpdateAssetAttributesTest extends Wso2Base {
         LockAssetRequest lockReq = new LockAssetRequest();
         lockReq.setAssetKey(key);
 
-        RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
         LockAssetResponse lockRes = provider.lockAsset(lockReq);
         assertEquals(AckValue.SUCCESS, lockRes.getAck());
 
@@ -212,7 +213,7 @@ public class UpdateAssetAttributesTest extends Wso2Base {
      */
     private AssetInfo validateAsset(String assetId) {
         // now, i search the service to get all its related objects
-        RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
 
         GetAssetInfoRequest request = new GetAssetInfoRequest();
         AssetKey key = new AssetKey();

@@ -9,9 +9,8 @@
 
 package org.ebayopensource.turmeric.repository.wso2;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -23,20 +22,19 @@ import org.wso2.carbon.registry.core.Registry;
 import org.wso2.carbon.registry.core.Resource;
 
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
-import org.ebayopensource.turmeric.common.v1.types.BaseResponse;
 import org.ebayopensource.turmeric.common.v1.types.CommonErrorData;
 import org.ebayopensource.turmeric.repository.v2.services.*;
+import org.ebayopensource.turmeric.repository.wso2.assets.AssetConstants;
 import org.ebayopensource.turmeric.services.common.error.RepositoryServiceErrorDescriptor;
 
-import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositoryServiceProvider;
-
-import edu.emory.mathcs.backport.java.util.Arrays;
+//import edu.emory.mathcs.backport.java.util.Arrays;
 
 /**
  * @author mgorovoy
+ * @dcarver refactored lots of the code
  * 
  */
-public class RepositoryServiceProviderImpl implements RepositoryServiceProvider {
+public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider {
 
 	/**
 	 * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#lockAsset(org.ebayopensource.turmeric.repository.v1.services.LockAssetRequest)
@@ -64,10 +62,9 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 				asset.lockAsset();
 				asset.save();
 			}
-						
-			asset.findAsset();
+									
+			AssetInfo assetInfo = getAssetInfo(asset);
 			
-			AssetInfo assetInfo = RSProviderUtil.getAssetInfo(assetKey, asset.getGovernanceArtifact());
 
 			// populate the response
 			response.setAssetInfo(assetInfo);
@@ -90,6 +87,66 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 			} catch (Exception e) {
 			}
 		}
+	}
+	
+	private AssetInfo getAssetInfo(Asset asset) throws GovernanceException {
+		AssetInfo assetInfo = new AssetInfo();
+		
+		BasicAssetInfo info = getBasicAssetInfo(asset);
+		assetInfo.setBasicAssetInfo(info);
+		
+		ExtendedAssetInfo extendedInfo = getExtendedAssetInfo(asset);
+		assetInfo.setExtendedAssetInfo(extendedInfo);
+		
+		GovernanceArtifact gart = asset.getGovernanceArtifact(); 
+		GovernanceArtifact[] dependencies = gart.getDependencies();
+		if (dependencies != null && dependencies.length > 0) {
+			List <ArtifactInfo> artifacts = assetInfo.getArtifactInfo();
+			for (GovernanceArtifact dependency : dependencies) {
+				ArtifactInfo ai = new ArtifactInfo();
+				Artifact art = new Artifact();
+				art.setArtifactCategory(dependency.getAttribute(AssetConstants.TURMERIC_ARTIFACT_CATEGORY));
+				art.setArtifactDisplayName(dependency.getAttribute(AssetConstants.TURMERIC_DISPLAY_NAME));
+				art.setArtifactIdentifier(dependency.getId());
+				ai.setArtifact(art);
+				artifacts.add(ai);
+			}
+		}
+		
+		return assetInfo;
+	}
+	
+	private BasicAssetInfo getBasicAssetInfo(Asset asset) throws GovernanceException {
+		GovernanceArtifact gart = asset.getGovernanceArtifact();
+		BasicAssetInfo bi = new BasicAssetInfo();
+		AssetKey assetKey = getAssetKey(asset);
+		bi.setAssetKey(assetKey);
+		bi.setAssetName(assetKey.getAssetName());
+		bi.setAssetType(assetKey.getType());
+		bi.setVersion(assetKey.getVersion());
+		bi.setGroupName(gart.getAttribute(AssetConstants.TURMERIC_OWNER));
+		bi.setNamespace(gart.getAttribute(AssetConstants.TURMERIC_NAMESPACE));
+		bi.setAssetDescription(gart.getAttribute(AssetConstants.TURMERIC_DESCRIPTION));
+		bi.setAssetLongDescription(gart.getAttribute(AssetConstants.TURMERIC_LONG_DESCRIPTION));
+		return bi;
+	}
+	
+	private AssetKey getAssetKey(Asset asset) throws GovernanceException {
+		GovernanceArtifact gart = asset.getGovernanceArtifact();
+		AssetKey assetKey = new AssetKey();
+		
+		assetKey.setAssetId(asset.getId());
+		assetKey.setAssetName(gart.getAttribute(AssetConstants.TURMERIC_NAME));
+		assetKey.setType(gart.getAttribute(AssetConstants.TURMERIC_TYPE));
+		assetKey.setVersion(gart.getAttribute(AssetConstants.TURMERIC_VERSION));
+		
+		return assetKey;
+	}
+	
+	private ExtendedAssetInfo getExtendedAssetInfo(Asset asset) throws GovernanceException{
+		ExtendedAssetInfo eai = new ExtendedAssetInfo();
+		
+		return eai;
 	}
 
 	private BasicAssetInfo populateMinBasicAssetInfo(AssetKey assetKey) {
@@ -128,9 +185,9 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 		UpdateAssetArtifactsResponse response = new UpdateAssetArtifactsResponse();
 
 		try {
-			AssetKey assetKey = RSProviderUtil.completeAssetKey(
-					request.getAssetKey(), null, null);
-			String assetId = assetKey.getAssetId();
+			AssetFactory factory = new AssetFactory(request.getAssetKey(), wso2);
+			Asset asset = factory.createAsset();
+			String assetId = asset.getId();
 
 			if (!wso2.resourceExists(assetId)) {
 				errorDataList
@@ -139,35 +196,25 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 				return RSProviderUtil.addErrorsToResponse(errorDataList,
 						response);
 			}
-
-			wso2.beginTransaction();
-			Resource asset = wso2.get(assetId);
-			if (!RSProviderUtil.islocked(asset)) {
-				errorDataList
-						.add(RepositoryServiceErrorDescriptor.ASSET_LOCK_EXCEPTION
-								.newError());
-				return RSProviderUtil.addErrorsToResponse(errorDataList,
-						response);
+			
+			if (!asset.isLocked()) {
+				return createAssetNotLocked(errorDataList, response);
 			}
 
 			// get the existing assetInfo
-			AssetInfo assetInfo = RSProviderUtil.getAssetInfo(assetKey, asset);
+			AssetInfo assetInfo = getAssetInfo(asset);
 
 			if (assetInfo == null) {
-				errorDataList
-						.add(RepositoryServiceErrorDescriptor.ASSET_TYPE_EXCEPTION
-								.newError());
-				return RSProviderUtil.addErrorsToResponse(errorDataList,
-						response);
+				return createAssetTypeException(errorDataList, response);
 			}
 
 			if (request.isReplaceCurrent()) {
-				RSProviderUtil.removeArtifacts(assetId);
-				RSProviderUtil.updateArtifacts(assetKey, null,
-						request.getArtifactInfo());
+				//TODO: remove and add artifacts
+				// remove Artifacts
+				// add artifacts
+				
 			} else {
-				RSProviderUtil.updateArtifacts(assetKey,
-						assetInfo.getArtifactInfo(), request.getArtifactInfo());
+				// Update existing artifacts and add new ones
 			}
 
 			// populate the response
@@ -180,17 +227,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 							ex,
 							response,
 							RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
-		} finally {
-			try {
-				if (request.isPartialUpdate()
-						|| (response.getAck() == AckValue.SUCCESS && response
-								.getErrorMessage() == null)) {
-					wso2.commitTransaction();
-				} else {
-					wso2.rollbackTransaction();
-				}
-			} catch (Exception e) {
-			}
 		}
 	}
 
@@ -206,25 +242,17 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 		try {
 			ApprovalInfo approvalInfo = request.getApprovalInfo();
 			String assetId = approvalInfo.getAssetId();
+			GovernanceArtifact gart = GovernanceUtils.retrieveGovernanceArtifactById(wso2, assetId);
 
-			if (!wso2.resourceExists(assetId)) {
-				errorDataList
-						.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
-								.newError());
-				return RSProviderUtil.addErrorsToResponse(errorDataList,
-						response);
+			if (gart == null) {
+				return createAssetNotFoundError(errorDataList, response);
 			}
-
-			wso2.beginTransaction();
-			Resource asset = wso2.get(assetId);
-			RSLifeCycle.approve(asset, approvalInfo.getComments());
-
-			wso2.put(assetId, asset);
+			
+			//TODO Re-implement approveAsset
 
 			response.setTimestamp(DatatypeFactory.newInstance()
 					.newXMLGregorianCalendar(new GregorianCalendar()));
-			response.setVersion(asset
-					.getProperty(RSProviderUtil.__artifactVersionPropName));
+			response.setVersion(gart.getAttribute(AssetConstants.TURMERIC_VERSION));
 			return RSProviderUtil.setSuccessResponse(response);
 		} catch (Exception ex) {
 			return RSProviderUtil
@@ -259,62 +287,30 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 			AssetInfo assetInfo = request.getAssetInfo();
 			BasicAssetInfo basicInfo = assetInfo.getBasicAssetInfo();
 			AssetKey assetKey = basicInfo.getAssetKey();
-
 			if (assetKey.getAssetId() == null
 					&& assetKey.getAssetName() == null) {
-				errorDataList
-						.add(RepositoryServiceErrorDescriptor.ASSET_NAME_MISSING
-								.newError());
-				return RSProviderUtil.addErrorsToResponse(errorDataList,
-						response);
+				return createErrorMissingAssetName(errorDataList, response);
+			}
+			
+			AssetFactory factory = new AssetFactory(basicInfo, wso2);
+			Asset asset = factory.createAsset();
+
+			if (asset.hasDuplicates()) {
+				return createErrorDuplicateAsset(errorDataList, response);
 			}
 
-			String assetType = basicInfo.getAssetType();
-			assetKey = RSProviderUtil.completeAssetKey(assetKey, assetType,
-					null);
-			String assetId = assetKey.getAssetId();
-
-			if (wso2.resourceExists(assetId)) {
-				errorDataList
-						.add(RepositoryServiceErrorDescriptor.DUPLICATE_ASSET
-								.newError());
-				return RSProviderUtil.addErrorsToResponse(errorDataList,
-						response);
+			asset.createAsset();
+			
+			for (ArtifactInfo artinfo : assetInfo.getArtifactInfo()) {
+				asset.addArtifact(artinfo);
 			}
 
-			wso2.beginTransaction();
-			Resource asset = RSProviderUtil.newAssetResource();
+			asset.save();
 
-			asset.setProperty(RSProviderUtil.__artifactVersionPropName,
-					basicInfo.getVersion());
-			RSProviderUtil.updateResourceProperties(asset,
-					assetInfo.getExtendedAssetInfo());
+			// TODO add submittal of asset
+//			RSLifeCycle.submit(asset, request.getComment());
 
-			if ("Service".equalsIgnoreCase(assetType)) {
-				asset.setMediaType("application/vnd.wso2-service+xml");
-				String content = RSProviderUtil.getAssetInfoXml(assetInfo);
-				if (content != null) {
-					InputStream contentStream = new ByteArrayInputStream(
-							content.getBytes("UTF-8"));
-					asset.setContentStream(contentStream);
-				}
-			} else {
-				asset.setDescription(assetInfo.getBasicAssetInfo()
-						.getAssetDescription());
-			}
-
-			RSLifeCycle.submit(asset, request.getComment());
-
-			wso2.put(assetId, asset);
-
-			RSProviderUtil.removeArtifacts(assetId);
-			RSProviderUtil.removeDependencies(assetId);
-
-			RSProviderUtil.createArtifacts(assetKey,
-					assetInfo.getArtifactInfo());
-			RSProviderUtil.createDependencies(assetKey,
-					assetInfo.getFlattenedRelationship());
-
+			assetKey = (getAssetKey(asset));
 			response.setAssetKey(assetKey);
 			return RSProviderUtil.setSuccessResponse(response);
 		} catch (Exception ex) {
@@ -323,16 +319,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 							ex,
 							response,
 							RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
-		} finally {
-			try {
-				if (response.getAck() == AckValue.SUCCESS
-						&& response.getErrorMessage() == null) {
-					wso2.commitTransaction();
-				} else {
-					wso2.rollbackTransaction();
-				}
-			} catch (Exception e) {
-			}
 		}
 	}
 
@@ -409,75 +395,25 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 
 		try {
 			BasicAssetInfo basicInfo = request.getBasicAssetInfo();
-			AssetKey origAssetKey = RSProviderUtil.completeAssetKey(
-					basicInfo.getAssetKey(), basicInfo.getAssetType(), null);
-			String origAssetId = origAssetKey.getAssetId();
-
-			if (!wso2.resourceExists(origAssetId)) {
-				errorDataList
-						.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
-								.newError());
-				return RSProviderUtil.addErrorsToResponse(errorDataList,
-						response);
+			 
+			AssetFactory factory = new AssetFactory(basicInfo, wso2);
+			Asset asset = factory.createAsset();
+			
+			if (!asset.exists()) {
+				return createErrorDuplicateAsset(errorDataList, response);
 			}
-
-			wso2.beginTransaction();
-			Resource asset = wso2.get(origAssetId);
-			if (!RSProviderUtil.islocked(asset)) {
-				errorDataList
-						.add(RepositoryServiceErrorDescriptor.ASSET_LOCK_EXCEPTION
-								.newError());
-				return RSProviderUtil.addErrorsToResponse(errorDataList,
-						response);
+			
+			asset.findAsset();
+			
+			if (!asset.isLocked()) {
+				return createAssetNotLocked(errorDataList, response);
 			}
-
-			// get the existing assetInfo
-			AssetInfo assetInfo = RSProviderUtil.getAssetInfo(origAssetKey,
-					asset);
-			if (assetInfo == null) {
-				errorDataList
-						.add(RepositoryServiceErrorDescriptor.ASSET_TYPE_EXCEPTION
-								.newError());
-				return RSProviderUtil.addErrorsToResponse(errorDataList,
-						response);
-			}
-			BasicAssetInfo origBasicInfo = assetInfo.getBasicAssetInfo();
-
-			// update the assetInfo
-			AssetKey newAssetKey = new AssetKey();
-			newAssetKey.setAssetName(basicInfo.getAssetName());
-			newAssetKey = RSProviderUtil.completeAssetKey(newAssetKey,
-					basicInfo.getAssetType(), null);
-
-			basicInfo.setAssetKey(newAssetKey);
-			assetInfo.setBasicAssetInfo(basicInfo);
-			// update the basicInfo.version if null
-			if (basicInfo.getVersion() == null) {
-				basicInfo.setVersion(origBasicInfo.getVersion());
-			}
-			asset.setProperty(RSProviderUtil.__artifactVersionPropName,
-					basicInfo.getVersion() != null ? basicInfo.getVersion()
-							: origBasicInfo.getVersion());
-
-			if ("Service".equals(basicInfo.getAssetType())) {
-				String content = RSProviderUtil.getAssetInfoXml(assetInfo);
-				if (content != null) {
-					InputStream contentStream = new ByteArrayInputStream(
-							content.getBytes("UTF-8"));
-					asset.setContentStream(contentStream);
-				}
-			} else {
-				asset.setDescription(basicInfo.getAssetDescription());
-			}
-
-			// check if assetId have changed
-			String newAssetId = basicInfo.getAssetKey().getAssetId();
-			if (!origAssetId.equals(newAssetId)) {
-				RSProviderUtil.moveAsset(origAssetKey, assetInfo);
-			}
-
-			// update the resource
-			wso2.put(newAssetKey.getAssetId(), asset);
+			
+			asset.save();
+			
+			// TODO: Add new update logic
+			
+			AssetInfo assetInfo = getAssetInfo(asset);
 
 			// populate the response
 			response.setAssetInfo(assetInfo);
@@ -489,17 +425,7 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 							ex,
 							new UpdateAssetResponse(),
 							RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
-		} finally {
-			try {
-				if (response.getAck() == AckValue.SUCCESS
-						&& response.getErrorMessage() == null) {
-					wso2.commitTransaction();
-				} else {
-					wso2.rollbackTransaction();
-				}
-			} catch (Exception e) {
-			}
-		}
+		} 
 	}
 
 	/**
@@ -514,16 +440,12 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 		try {
 			RejectionInfo rejectionInfo = request.getRejectionInfo();
 			String assetId = rejectionInfo.getAssetId();
+			GovernanceArtifact gart = GovernanceUtils.retrieveGovernanceArtifactById(wso2, assetId);
 
-			if (!wso2.resourceExists(assetId)) {
-				errorDataList
-						.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
-								.newError());
-				return RSProviderUtil.addErrorsToResponse(errorDataList,
-						response);
+			if (gart == null) {
+				return createAssetNotFoundError(errorDataList, response);
 			}
 
-			wso2.beginTransaction();
 			Resource asset = wso2.get(assetId);
 			RSLifeCycle.reject(asset, rejectionInfo.getComments());
 
@@ -582,19 +504,16 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 		SubmitForPublishingResponse response = new SubmitForPublishingResponse();
 
 		try {
-			AssetKey assetKey = RSProviderUtil.completeAssetKey(
-					request.getAssetKey(), null, null);
+			
+			AssetFactory factory = new AssetFactory(request.getAssetKey(), wso2);
+			Asset gasset = factory.createAsset();
+			AssetKey assetKey = getAssetKey(gasset);
 			String assetId = assetKey.getAssetId();
 
-			if (!wso2.resourceExists(assetId)) {
-				errorDataList
-						.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
-								.newError());
-				return RSProviderUtil.addErrorsToResponse(errorDataList,
-						response);
+			if (!gasset.exists()) {
+				return createAssetNotFoundError(errorDataList, response);
 			}
 
-			wso2.beginTransaction();
 			Resource asset = wso2.get(assetId);
 			RSLifeCycle.submit(asset, request.getComment());
 
@@ -603,7 +522,7 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 			response.setTimestamp(DatatypeFactory.newInstance()
 					.newXMLGregorianCalendar(new GregorianCalendar()));
 			response.setVersion(asset
-					.getProperty(RSProviderUtil.__artifactVersionPropName));
+					.getProperty(AssetConstants.TURMERIC_VERSION));
 			return RSProviderUtil.setSuccessResponse(response);
 		} catch (Exception ex) {
 			return RSProviderUtil
@@ -611,16 +530,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 							ex,
 							response,
 							RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
-		} finally {
-			try {
-				if (response.getAck() == AckValue.SUCCESS
-						&& response.getErrorMessage() == null) {
-					wso2.commitTransaction();
-				} else {
-					wso2.rollbackTransaction();
-				}
-			} catch (Exception e) {
-			}
 		}
 	}
 
@@ -634,16 +543,11 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 		GetAssetStatusResponse response = new GetAssetStatusResponse();
 
 		try {
-			AssetKey assetKey = RSProviderUtil.completeAssetKey(
-					request.getAssetKey(), null, null);
+			AssetKey assetKey = request.getAssetKey();
 			String assetId = assetKey.getAssetId();
 
 			if (!wso2.resourceExists(assetId)) {
-				errorDataList
-						.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
-								.newError());
-				return RSProviderUtil.addErrorsToResponse(errorDataList,
-						response);
+				return createAssetNotFoundError(errorDataList, response);
 			}
 
 			Resource asset = wso2.get(assetId);
@@ -654,7 +558,7 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 			response.setAssetStatus(assetStatus);
 
 			response.setVersion(asset
-					.getProperty(RSProviderUtil.__artifactVersionPropName));
+					.getProperty(AssetConstants.TURMERIC_VERSION));
 			return RSProviderUtil.setSuccessResponse(response);
 
 		} catch (Exception ex) {
@@ -704,8 +608,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 			for (ArtifactInfo artifactInfo : artifactInfoList) {
 				asset.addArtifact(artifactInfo);
 			}
-						
-			
 			
 //			RSProviderUtil.createDependencies(assetKey,
 //					assetInfo.getFlattenedRelationship());
@@ -748,25 +650,24 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 		UnlockAssetResponse response = new UnlockAssetResponse();
 
 		try {
-			AssetKey assetKey = RSProviderUtil.completeAssetKey(
-					request.getAssetKey(), null, null);
-			String assetId = assetKey.getAssetId();
-
-			if (!wso2.resourceExists(assetId)) {
-				errorDataList
-						.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
-								.newError());
-				return RSProviderUtil.addErrorsToResponse(errorDataList,
-						response);
+			AssetKey assetKey = request.getAssetKey();
+			BasicAssetInfo basicInfo = populateMinBasicAssetInfo(assetKey);
+			
+			AssetFactory factory = new AssetFactory(basicInfo, wso2);
+			Asset asset = factory.createAsset();
+			
+			if (!asset.exists()) {
+				return createAssetNotFoundError(errorDataList, response);
 			}
-
-			wso2.beginTransaction();
-			Resource service = wso2.get(assetId);
-			RSProviderUtil.unlock(service);
-			wso2.put(assetId, service);
-
-			AssetInfo assetInfo = RSProviderUtil
-					.getAssetInfo(assetKey, service);
+			
+			asset.findAsset();
+			
+			if (!asset.isLocked()) {
+				asset.unlock();
+				asset.save();
+			}
+									
+			AssetInfo assetInfo = getAssetInfo(asset);
 
 			// populate the response
 			response.setAssetInfo(assetInfo);
@@ -802,27 +703,23 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 		GetAssetDependenciesResponse response = new GetAssetDependenciesResponse();
 
 		try {
-			AssetKey assetKey = RSProviderUtil.completeAssetKey(
-					request.getAssetKey(), null, null);
-			String assetId = assetKey.getAssetId();
-
-			if (!wso2.resourceExists(assetId)) {
-				errorDataList
-						.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
-								.newError());
-				return RSProviderUtil.addErrorsToResponse(errorDataList,
-						response);
+			AssetKey assetKey = request.getAssetKey();
+			BasicAssetInfo basicInfo = populateMinBasicAssetInfo(assetKey);
+			
+			AssetFactory factory = new AssetFactory(basicInfo, wso2);
+			Asset asset = factory.createAsset();
+			
+			if (!asset.exists()) {
+				return createAssetNotFoundError(errorDataList, response);
 			}
 
-			Resource asset = wso2.get(assetId);
+			asset.findAsset();
 
-			FlattenedRelationship relationship = new FlattenedRelationship();
-			RSProviderUtil.retrieveAssociations(null, relationship, asset);
+			FlattenedRelationship relationship = getRelationShip(asset);
 
 			// populate the response
 			response.setFlattenedRelationship(relationship);
-			response.setVersion(asset
-					.getProperty(RSProviderUtil.__artifactVersionPropName));
+			response.setVersion(basicInfo.getVersion());
 			return RSProviderUtil.setSuccessResponse(response);
 
 		} catch (Exception ex) {
@@ -833,6 +730,14 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 							response,
 							RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
 		}
+	}
+	
+	private FlattenedRelationship getRelationShip(Asset asset) {
+		FlattenedRelationship relationship = new FlattenedRelationship();
+		//TODO complete me!
+		
+		return relationship;
+		
 	}
 
 	/**
@@ -861,7 +766,7 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 				return createAssetNotFoundError(errorDataList, response);
 			}
 			
-			AssetInfo assetInfo = RSProviderUtil.getAssetInfo(assetKey, asset.getGovernanceArtifact());
+			AssetInfo assetInfo = getAssetInfo(asset);
 
 			if (assetInfo == null) {
 				return createAssetTypeException(errorDataList, response);
@@ -882,14 +787,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 		}
 	}
 
-	private <T extends BaseResponse> T createAssetTypeException(
-			List<CommonErrorData> errorDataList, T response) {
-		errorDataList
-				.add(RepositoryServiceErrorDescriptor.ASSET_TYPE_EXCEPTION
-						.newError());
-		return RSProviderUtil.addErrorsToResponse(errorDataList,
-				response);
-	}
 
 	/**
 	 * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#getAssetLifeCycleStates(org.ebayopensource.turmeric.repository.v1.services.GetAssetLifeCycleStatesRequest)
@@ -920,46 +817,38 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 		UpdateAssetAttributesResponse response = new UpdateAssetAttributesResponse();
 
 		try {
-			AssetKey assetKey = RSProviderUtil.completeAssetKey(
-					request.getAssetKey(), null, null);
-			String assetId = assetKey.getAssetId();
+			AssetKey assetKey = request.getAssetKey();
+			BasicAssetInfo basicInfo = populateMinBasicAssetInfo(assetKey);
+			
+			AssetFactory factory = new AssetFactory(basicInfo, wso2);
+			Asset asset = factory.createAsset();
 
-			if (!wso2.resourceExists(assetId)) {
-				errorDataList
-						.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
-								.newError());
-				return RSProviderUtil.addErrorsToResponse(errorDataList,
-						response);
+			if (!asset.exists()) {
+				return createAssetNotFoundError(errorDataList, response);
 			}
-
-			wso2.beginTransaction();
-			Resource asset = wso2.get(assetId);
-			if (!RSProviderUtil.islocked(asset)) {
-				errorDataList
-						.add(RepositoryServiceErrorDescriptor.ASSET_LOCK_EXCEPTION
-								.newError());
-				return RSProviderUtil.addErrorsToResponse(errorDataList,
-						response);
+			
+			asset.findAsset();
+			if (!asset.isLocked()) {
+				return createAssetNotLocked(errorDataList, response);
 			}
 
 			// get the existing assetInfo
-			AssetInfo assetInfo = RSProviderUtil.getAssetInfo(assetKey, asset);
+			AssetInfo assetInfo = getAssetInfo(asset);
 
 			if (assetInfo == null) {
-				errorDataList
-						.add(RepositoryServiceErrorDescriptor.ASSET_TYPE_EXCEPTION
-								.newError());
-				return RSProviderUtil.addErrorsToResponse(errorDataList,
-						response);
+				return createAssetTypeException(errorDataList, response);
 			}
 
 			if (request.isReplaceCurrent()) {
+				// Uh...this will never work...it never actually updates the item
 				assetInfo.setExtendedAssetInfo(request.getExtendedAssetInfo());
 			} else {
-				RSProviderUtil.updateExtendedInfo(
-						assetInfo.getExtendedAssetInfo(),
-						request.getExtendedAssetInfo());
+//				RSProviderUtil.updateExtendedInfo(
+//						assetInfo.getExtendedAssetInfo(),
+//						request.getExtendedAssetInfo());
 			}
+			
+			asset.save();
 
 			// populate the response
 			response.setVersion(assetInfo.getBasicAssetInfo().getVersion());
@@ -1022,7 +911,7 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 			}
 
 			// get the existing assetInfo
-			AssetInfo origAssetInfo = RSProviderUtil.getAssetInfo(assetKey, asset.getGovernanceArtifact()); 
+			AssetInfo origAssetInfo = getAssetInfo(asset); 
 
 			if (origAssetInfo == null) {
 				return createAssetTypeException(errorDataList, response);
@@ -1047,12 +936,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 			// Update the asset
 			asset.save();
 
-
-			// check if asset name or library name have changed
-			if (!assetKey.getAssetId().equals(origAssetKey.getAssetId())) {
-				RSProviderUtil.moveAsset(assetKey, origAssetInfo);
-			}
-
 			// populate the response
 			response.setAssetKey(assetKey);
 			response.setVersion(basicInfo.getVersion());
@@ -1063,18 +946,7 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 							ex,
 							response,
 							RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
-		} finally {
-			try {
-				if (request.isPartialUpdate()
-						|| (response.getAck() == AckValue.SUCCESS && response
-								.getErrorMessage() == null)) {
-					wso2.commitTransaction();
-				} else {
-					wso2.rollbackTransaction();
-				}
-			} catch (Exception e) {
-			}
-		}
+		} 
 	}
 	
 	private GovernanceArtifact updateBasicInfo(BasicAssetInfo basicInfo, GovernanceArtifact artifact) {
@@ -1082,15 +954,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 		return gart;
 	}
 
-	private <T extends BaseResponse> T createAssetNotLocked(
-			List<CommonErrorData> errorDataList,
-			T response) {
-		errorDataList
-				.add(RepositoryServiceErrorDescriptor.ASSET_LOCK_EXCEPTION
-						.newError());
-		return RSProviderUtil.addErrorsToResponse(errorDataList,
-				response);
-	}
 
 	@Override
 	public CreateAssetResponse createAsset(CreateAssetRequest request) {
@@ -1140,36 +1003,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 		}
 	}
 
-
-	private <T extends BaseResponse> T createErrorDuplicateAsset(
-			List<CommonErrorData> errorDataList, T response) {
-		errorDataList.add(RepositoryServiceErrorDescriptor.DUPLICATE_ASSET
-				.newError());
-		return RSProviderUtil.addErrorsToResponse(errorDataList, response);
-	}
-
-	private <T extends BaseResponse> T createErrorAssetCreation(
-			List<CommonErrorData> errorDataList, T response) {
-		errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_CREATION_ERROR
-				.newError());
-		return RSProviderUtil.addErrorsToResponse(errorDataList, response);
-	}
-
-	private <T extends BaseResponse> T createErrorMissingNamespace(
-			List<CommonErrorData> errorDataList, T response) {
-		errorDataList
-				.add(RepositoryServiceErrorDescriptor.ASSET_NAMESPACE_MISSING
-						.newError());
-		return RSProviderUtil.addErrorsToResponse(errorDataList, response);
-	}
-
-	private <T extends BaseResponse> T createErrorMissingAssetName(
-			List<CommonErrorData> errorDataList, T response) {
-		errorDataList.add(RepositoryServiceErrorDescriptor.ASSET_NAME_MISSING
-				.newError());
-		return RSProviderUtil.addErrorsToResponse(errorDataList, response);
-	}	
-
 	/**
 	 * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#getBasicAssetInfo(org.ebayopensource.turmeric.repository.v1.services.GetBasicAssetInfoRequest)
 	 */
@@ -1181,8 +1014,7 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 		GetBasicAssetInfoResponse response = new GetBasicAssetInfoResponse();
 
 		try {
-			AssetKey assetKey = RSProviderUtil.completeAssetKey(
-					request.getAssetKey(), request.getAssetType(), null);
+			AssetKey assetKey = request.getAssetKey();
 			String assetId = assetKey.getAssetId();
 			
 			GovernanceArtifact asset = GovernanceUtils.retrieveGovernanceArtifactById(wso2Registry, assetId);
@@ -1224,15 +1056,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 		return basicAssetInfo;
 	}
 
-	private <T extends BaseResponse> T createAssetNotFoundError(
-			List<CommonErrorData> errorDataList,
-			T response) {
-		errorDataList
-		.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
-				.newError());
-		return RSProviderUtil.addErrorsToResponse(errorDataList,
-				response);
-	}
 
 	/**
 	 * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#updateAssetDependencies(org.ebayopensource.turmeric.repository.v1.services.UpdateAssetDependenciesRequest)
@@ -1245,47 +1068,30 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 		UpdateAssetDependenciesResponse response = new UpdateAssetDependenciesResponse();
 
 		try {
-			AssetKey assetKey = RSProviderUtil.completeAssetKey(
-					request.getAssetKey(), null, null);
-			String assetId = assetKey.getAssetId();
+			AssetFactory factory = new AssetFactory(request.getAssetKey(), wso2);
+			Asset asset = factory.createAsset();
 
-			if (!wso2.resourceExists(assetId)) {
-				errorDataList
-						.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
-								.newError());
-				return RSProviderUtil.addErrorsToResponse(errorDataList,
-						response);
+			if (asset.exists()) {
+				return createAssetNotFoundError(errorDataList, response);
 			}
+			
+			asset.findAsset();
 
-			wso2.beginTransaction();
-			Resource asset = wso2.get(assetId);
-			if (!RSProviderUtil.islocked(asset)) {
-				errorDataList
-						.add(RepositoryServiceErrorDescriptor.ASSET_LOCK_EXCEPTION
-								.newError());
-				return RSProviderUtil.addErrorsToResponse(errorDataList,
-						response);
+			if (asset.isLocked()) {
+				return createAssetNotLocked(errorDataList, response);
 			}
 
 			// get the existing assetInfo
-			AssetInfo assetInfo = RSProviderUtil.getAssetInfo(assetKey, asset);
+			AssetInfo assetInfo = getAssetInfo(asset);
 
 			if (assetInfo == null) {
-				errorDataList
-						.add(RepositoryServiceErrorDescriptor.ASSET_TYPE_EXCEPTION
-								.newError());
-				return RSProviderUtil.addErrorsToResponse(errorDataList,
-						response);
+				return createAssetTypeException(errorDataList, response);
 			}
 
-			FlattenedRelationshipForUpdate relationship = request
-					.getFlattenedRelationshipForUpdate();
 			if (request.isReplaceCurrent()) {
-				RSProviderUtil.removeDependencies(assetId);
-				RSProviderUtil.updateDependencies(assetKey, null, relationship);
+				// Remove and Update everything.
 			} else {
-				RSProviderUtil.updateDependencies(assetKey,
-						assetInfo.getFlattenedRelationship(), relationship);
+				// Add and Update
 			}
 
 			// populate the response
@@ -1298,16 +1104,6 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 							ex,
 							response,
 							RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
-		} finally {
-			try {
-				if ((response.getAck() == AckValue.SUCCESS && response
-						.getErrorMessage() == null)) {
-					wso2.commitTransaction();
-				} else {
-					wso2.rollbackTransaction();
-				}
-			} catch (Exception e) {
-			}
 		}
 	}
 
@@ -1319,4 +1115,5 @@ public class RepositoryServiceProviderImpl implements RepositoryServiceProvider 
 			UpdateSubscriptionRequest request) {
 		return null;
 	}
+
 }

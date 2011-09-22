@@ -10,12 +10,14 @@
 package org.ebayopensource.turmeric.repository.wso2;
 
 import org.ebayopensource.turmeric.repository.v2.services.ArtifactInfo;
+import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
 import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
 import org.ebayopensource.turmeric.repository.wso2.assets.EndPointAsset;
 import org.ebayopensource.turmeric.repository.wso2.assets.NullAsset;
 import org.ebayopensource.turmeric.repository.wso2.assets.SchemaAsset;
 import org.ebayopensource.turmeric.repository.wso2.assets.ServiceAsset;
 import org.ebayopensource.turmeric.repository.wso2.assets.WSDLAsset;
+import org.wso2.carbon.governance.api.common.dataobjects.GovernanceArtifact;
 import org.wso2.carbon.registry.core.Registry;
 
 /**
@@ -44,9 +46,15 @@ public class AssetFactory {
 		this.registry = registry;
 		this.basicInfo = basicInfo;
 	}
-	
+
+	@Deprecated
 	public AssetFactory(ArtifactInfo artifactInfo, Registry registry) {
 		this.artifactInfo = artifactInfo;
+		this.registry = registry;
+	}
+	
+	public AssetFactory(AssetKey assetKey, Registry registry) {
+		this.basicInfo = populateMinBasicAssetInfo(assetKey);
 		this.registry = registry;
 	}
 	
@@ -85,5 +93,15 @@ public class AssetFactory {
 		}
 		return new NullAsset();
 	}
+		
+	private BasicAssetInfo populateMinBasicAssetInfo(AssetKey assetKey) {
+		BasicAssetInfo basicInfo = new BasicAssetInfo();
+		basicInfo.setAssetName(assetKey.getAssetName());
+		basicInfo.setAssetType(assetKey.getType());
+		basicInfo.setVersion(assetKey.getVersion());
+		basicInfo.setAssetKey(assetKey);
+		return basicInfo;
+	}
+	
 
 }

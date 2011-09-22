@@ -23,6 +23,7 @@ import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
 import org.ebayopensource.turmeric.repository.v2.services.GetAssetInfoRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetAssetInfoResponse;
 import org.ebayopensource.turmeric.repository.wso2.filters.FindServiceByNameVersionFilter;
+import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositoryServiceProvider;
 
 public class GetAssetInfoTest extends Wso2Base {
     @Override
@@ -56,7 +57,7 @@ public class GetAssetInfoTest extends Wso2Base {
         request.setAssetKey(key);
         request.setAssetType("Service");
 
-        RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
         GetAssetInfoResponse response = provider.getAssetInfo(request);
 
         assertEquals(AckValue.SUCCESS, response.getAck());
@@ -96,7 +97,7 @@ public class GetAssetInfoTest extends Wso2Base {
 
         GetAssetInfoRequest request = new GetAssetInfoRequest();
         request.setAssetKey(key);
-        RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
         GetAssetInfoResponse response = provider.getAssetInfo(request);
 
         assertEquals(AckValue.SUCCESS, response.getAck());

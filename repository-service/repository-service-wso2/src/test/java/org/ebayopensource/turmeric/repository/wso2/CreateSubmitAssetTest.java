@@ -34,6 +34,7 @@ import org.ebayopensource.turmeric.repository.v2.services.CreateAndSubmitAssetRe
 import org.ebayopensource.turmeric.repository.v2.services.ExtendedAssetInfo;
 import org.ebayopensource.turmeric.repository.v2.services.FlattenedRelationship;
 import org.ebayopensource.turmeric.repository.v2.services.Relation;
+import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositoryServiceProvider;
 
 /**
  * @author mgorovoy
@@ -129,30 +130,30 @@ public class CreateSubmitAssetTest extends Wso2Base {
         
         FlattenedRelationship rel = new FlattenedRelationship();
         List<Relation> relationList = rel.getRelatedAsset();
-        relationList.add(
-                        new Relation() {
-                            {
-                                this.setSourceAsset(RSProviderUtil.completeAssetKey(
-                                                new AssetKey() {
-                                                    {
-                                                        this.setAssetId(resources[0]);
-                                                    }
-                                                }, null, null));
-                                this.setTargetAsset(RSProviderUtil.completeAssetKey(
-                                                new AssetKey() {
-                                                    {
-                                                        this.setAssetId(dstAsset);
-                                                    }
-                                                }, null, null));
-                                this.setAssetRelationship("DependsOn");
-                            }
-                        });
+//        relationList.add(
+//                        new Relation() {
+//                            {
+//                                this.setSourceAsset(RSProviderUtil.completeAssetKey(
+//                                                new AssetKey() {
+//                                                    {
+//                                                        this.setAssetId(resources[0]);
+//                                                    }
+//                                                }, null, null));
+//                                this.setTargetAsset(RSProviderUtil.completeAssetKey(
+//                                                new AssetKey() {
+//                                                    {
+//                                                        this.setAssetId(dstAsset);
+//                                                    }
+//                                                }, null, null));
+//                                this.setAssetRelationship("DependsOn");
+//                            }
+//                        });
         assetInfo.setFlattenedRelationship(rel);
         
         CreateAndSubmitAssetRequest request = new CreateAndSubmitAssetRequest();
         request.setAssetInfo(assetInfo);
 
-        RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
         return provider.createAndSubmitAsset(request);
     }
 

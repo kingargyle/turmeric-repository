@@ -23,6 +23,7 @@ import org.ebayopensource.turmeric.repository.v2.services.CreateAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.CreateAssetResponse;
 import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetResponse;
+import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositoryServiceProvider;
 
 /**
  * @author mgorovoy
@@ -55,7 +56,7 @@ public class UpdateAssetTest extends Wso2Base {
         CreateAssetRequest request = new CreateAssetRequest();
         request.setBasicAssetInfo(basicInfo);
 
-        RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
         CreateAssetResponse response = provider.createAsset(request);
 
         assertEquals(AckValue.SUCCESS, response.getAck());
@@ -80,7 +81,7 @@ public class UpdateAssetTest extends Wso2Base {
         UpdateAssetRequest request = new UpdateAssetRequest();
         request.setBasicAssetInfo(basicInfo);
 
-        RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
         UpdateAssetResponse response = provider.updateAsset(request);
 
         assertEquals(AckValue.SUCCESS, response.getAck());
