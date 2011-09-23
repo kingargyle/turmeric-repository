@@ -187,8 +187,6 @@ public class UpdateAssetAttributesTest extends Wso2Base {
         AssetKey key = new AssetKey();
         key.setAssetId(assetId);
         request.setAssetKey(key);
-        request.setAssetType("Service");
-
 
         GetAssetInfoResponse assetInfoResponse = provider.getAssetInfo(request);
         String errorMsg = getErrorMessage(assetInfoResponse);
