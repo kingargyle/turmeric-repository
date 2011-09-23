@@ -45,66 +45,30 @@ import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositorySer
 public class UpdateAssetAttributesTest extends Wso2Base {
     // First resource path must be the primary resource created by the test
     // in order for the assumption checks to work correctly.
-    private static final String[] resources = {
-            "/_system/governance/trunk/services/http/www/ebay/com/marketplace/services/UpdateAssetAttributesTest",
-            "/_system/governance/trunk/endpoints/http/localhost:8080/ep-UpdateAssetAttributesTest",
-            "/_system/governance/trunk/endpoints/http/localhost:8080/ep-UpdateAssetAttributesTest-updated",
-            "/_system/governance/trunk/endpoints/http/localhost:8080/ep-UpdateAssetAttributesTest-updated-merge" };
 
     private static final String assetName = "UpdateAssetAttributesTest";
     private static final String assetDesc = "UpdateAssetAttributesTest description";
-    private static final String libraryName = "http://www.ebay.com/marketplace/services";
+    private static final String namespace = "http://www.ebay.com/marketplace/services";
     private static final String stringProperty = "test value";
     private static final Long longProperty = new Long(100000l);
     private static final Boolean booleanProperty = Boolean.FALSE;
 
-    @Before
-    @Override
-    public void setUp() throws Exception {
-    	super.setUp();
-    	
-        boolean exists = false;
-        try {
-            Registry wso2 = RSProviderUtil.getRegistry();
-            exists = wso2.resourceExists("/");
-
-            for (String resource : resources) {
-                if (wso2.resourceExists(resource)) {
-                    wso2.delete(resource);
-                }
-            }
-        }
-        catch (Exception ex) {
-        }
-
-        assertTrue(exists);
-    }
-    
-    @After
-    public void cleanUp() throws Exception {
-        Registry wso2 = RSProviderUtil.getRegistry();
-
-        for (String resource : resources) {
-            if (wso2.resourceExists(resource)) {
-                wso2.delete(resource);
-            }
-        }
-    	
-    }
-
     private CreateCompleteAssetResponse createAsset() throws Exception {
         AssetKey key = new AssetKey();
         key.setAssetName(assetName);
+        key.setType("Service");
+        key.setVersion("1.0.0");
 
         BasicAssetInfo basicInfo = new BasicAssetInfo();
         basicInfo.setAssetKey(key);
         basicInfo.setAssetName(assetName);
         basicInfo.setAssetDescription(assetDesc);
         basicInfo.setAssetType("Service");
+        basicInfo.setVersion("1.0.0");
 
         ExtendedAssetInfo extendedInfo = new ExtendedAssetInfo();
         List<AttributeNameValue> attrs = extendedInfo.getAttribute();
-        attrs.add(RSProviderUtil.newAttribute("namespace", libraryName));
+        attrs.add(RSProviderUtil.newAttribute("namespace", namespace));
         attrs.add(RSProviderUtil.newAttribute("longProperty", longProperty.longValue()));
         attrs.add(RSProviderUtil.newAttribute("booleanProperty", booleanProperty.booleanValue()));
 
@@ -127,6 +91,8 @@ public class UpdateAssetAttributesTest extends Wso2Base {
     private UpdateCompleteAssetResponse replaceAsset(AssetKey assetKey) throws Exception {
         AssetKey key = assetKey;
         key.setType("Service");
+        key.setVersion("1.0.0");
+        key.setAssetName(assetName);
 
         LockAssetRequest lockReq = new LockAssetRequest();
         lockReq.setAssetKey(key);
@@ -143,7 +109,7 @@ public class UpdateAssetAttributesTest extends Wso2Base {
 
         ExtendedAssetInfo extendedInfo = new ExtendedAssetInfo();
         List<AttributeNameValue> attrs = extendedInfo.getAttribute();
-        attrs.add(RSProviderUtil.newAttribute("namespace", libraryName));
+        attrs.add(RSProviderUtil.newAttribute("namespace", namespace));
         attrs.add(RSProviderUtil.newAttribute("stringProperty", stringProperty + " updated"));
         attrs.add(RSProviderUtil.newAttribute("longProperty", longProperty.longValue() * 10));
         attrs.add(RSProviderUtil.newAttribute("booleanProperty", !booleanProperty.booleanValue()));
@@ -168,6 +134,8 @@ public class UpdateAssetAttributesTest extends Wso2Base {
     private UpdateCompleteAssetResponse mergeAsset(String assetId) throws Exception {
         AssetKey key = new AssetKey();
         key.setAssetId(assetId);
+        key.setAssetName(assetName);
+        key.setVersion("1.0.0");
 
         LockAssetRequest lockReq = new LockAssetRequest();
         lockReq.setAssetKey(key);
@@ -184,7 +152,7 @@ public class UpdateAssetAttributesTest extends Wso2Base {
 
         ExtendedAssetInfo extendedInfo = new ExtendedAssetInfo();
         List<AttributeNameValue> attrs = extendedInfo.getAttribute();
-        attrs.add(RSProviderUtil.newAttribute("namespace", libraryName));
+        attrs.add(RSProviderUtil.newAttribute("namespace", namespace));
         attrs.add(RSProviderUtil.newAttribute("stringProperty", stringProperty + " updated"));
         attrs.add(RSProviderUtil.newAttribute("longProperty", longProperty.longValue() * 10));
         attrs.add(RSProviderUtil.newAttribute("booleanProperty", !booleanProperty.booleanValue()));
@@ -221,8 +189,10 @@ public class UpdateAssetAttributesTest extends Wso2Base {
         request.setAssetKey(key);
         request.setAssetType("Service");
 
+
         GetAssetInfoResponse assetInfoResponse = provider.getAssetInfo(request);
-        assertEquals(AckValue.SUCCESS, assetInfoResponse.getAck());
+        String errorMsg = getErrorMessage(assetInfoResponse);
+        assertEquals("Unexpected error: " + errorMsg, AckValue.SUCCESS, assetInfoResponse.getAck());
         assertEquals(null, assetInfoResponse.getErrorMessage());
 
         // //now, validating the basic info of the updated asset
@@ -256,16 +226,16 @@ public class UpdateAssetAttributesTest extends Wso2Base {
         return assetInfoResponse.getAssetInfo();
     }
 
+	private String getErrorMessage(GetAssetInfoResponse assetInfoResponse) {
+		String errorMsg = null; 
+        if (assetInfoResponse.getErrorMessage() != null) {
+        	errorMsg = assetInfoResponse.getErrorMessage().getError().get(0).getMessage();
+        }
+		return errorMsg;
+	}
+
     @Test
     public void updateReplaceTest() throws Exception {
-        boolean clean = false;
-        try {
-            Registry wso2 = RSProviderUtil.getRegistry();
-            clean = !wso2.resourceExists(resources[0]);
-        }
-        catch (RegistryException e) {
-        }
-        assertTrue(clean);
 
         // first, create the complete asset
         CreateCompleteAssetResponse response = createAsset();
@@ -274,22 +244,24 @@ public class UpdateAssetAttributesTest extends Wso2Base {
 
         // then, update the complete asset, replacing all its related objects
         UpdateCompleteAssetResponse responseUpdate = replaceAsset(response.getAssetKey());
-        assertEquals(AckValue.SUCCESS, responseUpdate.getAck());
+        String errorMsg = getErrorMsg(responseUpdate);
+        
+        assertEquals("Unexpected error: " + errorMsg, AckValue.SUCCESS, responseUpdate.getAck());
         assertEquals(null, responseUpdate.getErrorMessage());
 
         validateAsset(responseUpdate.getAssetKey().getAssetId());
     }
 
+	private String getErrorMsg(UpdateCompleteAssetResponse responseUpdate) {
+		String errorMsg = null;
+		if (responseUpdate.getErrorMessage() != null) {
+			errorMsg = responseUpdate.getErrorMessage().getError().get(0).getMessage();
+		}
+		return errorMsg;
+	}
+
     @Test
     public void mergeCompleteAssetTest() throws Exception {
-        boolean clean = false;
-        try {
-            Registry wso2 = RSProviderUtil.getRegistry();
-            clean = !wso2.resourceExists(resources[0]);
-        }
-        catch (RegistryException e) {
-        }
-        assertTrue(clean);
 
         // first, create the complete asset
         CreateCompleteAssetResponse response = createAsset();
@@ -298,7 +270,8 @@ public class UpdateAssetAttributesTest extends Wso2Base {
 
         // then, update the complete asset, replacing all its related objects
         UpdateCompleteAssetResponse responseUpdate = mergeAsset(response.getAssetKey().getAssetId());
-        assertEquals(AckValue.SUCCESS, responseUpdate.getAck());
+        String errorMsg = getErrorMsg(responseUpdate);
+        assertEquals("Unexpected Error:" + errorMsg, AckValue.SUCCESS, responseUpdate.getAck());
         assertEquals(null, responseUpdate.getErrorMessage());
 
         validateAsset(responseUpdate.getAssetKey().getAssetId());

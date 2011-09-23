@@ -750,10 +750,20 @@ public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider {
 		GetAssetInfoResponse response = new GetAssetInfoResponse();
 
 		try {
-			AssetKey assetKey = request.getAssetKey();
-			BasicAssetInfo basicInfo = populateMinBasicAssetInfo(assetKey);
 			
-			AssetFactory factory = new AssetFactory(basicInfo, wso2);
+			AssetKey assetKey = request.getAssetKey();
+			GovernanceArtifact artifact = null;
+			AssetFactory factory = null;
+			
+			if (assetKey.getAssetId() != null) {
+				artifact = GovernanceUtils.retrieveGovernanceArtifactById(wso2, assetKey.getAssetId());
+				factory = new AssetFactory(artifact, wso2);
+			}
+			
+			if (artifact == null) {
+				factory = new AssetFactory(assetKey, wso2);
+			}
+			
 			Asset asset = factory.createAsset();
 
 			if (!asset.exists()) {
@@ -906,9 +916,9 @@ public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider {
 			
 			asset.findAsset();
 			
-			if (!asset.isLocked()) {
-				return createAssetNotLocked(errorDataList, response);
-			}
+//			if (!asset.isLocked()) {
+//				return createAssetNotLocked(errorDataList, response);
+//			}
 
 			// get the existing assetInfo
 			AssetInfo origAssetInfo = getAssetInfo(asset); 

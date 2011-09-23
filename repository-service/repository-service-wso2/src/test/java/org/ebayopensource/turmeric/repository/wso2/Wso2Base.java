@@ -74,6 +74,12 @@ public class Wso2Base extends AbstractCarbonIntegrationTestCase {
     public static void createRequiredServiceAssetInWso2() throws Exception {
         	Registry registry = RSProviderUtil.getRegistry();
         	BasicAssetInfo basicInfo = new BasicAssetInfo();
+        	AssetKey assetKey = new AssetKey();
+        	assetKey.setType("Service");
+        	assetKey.setAssetName("RepositoryMetadataService");
+        	assetKey.setVersion("2.0.0");
+        	
+        	basicInfo.setAssetKey(assetKey);
         	basicInfo.setNamespace("http://www.ebay.com/marketplace/services");
         	basicInfo.setAssetName("RepositoryMetadataService");
         	basicInfo.setAssetDescription("The service description");

@@ -70,6 +70,7 @@ public class ServiceAsset implements Asset {
 			service.setAttribute(AssetConstants.TURMERIC_NAMESPACE, basicInfo.getNamespace());
 			service.setAttribute(AssetConstants.TURMERIC_OWNER, basicInfo.getGroupName());
 			service.setAttribute(AssetConstants.TURMERIC_LOCK, "false");
+			service.setAttribute(AssetConstants.TURMERIC_TYPE, basicInfo.getAssetType());
 		} catch (GovernanceException e) {
 			return false;
 		}

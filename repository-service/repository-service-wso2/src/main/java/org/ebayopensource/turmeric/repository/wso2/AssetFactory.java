@@ -12,12 +12,14 @@ package org.ebayopensource.turmeric.repository.wso2;
 import org.ebayopensource.turmeric.repository.v2.services.ArtifactInfo;
 import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
 import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
+import org.ebayopensource.turmeric.repository.wso2.assets.AssetConstants;
 import org.ebayopensource.turmeric.repository.wso2.assets.EndPointAsset;
 import org.ebayopensource.turmeric.repository.wso2.assets.NullAsset;
 import org.ebayopensource.turmeric.repository.wso2.assets.SchemaAsset;
 import org.ebayopensource.turmeric.repository.wso2.assets.ServiceAsset;
 import org.ebayopensource.turmeric.repository.wso2.assets.WSDLAsset;
 import org.wso2.carbon.governance.api.common.dataobjects.GovernanceArtifact;
+import org.wso2.carbon.governance.api.exception.GovernanceException;
 import org.wso2.carbon.registry.core.Registry;
 
 /**
@@ -56,6 +58,21 @@ public class AssetFactory {
 	public AssetFactory(AssetKey assetKey, Registry registry) {
 		this.basicInfo = populateMinBasicAssetInfo(assetKey);
 		this.registry = registry;
+	}
+	
+	public AssetFactory(GovernanceArtifact gart, Registry registry) {
+		this.registry = registry;
+		
+		try {
+			AssetKey assetKey = new AssetKey();
+			assetKey.setAssetId(gart.getId());
+			assetKey.setAssetName(gart.getAttribute(AssetConstants.TURMERIC_NAME));
+			assetKey.setVersion(gart.getAttribute(AssetConstants.TURMERIC_VERSION));
+			assetKey.setType(gart.getAttribute(AssetConstants.TURMERIC_TYPE));
+			basicInfo = populateMinBasicAssetInfo(assetKey);
+		} catch (GovernanceException ex) {
+			
+		}
 	}
 	
 	/**
