@@ -13,33 +13,10 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.wso2.carbon.registry.core.Registry;
-import org.wso2.carbon.registry.core.exceptions.RegistryException;
 
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
-import org.ebayopensource.turmeric.repository.v2.services.Artifact;
-import org.ebayopensource.turmeric.repository.v2.services.ArtifactInfo;
-import org.ebayopensource.turmeric.repository.v2.services.ArtifactValueType;
-import org.ebayopensource.turmeric.repository.v2.services.AssetInfo;
-import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
-import org.ebayopensource.turmeric.repository.v2.services.AssetLifeCycleInfo;
-import org.ebayopensource.turmeric.repository.v2.services.AttributeNameValue;
-import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
-import org.ebayopensource.turmeric.repository.v2.services.CreateCompleteAssetRequest;
-import org.ebayopensource.turmeric.repository.v2.services.CreateCompleteAssetResponse;
-import org.ebayopensource.turmeric.repository.v2.services.ExtendedAssetInfo;
-import org.ebayopensource.turmeric.repository.v2.services.FlattenedRelationship;
-import org.ebayopensource.turmeric.repository.v2.services.FlattenedRelationshipForUpdate;
-import org.ebayopensource.turmeric.repository.v2.services.GetAssetInfoRequest;
-import org.ebayopensource.turmeric.repository.v2.services.GetAssetInfoResponse;
-import org.ebayopensource.turmeric.repository.v2.services.LockAssetRequest;
-import org.ebayopensource.turmeric.repository.v2.services.LockAssetResponse;
-import org.ebayopensource.turmeric.repository.v2.services.Relation;
-import org.ebayopensource.turmeric.repository.v2.services.RelationForUpdate;
-import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetDependenciesRequest;
-import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetDependenciesResponse;
+import org.ebayopensource.turmeric.repository.v2.services.*;
 import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositoryServiceProvider;
 
 /**
@@ -48,42 +25,11 @@ import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositorySer
  */
 public class UpdateAssetDependenciesTest extends Wso2Base {
     // First resource path must be the primary resource created by the test
-    // in order for the assumption checks to work correctly.
-    private static final String[] resources = {
-            "/_system/governance/trunk/services/http/www/ebay/com/marketplace/services/UpdateAssetDependenciesTest"
-    };
-
-    private static final String[] dstAssets = {
-        "/_system/governance/trunk/services/http/www/ebay/com/marketplace/services/RepositoryService",
-        "/_system/governance/trunk/services/http/www/ebay/com/marketplace/services/RepositoryMetadataService",
-    };
-    
+    // in order for the assumption checks to work correctly.    
     private static final String assetName = "UpdateAssetDependenciesTest";
     private static final String assetDesc = "UpdateAssetDependenciesTest description";
     private static final String libraryName = "http://www.ebay.com/marketplace/services";
     private static final String baseUrl = "http://www.domain.com/services/";
-
-    @Override
-	@Before
-    public void setUp() throws Exception {
-    	super.setUp();
-    	
-        boolean exists = false;
-        try {
-            Registry wso2 = RSProviderUtil.getRegistry();
-            exists = wso2.resourceExists("/");
-
-            for (String resource : resources) {
-                if (wso2.resourceExists(resource)) {
-                    wso2.delete(resource);
-                }
-            }
-        }
-        catch (Exception ex) {
-        }
-
-        assertTrue(exists);
-    }
 
     private CreateCompleteAssetResponse createAsset() throws Exception {
         AssetKey key = new AssetKey();
@@ -225,15 +171,6 @@ public class UpdateAssetDependenciesTest extends Wso2Base {
 
     @Test
     public void updateTest() throws Exception {
-        boolean clean = false;
-        try {
-            Registry wso2 = RSProviderUtil.getRegistry();
-            clean = !wso2.resourceExists(resources[0]);
-        }
-        catch (RegistryException e) {
-        }
-        assertTrue(clean);
-
         // first, create the complete asset
         CreateCompleteAssetResponse response = createAsset();
         assertEquals(AckValue.SUCCESS, response.getAck());

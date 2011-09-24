@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2006-2010 eBay Inc. All Rights Reserved.
+ * Copyright (c) 2006-2011 eBay Inc. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -12,14 +12,11 @@ package org.ebayopensource.turmeric.repository.wso2;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static org.junit.Assume.assumeTrue;
 
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.wso2.carbon.registry.core.Registry;
-import org.wso2.carbon.registry.core.exceptions.RegistryException;
+import org.wso2.carbon.governance.api.util.GovernanceConstants;
 
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
 import org.ebayopensource.turmeric.common.v1.types.CommonErrorData;
@@ -46,49 +43,22 @@ import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositorySer
  * 
  */
 public class UpdateAssetArtifactsTest extends Wso2Base {
-    // First resource path must be the primary resource created by the test
-    // in order for the assumption checks to work correctly.
-    private static final String[] resources = {
-            "/_system/governance/trunk/services/http/www/domain/com/assets/UpdateAssetArtifactsTest",
-            "/_system/governance/trunk/endpoints/http/www/domain/com/ep-UpdateAssetArtifactsTest",
-            "/_system/governance/trunk/endpoints/http/www/domain/com/ep-UpdateAssetArtifactsTest-updated",
-            "/_system/governance/trunk/endpoints/http/www/domain/com/ep-UpdateAssetArtifactsTest-updated-merge" };
-
     private static final String assetName = "UpdateAssetArtifactsTest";
     private static final String assetDesc = "UpdateAssetArtifactsTest description";
     private static final String baseUrl = "http://www.domain.com/assets/";
-
-    @Before
-    @Override
-    public void setUp() throws Exception {
-    	super.setUp();
-    	
-        boolean exists = false;
-        try {
-            Registry wso2 = RSProviderUtil.getRegistry();
-            exists = wso2.resourceExists("/");
-
-            for (String resource : resources) {
-                if (wso2.resourceExists(resource)) {
-                    wso2.delete(resource);
-                }
-            }
-        }
-        catch (Exception ex) {
-        }
-
-        assumeTrue(exists);
-    }
-    
+  
     private CreateCompleteAssetResponse createAsset() throws Exception {
         AssetKey key = new AssetKey();
         key.setAssetName(assetName);
+        key.setType("Service");
+        key.setVersion("1.0.0");
 
         BasicAssetInfo basicInfo = new BasicAssetInfo();
         basicInfo.setAssetKey(key);
         basicInfo.setAssetName(assetName);
         basicInfo.setAssetDescription(assetDesc);
         basicInfo.setAssetType("Service");
+        basicInfo.setVersion(key.getVersion());
 
         ExtendedAssetInfo extendedInfo = new ExtendedAssetInfo();
 
@@ -110,7 +80,7 @@ public class UpdateAssetArtifactsTest extends Wso2Base {
         ArtifactInfo endpointInfo = new ArtifactInfo();
         endpointInfo.setArtifact(endpoint);
         endpointInfo.setArtifactDetail(endpointUrl.getBytes("UTF-8"));
-        endpointInfo.setContentType("application/vnd.wso2.endpoint");
+        endpointInfo.setContentType(GovernanceConstants.ENDPOINT_MEDIA_TYPE);
 
         List<ArtifactInfo> artifactList = assetInfo.getArtifactInfo();
         artifactList.add(endpointInfo);
@@ -211,15 +181,6 @@ public class UpdateAssetArtifactsTest extends Wso2Base {
 
     @Test
     public void updateReplaceTest() throws Exception {
-        boolean clean = false;
-        try {
-            Registry wso2 = RSProviderUtil.getRegistry();
-            clean = !wso2.resourceExists(resources[0]);
-        }
-        catch (RegistryException e) {
-        }
-        assertTrue(clean);
-
         // first, create the complete asset
         CreateCompleteAssetResponse response = createAsset();
         assertEquals(AckValue.SUCCESS, response.getAck());
@@ -248,15 +209,6 @@ public class UpdateAssetArtifactsTest extends Wso2Base {
 
     @Test
     public void mergeCompleteAssetTest() throws Exception {
-        boolean clean = false;
-        try {
-            Registry wso2 = RSProviderUtil.getRegistry();
-            clean = !wso2.resourceExists(resources[0]);
-        }
-        catch (RegistryException e) {
-        }
-        assertTrue(clean);
-
         // first, create the complete asset
         CreateCompleteAssetResponse response = createAsset();
         String errorMessage = null;

@@ -41,11 +41,6 @@ import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositorySer
  * 
  */
 public class CreateSubmitAssetTest extends Wso2Base {
-    // First resource path must be the primary resource created by the test
-    // in order for the assumption checks to work correctly.
-    private static final String[] resources = {
-            BASE + "/services/http/www/domain/com/assets/CreateSubmitAssetTest",
-            BASE + "/endpoints/http/www/domain/com/ep-CreateSubmitAssetTest", };
 
     private static final String dstAsset = BASE + "/services/http/www/domain/com/marketplace/services/RepositoryMetadataService";
    
@@ -57,25 +52,6 @@ public class CreateSubmitAssetTest extends Wso2Base {
     private static final Long longProperty = new Long(1234567l);
     private static final Boolean booleanProperty = Boolean.FALSE;
 
-    @Override
-	@Before
-    public void setUp() throws Exception{
-        boolean exists = false;
-        try {
-            Registry wso2 = RSProviderUtil.getRegistry();
-            exists = wso2.resourceExists("/");
-
-            for (String resource : resources) {
-                if (wso2.resourceExists(resource)) {
-                    wso2.delete(resource);
-                }
-            }
-        }
-        catch (Exception ex) {
-        }
-
-        assertTrue(exists);
-    }
 
     private CreateAndSubmitAssetResponse createAndSubmitAsset() throws Exception {
         AssetKey key = new AssetKey();
@@ -159,29 +135,13 @@ public class CreateSubmitAssetTest extends Wso2Base {
 
     @Test
     public void createTest() throws Exception {
-        boolean clean = false;
-        try {
-            Registry wso2 = RSProviderUtil.getRegistry();
-            clean = !wso2.resourceExists(resources[0]);
-        }
-        catch (RegistryException e) {
-        }
-        assertTrue(clean);
-
         CreateAndSubmitAssetResponse response = createAndSubmitAsset();
 
         assertEquals(AckValue.SUCCESS, response.getAck());
         assertEquals(null, response.getErrorMessage());
 
-        Registry wso2 = RSProviderUtil.getRegistry();
-        Resource asset = wso2.get(resources[0]);
         
-        assertEquals(stringProperty, asset.getProperty("stringProperty"));
-        assertEquals(longProperty.toString(), asset.getProperty("longProperty"));
-        assertEquals(booleanProperty.toString(), asset.getProperty("booleanProperty"));
-        
-        RSLifeCycle lc = RSLifeCycle.get(asset);
-        assertEquals("New", lc.getState());
-        assertEquals(true, lc.getItem(0).isValue());
+//        assertEquals("New", lc.getState());
+//        assertEquals(true, lc.getItem(0).isValue());
     }
 }

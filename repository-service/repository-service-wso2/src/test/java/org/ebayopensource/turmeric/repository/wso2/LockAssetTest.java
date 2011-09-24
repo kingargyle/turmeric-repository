@@ -56,12 +56,16 @@ public class LockAssetTest extends Wso2Base {
     private CreateCompleteAssetResponse createAsset() throws Exception {
         AssetKey key = new AssetKey();
         key.setAssetName(assetName);
+        key.setType("Service");
+        key.setVersion("1.0.0");
 
         BasicAssetInfo basicInfo = new BasicAssetInfo();
         basicInfo.setAssetKey(key);
         basicInfo.setAssetName(assetName);
         basicInfo.setAssetDescription(assetDesc);
         basicInfo.setAssetType("Service");
+        basicInfo.setVersion("1.0.0");
+        basicInfo.setNamespace(libraryName);
 
         ExtendedAssetInfo extendedInfo = new ExtendedAssetInfo();
         List<AttributeNameValue> attrs = extendedInfo.getAttribute();

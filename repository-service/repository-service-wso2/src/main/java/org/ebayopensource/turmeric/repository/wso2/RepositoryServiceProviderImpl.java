@@ -190,11 +190,7 @@ public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider {
 			String assetId = asset.getId();
 
 			if (!wso2.resourceExists(assetId)) {
-				errorDataList
-						.add(RepositoryServiceErrorDescriptor.ASSET_NOT_FOUND_EXCEPTION
-								.newError());
-				return RSProviderUtil.addErrorsToResponse(errorDataList,
-						response);
+				return createAssetNotFoundError(errorDataList, response);
 			}
 			
 			if (!asset.isLocked()) {

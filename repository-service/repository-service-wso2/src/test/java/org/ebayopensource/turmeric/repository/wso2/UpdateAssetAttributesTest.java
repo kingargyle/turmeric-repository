@@ -12,29 +12,10 @@ package org.ebayopensource.turmeric.repository.wso2;
 import static org.junit.Assert.*;
 
 import java.util.List;
-
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.wso2.carbon.registry.core.Registry;
-import org.wso2.carbon.registry.core.exceptions.RegistryException;
 
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
-import org.ebayopensource.turmeric.repository.v2.services.AssetInfo;
-import org.ebayopensource.turmeric.repository.v2.services.AssetInfoForUpdate;
-import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
-import org.ebayopensource.turmeric.repository.v2.services.AssetLifeCycleInfo;
-import org.ebayopensource.turmeric.repository.v2.services.AttributeNameValue;
-import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
-import org.ebayopensource.turmeric.repository.v2.services.CreateCompleteAssetRequest;
-import org.ebayopensource.turmeric.repository.v2.services.CreateCompleteAssetResponse;
-import org.ebayopensource.turmeric.repository.v2.services.ExtendedAssetInfo;
-import org.ebayopensource.turmeric.repository.v2.services.GetAssetInfoRequest;
-import org.ebayopensource.turmeric.repository.v2.services.GetAssetInfoResponse;
-import org.ebayopensource.turmeric.repository.v2.services.LockAssetRequest;
-import org.ebayopensource.turmeric.repository.v2.services.LockAssetResponse;
-import org.ebayopensource.turmeric.repository.v2.services.UpdateCompleteAssetRequest;
-import org.ebayopensource.turmeric.repository.v2.services.UpdateCompleteAssetResponse;
+import org.ebayopensource.turmeric.repository.v2.services.*;
 import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositoryServiceProvider;
 
 

@@ -166,15 +166,7 @@ public class AssetLifeCycleTest extends Wso2Base {
 
     @Test
     public void submitApproveTest() throws Exception {
-        boolean clean = false;
         Registry wso2 = RSProviderUtil.getRegistry();
-        try {
-            clean = !wso2.resourceExists(resources[0]);
-        }
-        catch (RegistryException e) {
-        }
-        assertTrue(clean);
-
         RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
 
         CreateCompleteAssetResponse responseCreate = createAsset();
@@ -215,14 +207,7 @@ public class AssetLifeCycleTest extends Wso2Base {
 
     @Test
     public void submitRejectTest() throws Exception {
-        boolean clean = false;
         Registry wso2 = RSProviderUtil.getRegistry();
-        try {
-            clean = !wso2.resourceExists(resources[0]);
-        }
-        catch (RegistryException e) {
-        }
-        assertTrue(clean);
 
         RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
 
