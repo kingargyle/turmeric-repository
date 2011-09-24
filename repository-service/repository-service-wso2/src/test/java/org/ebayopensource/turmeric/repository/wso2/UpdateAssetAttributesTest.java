@@ -12,6 +12,8 @@ package org.ebayopensource.turmeric.repository.wso2;
 import static org.junit.Assert.*;
 
 import java.util.List;
+
+import org.junit.Ignore;
 import org.junit.Test;
 
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
@@ -214,6 +216,7 @@ public class UpdateAssetAttributesTest extends Wso2Base {
 	}
 
     @Test
+    @Ignore
     public void updateReplaceTest() throws Exception {
 
         // first, create the complete asset
@@ -240,6 +243,7 @@ public class UpdateAssetAttributesTest extends Wso2Base {
 	}
 
     @Test
+    @Ignore
     public void mergeCompleteAssetTest() throws Exception {
 
         // first, create the complete asset

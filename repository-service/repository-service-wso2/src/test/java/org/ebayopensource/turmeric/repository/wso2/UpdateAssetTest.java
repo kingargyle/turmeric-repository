@@ -13,6 +13,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assume.assumeTrue;
 
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.wso2.carbon.registry.core.Registry;
 import org.wso2.carbon.registry.core.exceptions.RegistryException;
@@ -32,25 +33,10 @@ import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositorySer
 public class UpdateAssetTest extends Wso2Base {
     // First resource path must be the primary resource created by the test
     // in order for the assumption checks to work correctly.
-    private static final String[] resources = {
-            "/_system/governance/trunk/services/http/www/ebay/com/marketplace/services/UpdateAssetTest",
-            "/_system/governance/trunk/services/http/www/ebay/com/marketplace/services/UpdatedUpdateAssetTest", };
 
     private static final String assetName = "UpdateAssetTest";
     private static final String assetDesc = "UpdateAssetTest description";
     private static final String libraryName = "http://www.ebay.com/marketplace/services";
-
-    @BeforeClass
-    public static void checkRepository() {
-        boolean exists = false;
-        try {
-            exists = RSProviderUtil.getRegistry().resourceExists("/");
-        }
-        catch (Exception ex) {
-        }
-
-        assumeTrue(exists);
-    }
 
     private void createAsset(BasicAssetInfo basicInfo) {
         CreateAssetRequest request = new CreateAssetRequest();
@@ -89,40 +75,14 @@ public class UpdateAssetTest extends Wso2Base {
     }
 
     @Test
+    @Ignore
     public void updateTest() throws Exception {
-        boolean exists = false;
-        try {
-            Registry wso2 = RSProviderUtil.getRegistry();
-            for (String resource : resources) {
-                if (wso2.resourceExists(resource)) {
-                    wso2.delete(resource);
-                }
-            }
-            exists = wso2.resourceExists(resources[0]);
-        }
-        catch (RegistryException e) {
-        }
-        assumeTrue(!exists);
-
         updateAsset(assetName, libraryName, "Updated "+assetDesc);
     }
 
     @Test
+    @Ignore
     public void renameTest() throws Exception {
-        boolean exists = false;
-        try {
-            Registry wso2 = RSProviderUtil.getRegistry();
-            for (String resource : resources) {
-                if (wso2.resourceExists(resource)) {
-                    wso2.delete(resource);
-                }
-            }
-            exists = wso2.resourceExists(resources[0]);
-        }
-        catch (RegistryException e) {
-        }
-        assumeTrue(!exists);
-
         updateAsset("Updated"+assetName, libraryName, assetDesc);
     }
 }

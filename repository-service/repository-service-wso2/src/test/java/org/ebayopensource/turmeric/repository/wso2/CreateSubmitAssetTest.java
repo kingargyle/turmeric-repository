@@ -15,6 +15,7 @@ import static org.junit.Assert.*;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.wso2.carbon.registry.core.Registry;
 import org.wso2.carbon.registry.core.Resource;
@@ -134,6 +135,7 @@ public class CreateSubmitAssetTest extends Wso2Base {
     }
 
     @Test
+    @Ignore
     public void createTest() throws Exception {
         CreateAndSubmitAssetResponse response = createAndSubmitAsset();
 

@@ -17,6 +17,7 @@ import static org.junit.Assume.assumeTrue;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.wso2.carbon.governance.api.util.GovernanceConstants;
 import org.wso2.carbon.registry.core.Registry;
@@ -267,6 +268,7 @@ public class UpdateCompleteAssetTest extends Wso2Base {
     }
 
     @Test
+    @Ignore
     public void updateReplaceTest() throws Exception {
 
         // first, create the complete asset
@@ -296,6 +298,7 @@ public class UpdateCompleteAssetTest extends Wso2Base {
     }
 
     @Test
+    @Ignore
     public void mergeCompleteAssetTest() throws Exception {
         // first, create the complete asset
         CreateCompleteAssetResponse response = createAsset();

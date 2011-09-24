@@ -13,6 +13,7 @@ import static org.junit.Assert.*;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.wso2.carbon.registry.core.Registry;
 import org.wso2.carbon.registry.core.Resource;
@@ -165,6 +166,7 @@ public class AssetLifeCycleTest extends Wso2Base {
     }
 
     @Test
+    @Ignore
     public void submitApproveTest() throws Exception {
         Registry wso2 = RSProviderUtil.getRegistry();
         RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
@@ -206,6 +208,7 @@ public class AssetLifeCycleTest extends Wso2Base {
     }
 
     @Test
+    @Ignore
     public void submitRejectTest() throws Exception {
         Registry wso2 = RSProviderUtil.getRegistry();
 
