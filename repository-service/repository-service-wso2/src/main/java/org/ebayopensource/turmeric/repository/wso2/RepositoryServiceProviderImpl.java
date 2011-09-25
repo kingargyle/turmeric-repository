@@ -76,16 +76,6 @@ public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider {
 							ex,
 							response,
 							RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
-		} finally {
-			try {
-				if (response.getAck() == AckValue.SUCCESS
-						&& response.getErrorMessage() == null) {
-					wso2.commitTransaction();
-				} else {
-					wso2.rollbackTransaction();
-				}
-			} catch (Exception e) {
-			}
 		}
 	}
 	
@@ -256,16 +246,6 @@ public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider {
 							ex,
 							response,
 							RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
-		} finally {
-			try {
-				if (response.getAck() == AckValue.SUCCESS
-						&& response.getErrorMessage() == null) {
-					wso2.commitTransaction();
-				} else {
-					wso2.rollbackTransaction();
-				}
-			} catch (Exception e) {
-			}
 		}
 	}
 
@@ -458,16 +438,6 @@ public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider {
 							ex,
 							response,
 							RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
-		} finally {
-			try {
-				if (response.getAck() == AckValue.SUCCESS
-						&& response.getErrorMessage() == null) {
-					wso2.commitTransaction();
-				} else {
-					wso2.rollbackTransaction();
-				}
-			} catch (Exception e) {
-			}
 		}
 	}
 
@@ -616,7 +586,6 @@ public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider {
 							ex,
 							response,
 							RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
-		} finally {
 		}
 	}
 
@@ -658,7 +627,7 @@ public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider {
 			
 			asset.findAsset();
 			
-			if (!asset.isLocked()) {
+			if (asset.isLocked()) {
 				asset.unlock();
 				asset.save();
 			}
@@ -675,17 +644,7 @@ public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider {
 							ex,
 							response,
 							RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
-		} finally {
-			try {
-				if (response.getAck() == AckValue.SUCCESS
-						&& response.getErrorMessage() == null) {
-					wso2.commitTransaction();
-				} else {
-					wso2.rollbackTransaction();
-				}
-			} catch (Exception e) {
-			}
-		}
+		} 
 	}
 
 	/**
@@ -866,17 +825,6 @@ public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider {
 							ex,
 							response,
 							RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
-		} finally {
-			try {
-				if (request.isPartialUpdate()
-						|| (response.getAck() == AckValue.SUCCESS && response
-								.getErrorMessage() == null)) {
-					wso2.commitTransaction();
-				} else {
-					wso2.rollbackTransaction();
-				}
-			} catch (Exception e) {
-			}
 		}
 	}
 
