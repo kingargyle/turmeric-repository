@@ -223,6 +223,19 @@ public abstract class AbstractRepositoryProvider implements RepositoryServicePro
 		return RSProviderUtil.addErrorsToResponse(errorDataList, response);
 	}
 	
+	/**
+	 * Creates the error message for when an asset can't be created.
+	 * @param errorDataList CommonErrorData list
+	 * @param response A response that extends BaseResponse
+	 * @return the newly created error response
+	 */
+	protected <T extends BaseResponse> T createErrorInvalidInput(
+			List<CommonErrorData> errorDataList, T response) {
+		errorDataList.add(RepositoryServiceErrorDescriptor.INVALID_INPUT_EXCEPTION.newError());
+		return RSProviderUtil.addErrorsToResponse(errorDataList, response);
+	}
+
+	
 	
 	/**
 	 * Creates the error message for when an asset is missing the namespace.

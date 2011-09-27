@@ -12,7 +12,7 @@
   <parent>
     <groupId>org.ebayopensource.turmeric</groupId>
     <artifactId>turmeric-project</artifactId>
-    <version>1.1.0.3-SNAPSHOT</version>
+    <version>1.1.0.3</version>
     <relativePath>../turmeric-project/pom.xml</relativePath>
   </parent>
 	<groupId>org.ebayopensource.turmeric.repository</groupId>
@@ -23,22 +23,12 @@
 	<properties>
 		<turmeric-runtime-version>1.0.0</turmeric-runtime-version>
 	</properties>
-	<scm>
-		<connection>scm:svn:http://www.ebayopensource.org/svn/turmeric/soa-platform/trunk/repository</connection>
-		<developerConnection>scm:svn:http://www.ebayopensource.org/svn/turmeric/soa-platform/trunk/repository</developerConnection>
-	</scm>
-	<build>
+	  <scm>
+	    <connection>scm:git:git@github.com:ebayopensource/turmeric-repository.git</connection>
+	    <developerConnection>scm:git:git@github.com:ebayopensource/turmeric-repository.git</developerConnection>
+	    <url>scm:git:git@github.com:ebayopensource/turmeric-repository.git</url>
+	  </scm>	<build>
 		<plugins>
-		      <plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-release-plugin</artifactId>
-			<version>2.1</version>
-			<configuration>
-			  <autoVersionSubmodules>true</autoVersionSubmodules>
-			  <tagBase>http://www.ebayopensource.org/svn/turmeric/soa-platform/tags</tagBase>
-			</configuration>
-		      </plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>

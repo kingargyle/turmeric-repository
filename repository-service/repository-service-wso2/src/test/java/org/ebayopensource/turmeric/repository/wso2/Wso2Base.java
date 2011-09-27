@@ -47,6 +47,8 @@ public class Wso2Base extends AbstractCarbonIntegrationTestCase {
         System.setProperty("org.ebayopensource.turmeric.repository.wso2.password", "admin");
     }
     
+    protected static String preloaded_asset_id = null;
+    
     public static final String BASE = "/_system/governance/trunk";
     
     @Override
@@ -89,6 +91,7 @@ public class Wso2Base extends AbstractCarbonIntegrationTestCase {
         	ServiceAsset serviceAsset = new ServiceAsset(basicInfo, registry);
         	serviceAsset.createAsset();
         	serviceAsset.addAsset();
+        	preloaded_asset_id = serviceAsset.getId();
         	
         	
             

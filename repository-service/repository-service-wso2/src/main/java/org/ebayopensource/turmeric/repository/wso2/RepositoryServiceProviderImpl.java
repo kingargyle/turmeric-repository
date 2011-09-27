@@ -13,12 +13,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.xml.datatype.DatatypeFactory;
 import org.wso2.carbon.governance.api.common.dataobjects.GovernanceArtifact;
 import org.wso2.carbon.governance.api.exception.GovernanceException;
 import org.wso2.carbon.governance.api.util.GovernanceUtils;
+import org.wso2.carbon.registry.core.Collection;
 import org.wso2.carbon.registry.core.Registry;
+import org.wso2.carbon.registry.core.RegistryConstants;
 import org.wso2.carbon.registry.core.Resource;
 
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
@@ -157,11 +162,52 @@ public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 * 
 	 * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#searchAssets(org.ebayopensource.turmeric.repository.v1.services.SearchAssetsRequest)
 	 */
 	@Override
 	public SearchAssetsResponse searchAssets(SearchAssetsRequest request) {
-		return null;
+		Registry wso2 = RSProviderUtil.getRegistry();
+		List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
+		SearchAssetsResponse response = new SearchAssetsResponse();
+		
+		if (request.getAssetQuery() == null) {
+			return createErrorInvalidInput(errorDataList, response);
+		}
+		
+		ArtifactCriteria artifactCriteria = request.getAssetQuery().getArtifactCriteria();
+		List<Artifact> artifacts =  artifactCriteria.getArtifact();
+
+		
+		Registry registry = RSProviderUtil.getRegistry();
+		
+		String searchByID = "SELECT REG_PATH_ID, REG_NAME FROM REG_RESOURCE WHERE REG_PATH_ID = ?";
+		try {
+			Resource queryResource = registry.newResource();
+			queryResource.setContent(searchByID);
+			queryResource.setMediaType(RegistryConstants.SQL_QUERY_MEDIA_TYPE);
+			queryResource.addProperty(RegistryConstants.RESULT_TYPE_PROPERTY_NAME, RegistryConstants.RESOURCES_RESULT_TYPE);
+	        registry.put(RegistryConstants.CONFIG_REGISTRY_BASE_PATH + RegistryConstants.QUERIES_COLLECTION_PATH + "/turmeric-queries-findbyid", queryResource);
+	        
+	        Map<String, String> parameters = new ConcurrentHashMap<String, String>();
+	        for(Artifact art : artifacts ) {
+		        parameters.put(art.getArtifactIdentifier(), "%services%");
+	        }
+	        Collection paths = registry.executeQuery(RegistryConstants.CONFIG_REGISTRY_BASE_PATH + RegistryConstants.QUERIES_COLLECTION_PATH + "/turmeric-queries-findbyid", parameters);
+	        			
+			return RSProviderUtil.setSuccessResponse(response);
+		} catch (Exception ex) {
+			return RSProviderUtil
+					.handleException(
+							ex,
+							response,
+							RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);			
+		}
+		
+		
+				
+
 	}
 
 	/**
