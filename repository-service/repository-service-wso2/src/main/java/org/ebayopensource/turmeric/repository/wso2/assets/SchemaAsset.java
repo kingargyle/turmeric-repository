@@ -21,183 +21,186 @@ import org.wso2.carbon.registry.core.Registry;
  * Represents a Schema asset.
  * 
  * @author dcarver
- *
+ * 
  */
 public class SchemaAsset implements Asset {
 
-	private ArtifactInfo artifactInfo = null;
-	private SchemaManager schemaManager = null;
-	private Schema schema;
-	private Registry registry = null;
+   private ArtifactInfo artifactInfo = null;
+   private SchemaManager schemaManager = null;
+   private Schema schema;
+   private Registry registry = null;
 
-	
-	/**
-	 * Constructor for a Schema created from an ArtifactInfo object.
-	 * 
-	 * @param ai the artifactInfo object
-	 * @param registry the associated registry
-	 * @throws Exception any exception that could be thrown
-	 */
-	public SchemaAsset(ArtifactInfo ai, Registry registry) throws Exception{
-		artifactInfo = ai;
-		this.registry = registry;
-		schemaManager = new SchemaManager(registry);
-	}
-	
-	@Override
-	public boolean isNamespaceRequired() {
-		return true;
-	}
+   /**
+    * Constructor for a Schema created from an ArtifactInfo object.
+    * 
+    * @param ai
+    *           the artifactInfo object
+    * @param registry
+    *           the associated registry
+    * @throws Exception
+    *            any exception that could be thrown
+    */
+   public SchemaAsset(ArtifactInfo ai, Registry registry) throws Exception {
+      artifactInfo = ai;
+      this.registry = registry;
+      schemaManager = new SchemaManager(registry);
+   }
 
-	@Override
-	public boolean hasNamespace() {
-		return true;
-	}
+   @Override
+   public boolean isNamespaceRequired() {
+      return true;
+   }
 
-	@Override
-	public String getType() {
-		return "Schema";
-	}
+   @Override
+   public boolean hasNamespace() {
+      return true;
+   }
 
-	@Override
-	public boolean hasName() {
-		return artifactInfo.getArtifact().getArtifactName() != null;
-	}
+   @Override
+   public String getType() {
+      return "Schema";
+   }
 
-	@Override
-	public boolean duplicatesAllowed() {
-		return false;
-	}
+   @Override
+   public boolean hasName() {
+      return artifactInfo.getArtifact().getArtifactName() != null;
+   }
 
-	@Override
-	public boolean hasDuplicates() {
-		try {
-			Schema[] schemas = schemaManager.findSchemas(new DuplicateSchemaFilter(artifactInfo));
-			
-			return schemas.length > 0;
-		} catch (GovernanceException ex) {
-			
-		}
-		return false;
-	}
+   @Override
+   public boolean duplicatesAllowed() {
+      return false;
+   }
 
-	@Override
-	public boolean createAsset() {
-		try {
-			schema = schemaManager.newSchema(registry, artifactInfo.getArtifactDetail()); 
-			schema.setAttribute(AssetConstants.TURMERIC_NAME, artifactInfo.getArtifact().getArtifactName());
-			schema.setAttribute(AssetConstants.TURMERIC_DISPLAY_NAME, artifactInfo.getArtifact().getArtifactDisplayName());
-			schema.setAttribute(AssetConstants.TURMERIC_ARTIFACT_CATEGORY,artifactInfo.getArtifact().getArtifactCategory());
-			
-		} catch (Exception ex) {
-			return false;
-		} 
-		
-		return true;
-	}
+   @Override
+   public boolean hasDuplicates() {
+      try {
+         Schema[] schemas = schemaManager.findSchemas(new DuplicateSchemaFilter(artifactInfo));
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * Only type of assets that can be added to a WSDL are Schemas and Endpoints.
-	 */
-	@Override
-	public boolean addAsset() {
-		try {
-			schemaManager.addSchema(schema);
-			schema = schemaManager.getSchema(schema.getId());
-			artifactInfo.getArtifact().setArtifactIdentifier(schema.getId());
-		} catch (GovernanceException e) {
-			e.printStackTrace();
-			return false;
-		}
-		return true;
-	}
+         return schemas.length > 0;
+      } catch (GovernanceException ex) {
 
-	@Override
-	public String getId() {
-		return schema.getId();
-	}
+      }
+      return false;
+   }
 
-	@Override
-	public GovernanceArtifact addArtifact(ArtifactInfo artifact) {
-		return null;
-	}
-	
-	@Override
-	public GovernanceArtifact getGovernanceArtifact() {
-		return schema;
-	}
+   @Override
+   public boolean createAsset() {
+      try {
+         schema = schemaManager.newSchema(registry, artifactInfo.getArtifactDetail());
+         schema.setAttribute(AssetConstants.TURMERIC_NAME, artifactInfo.getArtifact().getArtifactName());
+         schema.setAttribute(AssetConstants.TURMERIC_DISPLAY_NAME, artifactInfo.getArtifact().getArtifactDisplayName());
+         schema.setAttribute(AssetConstants.TURMERIC_ARTIFACT_CATEGORY, artifactInfo.getArtifact()
+                  .getArtifactCategory());
 
-	@Override
-	public boolean exists() {
-		String id = artifactInfo.getArtifact().getArtifactIdentifier();
-		if (id != null) {
-			try {
-				schema = schemaManager.getSchema(id);
-				return true;
-			} catch (GovernanceException ex) {
-				return false;
-			}
-		}
-		return hasDuplicates();
-	}
-	
-	@Override
-	public void findAsset() {
-		
-	}
+      } catch (Exception ex) {
+         return false;
+      }
 
-	@Override
-	public void lockAsset() {
-		try {
-			String lock = schema.getAttribute(AssetConstants.TURMERIC_LOCK);
-			if (lock == null) {
-				schema.addAttribute(AssetConstants.TURMERIC_LOCK, "true");
-				return;
-			}
-			schema.setAttribute(AssetConstants.TURMERIC_LOCK, "true");
-		} catch (GovernanceException e) {
-		}
-		
-	}
+      return true;
+   }
 
-	@Override
-	public void unlock() {
-		try {
-			String lock = schema.getAttribute(AssetConstants.TURMERIC_LOCK);
-			if (lock == null) {
-				schema.addAttribute(AssetConstants.TURMERIC_LOCK, "false");
-				return;
-			}
-			schema.setAttribute(AssetConstants.TURMERIC_LOCK, "false");
-		} catch (GovernanceException e) {
-		}
-		
-	}
+   /**
+    * {@inheritDoc}
+    * 
+    * Only type of assets that can be added to a WSDL are Schemas and Endpoints.
+    */
+   @Override
+   public boolean addAsset() {
+      try {
+         schemaManager.addSchema(schema);
+         schema = schemaManager.getSchema(schema.getId());
+         artifactInfo.getArtifact().setArtifactIdentifier(schema.getId());
+      } catch (GovernanceException e) {
+         e.printStackTrace();
+         return false;
+      }
+      return true;
+   }
 
-	@Override
-	public boolean isLocked() {
-		String lock = null;
-		try {
-			lock = schema.getAttribute(AssetConstants.TURMERIC_LOCK);
-			if (lock == null) {
-				return false;
-			}
-		} catch (GovernanceException ex) {
-			return false;
-		}
-		return lock.equals("true");
-	}
+   @Override
+   public String getId() {
+      return schema.getId();
+   }
 
-	@Override
-	public boolean save() {
-		try {
-			schemaManager.updateSchema(schema);
-		} catch (GovernanceException ex) {
-			return false;
-		}
-		return true;
-	}
+   @Override
+   public GovernanceArtifact addArtifact(ArtifactInfo artifact) {
+      return null;
+   }
+
+   @Override
+   public GovernanceArtifact getGovernanceArtifact() {
+      return schema;
+   }
+
+   @Override
+   public boolean exists() {
+      String id = artifactInfo.getArtifact().getArtifactIdentifier();
+      if (id != null) {
+         try {
+            schema = schemaManager.getSchema(id);
+            return true;
+         } catch (GovernanceException ex) {
+            return false;
+         }
+      }
+      return hasDuplicates();
+   }
+
+   @Override
+   public void findAsset() {
+
+   }
+
+   @Override
+   public void lockAsset() {
+      try {
+         String lock = schema.getAttribute(AssetConstants.TURMERIC_LOCK);
+         if (lock == null) {
+            schema.addAttribute(AssetConstants.TURMERIC_LOCK, "true");
+            return;
+         }
+         schema.setAttribute(AssetConstants.TURMERIC_LOCK, "true");
+      } catch (GovernanceException e) {
+      }
+
+   }
+
+   @Override
+   public void unlock() {
+      try {
+         String lock = schema.getAttribute(AssetConstants.TURMERIC_LOCK);
+         if (lock == null) {
+            schema.addAttribute(AssetConstants.TURMERIC_LOCK, "false");
+            return;
+         }
+         schema.setAttribute(AssetConstants.TURMERIC_LOCK, "false");
+      } catch (GovernanceException e) {
+      }
+
+   }
+
+   @Override
+   public boolean isLocked() {
+      String lock = null;
+      try {
+         lock = schema.getAttribute(AssetConstants.TURMERIC_LOCK);
+         if (lock == null) {
+            return false;
+         }
+      } catch (GovernanceException ex) {
+         return false;
+      }
+      return lock.equals("true");
+   }
+
+   @Override
+   public boolean save() {
+      try {
+         schemaManager.updateSchema(schema);
+      } catch (GovernanceException ex) {
+         return false;
+      }
+      return true;
+   }
 
 }

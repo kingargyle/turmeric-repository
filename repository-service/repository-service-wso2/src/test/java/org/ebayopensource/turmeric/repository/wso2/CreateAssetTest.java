@@ -26,74 +26,72 @@ import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositorySer
  * 
  */
 public class CreateAssetTest extends Wso2Base {
-    private static final String resourcePath = "/_system/governance/trunk/services/com/domain/www/assets/CreateAssetTest";
-    private static final String assetName = "CreateAssetTest";
-    private static final String assetDesc = "CreateAssetTest description";
-    private static final String namespace = "http://www.domain.com/assets";
+   private static final String resourcePath = "/_system/governance/trunk/services/com/domain/www/assets/CreateAssetTest";
+   private static final String assetName = "CreateAssetTest";
+   private static final String assetDesc = "CreateAssetTest description";
+   private static final String namespace = "http://www.domain.com/assets";
 
-    @Override
-	@Before
-    public void setUp() throws Exception {
-    	super.setUp();
-    	
-        boolean exists = false;
-        try {
-            exists = RSProviderUtil.getRegistry().resourceExists("/");
-        }
-        catch (Exception ex) {
-        }
+   @Override
+   @Before
+   public void setUp() throws Exception {
+      super.setUp();
 
-        assertTrue(exists);
-    }
+      boolean exists = false;
+      try {
+         exists = RSProviderUtil.getRegistry().resourceExists("/");
+      } catch (Exception ex) {
+      }
 
-    private CreateAssetResponse createAsset() {
-        AssetKey key = new AssetKey();
-        key.setAssetName(assetName);
+      assertTrue(exists);
+   }
 
-        BasicAssetInfo basicInfo = new BasicAssetInfo();
-        basicInfo.setAssetKey(key);
-        basicInfo.setAssetName(assetName);
-        basicInfo.setAssetDescription(assetDesc);
-        basicInfo.setAssetType("Service");
-        basicInfo.setVersion("1.0.0");
-        basicInfo.setNamespace(namespace);
+   private CreateAssetResponse createAsset() {
+      AssetKey key = new AssetKey();
+      key.setAssetName(assetName);
 
-        CreateAssetRequest request = new CreateAssetRequest();
-        request.setBasicAssetInfo(basicInfo);
+      BasicAssetInfo basicInfo = new BasicAssetInfo();
+      basicInfo.setAssetKey(key);
+      basicInfo.setAssetName(assetName);
+      basicInfo.setAssetDescription(assetDesc);
+      basicInfo.setAssetType("Service");
+      basicInfo.setVersion("1.0.0");
+      basicInfo.setNamespace(namespace);
 
-        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
-        return provider.createAsset(request);
-    }
+      CreateAssetRequest request = new CreateAssetRequest();
+      request.setBasicAssetInfo(basicInfo);
 
-    @Test
-    public void createTest() {
-        boolean exists = false;
-        try {
-            Registry wso2 = RSProviderUtil.getRegistry();
-            if (wso2.resourceExists(resourcePath)) {
-                wso2.delete(resourcePath);
-            }
-            exists = wso2.resourceExists(resourcePath);
-        }
-        catch (RegistryException e) {
-        }
-        assertTrue(!exists);
+      RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
+      return provider.createAsset(request);
+   }
 
-        CreateAssetResponse response = createAsset();
-        
-        String errorMsg = "none"; 
-        if (response.getErrorMessage() != null) {
-        	errorMsg = response.getErrorMessage().getError().get(0).getMessage();
-        }
+   @Test
+   public void createTest() {
+      boolean exists = false;
+      try {
+         Registry wso2 = RSProviderUtil.getRegistry();
+         if (wso2.resourceExists(resourcePath)) {
+            wso2.delete(resourcePath);
+         }
+         exists = wso2.resourceExists(resourcePath);
+      } catch (RegistryException e) {
+      }
+      assertTrue(!exists);
 
-        assertEquals("Error: " + errorMsg, AckValue.SUCCESS, response.getAck());
-        assertEquals(null, response.getErrorMessage());
-        validateAssetKey(response.getAssetKey());
-    }
+      CreateAssetResponse response = createAsset();
 
-    @Test
-    public void createDuplicateTest() {
-        CreateAssetResponse response = createAsset();
-        assertEquals(AckValue.FAILURE, response.getAck());
-    }
+      String errorMsg = "none";
+      if (response.getErrorMessage() != null) {
+         errorMsg = response.getErrorMessage().getError().get(0).getMessage();
+      }
+
+      assertEquals("Error: " + errorMsg, AckValue.SUCCESS, response.getAck());
+      assertEquals(null, response.getErrorMessage());
+      validateAssetKey(response.getAssetKey());
+   }
+
+   @Test
+   public void createDuplicateTest() {
+      CreateAssetResponse response = createAsset();
+      assertEquals(AckValue.FAILURE, response.getAck());
+   }
 }

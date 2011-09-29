@@ -14,57 +14,51 @@ import org.ebayopensource.turmeric.services.repositoryservice.operation.consumer
 import org.junit.Test;
 
 public class GetUsersProjectsAndGroupsTest {
-	private static final String s_success ="PASSED";
-	/*
-	 * Method under test: GetUsersProjectsAndGroups
-	 * Test Type        : Positive
-	 * Sub  Type        : WithEmptyLibrary
-	 */
-	@Test
-	public void testGetUsersProjectsAndGroupsWithEmptyLibrary(){
-		String status = GetUsersProjectsAndGroupsConsumer.testGetUsersProjectsAndGroupsWithEmptyLibrary();
-		Assert.assertEquals(s_success, status);
-	}
-	/*
-	 * Method under test: GetUsersProjectsAndGroups
-	 * Test Type        : Positive
-	 * Sub  Type        : WithEmptyRequest
-	 */
-	@Test
-	public void testGetUsersProjectsAndGroupsWithEmptyRequest(){
-		String status = GetUsersProjectsAndGroupsConsumer.testGetUsersProjectsAndGroupsWithEmptyRequest();
-		Assert.assertEquals(s_success, status);
-	}
-	/*
-	 * Method under test: GetUsersProjectsAndGroups
-	 * Test Type        : Positive
-	 * Sub  Type        : WithInvalidLibrary
-	 */
-	@Test
-	public void testGetUsersProjectsAndGroupsWithInvalidLibrary(){
-		String status = GetUsersProjectsAndGroupsConsumer.testGetUsersProjectsAndGroupsWithInvalidLibrary();
-		Assert.assertEquals(s_success, status);
-	}
-	/*
-	 * Method under test: GetUsersProjectsAndGroups
-	 * Test Type        : Positive
-	 * Sub  Type        : WithInvalidUser
-	 */
-	@Test
-	public void testGetUsersProjectsAndGroupsWithInvalidUser(){
-		String status = GetUsersProjectsAndGroupsConsumer.testGetUsersProjectsAndGroupsWithInvalidUser();
-		Assert.assertEquals(s_success, status);
-	}
-	/*
-	 * Method under test: GetUsersProjectsAndGroups
-	 * Test Type        : Positive
-	 * Sub  Type        : WithValidLibrary
-	 */
-	@Test
-	public void testGetUsersProjectsAndGroupsWithValidLibrary(){
-		String status = GetUsersProjectsAndGroupsConsumer.testGetUsersProjectsAndGroupsWithValidLibrary();
-		Assert.assertEquals(s_success, status);
-	}
+   private static final String s_success = "PASSED";
 
+   /*
+    * Method under test: GetUsersProjectsAndGroups Test Type : Positive Sub Type : WithEmptyLibrary
+    */
+   @Test
+   public void testGetUsersProjectsAndGroupsWithEmptyLibrary() {
+      String status = GetUsersProjectsAndGroupsConsumer.testGetUsersProjectsAndGroupsWithEmptyLibrary();
+      Assert.assertEquals(s_success, status);
+   }
+
+   /*
+    * Method under test: GetUsersProjectsAndGroups Test Type : Positive Sub Type : WithEmptyRequest
+    */
+   @Test
+   public void testGetUsersProjectsAndGroupsWithEmptyRequest() {
+      String status = GetUsersProjectsAndGroupsConsumer.testGetUsersProjectsAndGroupsWithEmptyRequest();
+      Assert.assertEquals(s_success, status);
+   }
+
+   /*
+    * Method under test: GetUsersProjectsAndGroups Test Type : Positive Sub Type : WithInvalidLibrary
+    */
+   @Test
+   public void testGetUsersProjectsAndGroupsWithInvalidLibrary() {
+      String status = GetUsersProjectsAndGroupsConsumer.testGetUsersProjectsAndGroupsWithInvalidLibrary();
+      Assert.assertEquals(s_success, status);
+   }
+
+   /*
+    * Method under test: GetUsersProjectsAndGroups Test Type : Positive Sub Type : WithInvalidUser
+    */
+   @Test
+   public void testGetUsersProjectsAndGroupsWithInvalidUser() {
+      String status = GetUsersProjectsAndGroupsConsumer.testGetUsersProjectsAndGroupsWithInvalidUser();
+      Assert.assertEquals(s_success, status);
+   }
+
+   /*
+    * Method under test: GetUsersProjectsAndGroups Test Type : Positive Sub Type : WithValidLibrary
+    */
+   @Test
+   public void testGetUsersProjectsAndGroupsWithValidLibrary() {
+      String status = GetUsersProjectsAndGroupsConsumer.testGetUsersProjectsAndGroupsWithValidLibrary();
+      Assert.assertEquals(s_success, status);
+   }
 
 }

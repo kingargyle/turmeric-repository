@@ -7,65 +7,62 @@
  *    http://www.apache.org/licenses/LICENSE-2.0
  *******************************************************************************/
 package org.ebayopensource.turmeric.services.repositoryservice.junit;
+
 import junit.framework.Assert;
 
 import org.ebayopensource.turmeric.services.repositoryservice.operation.consumer.GetCatalogAssetInfoConsumer;
 import org.junit.Test;
+
 public class GetCatalogAssetInfoTest {
-	private static final String s_success ="PASSED";
-/*
- * Method under test: GetCatalogAssetInfo
- * Test Type        : Negative
- * Sub  Type        : invalidLibrary
- */
+   private static final String s_success = "PASSED";
 
-@Test
-public void testGetAllCatalogAsset_invalidSessionId(){
-	 String status= GetCatalogAssetInfoConsumer.testGetAllCatalogAsset_invalidSessionId();
-	 Assert.assertEquals(s_success, status);         
-}
-/*
- * Method under test: GetCatalogAssetInfo
- * Test Type        : Positive
- * Sub  Type        : GetAllCatalogAsset
- */
+   /*
+    * Method under test: GetCatalogAssetInfo Test Type : Negative Sub Type : invalidLibrary
+    */
 
-@Test
-public void testGetAllCatalogAsset() {
-	 String status= GetCatalogAssetInfoConsumer.testGetAllCatalogAsset();
-	 Assert.assertEquals(s_success, status);         
-}
-/*
- * Method under test: GetCatalogAssetInfo
- * Test Type        : Positive
- * Sub  Type        : EditedCatalogAsset
- */
+   @Test
+   public void testGetAllCatalogAsset_invalidSessionId() {
+      String status = GetCatalogAssetInfoConsumer.testGetAllCatalogAsset_invalidSessionId();
+      Assert.assertEquals(s_success, status);
+   }
 
-@Test
-public void testGetEditedCatalogAsset(){
-	 String status= GetCatalogAssetInfoConsumer.testGetEditedCatalogAsset();
-	 Assert.assertEquals(s_success, status);         
-}
-/*
- * Method under test: GetCatalogAssetInfo
- * Test Type        : Positive
- * Sub  Type        : LockedCatalogAsset
- */
+   /*
+    * Method under test: GetCatalogAssetInfo Test Type : Positive Sub Type : GetAllCatalogAsset
+    */
 
-@Test
-public void testGetLockedCatalogAsset(){
-	 String status= GetCatalogAssetInfoConsumer.testGetLockedCatalogAsset();
-	 Assert.assertEquals(s_success, status);         
-}
-/*
- * Method under test: GetCatalogAssetInfo
- * Test Type        : Positive
- * Sub  Type        : WhenSearchLevelProvided
- */
+   @Test
+   public void testGetAllCatalogAsset() {
+      String status = GetCatalogAssetInfoConsumer.testGetAllCatalogAsset();
+      Assert.assertEquals(s_success, status);
+   }
 
-@Test
-public void testGetCatalogAssetWhenSearchLevelProvided(){
-	 String status= GetCatalogAssetInfoConsumer.testGetCatalogAssetWhenSearchLevelProvided();
-	 Assert.assertEquals(s_success, status);         
-}
+   /*
+    * Method under test: GetCatalogAssetInfo Test Type : Positive Sub Type : EditedCatalogAsset
+    */
+
+   @Test
+   public void testGetEditedCatalogAsset() {
+      String status = GetCatalogAssetInfoConsumer.testGetEditedCatalogAsset();
+      Assert.assertEquals(s_success, status);
+   }
+
+   /*
+    * Method under test: GetCatalogAssetInfo Test Type : Positive Sub Type : LockedCatalogAsset
+    */
+
+   @Test
+   public void testGetLockedCatalogAsset() {
+      String status = GetCatalogAssetInfoConsumer.testGetLockedCatalogAsset();
+      Assert.assertEquals(s_success, status);
+   }
+
+   /*
+    * Method under test: GetCatalogAssetInfo Test Type : Positive Sub Type : WhenSearchLevelProvided
+    */
+
+   @Test
+   public void testGetCatalogAssetWhenSearchLevelProvided() {
+      String status = GetCatalogAssetInfoConsumer.testGetCatalogAssetWhenSearchLevelProvided();
+      Assert.assertEquals(s_success, status);
+   }
 }

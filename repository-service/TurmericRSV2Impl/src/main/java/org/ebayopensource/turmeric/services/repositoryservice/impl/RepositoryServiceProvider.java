@@ -12,95 +12,71 @@ import org.ebayopensource.turmeric.repository.v2.services.*;
 
 public interface RepositoryServiceProvider {
 
-	public LockAssetResponse lockAsset(LockAssetRequest lockAssetRequest);
+   public LockAssetResponse lockAsset(LockAssetRequest lockAssetRequest);
 
-	public UnsubscribeResponse unsubscribe(UnsubscribeRequest unsubscribeRequest);
+   public UnsubscribeResponse unsubscribe(UnsubscribeRequest unsubscribeRequest);
 
-	public SearchAssetsResponse searchAssets(SearchAssetsRequest searchAssetsRequest);
+   public SearchAssetsResponse searchAssets(SearchAssetsRequest searchAssetsRequest);
 
-	public UpdateAssetArtifactsResponse updateAssetArtifacts(UpdateAssetArtifactsRequest updateAssetArtifactsRequest);
+   public UpdateAssetArtifactsResponse updateAssetArtifacts(UpdateAssetArtifactsRequest updateAssetArtifactsRequest);
 
-	public ApproveAssetResponse approveAsset(
-			ApproveAssetRequest approveAssetRequest);
+   public ApproveAssetResponse approveAsset(ApproveAssetRequest approveAssetRequest);
 
+   public CreateAndSubmitAssetResponse createAndSubmitAsset(CreateAndSubmitAssetRequest createAndSubmitAssetRequest);
 
-	public CreateAndSubmitAssetResponse createAndSubmitAsset(
-			CreateAndSubmitAssetRequest createAndSubmitAssetRequest);
+   public GetAssetTypesResponse getAssetTypes(GetAssetTypesRequest getAssetTypesRequest);
 
+   public GetAssetTreeByAttributesResponse getAssetTreeByAttributes(
+            GetAssetTreeByAttributesRequest getAssetTreeByAttributesRequest);
 
-	public GetAssetTypesResponse getAssetTypes(
-			GetAssetTypesRequest getAssetTypesRequest);
+   public RemoveAssetResponse removeAsset(RemoveAssetRequest removeAssetRequest);
 
-	public GetAssetTreeByAttributesResponse getAssetTreeByAttributes(
-			GetAssetTreeByAttributesRequest getAssetTreeByAttributesRequest);
+   public GetAssetSubmissionPropertiesResponse getAssetSubmissionProperties(
+            GetAssetSubmissionPropertiesRequest getAssetSubmissionPropertiesRequest);
 
-	public RemoveAssetResponse removeAsset(
-			RemoveAssetRequest removeAssetRequest);
+   public UpdateAssetResponse updateAsset(UpdateAssetRequest updateAssetRequest);
 
-	public GetAssetSubmissionPropertiesResponse getAssetSubmissionProperties(
-			GetAssetSubmissionPropertiesRequest getAssetSubmissionPropertiesRequest);
+   public RejectAssetResponse rejectAsset(RejectAssetRequest rejectAssetRequest);
 
-	public UpdateAssetResponse updateAsset(
-			UpdateAssetRequest updateAssetRequest);
+   public SearchAssetsDetailedResponse searchAssetsDetailed(SearchAssetsDetailedRequest searchAssetsDetailedRequest);
 
-	public RejectAssetResponse rejectAsset(
-			RejectAssetRequest rejectAssetRequest);
+   public GetSubscriptionResponse getSubscription(GetSubscriptionRequest getSubscriptionRequest);
 
-	public SearchAssetsDetailedResponse searchAssetsDetailed(
-			SearchAssetsDetailedRequest searchAssetsDetailedRequest);
+   public SubmitForPublishingResponse submitForPublishing(SubmitForPublishingRequest submitForPublishingRequest);
 
-	public GetSubscriptionResponse getSubscription(
-			GetSubscriptionRequest getSubscriptionRequest);
+   public GetAssetStatusResponse getAssetStatus(GetAssetStatusRequest getAssetStatusRequest);
 
-	public SubmitForPublishingResponse submitForPublishing(
-			SubmitForPublishingRequest submitForPublishingRequest);
+   public CreateCompleteAssetResponse createCompleteAsset(CreateCompleteAssetRequest createCompleteAssetRequest);
 
-	public GetAssetStatusResponse getAssetStatus(
-			GetAssetStatusRequest getAssetStatusRequest);
+   public SubscribeResponse subscribe(SubscribeRequest subscribeRequest);
 
-	public CreateCompleteAssetResponse createCompleteAsset(
-			CreateCompleteAssetRequest createCompleteAssetRequest);
+   public ValidateAssetResponse validateAsset(ValidateAssetRequest validateAssetRequest);
 
-	public SubscribeResponse subscribe(
-			SubscribeRequest subscribeRequest);
+   public UnlockAssetResponse unlockAsset(UnlockAssetRequest unlockAssetRequest);
 
-	public ValidateAssetResponse validateAsset(
-			ValidateAssetRequest validateAssetRequest);
+   public GetAssetDependenciesResponse getAssetDependencies(GetAssetDependenciesRequest getAssetDependenciesRequest);
 
-	public UnlockAssetResponse unlockAsset(
-			UnlockAssetRequest unlockAssetRequest);
+   public GetAssetInfoResponse getAssetInfo(GetAssetInfoRequest getAssetInfoRequest);
 
-	public GetAssetDependenciesResponse getAssetDependencies(
-			GetAssetDependenciesRequest getAssetDependenciesRequest);
+   public GetAssetLifeCycleStatesResponse getAssetLifeCycleStates(
+            GetAssetLifeCycleStatesRequest getAssetLifeCycleStatesRequest);
 
-	public GetAssetInfoResponse getAssetInfo(
-			GetAssetInfoRequest getAssetInfoRequest);
+   public GetAllAssetsGroupedByCategoryResponse getAllAssetsGroupedByCategory(
+            GetAllAssetsGroupedByCategoryRequest getAllAssetsGroupedByCategoryRequest);
 
-	public GetAssetLifeCycleStatesResponse getAssetLifeCycleStates(
-			GetAssetLifeCycleStatesRequest getAssetLifeCycleStatesRequest);
+   public UpdateAssetAttributesResponse updateAssetAttributes(UpdateAssetAttributesRequest updateAssetAttributesRequest);
 
-	public GetAllAssetsGroupedByCategoryResponse getAllAssetsGroupedByCategory(
-			GetAllAssetsGroupedByCategoryRequest getAllAssetsGroupedByCategoryRequest);
+   public GetAssetVersionsResponse getAssetVersions(GetAssetVersionsRequest getAssetVersionsRequest);
 
-	public UpdateAssetAttributesResponse updateAssetAttributes(
-			UpdateAssetAttributesRequest updateAssetAttributesRequest);
+   public UpdateCompleteAssetResponse updateCompleteAsset(UpdateCompleteAssetRequest updateCompleteAssetRequest);
 
-	public GetAssetVersionsResponse getAssetVersions(
-			GetAssetVersionsRequest getAssetVersionsRequest);
+   public CreateAssetResponse createAsset(CreateAssetRequest createAssetRequest);
 
-	public UpdateCompleteAssetResponse updateCompleteAsset(
-			UpdateCompleteAssetRequest updateCompleteAssetRequest);
+   public GetBasicAssetInfoResponse getBasicAssetInfo(GetBasicAssetInfoRequest getBasicAssetInfoRequest);
 
-	public CreateAssetResponse createAsset(
-			CreateAssetRequest createAssetRequest);
+   public UpdateAssetDependenciesResponse updateAssetDependencies(
+            UpdateAssetDependenciesRequest updateAssetDependenciesRequest);
 
-	public GetBasicAssetInfoResponse getBasicAssetInfo(
-			GetBasicAssetInfoRequest getBasicAssetInfoRequest);
-
-	public UpdateAssetDependenciesResponse updateAssetDependencies(
-			UpdateAssetDependenciesRequest updateAssetDependenciesRequest);
-
-	public UpdateSubscriptionResponse updateSubscription(
-			UpdateSubscriptionRequest updateSubscriptionRequest);
+   public UpdateSubscriptionResponse updateSubscription(UpdateSubscriptionRequest updateSubscriptionRequest);
 
 }

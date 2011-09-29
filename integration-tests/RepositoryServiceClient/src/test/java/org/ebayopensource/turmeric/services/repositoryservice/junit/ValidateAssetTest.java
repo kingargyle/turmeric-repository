@@ -21,33 +21,31 @@ import org.ebayopensource.turmeric.repository.v1.services.AssetKey;
 import org.ebayopensource.turmeric.services.repositoryservice.operation.consumer.ValidateAssetConsumer;
 
 public class ValidateAssetTest {
-	public static AssetCreatorIntf assetCreator = AssetCreatorFactory.
-	getAssetCreator("resource/FunctionalDomainAsset.xml");
-	@BeforeClass
-	public static void oneTimeSetUp() throws AssetCreationException {	
-		assetCreator.createAsset();
-	}
-	private static final String s_success ="PASSED";
-	/*
-	 * Method under test: ValidateAsset
-	 * Test Type        : Positive
-	 * Sub  Type        : validInput
-	 */
-	@Test
-	public void testValidateAsset_validInput() throws Exception {
-		try
-		{
-		AssetInfo assetInfo = assetCreator.getAssetAsAssetInfo("Common");
-		String status = ValidateAssetConsumer.testValidateDataTypeAsset_withValidAsset(assetInfo);
-		AssetKey assetKey = new AssetKey();
-		assetKey.setAssetId(assetInfo.getBasicAssetInfo().getAssetKey().getAssetId());
-		assetCreator.removeAsset(assetKey);
-		Assert.assertEquals(s_success, status);
-		}
-		catch(Exception e )
-		{
-		e.printStackTrace();
-		throw e;
-		}
-	}
+   public static AssetCreatorIntf assetCreator = AssetCreatorFactory
+            .getAssetCreator("resource/FunctionalDomainAsset.xml");
+
+   @BeforeClass
+   public static void oneTimeSetUp() throws AssetCreationException {
+      assetCreator.createAsset();
+   }
+
+   private static final String s_success = "PASSED";
+
+   /*
+    * Method under test: ValidateAsset Test Type : Positive Sub Type : validInput
+    */
+   @Test
+   public void testValidateAsset_validInput() throws Exception {
+      try {
+         AssetInfo assetInfo = assetCreator.getAssetAsAssetInfo("Common");
+         String status = ValidateAssetConsumer.testValidateDataTypeAsset_withValidAsset(assetInfo);
+         AssetKey assetKey = new AssetKey();
+         assetKey.setAssetId(assetInfo.getBasicAssetInfo().getAssetKey().getAssetId());
+         assetCreator.removeAsset(assetKey);
+         Assert.assertEquals(s_success, status);
+      } catch (Exception e) {
+         e.printStackTrace();
+         throw e;
+      }
+   }
 }

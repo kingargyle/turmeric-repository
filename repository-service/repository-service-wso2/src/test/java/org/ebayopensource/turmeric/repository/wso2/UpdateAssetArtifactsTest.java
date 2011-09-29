@@ -44,215 +44,209 @@ import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositorySer
  * 
  */
 public class UpdateAssetArtifactsTest extends Wso2Base {
-    private static final String assetName = "UpdateAssetArtifactsTest";
-    private static final String assetDesc = "UpdateAssetArtifactsTest description";
-    private static final String baseUrl = "http://www.domain.com/assets/";
-  
-    private CreateCompleteAssetResponse createAsset() throws Exception {
-        AssetKey key = new AssetKey();
-        key.setAssetName(assetName);
-        key.setType("Service");
-        key.setVersion("1.0.0");
+   private static final String assetName = "UpdateAssetArtifactsTest";
+   private static final String assetDesc = "UpdateAssetArtifactsTest description";
+   private static final String baseUrl = "http://www.domain.com/assets/";
 
-        BasicAssetInfo basicInfo = new BasicAssetInfo();
-        basicInfo.setAssetKey(key);
-        basicInfo.setAssetName(assetName);
-        basicInfo.setAssetDescription(assetDesc);
-        basicInfo.setAssetType("Service");
-        basicInfo.setVersion(key.getVersion());
+   private CreateCompleteAssetResponse createAsset() throws Exception {
+      AssetKey key = new AssetKey();
+      key.setAssetName(assetName);
+      key.setType("Service");
+      key.setVersion("1.0.0");
 
-        ExtendedAssetInfo extendedInfo = new ExtendedAssetInfo();
+      BasicAssetInfo basicInfo = new BasicAssetInfo();
+      basicInfo.setAssetKey(key);
+      basicInfo.setAssetName(assetName);
+      basicInfo.setAssetDescription(assetDesc);
+      basicInfo.setAssetType("Service");
+      basicInfo.setVersion(key.getVersion());
 
-        AssetLifeCycleInfo lifeCycleInfo = new AssetLifeCycleInfo();
-        lifeCycleInfo.setDomainOwner("John Doe");
-        lifeCycleInfo.setDomainType("Technical Owner");
+      ExtendedAssetInfo extendedInfo = new ExtendedAssetInfo();
 
-        AssetInfo assetInfo = new AssetInfo();
-        assetInfo.setBasicAssetInfo(basicInfo);
-        assetInfo.setExtendedAssetInfo(extendedInfo);
-        assetInfo.setAssetLifeCycleInfo(lifeCycleInfo);
+      AssetLifeCycleInfo lifeCycleInfo = new AssetLifeCycleInfo();
+      lifeCycleInfo.setDomainOwner("John Doe");
+      lifeCycleInfo.setDomainType("Technical Owner");
 
-        Artifact endpoint = new Artifact();
-        endpoint.setArtifactName("ep-" + assetName);
-        endpoint.setArtifactCategory("Endpoint");
-        endpoint.setArtifactValueType(ArtifactValueType.URL);
+      AssetInfo assetInfo = new AssetInfo();
+      assetInfo.setBasicAssetInfo(basicInfo);
+      assetInfo.setExtendedAssetInfo(extendedInfo);
+      assetInfo.setAssetLifeCycleInfo(lifeCycleInfo);
 
-        String endpointUrl = baseUrl + assetName;
-        ArtifactInfo endpointInfo = new ArtifactInfo();
-        endpointInfo.setArtifact(endpoint);
-        endpointInfo.setArtifactDetail(endpointUrl.getBytes("UTF-8"));
-        endpointInfo.setContentType(GovernanceConstants.ENDPOINT_MEDIA_TYPE);
+      Artifact endpoint = new Artifact();
+      endpoint.setArtifactName("ep-" + assetName);
+      endpoint.setArtifactCategory("Endpoint");
+      endpoint.setArtifactValueType(ArtifactValueType.URL);
 
-        List<ArtifactInfo> artifactList = assetInfo.getArtifactInfo();
-        artifactList.add(endpointInfo);
+      String endpointUrl = baseUrl + assetName;
+      ArtifactInfo endpointInfo = new ArtifactInfo();
+      endpointInfo.setArtifact(endpoint);
+      endpointInfo.setArtifactDetail(endpointUrl.getBytes("UTF-8"));
+      endpointInfo.setContentType(GovernanceConstants.ENDPOINT_MEDIA_TYPE);
 
-        CreateCompleteAssetRequest request = new CreateCompleteAssetRequest();
-        request.setAssetInfo(assetInfo);
+      List<ArtifactInfo> artifactList = assetInfo.getArtifactInfo();
+      artifactList.add(endpointInfo);
 
-        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
-        return provider.createCompleteAsset(request);
-    }
+      CreateCompleteAssetRequest request = new CreateCompleteAssetRequest();
+      request.setAssetInfo(assetInfo);
 
-    private UpdateAssetArtifactsResponse replaceAsset(String assetId) throws Exception {
-        AssetKey key = new AssetKey();
-        key.setAssetId(assetId);
+      RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
+      return provider.createCompleteAsset(request);
+   }
 
-        LockAssetRequest lockReq = new LockAssetRequest();
-        lockReq.setAssetKey(key);
+   private UpdateAssetArtifactsResponse replaceAsset(String assetId) throws Exception {
+      AssetKey key = new AssetKey();
+      key.setAssetId(assetId);
 
-        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
-        LockAssetResponse lockRes = provider.lockAsset(lockReq);
-        assertEquals(AckValue.SUCCESS, lockRes.getAck());
+      LockAssetRequest lockReq = new LockAssetRequest();
+      lockReq.setAssetKey(key);
 
-        UpdateAssetArtifactsRequest request = new UpdateAssetArtifactsRequest();
-        request.setPartialUpdate(false);
-        request.setReplaceCurrent(true);
-        request.setAssetKey(key);
-        List<ArtifactInfo> artifactList = request.getArtifactInfo();
+      RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
+      LockAssetResponse lockRes = provider.lockAsset(lockReq);
+      assertEquals(AckValue.SUCCESS, lockRes.getAck());
 
-        Artifact endpoint = new Artifact();
-        endpoint.setArtifactName("ep-" + assetName + "-updated");
-        endpoint.setArtifactCategory("Endpoint");
-        endpoint.setArtifactValueType(ArtifactValueType.URL);
+      UpdateAssetArtifactsRequest request = new UpdateAssetArtifactsRequest();
+      request.setPartialUpdate(false);
+      request.setReplaceCurrent(true);
+      request.setAssetKey(key);
+      List<ArtifactInfo> artifactList = request.getArtifactInfo();
 
-        String endpointUrl = baseUrl + assetName + "-updated";
-        ArtifactInfo endpointInfo = new ArtifactInfo();
-        endpointInfo.setArtifact(endpoint);
-        endpointInfo.setArtifactDetail(endpointUrl.getBytes("UTF-8"));
-        endpointInfo.setContentType("application/vnd.wso2.endpoint");
-        artifactList.add(endpointInfo);
+      Artifact endpoint = new Artifact();
+      endpoint.setArtifactName("ep-" + assetName + "-updated");
+      endpoint.setArtifactCategory("Endpoint");
+      endpoint.setArtifactValueType(ArtifactValueType.URL);
 
-        return provider.updateAssetArtifacts(request);
-    }
+      String endpointUrl = baseUrl + assetName + "-updated";
+      ArtifactInfo endpointInfo = new ArtifactInfo();
+      endpointInfo.setArtifact(endpoint);
+      endpointInfo.setArtifactDetail(endpointUrl.getBytes("UTF-8"));
+      endpointInfo.setContentType("application/vnd.wso2.endpoint");
+      artifactList.add(endpointInfo);
 
-    private UpdateAssetArtifactsResponse mergeAsset(String assetId) throws Exception {
-        AssetKey key = new AssetKey();
-        key.setAssetId(assetId);
+      return provider.updateAssetArtifacts(request);
+   }
 
-        LockAssetRequest lockReq = new LockAssetRequest();
-        lockReq.setAssetKey(key);
+   private UpdateAssetArtifactsResponse mergeAsset(String assetId) throws Exception {
+      AssetKey key = new AssetKey();
+      key.setAssetId(assetId);
 
-        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
-        LockAssetResponse lockRes = provider.lockAsset(lockReq);
-        assertEquals(AckValue.SUCCESS, lockRes.getAck());
+      LockAssetRequest lockReq = new LockAssetRequest();
+      lockReq.setAssetKey(key);
 
-        UpdateAssetArtifactsRequest request = new UpdateAssetArtifactsRequest();
-        request.setPartialUpdate(false);
-        request.setReplaceCurrent(false);
-        request.setAssetKey(key);
+      RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
+      LockAssetResponse lockRes = provider.lockAsset(lockReq);
+      assertEquals(AckValue.SUCCESS, lockRes.getAck());
 
-        List<ArtifactInfo> artifactList = request.getArtifactInfo();
+      UpdateAssetArtifactsRequest request = new UpdateAssetArtifactsRequest();
+      request.setPartialUpdate(false);
+      request.setReplaceCurrent(false);
+      request.setAssetKey(key);
 
-        Artifact endpoint = new Artifact();
-        endpoint.setArtifactName("ep-" + assetName + "-updated-merge");
-        endpoint.setArtifactCategory("Endpoint");
-        endpoint.setArtifactValueType(ArtifactValueType.URL);
+      List<ArtifactInfo> artifactList = request.getArtifactInfo();
 
-        String endpointUrl = baseUrl + assetName + "-updated-merge";
-        ArtifactInfo endpointInfo = new ArtifactInfo();
-        endpointInfo.setArtifact(endpoint);
-        endpointInfo.setArtifactDetail(endpointUrl.getBytes("UTF-8"));
-        endpointInfo.setContentType("application/vnd.wso2.endpoint");
-        artifactList.add(endpointInfo);
+      Artifact endpoint = new Artifact();
+      endpoint.setArtifactName("ep-" + assetName + "-updated-merge");
+      endpoint.setArtifactCategory("Endpoint");
+      endpoint.setArtifactValueType(ArtifactValueType.URL);
 
-        return provider.updateAssetArtifacts(request);
-    }
+      String endpointUrl = baseUrl + assetName + "-updated-merge";
+      ArtifactInfo endpointInfo = new ArtifactInfo();
+      endpointInfo.setArtifact(endpoint);
+      endpointInfo.setArtifactDetail(endpointUrl.getBytes("UTF-8"));
+      endpointInfo.setContentType("application/vnd.wso2.endpoint");
+      artifactList.add(endpointInfo);
 
-    /**
-     * Helper method to retrieve the asset basic and extended info
-     * 
-     * @return
-     */
-    private AssetInfo getAsset(String assetId) {
-        // now, i search the service to get all its related objects
-        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
+      return provider.updateAssetArtifacts(request);
+   }
 
-        GetAssetInfoRequest request = new GetAssetInfoRequest();
-        AssetKey key = new AssetKey();
-        key.setAssetId(assetId);
-        request.setAssetKey(key);
-        request.setAssetType("Service");
+   /**
+    * Helper method to retrieve the asset basic and extended info
+    * 
+    * @return
+    */
+   private AssetInfo getAsset(String assetId) {
+      // now, i search the service to get all its related objects
+      RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
 
-        GetAssetInfoResponse assetInfoResponse = provider.getAssetInfo(request);
-        assertEquals(AckValue.SUCCESS, assetInfoResponse.getAck());
-        assertEquals(null, assetInfoResponse.getErrorMessage());
+      GetAssetInfoRequest request = new GetAssetInfoRequest();
+      AssetKey key = new AssetKey();
+      key.setAssetId(assetId);
+      request.setAssetKey(key);
+      request.setAssetType("Service");
 
-        return assetInfoResponse.getAssetInfo();
-    }
+      GetAssetInfoResponse assetInfoResponse = provider.getAssetInfo(request);
+      assertEquals(AckValue.SUCCESS, assetInfoResponse.getAck());
+      assertEquals(null, assetInfoResponse.getErrorMessage());
 
-    @Test
-    @Ignore
-    public void updateReplaceTest() throws Exception {
-        // first, create the complete asset
-        CreateCompleteAssetResponse response = createAsset();
-        assertEquals(AckValue.SUCCESS, response.getAck());
-        assertEquals(null, response.getErrorMessage());
+      return assetInfoResponse.getAssetInfo();
+   }
 
-        // then, update the complete asset, replacing all its related objects
-        UpdateAssetArtifactsResponse responseUpdate = replaceAsset(response.getAssetKey().getAssetId());
-        assertEquals(AckValue.SUCCESS, responseUpdate.getAck());
-        assertEquals(null, responseUpdate.getErrorMessage());
+   @Test
+   @Ignore
+   public void updateReplaceTest() throws Exception {
+      // first, create the complete asset
+      CreateCompleteAssetResponse response = createAsset();
+      assertEquals(AckValue.SUCCESS, response.getAck());
+      assertEquals(null, response.getErrorMessage());
 
-        AssetInfo assetInfo = getAsset(response.getAssetKey().getAssetId());
-        // now, validating artifacts
-        List<ArtifactInfo> artifacts = assetInfo.getArtifactInfo();
-        assertTrue(artifacts != null);
-        assertEquals(1, artifacts.size());
-        ArtifactInfo artifactInfo = artifacts.get(0);
-        assertEquals("ep-" + assetName + "-updated", artifactInfo.getArtifact().getArtifactName());
-        assertEquals("Endpoint", artifactInfo.getArtifact().getArtifactCategory());
-        assertEquals(ArtifactValueType.URL, artifactInfo.getArtifact().getArtifactValueType());
-        assertEquals(new String(
-                        (baseUrl + assetName + "-updated").getBytes("UTF-8")),
-                        new String(artifactInfo.getArtifactDetail()));
-        assertEquals("application/vnd.wso2.endpoint", artifactInfo.getContentType());
+      // then, update the complete asset, replacing all its related objects
+      UpdateAssetArtifactsResponse responseUpdate = replaceAsset(response.getAssetKey().getAssetId());
+      assertEquals(AckValue.SUCCESS, responseUpdate.getAck());
+      assertEquals(null, responseUpdate.getErrorMessage());
 
-    }
+      AssetInfo assetInfo = getAsset(response.getAssetKey().getAssetId());
+      // now, validating artifacts
+      List<ArtifactInfo> artifacts = assetInfo.getArtifactInfo();
+      assertTrue(artifacts != null);
+      assertEquals(1, artifacts.size());
+      ArtifactInfo artifactInfo = artifacts.get(0);
+      assertEquals("ep-" + assetName + "-updated", artifactInfo.getArtifact().getArtifactName());
+      assertEquals("Endpoint", artifactInfo.getArtifact().getArtifactCategory());
+      assertEquals(ArtifactValueType.URL, artifactInfo.getArtifact().getArtifactValueType());
+      assertEquals(new String((baseUrl + assetName + "-updated").getBytes("UTF-8")),
+               new String(artifactInfo.getArtifactDetail()));
+      assertEquals("application/vnd.wso2.endpoint", artifactInfo.getContentType());
 
-    @Test
-    @Ignore
-    public void mergeCompleteAssetTest() throws Exception {
-        // first, create the complete asset
-        CreateCompleteAssetResponse response = createAsset();
-        String errorMessage = null;
-        if (!response.getAck().equals(AckValue.SUCCESS)) {
-        	for (CommonErrorData error : response.getErrorMessage().getError()) {
-        		errorMessage = error.getMessage();
-        		fail("Unable to complete asset creation. " + errorMessage);
-        	}
-        }
+   }
 
-        // then, update the complete asset, replacing all its related objects
-        UpdateAssetArtifactsResponse responseUpdate = mergeAsset(response.getAssetKey().getAssetId());
-        assertEquals(AckValue.SUCCESS, responseUpdate.getAck());
-        assertEquals(null, responseUpdate.getErrorMessage());
+   @Test
+   @Ignore
+   public void mergeCompleteAssetTest() throws Exception {
+      // first, create the complete asset
+      CreateCompleteAssetResponse response = createAsset();
+      String errorMessage = null;
+      if (!response.getAck().equals(AckValue.SUCCESS)) {
+         for (CommonErrorData error : response.getErrorMessage().getError()) {
+            errorMessage = error.getMessage();
+            fail("Unable to complete asset creation. " + errorMessage);
+         }
+      }
 
-        AssetInfo assetInfo = this.getAsset(response.getAssetKey().getAssetId());
-        // now, validating artifacts
-        List<ArtifactInfo> artifacts = assetInfo.getArtifactInfo();
-        assertTrue(artifacts != null);
-        assertEquals(2, artifacts.size());
-        for (ArtifactInfo artifactInfo : artifacts) {
-            if (("ep-" + assetName).equals(artifactInfo.getArtifact().getArtifactName())) {
-                assertEquals(new String((baseUrl + assetName).getBytes("UTF-8")),
-                                new String(artifactInfo.getArtifactDetail()));
-            }
-            else if (("ep-" + assetName + "-updated-merge").equals(artifactInfo.getArtifact()
-                            .getArtifactName())) {
-                assertEquals(new String(
-                                (baseUrl + assetName + "-updated-merge")
-                                                .getBytes("UTF-8")),
-                                new String(artifactInfo.getArtifactDetail()));
+      // then, update the complete asset, replacing all its related objects
+      UpdateAssetArtifactsResponse responseUpdate = mergeAsset(response.getAssetKey().getAssetId());
+      assertEquals(AckValue.SUCCESS, responseUpdate.getAck());
+      assertEquals(null, responseUpdate.getErrorMessage());
 
-            }
-            else {
-                // test should fail, there should be only two artifacts here
-                fail("there should be only two artifacts");
-            }
+      AssetInfo assetInfo = this.getAsset(response.getAssetKey().getAssetId());
+      // now, validating artifacts
+      List<ArtifactInfo> artifacts = assetInfo.getArtifactInfo();
+      assertTrue(artifacts != null);
+      assertEquals(2, artifacts.size());
+      for (ArtifactInfo artifactInfo : artifacts) {
+         if (("ep-" + assetName).equals(artifactInfo.getArtifact().getArtifactName())) {
+            assertEquals(new String((baseUrl + assetName).getBytes("UTF-8")),
+                     new String(artifactInfo.getArtifactDetail()));
+         } else if (("ep-" + assetName + "-updated-merge").equals(artifactInfo.getArtifact().getArtifactName())) {
+            assertEquals(new String((baseUrl + assetName + "-updated-merge").getBytes("UTF-8")), new String(
+                     artifactInfo.getArtifactDetail()));
 
-            assertEquals("Endpoint", artifactInfo.getArtifact().getArtifactCategory());
-            assertEquals(ArtifactValueType.URL, artifactInfo.getArtifact().getArtifactValueType());
-            assertEquals("application/vnd.wso2.endpoint", artifactInfo.getContentType());
-        }
-    }
+         } else {
+            // test should fail, there should be only two artifacts here
+            fail("there should be only two artifacts");
+         }
+
+         assertEquals("Endpoint", artifactInfo.getArtifact().getArtifactCategory());
+         assertEquals(ArtifactValueType.URL, artifactInfo.getArtifact().getArtifactValueType());
+         assertEquals("application/vnd.wso2.endpoint", artifactInfo.getContentType());
+      }
+   }
 }

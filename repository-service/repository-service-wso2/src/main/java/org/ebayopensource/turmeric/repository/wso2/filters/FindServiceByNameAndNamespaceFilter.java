@@ -17,19 +17,19 @@ import org.wso2.carbon.governance.api.services.dataobjects.Service;
 
 public class FindServiceByNameAndNamespaceFilter implements ServiceFilter {
 
-	private BasicAssetInfo basicInfo = null;
-	
-	public FindServiceByNameAndNamespaceFilter(BasicAssetInfo info) {
-		this.basicInfo = info;
-	}
-	
-	@Override
-	public boolean matches(Service service) throws GovernanceException {
-		QName qname = new QName(basicInfo.getNamespace(), basicInfo.getAssetName());
-		if (service.getQName().equals(qname)) {
-			return true;
-		}
-		return false;
-	}
+   private BasicAssetInfo basicInfo = null;
+
+   public FindServiceByNameAndNamespaceFilter(BasicAssetInfo info) {
+      this.basicInfo = info;
+   }
+
+   @Override
+   public boolean matches(Service service) throws GovernanceException {
+      QName qname = new QName(basicInfo.getNamespace(), basicInfo.getAssetName());
+      if (service.getQName().equals(qname)) {
+         return true;
+      }
+      return false;
+   }
 
 }

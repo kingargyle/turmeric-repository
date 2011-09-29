@@ -31,61 +31,54 @@ import org.ebayopensource.turmeric.services.repositoryservice.operation.consumer
 import org.ebayopensource.turmeric.services.repository.validation.exception.InvalidInputException;
 
 public class ApproveAssetTest extends AbstractCarbonIntegrationTestCase {
-	
-	public static AssetCreatorIntf assetCreator = AssetCreatorFactory.
-	getAssetCreator("resource/FunctionalDomainAsset.xml");
-	@BeforeClass
-	public static void oneTimeSetUp() throws AssetCreationException {	
-		try
-		{
-		assetCreator.createAsset();
-//		Connection connection = ConnectionUtil.getInstance().getDefaultConnection();
-//		assetSource = AssetSourceFactory.createAssetSource(connection);
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
-	
-	//private Event event ;
-	private static final String s_success ="PASSED";
-	//private static AssetSource assetSource = null;
-	/*
-	 * Method under test: ApproveAsset
-	 * Test Type        : Positive
-	 * Sub  Type        : ValidAsset
-	 */ 
-	@Test
-	public void testGetAssetStatus_validAsset_WithId() throws AssetInfoNotFoundException, IdNotFoundException, 
-					UpdateCompleteAssetException, InvalidInputException, ProcessingException, 
-					org.ebayopensource.turmeric.assetcreation.exception.ProcessingException,Exception {
-		try
-		{
-		//Event event = new Event();
-		String user = "_soaRegistry_admin";
-		AssetInfo assetInfo = assetCreator.getAssetAsAssetInfo("Common");
-		AssetKey assetKey = assetInfo.getBasicAssetInfo().getAssetKey();
-		String assetId=assetInfo.getBasicAssetInfo().getAssetKey().getAssetId();
-		//Asset asset = assetSource.getAsset(assetId, false);
-		AssetInfoForUpdate updateInfo = assetCreator.getAssetInfoForUpdate(assetInfo);
-		updateInfo.getBasicAssetInfo().setAssetDescription("Modified");
-		assetCreator.updateCompleteAsset(updateInfo);
-		//ExtListenerHandlerUtil.setEvent(asset, event, user);			
-		String status = ApproveAssetConsumer.testGetAssetStatus_validAsset_WithId(assetInfo);
-		assetCreator.removeAsset(assetKey);
-		Assert.assertEquals(s_success, status);
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			throw e;
-		}
-		
-	}
-	@Override
-	protected void copyArtifacts() throws IOException {
-		// TODO Auto-generated method stub
-		
-	}
+
+   public static AssetCreatorIntf assetCreator = AssetCreatorFactory
+            .getAssetCreator("resource/FunctionalDomainAsset.xml");
+
+   @BeforeClass
+   public static void oneTimeSetUp() throws AssetCreationException {
+      try {
+         assetCreator.createAsset();
+         // Connection connection = ConnectionUtil.getInstance().getDefaultConnection();
+         // assetSource = AssetSourceFactory.createAssetSource(connection);
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+   }
+
+   // private Event event ;
+   private static final String s_success = "PASSED";
+
+   // private static AssetSource assetSource = null;
+   /*
+    * Method under test: ApproveAsset Test Type : Positive Sub Type : ValidAsset
+    */
+   @Test
+   public void testGetAssetStatus_validAsset_WithId() throws AssetInfoNotFoundException, IdNotFoundException,
+            UpdateCompleteAssetException, InvalidInputException, ProcessingException,
+            org.ebayopensource.turmeric.assetcreation.exception.ProcessingException, Exception {
+      try {
+         AssetInfo assetInfo = assetCreator.getAssetAsAssetInfo("Common");
+         AssetKey assetKey = assetInfo.getBasicAssetInfo().getAssetKey();
+         assetInfo.getBasicAssetInfo().getAssetKey().getAssetId();
+         // Asset asset = assetSource.getAsset(assetId, false);
+         AssetInfoForUpdate updateInfo = assetCreator.getAssetInfoForUpdate(assetInfo);
+         updateInfo.getBasicAssetInfo().setAssetDescription("Modified");
+         assetCreator.updateCompleteAsset(updateInfo);
+         // ExtListenerHandlerUtil.setEvent(asset, event, user);
+         String status = ApproveAssetConsumer.testGetAssetStatus_validAsset_WithId(assetInfo);
+         assetCreator.removeAsset(assetKey);
+         Assert.assertEquals(s_success, status);
+      } catch (Exception e) {
+         e.printStackTrace();
+         throw e;
+      }
+
+   }
+
+   @Override
+   protected void copyArtifacts() throws IOException {
+      // TODO Auto-generated method stub
+
+   }
 }

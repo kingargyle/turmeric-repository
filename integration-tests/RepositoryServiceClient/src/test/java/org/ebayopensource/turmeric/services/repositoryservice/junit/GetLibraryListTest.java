@@ -7,23 +7,23 @@
  *    http://www.apache.org/licenses/LICENSE-2.0
  *******************************************************************************/
 package org.ebayopensource.turmeric.services.repositoryservice.junit;
+
 import junit.framework.Assert;
 
 import org.ebayopensource.turmeric.services.repositoryservice.operation.consumer.GetLibraryListConsumer;
 import org.junit.Test;
 
 public class GetLibraryListTest {
-	private static final String s_success ="PASSED";
-	/*
-	 * Method under test: GetLibraryList
-	 * Test Type        : Positive
-	 * Sub  Type        : Positive scenario
-	 */
+   private static final String s_success = "PASSED";
 
-	@Test
-	public void testGetLibraryList_positiveScenario(){
-		 String status= GetLibraryListConsumer.testGetLibraryList_positiveScenario();
-		 Assert.assertEquals(s_success, status);         
-	}
+   /*
+    * Method under test: GetLibraryList Test Type : Positive Sub Type : Positive scenario
+    */
+
+   @Test
+   public void testGetLibraryList_positiveScenario() {
+      String status = GetLibraryListConsumer.testGetLibraryList_positiveScenario();
+      Assert.assertEquals(s_success, status);
+   }
 
 }

@@ -13,7 +13,6 @@
 // Generated on: 2010.10.18 at 03:20:10 AM PDT 
 //
 
-
 package org.ebayopensource.turmeric.services.repository.config;
 
 import java.util.ArrayList;
@@ -23,11 +22,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for RepositoryServiceProviderList complex type.
+ * <p>
+ * Java class for RepositoryServiceProviderList complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="RepositoryServiceProviderList">
@@ -44,41 +44,38 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "RepositoryServiceProviderList", propOrder = {
-    "providerConfig"
-})
+@XmlType(name = "RepositoryServiceProviderList", propOrder = { "providerConfig" })
 public class RepositoryServiceProviderList {
 
-    @XmlElement(name = "provider-config", required = true)
-    protected List<RepositoryServiceProviders> providerConfig;
+   @XmlElement(name = "provider-config", required = true)
+   protected List<RepositoryServiceProviders> providerConfig;
 
-    /**
-     * Gets the value of the providerConfig property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the providerConfig property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getProviderConfig().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link RepositoryServiceProviders }
-     * 
-     * 
-     */
-    public List<RepositoryServiceProviders> getProviderConfig() {
-        if (providerConfig == null) {
-            providerConfig = new ArrayList<RepositoryServiceProviders>();
-        }
-        return this.providerConfig;
-    }
+   /**
+    * Gets the value of the providerConfig property.
+    * 
+    * <p>
+    * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+    * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+    * the providerConfig property.
+    * 
+    * <p>
+    * For example, to add a new item, do as follows:
+    * 
+    * <pre>
+    * getProviderConfig().add(newItem);
+    * </pre>
+    * 
+    * 
+    * <p>
+    * Objects of the following type(s) are allowed in the list {@link RepositoryServiceProviders }
+    * 
+    * 
+    */
+   public List<RepositoryServiceProviders> getProviderConfig() {
+      if (providerConfig == null) {
+         providerConfig = new ArrayList<RepositoryServiceProviders>();
+      }
+      return this.providerConfig;
+   }
 
 }

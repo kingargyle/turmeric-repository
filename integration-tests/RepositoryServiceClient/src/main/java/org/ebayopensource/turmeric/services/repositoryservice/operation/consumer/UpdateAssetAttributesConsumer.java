@@ -28,159 +28,158 @@ import org.ebayopensource.turmeric.runtime.common.exceptions.ServiceException;
 import org.ebayopensource.turmeric.runtime.sif.service.Service;
 import org.ebayopensource.turmeric.runtime.sif.service.ServiceFactory;
 
-public class UpdateAssetAttributesConsumer extends	BaseRepositoryServiceConsumer {
-	private AsyncTurmericRSV1 m_proxy = null; 
-	public static String testUpdateAssetAttributes_validAsset(AssetInfo assetInfo) {
-		UpdateAssetAttributesConsumer updateAssetAttributesConsumer = new UpdateAssetAttributesConsumer();
-		
-		int updatedAttributesCount = 3;
-		AssetKey assetKey = new AssetKey();
-		assetKey.setAssetId(assetInfo.getBasicAssetInfo().getAssetKey().getAssetId());
-		assetKey.setAssetName(assetInfo.getBasicAssetInfo().getAssetKey().getAssetName());
-		Library library = new Library();
-		library.setLibraryId(assetInfo.getBasicAssetInfo().getAssetKey().getLibrary().getLibraryId());
-		library.setLibraryName(assetInfo.getBasicAssetInfo().getAssetKey().getLibrary().getLibraryName());
-		assetKey.setLibrary(library);
-		
-		
-		List<AttributeNameValue> attributeNameValues = new ArrayList<AttributeNameValue>();
-		AttributeNameValue attributeNameValue = new AttributeNameValue();
-		attributeNameValue.setAttributeName(RepositoryServiceClientConstants.ATTRIBUTE1_NAME);
-		attributeNameValue.setAttributeValueString(RepositoryServiceClientConstants.ATTRIBUTE1_VALUE);
-		attributeNameValues.add(attributeNameValue);
-		attributeNameValue = new AttributeNameValue();
-		attributeNameValue.setAttributeName(RepositoryServiceClientConstants.ATTRIBUTE2_NAME);
-		attributeNameValue.setAttributeValueLong(RepositoryServiceClientConstants.ATTRIBUTE2_VALUE);
-		attributeNameValues.add(attributeNameValue);
-		attributeNameValue = new AttributeNameValue();
-		attributeNameValue.setAttributeName(RepositoryServiceClientConstants.ATTRIBUTE3_NAME);
-		attributeNameValue.setAttributeValueBoolean(RepositoryServiceClientConstants.ATTRIBUTE3_VALUE);
-		attributeNameValues.add(attributeNameValue);
-		
-		ExtendedAssetInfo extendedAssetInfo = new ExtendedAssetInfo();
-		extendedAssetInfo.getAttribute().addAll(attributeNameValues);
-		
-		UpdateAssetAttributesRequest updateAssetAttributesRequest = new UpdateAssetAttributesRequest();
-		updateAssetAttributesRequest.setAssetKey(assetKey);
-		updateAssetAttributesRequest.setExtendedAssetInfo(extendedAssetInfo);
-		updateAssetAttributesRequest.setPartialUpdate(true);
-		updateAssetAttributesRequest.setReplaceCurrent(true);
-				
-		try	{
-			UpdateAssetAttributesResponse updateAssetAttributesResponse = updateAssetAttributesConsumer.getProxy().updateAssetAttributes(updateAssetAttributesRequest);
-			if(updateAssetAttributesResponse == null) {
-				throw new ServiceException(null, "Response object can not be null", null);
-			}			
-			if(validateUpdateAssetAttributesResponse(updateAssetAttributesResponse, "positiveCase", updatedAttributesCount).equalsIgnoreCase("success")) {				
-				return "PASSED";
-			}
-			else {			
-				return "FAILED";
-			}
-		}
-		catch(ServiceException se) {
-			se.getMessage();
-			se.printStackTrace();	
-			return "FAILED";
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			return "FAILED";
-		}
-	}
+public class UpdateAssetAttributesConsumer extends BaseRepositoryServiceConsumer {
+   private AsyncTurmericRSV1 m_proxy = null;
 
-	public static String testUpdateAssetAttributes_invalidAsset() {
-		UpdateAssetAttributesConsumer updateAssetAttributesConsumer = new UpdateAssetAttributesConsumer();
-		
-		int updatedAttributesCount = 3;
-		
-		Properties props = CommonUtil.loadPropertyFile("properties/common.properties");
-		Library library = new Library();
-		String libraryId = props.getProperty("libraryId");
-		String libraryName = props.getProperty("libraryName", "GovernedAssets");
-		library.setLibraryId(libraryId);
-		library.setLibraryName(libraryName);
-		
-		AssetKey assetKey = new AssetKey();
-		assetKey.setAssetId(RepositoryServiceClientConstants.INVALID_ASSET_ID);
-		assetKey.setAssetName(RepositoryServiceClientConstants.INVALID_ASSET_NAME);
-		assetKey.setLibrary(library);
-		
-		List<AttributeNameValue> attributeNameValues = new ArrayList<AttributeNameValue>();
-		AttributeNameValue attributeNameValue = new AttributeNameValue();
-		attributeNameValue.setAttributeName(RepositoryServiceClientConstants.ATTRIBUTE1_NAME);
-		attributeNameValue.setAttributeValueString(RepositoryServiceClientConstants.ATTRIBUTE1_VALUE);
-		attributeNameValues.add(attributeNameValue);
-		
-		ExtendedAssetInfo extendedAssetInfo = new ExtendedAssetInfo();
-		extendedAssetInfo.getAttribute().addAll(attributeNameValues);
-		
-		UpdateAssetAttributesRequest updateAssetAttributesRequest = new UpdateAssetAttributesRequest();
-		updateAssetAttributesRequest.setAssetKey(assetKey);
-		updateAssetAttributesRequest.setExtendedAssetInfo(extendedAssetInfo);
-		updateAssetAttributesRequest.setPartialUpdate(true);
-		updateAssetAttributesRequest.setReplaceCurrent(true);
-				
-		try	{
-			UpdateAssetAttributesResponse updateAssetAttributesResponse = updateAssetAttributesConsumer.getProxy().updateAssetAttributes(updateAssetAttributesRequest);
-			if(updateAssetAttributesResponse == null) {
-				throw new ServiceException(null, "Response object can not be null", null);
-			}						
-			if(validateUpdateAssetAttributesResponse(updateAssetAttributesResponse, "negativeCase", 0).equalsIgnoreCase("success")) {
-				List<CommonErrorData> errorDatas = updateAssetAttributesResponse.getErrorMessage().getError();
-				
-				System.out.println("The following list of errors occured");
-				for (CommonErrorData errorData : errorDatas) {
-					System.out.println("Error id: " + errorData.getErrorId() + " Error message: " + errorData.getMessage());					
-				}				
-				return "PASSED";
-			}
-			else {
-				return "FAILED";
-			}			
-		}
-		catch(ServiceException se) {
-			se.getMessage();
-			se.printStackTrace();	
-			return "FAILED";
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			return "FAILED";
-		}
-	}
-	
-    protected AsyncTurmericRSV1 getProxy() throws ServiceException {
-    	if(m_proxy == null) {
-	        String svcAdminName = RepositoryServiceClientConstants.SERVICE_NAME;
-	        Service service = ServiceFactory.create(svcAdminName, RepositoryServiceClientConstants.SERVICE_NAME);
-	        service.setSessionTransportHeader("X-TURMERIC-SECURITY-USERID", RepositoryServiceClientConstants.USER_ID);
-	        service.setSessionTransportHeader("X-TURMERIC-SECURITY-PASSWORD", RepositoryServiceClientConstants.USER_PASSWORD);
-	        
-	        m_proxy = service.getProxy();
-    	} 	
-    	
-	    return m_proxy;
-    }
+   public static String testUpdateAssetAttributes_validAsset(AssetInfo assetInfo) {
+      UpdateAssetAttributesConsumer updateAssetAttributesConsumer = new UpdateAssetAttributesConsumer();
 
-    private static String validateUpdateAssetAttributesResponse(UpdateAssetAttributesResponse updateAssetAttributesResponse, String criteria, int updatedAttributesCount) {
-    	if(criteria.equalsIgnoreCase("positiveCase")) {
-    		if(updateAssetAttributesResponse.getAck().value().equalsIgnoreCase("success")) {
-    			if(updateAssetAttributesResponse.getAttributeName().size() == updatedAttributesCount) {
-    				return "success";
-    			}
-    		}
-    		return "failure";
-    	}
-    	if(criteria.equalsIgnoreCase("negativeCase")) {
-    		if(updateAssetAttributesResponse.getAck().value().equalsIgnoreCase("failure")) {
-    			if(updateAssetAttributesResponse.getErrorMessage().getError().size() > 0) {
-    				return "success";
-    			}
-    		}   		
-    	}
-    	
-    	return "failure";
-    }
-    
+      int updatedAttributesCount = 3;
+      AssetKey assetKey = new AssetKey();
+      assetKey.setAssetId(assetInfo.getBasicAssetInfo().getAssetKey().getAssetId());
+      assetKey.setAssetName(assetInfo.getBasicAssetInfo().getAssetKey().getAssetName());
+      Library library = new Library();
+      library.setLibraryId(assetInfo.getBasicAssetInfo().getAssetKey().getLibrary().getLibraryId());
+      library.setLibraryName(assetInfo.getBasicAssetInfo().getAssetKey().getLibrary().getLibraryName());
+      assetKey.setLibrary(library);
+
+      List<AttributeNameValue> attributeNameValues = new ArrayList<AttributeNameValue>();
+      AttributeNameValue attributeNameValue = new AttributeNameValue();
+      attributeNameValue.setAttributeName(RepositoryServiceClientConstants.ATTRIBUTE1_NAME);
+      attributeNameValue.setAttributeValueString(RepositoryServiceClientConstants.ATTRIBUTE1_VALUE);
+      attributeNameValues.add(attributeNameValue);
+      attributeNameValue = new AttributeNameValue();
+      attributeNameValue.setAttributeName(RepositoryServiceClientConstants.ATTRIBUTE2_NAME);
+      attributeNameValue.setAttributeValueLong(RepositoryServiceClientConstants.ATTRIBUTE2_VALUE);
+      attributeNameValues.add(attributeNameValue);
+      attributeNameValue = new AttributeNameValue();
+      attributeNameValue.setAttributeName(RepositoryServiceClientConstants.ATTRIBUTE3_NAME);
+      attributeNameValue.setAttributeValueBoolean(RepositoryServiceClientConstants.ATTRIBUTE3_VALUE);
+      attributeNameValues.add(attributeNameValue);
+
+      ExtendedAssetInfo extendedAssetInfo = new ExtendedAssetInfo();
+      extendedAssetInfo.getAttribute().addAll(attributeNameValues);
+
+      UpdateAssetAttributesRequest updateAssetAttributesRequest = new UpdateAssetAttributesRequest();
+      updateAssetAttributesRequest.setAssetKey(assetKey);
+      updateAssetAttributesRequest.setExtendedAssetInfo(extendedAssetInfo);
+      updateAssetAttributesRequest.setPartialUpdate(true);
+      updateAssetAttributesRequest.setReplaceCurrent(true);
+
+      try {
+         UpdateAssetAttributesResponse updateAssetAttributesResponse = updateAssetAttributesConsumer.getProxy()
+                  .updateAssetAttributes(updateAssetAttributesRequest);
+         if (updateAssetAttributesResponse == null) {
+            throw new ServiceException(null, "Response object can not be null", null);
+         }
+         if (validateUpdateAssetAttributesResponse(updateAssetAttributesResponse, "positiveCase",
+                  updatedAttributesCount).equalsIgnoreCase("success")) {
+            return "PASSED";
+         } else {
+            return "FAILED";
+         }
+      } catch (ServiceException se) {
+         se.getMessage();
+         se.printStackTrace();
+         return "FAILED";
+      } catch (Exception e) {
+         e.printStackTrace();
+         return "FAILED";
+      }
+   }
+
+   public static String testUpdateAssetAttributes_invalidAsset() {
+      UpdateAssetAttributesConsumer updateAssetAttributesConsumer = new UpdateAssetAttributesConsumer();
+
+      Properties props = CommonUtil.loadPropertyFile("properties/common.properties");
+      Library library = new Library();
+      String libraryId = props.getProperty("libraryId");
+      String libraryName = props.getProperty("libraryName", "GovernedAssets");
+      library.setLibraryId(libraryId);
+      library.setLibraryName(libraryName);
+
+      AssetKey assetKey = new AssetKey();
+      assetKey.setAssetId(RepositoryServiceClientConstants.INVALID_ASSET_ID);
+      assetKey.setAssetName(RepositoryServiceClientConstants.INVALID_ASSET_NAME);
+      assetKey.setLibrary(library);
+
+      List<AttributeNameValue> attributeNameValues = new ArrayList<AttributeNameValue>();
+      AttributeNameValue attributeNameValue = new AttributeNameValue();
+      attributeNameValue.setAttributeName(RepositoryServiceClientConstants.ATTRIBUTE1_NAME);
+      attributeNameValue.setAttributeValueString(RepositoryServiceClientConstants.ATTRIBUTE1_VALUE);
+      attributeNameValues.add(attributeNameValue);
+
+      ExtendedAssetInfo extendedAssetInfo = new ExtendedAssetInfo();
+      extendedAssetInfo.getAttribute().addAll(attributeNameValues);
+
+      UpdateAssetAttributesRequest updateAssetAttributesRequest = new UpdateAssetAttributesRequest();
+      updateAssetAttributesRequest.setAssetKey(assetKey);
+      updateAssetAttributesRequest.setExtendedAssetInfo(extendedAssetInfo);
+      updateAssetAttributesRequest.setPartialUpdate(true);
+      updateAssetAttributesRequest.setReplaceCurrent(true);
+
+      try {
+         UpdateAssetAttributesResponse updateAssetAttributesResponse = updateAssetAttributesConsumer.getProxy()
+                  .updateAssetAttributes(updateAssetAttributesRequest);
+         if (updateAssetAttributesResponse == null) {
+            throw new ServiceException(null, "Response object can not be null", null);
+         }
+         if (validateUpdateAssetAttributesResponse(updateAssetAttributesResponse, "negativeCase", 0).equalsIgnoreCase(
+                  "success")) {
+            List<CommonErrorData> errorDatas = updateAssetAttributesResponse.getErrorMessage().getError();
+
+            System.out.println("The following list of errors occured");
+            for (CommonErrorData errorData : errorDatas) {
+               System.out.println("Error id: " + errorData.getErrorId() + " Error message: " + errorData.getMessage());
+            }
+            return "PASSED";
+         } else {
+            return "FAILED";
+         }
+      } catch (ServiceException se) {
+         se.getMessage();
+         se.printStackTrace();
+         return "FAILED";
+      } catch (Exception e) {
+         e.printStackTrace();
+         return "FAILED";
+      }
+   }
+
+   @Override
+   protected AsyncTurmericRSV1 getProxy() throws ServiceException {
+      if (m_proxy == null) {
+         String svcAdminName = RepositoryServiceClientConstants.SERVICE_NAME;
+         Service service = ServiceFactory.create(svcAdminName, RepositoryServiceClientConstants.SERVICE_NAME);
+         service.setSessionTransportHeader("X-TURMERIC-SECURITY-USERID", RepositoryServiceClientConstants.USER_ID);
+         service.setSessionTransportHeader("X-TURMERIC-SECURITY-PASSWORD",
+                  RepositoryServiceClientConstants.USER_PASSWORD);
+
+         m_proxy = service.getProxy();
+      }
+
+      return m_proxy;
+   }
+
+   private static String validateUpdateAssetAttributesResponse(
+            UpdateAssetAttributesResponse updateAssetAttributesResponse, String criteria, int updatedAttributesCount) {
+      if (criteria.equalsIgnoreCase("positiveCase")) {
+         if (updateAssetAttributesResponse.getAck().value().equalsIgnoreCase("success")) {
+            if (updateAssetAttributesResponse.getAttributeName().size() == updatedAttributesCount) {
+               return "success";
+            }
+         }
+         return "failure";
+      }
+      if (criteria.equalsIgnoreCase("negativeCase")) {
+         if (updateAssetAttributesResponse.getAck().value().equalsIgnoreCase("failure")) {
+            if (updateAssetAttributesResponse.getErrorMessage().getError().size() > 0) {
+               return "success";
+            }
+         }
+      }
+
+      return "failure";
+   }
+
 }

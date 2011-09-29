@@ -22,40 +22,37 @@ import org.ebayopensource.turmeric.repository.v1.services.AssetKey;
 import org.ebayopensource.turmeric.services.repositoryservice.operation.consumer.GetAssetDependenciesByGraphConsumer;
 
 public class GetAssetDependenciesByGraphTest {
-	public static AssetCreatorIntf assetCreator = AssetCreatorFactory.
-	getAssetCreator("resource/FunctionalDomainAsset.xml");
-	@BeforeClass
-	public static void oneTimeSetUp() throws AssetCreationException {	
-		assetCreator.createAsset();
-	}
-	private static final String s_success ="PASSED";
+   public static AssetCreatorIntf assetCreator = AssetCreatorFactory
+            .getAssetCreator("resource/FunctionalDomainAsset.xml");
 
-	/*
-	 * Method under test: getAssetDependenciesByGraph
-	 * Test Type        : Positive
-	 * Sub  Type        : validAsset
-	 */
-	@Test
-	public void testGetAssetDependenciesByGraph_positive() throws  AssetInfoNotFoundException, IdNotFoundException, ProcessingException {
-		AssetInfo assetInfo = assetCreator.getAssetAsAssetInfo("Common");
-		String status = GetAssetDependenciesByGraphConsumer.testGetAssetDependenciesByGraph_validAsset(assetInfo);
-		AssetKey assetKey = new AssetKey();
-		assetKey.setAssetId(assetInfo.getBasicAssetInfo().getAssetKey().getAssetId());
-		assetCreator.removeAsset(assetKey);
-		Assert.assertEquals(s_success, status);
-	}
-	
-	/*
-	 * Method under test: getAssetDependenciesByGraph
-	 * Test Type        : Negative
-	 * Sub  Type        : invalidAsset
-	 */
-	@Test
-	public void testGetAssetDependenciesByGraph_invalidAsset_negative() {
-		String status = GetAssetDependenciesByGraphConsumer.testGetAssetDependenciesByGraph_invalidAsset();
-		Assert.assertEquals(s_success, status);
-	}
+   @BeforeClass
+   public static void oneTimeSetUp() throws AssetCreationException {
+      assetCreator.createAsset();
+   }
 
+   private static final String s_success = "PASSED";
 
+   /*
+    * Method under test: getAssetDependenciesByGraph Test Type : Positive Sub Type : validAsset
+    */
+   @Test
+   public void testGetAssetDependenciesByGraph_positive() throws AssetInfoNotFoundException, IdNotFoundException,
+            ProcessingException {
+      AssetInfo assetInfo = assetCreator.getAssetAsAssetInfo("Common");
+      String status = GetAssetDependenciesByGraphConsumer.testGetAssetDependenciesByGraph_validAsset(assetInfo);
+      AssetKey assetKey = new AssetKey();
+      assetKey.setAssetId(assetInfo.getBasicAssetInfo().getAssetKey().getAssetId());
+      assetCreator.removeAsset(assetKey);
+      Assert.assertEquals(s_success, status);
+   }
+
+   /*
+    * Method under test: getAssetDependenciesByGraph Test Type : Negative Sub Type : invalidAsset
+    */
+   @Test
+   public void testGetAssetDependenciesByGraph_invalidAsset_negative() {
+      String status = GetAssetDependenciesByGraphConsumer.testGetAssetDependenciesByGraph_invalidAsset();
+      Assert.assertEquals(s_success, status);
+   }
 
 }

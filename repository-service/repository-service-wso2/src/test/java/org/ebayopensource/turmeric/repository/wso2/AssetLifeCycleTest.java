@@ -17,8 +17,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.wso2.carbon.registry.core.Registry;
 import org.wso2.carbon.registry.core.Resource;
-import org.wso2.carbon.registry.core.exceptions.RegistryException;
-
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
 import org.ebayopensource.turmeric.repository.v2.services.ApprovalInfo;
 import org.ebayopensource.turmeric.repository.v2.services.ApproveAssetRequest;
@@ -48,204 +46,201 @@ import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositorySer
  * 
  */
 public class AssetLifeCycleTest extends Wso2Base {
-    // First resource path must be the primary resource created by the test
-    // in order for the assumption checks to work correctly.
-    private static final String[] resources = {
+   // First resource path must be the primary resource created by the test
+   // in order for the assumption checks to work correctly.
+   private static final String[] resources = {
             "/_system/governance/trunk/services/http/www/domain/com/assets/AssetLifeCycleTest",
             "/_system/governance/trunk/endpoints/http/www/domain/com/ep-AssetLifeCycleTest", };
 
-    private static final String dstAsset = "/_system/governance/trunk/services/http/www/domain/com/marketplace/services/RepositoryMetadataService";
-   
-    private static final String assetName = "AssetLifeCycleTest";
-    private static final String assetDesc = "AssetLifeCycleTest description";
-    private static final String assetComment = "AssetLifeCycleTest comment";
-    private static final String libraryName = "http://www.domain.com/assets";
-    private static final String baseUrl = "http://www.domain.com/assets/";
+   private static final String assetName = "AssetLifeCycleTest";
+   private static final String assetDesc = "AssetLifeCycleTest description";
+   private static final String assetComment = "AssetLifeCycleTest comment";
+   private static final String libraryName = "http://www.domain.com/assets";
+   private static final String baseUrl = "http://www.domain.com/assets/";
 
-    @Before
-    @Override
-    public void setUp() throws Exception {
-    	super.setUp();
-    	
-        boolean exists = false;
-        try {
-            Registry wso2 = RSProviderUtil.getRegistry();
-            exists = wso2.resourceExists("/");
+   @Before
+   @Override
+   public void setUp() throws Exception {
+      super.setUp();
 
-            for (String resource : resources) {
-                if (wso2.resourceExists(resource)) {
-                    wso2.delete(resource);
-                }
+      boolean exists = false;
+      try {
+         Registry wso2 = RSProviderUtil.getRegistry();
+         exists = wso2.resourceExists("/");
+
+         for (String resource : resources) {
+            if (wso2.resourceExists(resource)) {
+               wso2.delete(resource);
             }
-        }
-        catch (Exception ex) {
-        }
+         }
+      } catch (Exception ex) {
+      }
 
-        assertTrue(exists);
-    }
+      assertTrue(exists);
+   }
 
-    private CreateCompleteAssetResponse createAsset() throws Exception {
-        AssetKey key = new AssetKey();
-        key.setAssetName(assetName);
+   private CreateCompleteAssetResponse createAsset() throws Exception {
+      AssetKey key = new AssetKey();
+      key.setAssetName(assetName);
 
-        BasicAssetInfo basicInfo = new BasicAssetInfo();
-        basicInfo.setAssetKey(key);
-        basicInfo.setAssetName(assetName);
-        basicInfo.setAssetDescription(assetDesc);
-        basicInfo.setAssetType("Service");
+      BasicAssetInfo basicInfo = new BasicAssetInfo();
+      basicInfo.setAssetKey(key);
+      basicInfo.setAssetName(assetName);
+      basicInfo.setAssetDescription(assetDesc);
+      basicInfo.setAssetType("Service");
 
-        ExtendedAssetInfo extendedInfo = new ExtendedAssetInfo();
-        List<AttributeNameValue> attrs = extendedInfo.getAttribute();
-        attrs.add(RSProviderUtil.newAttribute("namespace", libraryName));
+      ExtendedAssetInfo extendedInfo = new ExtendedAssetInfo();
+      List<AttributeNameValue> attrs = extendedInfo.getAttribute();
+      attrs.add(RSProviderUtil.newAttribute("namespace", libraryName));
 
-        AssetLifeCycleInfo lifeCycleInfo = new AssetLifeCycleInfo();
-        lifeCycleInfo.setDomainOwner("John Doe");
-        lifeCycleInfo.setDomainType("Technical Owner");
+      AssetLifeCycleInfo lifeCycleInfo = new AssetLifeCycleInfo();
+      lifeCycleInfo.setDomainOwner("John Doe");
+      lifeCycleInfo.setDomainType("Technical Owner");
 
-        AssetInfo assetInfo = new AssetInfo();
-        assetInfo.setBasicAssetInfo(basicInfo);
-        assetInfo.setExtendedAssetInfo(extendedInfo);
-        assetInfo.setAssetLifeCycleInfo(lifeCycleInfo);
+      AssetInfo assetInfo = new AssetInfo();
+      assetInfo.setBasicAssetInfo(basicInfo);
+      assetInfo.setExtendedAssetInfo(extendedInfo);
+      assetInfo.setAssetLifeCycleInfo(lifeCycleInfo);
 
-        Artifact endpoint = new Artifact();
-        endpoint.setArtifactName("ep-" + assetName);
-        endpoint.setArtifactCategory("endpoint");
-        endpoint.setArtifactValueType(ArtifactValueType.URL);
+      Artifact endpoint = new Artifact();
+      endpoint.setArtifactName("ep-" + assetName);
+      endpoint.setArtifactCategory("endpoint");
+      endpoint.setArtifactValueType(ArtifactValueType.URL);
 
-        String endpointUrl = baseUrl + assetName;
-        ArtifactInfo endpointInfo = new ArtifactInfo();
-        endpointInfo.setArtifact(endpoint);
-        endpointInfo.setArtifactDetail(endpointUrl.getBytes("UTF-8"));
-        endpointInfo.setContentType("application/vnd.wso2.endpoint");
+      String endpointUrl = baseUrl + assetName;
+      ArtifactInfo endpointInfo = new ArtifactInfo();
+      endpointInfo.setArtifact(endpoint);
+      endpointInfo.setArtifactDetail(endpointUrl.getBytes("UTF-8"));
+      endpointInfo.setContentType("application/vnd.wso2.endpoint");
 
-        Artifact wsdl = new Artifact();
-        wsdl.setArtifactName(assetName + ".wsdl");
-        wsdl.setArtifactCategory("wsdl");
-        wsdl.setArtifactValueType(ArtifactValueType.FILE);
+      Artifact wsdl = new Artifact();
+      wsdl.setArtifactName(assetName + ".wsdl");
+      wsdl.setArtifactCategory("wsdl");
+      wsdl.setArtifactValueType(ArtifactValueType.FILE);
 
-        ArtifactInfo wsdlInfo = new ArtifactInfo();
-        wsdlInfo.setArtifact(wsdl);
-        wsdlInfo.setArtifactDetail(loadFile("src/main/resources/META-INF/soa/services/wsdl/CreateServiceTest/CreateServiceTest.wsdl"));
-        wsdlInfo.setContentType("application/wsdl+xml");
+      ArtifactInfo wsdlInfo = new ArtifactInfo();
+      wsdlInfo.setArtifact(wsdl);
+      wsdlInfo.setArtifactDetail(loadFile("src/main/resources/META-INF/soa/services/wsdl/CreateServiceTest/CreateServiceTest.wsdl"));
+      wsdlInfo.setContentType("application/wsdl+xml");
 
-        List<ArtifactInfo> artifactList = assetInfo.getArtifactInfo();
-        artifactList.add(endpointInfo);
-        artifactList.add(wsdlInfo);
-        
-        FlattenedRelationship rel = new FlattenedRelationship();
-        List<Relation> relationList = rel.getRelatedAsset();
-//        relationList.add(
-//                        new Relation() {
-//                            {
-//                                this.setSourceAsset(RSProviderUtil.completeAssetKey(
-//                                                new AssetKey() {
-//                                                    {
-//                                                        this.setAssetId(resources[0]);
-//                                                    }
-//                                                }, null, null));
-//                                this.setTargetAsset(RSProviderUtil.completeAssetKey(
-//                                                new AssetKey() {
-//                                                    {
-//                                                        this.setAssetId(dstAsset);
-//                                                    }
-//                                                }, null, null));
-//                                this.setAssetRelationship("DependsOn");
-//                            }
-//                        });
-        assetInfo.setFlattenedRelationship(rel);
-        
-        CreateCompleteAssetRequest request = new CreateCompleteAssetRequest();
-        request.setAssetInfo(assetInfo);
+      List<ArtifactInfo> artifactList = assetInfo.getArtifactInfo();
+      artifactList.add(endpointInfo);
+      artifactList.add(wsdlInfo);
 
-        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
-        CreateCompleteAssetResponse response = provider.createCompleteAsset(request);
+      FlattenedRelationship rel = new FlattenedRelationship();
+      rel.getRelatedAsset();
+      // relationList.add(
+      // new Relation() {
+      // {
+      // this.setSourceAsset(RSProviderUtil.completeAssetKey(
+      // new AssetKey() {
+      // {
+      // this.setAssetId(resources[0]);
+      // }
+      // }, null, null));
+      // this.setTargetAsset(RSProviderUtil.completeAssetKey(
+      // new AssetKey() {
+      // {
+      // this.setAssetId(dstAsset);
+      // }
+      // }, null, null));
+      // this.setAssetRelationship("DependsOn");
+      // }
+      // });
+      assetInfo.setFlattenedRelationship(rel);
 
-        assertEquals(AckValue.SUCCESS, response.getAck());
-        assertEquals(null, response.getErrorMessage());
-        return response;
-    }
+      CreateCompleteAssetRequest request = new CreateCompleteAssetRequest();
+      request.setAssetInfo(assetInfo);
 
-    @Test
-    @Ignore
-    public void submitApproveTest() throws Exception {
-        Registry wso2 = RSProviderUtil.getRegistry();
-        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
+      RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
+      CreateCompleteAssetResponse response = provider.createCompleteAsset(request);
 
-        CreateCompleteAssetResponse responseCreate = createAsset();
-        
-        SubmitForPublishingRequest requestSubmit = new SubmitForPublishingRequest();
-        requestSubmit.setAssetKey(responseCreate.getAssetKey());
-        requestSubmit.setComment(assetComment);
-        
-        SubmitForPublishingResponse responseSubmit = provider.submitForPublishing(requestSubmit);
+      assertEquals(AckValue.SUCCESS, response.getAck());
+      assertEquals(null, response.getErrorMessage());
+      return response;
+   }
 
-        assertEquals(AckValue.SUCCESS, responseSubmit.getAck());
-        assertEquals(null, responseSubmit.getErrorMessage());
+   @Test
+   @Ignore
+   public void submitApproveTest() throws Exception {
+      Registry wso2 = RSProviderUtil.getRegistry();
+      RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
 
-        Resource asset = wso2.get(resources[0]);
+      CreateCompleteAssetResponse responseCreate = createAsset();
 
-        RSLifeCycle lc = RSLifeCycle.get(asset);
-        assertEquals("New", lc.getState());
-        assertEquals(true, lc.getItem(0).isValue());
-        
-        ApprovalInfo approvalInfo = new ApprovalInfo();
-        approvalInfo.setAssetId(responseCreate.getAssetKey().getAssetId());
-        approvalInfo.setComments(assetComment + " approved");
-        
-        ApproveAssetRequest requestApprove = new ApproveAssetRequest();
-        requestApprove.setApprovalInfo(approvalInfo);
-        
-        ApproveAssetResponse responseApprove = provider.approveAsset(requestApprove);
-        assertEquals(AckValue.SUCCESS, responseApprove.getAck());
-        assertEquals(null, responseApprove.getErrorMessage());
-        
-        asset = wso2.get(resources[0]);
+      SubmitForPublishingRequest requestSubmit = new SubmitForPublishingRequest();
+      requestSubmit.setAssetKey(responseCreate.getAssetKey());
+      requestSubmit.setComment(assetComment);
 
-        lc = RSLifeCycle.get(asset);
-        assertEquals("Proposed", lc.getState());
-        assertEquals(true, lc.getItem(0).isValue());
-        assertEquals(false, lc.getItem(1).isValue());
-    }
+      SubmitForPublishingResponse responseSubmit = provider.submitForPublishing(requestSubmit);
 
-    @Test
-    @Ignore
-    public void submitRejectTest() throws Exception {
-        Registry wso2 = RSProviderUtil.getRegistry();
+      assertEquals(AckValue.SUCCESS, responseSubmit.getAck());
+      assertEquals(null, responseSubmit.getErrorMessage());
 
-        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
+      Resource asset = wso2.get(resources[0]);
 
-        CreateCompleteAssetResponse responseCreate = createAsset();
-        
-        SubmitForPublishingRequest requestSubmit = new SubmitForPublishingRequest();
-        requestSubmit.setAssetKey(responseCreate.getAssetKey());
-        requestSubmit.setComment(assetComment);
-        
-        SubmitForPublishingResponse responseSubmit = provider.submitForPublishing(requestSubmit);
+      RSLifeCycle lc = RSLifeCycle.get(asset);
+      assertEquals("New", lc.getState());
+      assertEquals(true, lc.getItem(0).isValue());
 
-        assertEquals(AckValue.SUCCESS, responseSubmit.getAck());
-        assertEquals(null, responseSubmit.getErrorMessage());
+      ApprovalInfo approvalInfo = new ApprovalInfo();
+      approvalInfo.setAssetId(responseCreate.getAssetKey().getAssetId());
+      approvalInfo.setComments(assetComment + " approved");
 
-        Resource asset = wso2.get(resources[0]);
+      ApproveAssetRequest requestApprove = new ApproveAssetRequest();
+      requestApprove.setApprovalInfo(approvalInfo);
 
-        RSLifeCycle lc = RSLifeCycle.get(asset);
-        assertEquals("New", lc.getState());
-        assertEquals(true, lc.getItem(0).isValue());
-        
-        RejectionInfo rejectionInfo = new RejectionInfo();
-        rejectionInfo.setAssetId(responseCreate.getAssetKey().getAssetId());
-        rejectionInfo.setComments(assetComment + " rejected");
-        
-        RejectAssetRequest requestReject = new RejectAssetRequest();
-        requestReject.setRejectionInfo(rejectionInfo);
-        
-        RejectAssetResponse responseReject = provider.rejectAsset(requestReject);
-        assertEquals(AckValue.SUCCESS, responseReject.getAck());
-        assertEquals(null, responseReject.getErrorMessage());
-        
-        asset = wso2.get(resources[0]);
+      ApproveAssetResponse responseApprove = provider.approveAsset(requestApprove);
+      assertEquals(AckValue.SUCCESS, responseApprove.getAck());
+      assertEquals(null, responseApprove.getErrorMessage());
 
-        lc = RSLifeCycle.get(asset);
-        assertEquals("New", lc.getState());
-        assertEquals(false, lc.getItem(0).isValue());
-    }
+      asset = wso2.get(resources[0]);
+
+      lc = RSLifeCycle.get(asset);
+      assertEquals("Proposed", lc.getState());
+      assertEquals(true, lc.getItem(0).isValue());
+      assertEquals(false, lc.getItem(1).isValue());
+   }
+
+   @Test
+   @Ignore
+   public void submitRejectTest() throws Exception {
+      Registry wso2 = RSProviderUtil.getRegistry();
+
+      RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
+
+      CreateCompleteAssetResponse responseCreate = createAsset();
+
+      SubmitForPublishingRequest requestSubmit = new SubmitForPublishingRequest();
+      requestSubmit.setAssetKey(responseCreate.getAssetKey());
+      requestSubmit.setComment(assetComment);
+
+      SubmitForPublishingResponse responseSubmit = provider.submitForPublishing(requestSubmit);
+
+      assertEquals(AckValue.SUCCESS, responseSubmit.getAck());
+      assertEquals(null, responseSubmit.getErrorMessage());
+
+      Resource asset = wso2.get(resources[0]);
+
+      RSLifeCycle lc = RSLifeCycle.get(asset);
+      assertEquals("New", lc.getState());
+      assertEquals(true, lc.getItem(0).isValue());
+
+      RejectionInfo rejectionInfo = new RejectionInfo();
+      rejectionInfo.setAssetId(responseCreate.getAssetKey().getAssetId());
+      rejectionInfo.setComments(assetComment + " rejected");
+
+      RejectAssetRequest requestReject = new RejectAssetRequest();
+      requestReject.setRejectionInfo(rejectionInfo);
+
+      RejectAssetResponse responseReject = provider.rejectAsset(requestReject);
+      assertEquals(AckValue.SUCCESS, responseReject.getAck());
+      assertEquals(null, responseReject.getErrorMessage());
+
+      asset = wso2.get(resources[0]);
+
+      lc = RSLifeCycle.get(asset);
+      assertEquals("New", lc.getState());
+      assertEquals(false, lc.getItem(0).isValue());
+   }
 }

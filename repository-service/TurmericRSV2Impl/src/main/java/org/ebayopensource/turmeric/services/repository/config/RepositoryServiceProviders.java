@@ -13,7 +13,6 @@
 // Generated on: 2010.10.18 at 03:20:10 AM PDT 
 //
 
-
 package org.ebayopensource.turmeric.services.repository.config;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -24,11 +23,12 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
- * <p>Java class for RepositoryServiceProviders complex type.
+ * <p>
+ * Java class for RepositoryServiceProviders complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="RepositoryServiceProviders">
@@ -46,67 +46,58 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "RepositoryServiceProviders", propOrder = {
-    "name",
-    "providerImplClassName"
-})
+@XmlType(name = "RepositoryServiceProviders", propOrder = { "name", "providerImplClassName" })
 public class RepositoryServiceProviders {
 
-    @XmlElement(required = true)
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlSchemaType(name = "token")
-    protected String name;
-    @XmlElement(name = "provider-impl-class-name", required = true)
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlSchemaType(name = "token")
-    protected String providerImplClassName;
+   @XmlElement(required = true)
+   @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+   @XmlSchemaType(name = "token")
+   protected String name;
+   @XmlElement(name = "provider-impl-class-name", required = true)
+   @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+   @XmlSchemaType(name = "token")
+   protected String providerImplClassName;
 
-    /**
-     * Gets the value of the name property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getName() {
-        return name;
-    }
+   /**
+    * Gets the value of the name property.
+    * 
+    * @return possible object is {@link String }
+    * 
+    */
+   public String getName() {
+      return name;
+   }
 
-    /**
-     * Sets the value of the name property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setName(String value) {
-        this.name = value;
-    }
+   /**
+    * Sets the value of the name property.
+    * 
+    * @param value
+    *           allowed object is {@link String }
+    * 
+    */
+   public void setName(String value) {
+      this.name = value;
+   }
 
-    /**
-     * Gets the value of the providerImplClassName property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getProviderImplClassName() {
-        return providerImplClassName;
-    }
+   /**
+    * Gets the value of the providerImplClassName property.
+    * 
+    * @return possible object is {@link String }
+    * 
+    */
+   public String getProviderImplClassName() {
+      return providerImplClassName;
+   }
 
-    /**
-     * Sets the value of the providerImplClassName property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setProviderImplClassName(String value) {
-        this.providerImplClassName = value;
-    }
+   /**
+    * Sets the value of the providerImplClassName property.
+    * 
+    * @param value
+    *           allowed object is {@link String }
+    * 
+    */
+   public void setProviderImplClassName(String value) {
+      this.providerImplClassName = value;
+   }
 
 }

@@ -22,79 +22,73 @@ import org.ebayopensource.turmeric.services.repositoryservice.operation.consumer
 
 public class UpdateAssetDependenciesByGraphTest {
 
+   public static AssetCreatorIntf assetCreator = AssetCreatorFactory.getAssetCreator("resource/ServiceAsset.xml");
 
-	public static AssetCreatorIntf assetCreator = AssetCreatorFactory.
-	getAssetCreator("resource/ServiceAsset.xml");
-	@BeforeClass
-	public static void oneTimeSetUp() throws AssetCreationException {	
-		assetCreator.createAsset();
-	}
-	private static final String s_success ="PASSED";
-	/*
-	 * Method under test: updateAssetDependenciesByGraph
-	 * Test Type        : Positive
-	 * Sub  Type        : validInput
-	 */
-	@Test
-	public void testUpdateAssetDependenciesByGraph_validInput() throws Exception {
-		try
-		{
-		AssetInfo assetInfo1 = assetCreator.getAssetAsAssetInfo("Common");
-		AssetInfo assetInfo2 = assetCreator.getAssetAsAssetInfo("Common1");
-		AssetInfo assetInfo3 = assetCreator.getAssetAsAssetInfo("Common2");
-		AssetInfo assetInfo4 = assetCreator.getAssetAsAssetInfo("Common3");
-		String status = UpdateAssetDependenciesByGraphConsumer.testUpdateAssetDependenciesByGraph_validInput(assetInfo1,assetInfo2,assetInfo3,assetInfo4);
-		AssetKey assetKey = new AssetKey();
-		assetKey.setAssetId(assetInfo1.getBasicAssetInfo().getAssetKey().getAssetId());
-		assetCreator.removeAsset(assetKey);
-		assetKey.setAssetId(assetInfo2.getBasicAssetInfo().getAssetKey().getAssetId());
-		assetCreator.removeAsset(assetKey);
-		assetKey.setAssetId(assetInfo3.getBasicAssetInfo().getAssetKey().getAssetId());
-		assetCreator.removeAsset(assetKey);
-		assetKey.setAssetId(assetInfo4.getBasicAssetInfo().getAssetKey().getAssetId());
-		assetCreator.removeAsset(assetKey);
-		
-		Assert.assertEquals(s_success, status);
-		
-		}
-		catch(Exception e )
-		{
-		e.printStackTrace();
-		throw e;
-		}
-	}
-	/*
-	 * Method under test: updateAssetDependenciesByGraph
-	 * Test Type        : Negative
-	 * Sub  Type        : InvalidInput invalidAssetkey
-	 */
-	@Test
-	public void testUpdateAssetDependenciesByGraph_invalidInput() throws Exception {
-		try
-		{
-		AssetInfo assetInfo1 = assetCreator.getAssetAsAssetInfo("Common");
-		AssetInfo assetInfo2 = assetCreator.getAssetAsAssetInfo("Common1");
-		AssetInfo assetInfo3 = assetCreator.getAssetAsAssetInfo("Common2");
-		AssetInfo assetInfo4 = assetCreator.getAssetAsAssetInfo("Common3");
-		String status = UpdateAssetDependenciesByGraphConsumer.testUpdateAssetDependenciesByGraph_invalidInput("invalidAssetId",assetInfo1,assetInfo2,assetInfo3,assetInfo4);
-		AssetKey assetKey = new AssetKey();
-		assetKey.setAssetId(assetInfo1.getBasicAssetInfo().getAssetKey().getAssetId());
-		assetCreator.removeAsset(assetKey);
-		assetKey.setAssetId(assetInfo2.getBasicAssetInfo().getAssetKey().getAssetId());
-		assetCreator.removeAsset(assetKey);
-		assetKey.setAssetId(assetInfo3.getBasicAssetInfo().getAssetKey().getAssetId());
-		assetCreator.removeAsset(assetKey);
-		assetKey.setAssetId(assetInfo4.getBasicAssetInfo().getAssetKey().getAssetId());
-		assetCreator.removeAsset(assetKey);
-		
-		Assert.assertEquals(s_success, status);
-		
-		}
-		catch(Exception e )
-		{
-		e.printStackTrace();
-		throw e;
-		}
-	}
+   @BeforeClass
+   public static void oneTimeSetUp() throws AssetCreationException {
+      assetCreator.createAsset();
+   }
+
+   private static final String s_success = "PASSED";
+
+   /*
+    * Method under test: updateAssetDependenciesByGraph Test Type : Positive Sub Type : validInput
+    */
+   @Test
+   public void testUpdateAssetDependenciesByGraph_validInput() throws Exception {
+      try {
+         AssetInfo assetInfo1 = assetCreator.getAssetAsAssetInfo("Common");
+         AssetInfo assetInfo2 = assetCreator.getAssetAsAssetInfo("Common1");
+         AssetInfo assetInfo3 = assetCreator.getAssetAsAssetInfo("Common2");
+         AssetInfo assetInfo4 = assetCreator.getAssetAsAssetInfo("Common3");
+         String status = UpdateAssetDependenciesByGraphConsumer.testUpdateAssetDependenciesByGraph_validInput(
+                  assetInfo1, assetInfo2, assetInfo3, assetInfo4);
+         AssetKey assetKey = new AssetKey();
+         assetKey.setAssetId(assetInfo1.getBasicAssetInfo().getAssetKey().getAssetId());
+         assetCreator.removeAsset(assetKey);
+         assetKey.setAssetId(assetInfo2.getBasicAssetInfo().getAssetKey().getAssetId());
+         assetCreator.removeAsset(assetKey);
+         assetKey.setAssetId(assetInfo3.getBasicAssetInfo().getAssetKey().getAssetId());
+         assetCreator.removeAsset(assetKey);
+         assetKey.setAssetId(assetInfo4.getBasicAssetInfo().getAssetKey().getAssetId());
+         assetCreator.removeAsset(assetKey);
+
+         Assert.assertEquals(s_success, status);
+
+      } catch (Exception e) {
+         e.printStackTrace();
+         throw e;
+      }
+   }
+
+   /*
+    * Method under test: updateAssetDependenciesByGraph Test Type : Negative Sub Type : InvalidInput invalidAssetkey
+    */
+   @Test
+   public void testUpdateAssetDependenciesByGraph_invalidInput() throws Exception {
+      try {
+         AssetInfo assetInfo1 = assetCreator.getAssetAsAssetInfo("Common");
+         AssetInfo assetInfo2 = assetCreator.getAssetAsAssetInfo("Common1");
+         AssetInfo assetInfo3 = assetCreator.getAssetAsAssetInfo("Common2");
+         AssetInfo assetInfo4 = assetCreator.getAssetAsAssetInfo("Common3");
+         String status = UpdateAssetDependenciesByGraphConsumer.testUpdateAssetDependenciesByGraph_invalidInput(
+                  "invalidAssetId", assetInfo1, assetInfo2, assetInfo3, assetInfo4);
+         AssetKey assetKey = new AssetKey();
+         assetKey.setAssetId(assetInfo1.getBasicAssetInfo().getAssetKey().getAssetId());
+         assetCreator.removeAsset(assetKey);
+         assetKey.setAssetId(assetInfo2.getBasicAssetInfo().getAssetKey().getAssetId());
+         assetCreator.removeAsset(assetKey);
+         assetKey.setAssetId(assetInfo3.getBasicAssetInfo().getAssetKey().getAssetId());
+         assetCreator.removeAsset(assetKey);
+         assetKey.setAssetId(assetInfo4.getBasicAssetInfo().getAssetKey().getAssetId());
+         assetCreator.removeAsset(assetKey);
+
+         Assert.assertEquals(s_success, status);
+
+      } catch (Exception e) {
+         e.printStackTrace();
+         throw e;
+      }
+   }
 
 }

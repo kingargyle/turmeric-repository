@@ -17,33 +17,35 @@ import org.ebayopensource.turmeric.runtime.sif.service.Service;
 import org.ebayopensource.turmeric.runtime.sif.service.ServiceFactory;
 
 public class RepositoryServiceConsumer extends BaseRepositoryServiceConsumer {
-	
-	private AsyncTurmericRSV1 m_proxy;
-	
-	public AsyncTurmericRSV1 getProxy() throws ServiceException {
-    	if(m_proxy == null) {
-	        String svcAdminName = RepositoryServiceClientConstants.SERVICE_NAME;
-	        Service service = ServiceFactory.create(svcAdminName, RepositoryServiceClientConstants.SERVICE_NAME);
-	        service.setSessionTransportHeader("X-TURMERIC-SECURITY-USERID", RepositoryServiceClientConstants.USER_ID);
-	        service.setSessionTransportHeader("X-TURMERIC-SECURITY-PASSWORD", RepositoryServiceClientConstants.USER_PASSWORD);
-	        
-	        m_proxy = service.getProxy();
-    	} 	
-        
-	    return m_proxy;
-    }
-	
-	public AsyncTurmericRSV1 getProxy(String userId, String password) throws ServiceException {
-    	if(m_proxy == null) {
-	        String svcAdminName = RepositoryServiceClientConstants.SERVICE_NAME;
-	        Service service = ServiceFactory.create(svcAdminName, RepositoryServiceClientConstants.SERVICE_NAME);
-	        service.setSessionTransportHeader("X-TURMERIC-SECURITY-USERID", userId);
-	        service.setSessionTransportHeader("X-TURMERIC-SECURITY-PASSWORD", password);
-	        
-	        m_proxy = service.getProxy();
-    	} 	
-        
-	    return m_proxy;
-    }
+
+   private AsyncTurmericRSV1 m_proxy;
+
+   @Override
+   public AsyncTurmericRSV1 getProxy() throws ServiceException {
+      if (m_proxy == null) {
+         String svcAdminName = RepositoryServiceClientConstants.SERVICE_NAME;
+         Service service = ServiceFactory.create(svcAdminName, RepositoryServiceClientConstants.SERVICE_NAME);
+         service.setSessionTransportHeader("X-TURMERIC-SECURITY-USERID", RepositoryServiceClientConstants.USER_ID);
+         service.setSessionTransportHeader("X-TURMERIC-SECURITY-PASSWORD",
+                  RepositoryServiceClientConstants.USER_PASSWORD);
+
+         m_proxy = service.getProxy();
+      }
+
+      return m_proxy;
+   }
+
+   public AsyncTurmericRSV1 getProxy(String userId, String password) throws ServiceException {
+      if (m_proxy == null) {
+         String svcAdminName = RepositoryServiceClientConstants.SERVICE_NAME;
+         Service service = ServiceFactory.create(svcAdminName, RepositoryServiceClientConstants.SERVICE_NAME);
+         service.setSessionTransportHeader("X-TURMERIC-SECURITY-USERID", userId);
+         service.setSessionTransportHeader("X-TURMERIC-SECURITY-PASSWORD", password);
+
+         m_proxy = service.getProxy();
+      }
+
+      return m_proxy;
+   }
 
 }

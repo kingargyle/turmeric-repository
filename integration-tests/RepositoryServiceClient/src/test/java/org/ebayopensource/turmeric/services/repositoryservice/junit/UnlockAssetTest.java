@@ -17,59 +17,57 @@ import org.ebayopensource.turmeric.services.repositoryservice.operation.consumer
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-
 public class UnlockAssetTest {
-    private static final String s_success = "PASSED";
-    private static AssetInfo assetInfo;
+   private static final String s_success = "PASSED";
+   private static AssetInfo assetInfo;
 
-    @BeforeClass
-    public static void oneTimeSetUp() {
-        assetInfo = CommonUtil.createBasicAsset("Service", "Propose Service Template");
-    }
+   @BeforeClass
+   public static void oneTimeSetUp() {
+      assetInfo = CommonUtil.createBasicAsset("Service", "Propose Service Template");
+   }
 
-    /*
-     * Method under test: unlockAsset Test Type : Positive Sub Type : assetCurrentlyLocked
-     */
-    @Test
-    public void testUnlockAsset_assetCurrentlyLocked_positive() throws Exception {
-        try {
-            String status = UnlockAssetConsumer.testUnlockAsset_validAsset(assetInfo.getBasicAssetInfo().getAssetKey());
-            Assert.assertEquals(s_success, status);
-        }
-        catch (Exception e) {
-            TestCase.fail("Unexpected Exception Occured. Message : " + e.getMessage());
-            e.printStackTrace();
-            throw e;
-        }
+   /*
+    * Method under test: unlockAsset Test Type : Positive Sub Type : assetCurrentlyLocked
+    */
+   @Test
+   public void testUnlockAsset_assetCurrentlyLocked_positive() throws Exception {
+      try {
+         String status = UnlockAssetConsumer.testUnlockAsset_validAsset(assetInfo.getBasicAssetInfo().getAssetKey());
+         Assert.assertEquals(s_success, status);
+      } catch (Exception e) {
+         Assert.fail("Unexpected Exception Occured. Message : " + e.getMessage());
+         e.printStackTrace();
+         throw e;
+      }
 
-    }
+   }
 
-    /*
-     * Method under test: unlockAsset Test Type : Negative Sub Type : assetCurrentlyUnlocked
-     */
-//    @Test
-//    public void testUnlockAsset_assetCurrentlyUnlocked_negative() throws Exception {
-//        try {
-//            AssetInfo assetInfo = assetCreator.getAssetAsAssetInfo("Common");
-//            AssetKey assetKey = assetInfo.getBasicAssetInfo().getAssetKey();
-//            String status = UnlockAssetConsumer.testUnlockAsset_assetCurrentlyNotLocked(assetInfo);
-//            assetCreator.removeAsset(assetKey);
-//            Assert.assertEquals(s_success, status);
-//        }
-//        catch (Exception e) {
-//            e.printStackTrace();
-//            throw e;
-//        }
-//
-//    }
+   /*
+    * Method under test: unlockAsset Test Type : Negative Sub Type : assetCurrentlyUnlocked
+    */
+   // @Test
+   // public void testUnlockAsset_assetCurrentlyUnlocked_negative() throws Exception {
+   // try {
+   // AssetInfo assetInfo = assetCreator.getAssetAsAssetInfo("Common");
+   // AssetKey assetKey = assetInfo.getBasicAssetInfo().getAssetKey();
+   // String status = UnlockAssetConsumer.testUnlockAsset_assetCurrentlyNotLocked(assetInfo);
+   // assetCreator.removeAsset(assetKey);
+   // Assert.assertEquals(s_success, status);
+   // }
+   // catch (Exception e) {
+   // e.printStackTrace();
+   // throw e;
+   // }
+   //
+   // }
 
-    /*
-     * Method under test: unlockAsset Test Type : Negative Sub Type : invalidAsset
-     */
-    @Test
-    public void testUnlockAsset_invalidAsset_negative() {
-        String status = UnlockAssetConsumer.testUnlockAsset_invalidAsset();
-        Assert.assertEquals(s_success, status);
-    }
+   /*
+    * Method under test: unlockAsset Test Type : Negative Sub Type : invalidAsset
+    */
+   @Test
+   public void testUnlockAsset_invalidAsset_negative() {
+      String status = UnlockAssetConsumer.testUnlockAsset_invalidAsset();
+      Assert.assertEquals(s_success, status);
+   }
 
 }

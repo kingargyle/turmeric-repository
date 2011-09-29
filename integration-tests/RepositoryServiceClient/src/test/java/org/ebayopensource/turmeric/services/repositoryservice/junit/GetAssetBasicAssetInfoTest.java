@@ -17,52 +17,52 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-
 public class GetAssetBasicAssetInfoTest {
 
-    private static final String s_success = "PASSED";
-    private static AssetInfo assetInfo;
+   private static final String s_success = "PASSED";
+   private static AssetInfo assetInfo;
 
-    @BeforeClass
-    public static void oneTimeSetUp() {
-        assetInfo = CommonUtil.createBasicAsset("Service", "Propose Service Template");
-        
-    }
-    /*
-     * Method under test: getBasicAssetInfo Test Type : Positive Sub Type : validAsset
-     */
+   @BeforeClass
+   public static void oneTimeSetUp() {
+      assetInfo = CommonUtil.createBasicAsset("Service", "Propose Service Template");
 
-    @Test
-    public void testGetBasicAssetInfo_validAsset_positive() {
-        String status = GetBasicAssetInfoConsumer.testGetBasicAssetInfo_validAsset(assetInfo);
-        Assert.assertEquals(s_success, status);
-    }
+   }
 
-    /*
-     * Method under test: getBasicAssetInfo Test Type : Positive Sub Type : validAsset Long
-     * Description
-     */
+   /*
+    * Method under test: getBasicAssetInfo Test Type : Positive Sub Type : validAsset
+    */
 
-    @Test
-    public void testGetBasicAssetInfo_validAsset_longDescription_positive() {
-        String status = GetBasicAssetInfoConsumer
-                        .testGetBasicAssetInfo_validAsset_Long_Description(assetInfo.getBasicAssetInfo().getAssetKey());
-        Assert.assertEquals(s_success, status);
-    }
+   @Test
+   public void testGetBasicAssetInfo_validAsset_positive() {
+      String status = GetBasicAssetInfoConsumer.testGetBasicAssetInfo_validAsset(assetInfo);
+      Assert.assertEquals(s_success, status);
+   }
 
-    /*
-     * Method under test: getBasicAssetInfo Test Type : Negative Sub Type : invalidAsset
-     */
+   /*
+    * Method under test: getBasicAssetInfo Test Type : Positive Sub Type : validAsset Long Description
+    */
 
-    @Test
-    public void testGetBasicAssetInfo_invalidAsset_negative() {
-        String status = GetBasicAssetInfoConsumer.testGetBasicAssetInfo_invalidAsset(assetInfo.getBasicAssetInfo().getAssetKey());
-        Assert.assertEquals(s_success, status);
-    }
+   @Test
+   public void testGetBasicAssetInfo_validAsset_longDescription_positive() {
+      String status = GetBasicAssetInfoConsumer.testGetBasicAssetInfo_validAsset_Long_Description(assetInfo
+               .getBasicAssetInfo().getAssetKey());
+      Assert.assertEquals(s_success, status);
+   }
 
-    @AfterClass
-    public static void oneTimeTearDown() {
-        CommonUtil.removeAsset(assetInfo.getBasicAssetInfo().getAssetKey());
-    }
+   /*
+    * Method under test: getBasicAssetInfo Test Type : Negative Sub Type : invalidAsset
+    */
+
+   @Test
+   public void testGetBasicAssetInfo_invalidAsset_negative() {
+      String status = GetBasicAssetInfoConsumer.testGetBasicAssetInfo_invalidAsset(assetInfo.getBasicAssetInfo()
+               .getAssetKey());
+      Assert.assertEquals(s_success, status);
+   }
+
+   @AfterClass
+   public static void oneTimeTearDown() {
+      CommonUtil.removeAsset(assetInfo.getBasicAssetInfo().getAssetKey());
+   }
 
 }

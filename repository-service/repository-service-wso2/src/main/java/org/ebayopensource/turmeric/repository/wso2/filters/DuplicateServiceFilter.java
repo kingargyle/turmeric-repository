@@ -25,31 +25,31 @@ import org.ebayopensource.turmeric.repository.wso2.assets.AssetConstants;
  */
 public class DuplicateServiceFilter implements ServiceFilter {
 
-	private BasicAssetInfo basicInfo = null;
+   private BasicAssetInfo basicInfo = null;
 
-	/**
-	 * The DuplicateServiceFilter constructor.
-	 * 
-	 * @param bi
-	 *            The BasicAssetInfo used to check for duplicates.
-	 */
-	public DuplicateServiceFilter(BasicAssetInfo bi) {
-		basicInfo = bi;
-	}
+   /**
+    * The DuplicateServiceFilter constructor.
+    * 
+    * @param bi
+    *           The BasicAssetInfo used to check for duplicates.
+    */
+   public DuplicateServiceFilter(BasicAssetInfo bi) {
+      basicInfo = bi;
+   }
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @return true if the service is a duplicate.
-	 */
-	@Override
-	public boolean matches(Service service) throws GovernanceException {
-		QName qname = new QName(basicInfo.getNamespace(), basicInfo.getAssetName());
-		if (service.getQName().equals(qname) &&
-			service.getAttribute(AssetConstants.TURMERIC_VERSION).equals(basicInfo.getVersion())) {
-			return true;
-		}
-		return false;
-	}
+   /**
+    * {@inheritDoc}
+    * 
+    * @return true if the service is a duplicate.
+    */
+   @Override
+   public boolean matches(Service service) throws GovernanceException {
+      QName qname = new QName(basicInfo.getNamespace(), basicInfo.getAssetName());
+      if (service.getQName().equals(qname)
+               && service.getAttribute(AssetConstants.TURMERIC_VERSION).equals(basicInfo.getVersion())) {
+         return true;
+      }
+      return false;
+   }
 
 }

@@ -15,3 +15,4 @@
 
 @javax.xml.bind.annotation.XmlSchema(namespace = "http://www.ebayopensource.org/turmeric/services/repository/config", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
 package org.ebayopensource.turmeric.services.repository.config;
+

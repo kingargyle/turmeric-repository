@@ -20,34 +20,31 @@ import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
 import org.ebayopensource.turmeric.services.repositoryservice.operation.consumer.GetServiceConsumer;
 
 public class GetServiceTest {
-	public static AssetCreatorIntf assetCreator = AssetCreatorFactory.
-	getAssetCreator("resource/ServiceAsset.xml");
-@BeforeClass
-public static void oneTimeSetUp() throws AssetCreationException {	
-	assetCreator.createAsset();
-}
-private static final String s_success ="PASSED";
+   public static AssetCreatorIntf assetCreator = AssetCreatorFactory.getAssetCreator("resource/ServiceAsset.xml");
 
-	/*
-	 * Method under test: getService
-	 * Test Type        : Positive
-	 * Sub  Type        : validAsset
-	 */
-	@Test
-	public void testGetService_validAsset_positive()throws  AssetInfoNotFoundException, IdNotFoundException  {
-		AssetInfo assetInfo = assetCreator.getAssetAsAssetInfo("approvedserviceasset");
-		String status = GetServiceConsumer.testGetService_validAsset(assetInfo);
-		Assert.assertEquals(s_success, status);
-	}
-	
-	/*
-	 * Method under test: getService
-	 * Test Type        : Negative
-	 * Sub  Type        : invalidAsset
-	 */
-	@Test
-	public void testGetService_invalidAsset_negative() {
-		String status = GetServiceConsumer.testGetService_invalidAsset();
-		Assert.assertEquals(s_success, status);
-	}
+   @BeforeClass
+   public static void oneTimeSetUp() throws AssetCreationException {
+      assetCreator.createAsset();
+   }
+
+   private static final String s_success = "PASSED";
+
+   /*
+    * Method under test: getService Test Type : Positive Sub Type : validAsset
+    */
+   @Test
+   public void testGetService_validAsset_positive() throws AssetInfoNotFoundException, IdNotFoundException {
+      AssetInfo assetInfo = assetCreator.getAssetAsAssetInfo("approvedserviceasset");
+      String status = GetServiceConsumer.testGetService_validAsset(assetInfo);
+      Assert.assertEquals(s_success, status);
+   }
+
+   /*
+    * Method under test: getService Test Type : Negative Sub Type : invalidAsset
+    */
+   @Test
+   public void testGetService_invalidAsset_negative() {
+      String status = GetServiceConsumer.testGetService_invalidAsset();
+      Assert.assertEquals(s_success, status);
+   }
 }

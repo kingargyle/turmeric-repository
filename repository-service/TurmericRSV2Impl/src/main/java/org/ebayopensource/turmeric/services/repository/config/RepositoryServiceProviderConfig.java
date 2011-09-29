@@ -13,7 +13,6 @@
 // Generated on: 2010.10.18 at 03:20:10 AM PDT 
 //
 
-
 package org.ebayopensource.turmeric.services.repository.config;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -24,11 +23,12 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
- * <p>Java class for RepositoryServiceProviderConfig complex type.
+ * <p>
+ * Java class for RepositoryServiceProviderConfig complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="RepositoryServiceProviderConfig">
@@ -46,65 +46,56 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "RepositoryServiceProviderConfig", propOrder = {
-    "_default",
-    "providerConfigList"
-})
+@XmlType(name = "RepositoryServiceProviderConfig", propOrder = { "_default", "providerConfigList" })
 public class RepositoryServiceProviderConfig {
 
-    @XmlElement(name = "default", required = true)
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlSchemaType(name = "token")
-    protected String _default;
-    @XmlElement(name = "provider-config-list", required = true)
-    protected RepositoryServiceProviderList providerConfigList;
+   @XmlElement(name = "default", required = true)
+   @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+   @XmlSchemaType(name = "token")
+   protected String _default;
+   @XmlElement(name = "provider-config-list", required = true)
+   protected RepositoryServiceProviderList providerConfigList;
 
-    /**
-     * Gets the value of the default property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getDefault() {
-        return _default;
-    }
+   /**
+    * Gets the value of the default property.
+    * 
+    * @return possible object is {@link String }
+    * 
+    */
+   public String getDefault() {
+      return _default;
+   }
 
-    /**
-     * Sets the value of the default property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setDefault(String value) {
-        this._default = value;
-    }
+   /**
+    * Sets the value of the default property.
+    * 
+    * @param value
+    *           allowed object is {@link String }
+    * 
+    */
+   public void setDefault(String value) {
+      this._default = value;
+   }
 
-    /**
-     * Gets the value of the providerConfigList property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link RepositoryServiceProviderList }
-     *     
-     */
-    public RepositoryServiceProviderList getProviderConfigList() {
-        return providerConfigList;
-    }
+   /**
+    * Gets the value of the providerConfigList property.
+    * 
+    * @return possible object is {@link RepositoryServiceProviderList }
+    * 
+    */
+   public RepositoryServiceProviderList getProviderConfigList() {
+      return providerConfigList;
+   }
 
-    /**
-     * Sets the value of the providerConfigList property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link RepositoryServiceProviderList }
-     *     
-     */
-    public void setProviderConfigList(RepositoryServiceProviderList value) {
-        this.providerConfigList = value;
-    }
+   /**
+    * Sets the value of the providerConfigList property.
+    * 
+    * @param value
+    *           allowed object is {@link RepositoryServiceProviderList }
+    * 
+    */
+   public void setProviderConfigList(RepositoryServiceProviderList value) {
+      this.providerConfigList = value;
+   }
 
 }

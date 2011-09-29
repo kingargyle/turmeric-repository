@@ -20,199 +20,199 @@ import org.wso2.carbon.registry.core.Registry;
 
 /**
  * This represents a Service asset.
+ * 
  * @author dcarver
- *
+ * 
  */
 public class EndPointAsset implements Asset {
 
-	private BasicAssetInfo basicInfo = null;
-	private EndpointManager epManager = null;
-	private Endpoint endpoint = null;
-	
-	public EndPointAsset(BasicAssetInfo bi, Registry registry) {
-		this.basicInfo = bi;
-		epManager =  new EndpointManager(registry);
-	}
-	
-	@Override
-	public boolean isNamespaceRequired() {
-		return true;
-	}
+   private BasicAssetInfo basicInfo = null;
+   private EndpointManager epManager = null;
+   private Endpoint endpoint = null;
 
-	@Override
-	public boolean hasNamespace() {
-		return basicInfo.getNamespace() != null;
-	}
-	
-	@Override
-	public String getType() {
-		return basicInfo.getAssetType();
-	}
+   public EndPointAsset(BasicAssetInfo bi, Registry registry) {
+      this.basicInfo = bi;
+      epManager = new EndpointManager(registry);
+   }
 
-	@Override
-	public boolean createAsset() {
-		try {
-			endpoint = epManager.newEndpoint(basicInfo.getNamespace());
-			endpoint.setAttribute(AssetConstants.TURMERIC_NAME, basicInfo.getAssetName());
-			endpoint.setAttribute(AssetConstants.TURMERIC_DESCRIPTION,
-					basicInfo.getAssetDescription());
-			endpoint.setAttribute(AssetConstants.TURMERIC_VERSION, basicInfo.getVersion());
-			endpoint.setAttribute(AssetConstants.TURMERIC_NAMESPACE, basicInfo.getNamespace());
-			endpoint.setAttribute(AssetConstants.TURMERIC_OWNER, basicInfo.getGroupName());
-			endpoint.setAttribute(AssetConstants.TURMERIC_LOCK, "false");
-		} catch (GovernanceException e) {
-			return false;
-		}
-		return true;
-	}
-	
-	@Override
-	public boolean hasName() {
-		return basicInfo.getAssetName() != null && basicInfo.getAssetName().length() > 0;
-	}
-	
-	@Override
-	public boolean duplicatesAllowed() {
-		return false;
-	}
-	
-	@Override
-	public boolean hasDuplicates() {
-		Endpoint ep;
-		try {
-			ep = epManager.getEndpointByUrl(basicInfo.getNamespace());
+   @Override
+   public boolean isNamespaceRequired() {
+      return true;
+   }
 
-		} catch (GovernanceException e) {
-			return false;
-		}
-		return ep != null;
-	}
-	
-	@Override
-	public boolean addAsset() {
-		try {
-			epManager.addEndpoint(endpoint);
-		} catch (GovernanceException e) {
-			return false;
-		}
-		
-		if (basicInfo.getAssetKey() == null) {
-			basicInfo.setAssetKey(new AssetKey());
-		}
-		basicInfo.getAssetKey().setAssetId(endpoint.getId());
+   @Override
+   public boolean hasNamespace() {
+      return basicInfo.getNamespace() != null;
+   }
 
-		return true;
-	}
+   @Override
+   public String getType() {
+      return basicInfo.getAssetType();
+   }
 
-	@Override
-	public String getId() {
-		return endpoint.getId();
-	}
-	
-	@Override
-	public GovernanceArtifact addArtifact(ArtifactInfo artifact) {
-		return null;
-	}
+   @Override
+   public boolean createAsset() {
+      try {
+         endpoint = epManager.newEndpoint(basicInfo.getNamespace());
+         endpoint.setAttribute(AssetConstants.TURMERIC_NAME, basicInfo.getAssetName());
+         endpoint.setAttribute(AssetConstants.TURMERIC_DESCRIPTION, basicInfo.getAssetDescription());
+         endpoint.setAttribute(AssetConstants.TURMERIC_VERSION, basicInfo.getVersion());
+         endpoint.setAttribute(AssetConstants.TURMERIC_NAMESPACE, basicInfo.getNamespace());
+         endpoint.setAttribute(AssetConstants.TURMERIC_OWNER, basicInfo.getGroupName());
+         endpoint.setAttribute(AssetConstants.TURMERIC_LOCK, "false");
+      } catch (GovernanceException e) {
+         return false;
+      }
+      return true;
+   }
 
-	@Override
-	public GovernanceArtifact getGovernanceArtifact() {
-		return endpoint;
-	}
+   @Override
+   public boolean hasName() {
+      return basicInfo.getAssetName() != null && basicInfo.getAssetName().length() > 0;
+   }
 
-	@Override
-	public boolean exists() {
-		if (basicInfo.getAssetKey().getAssetId() != null) {
-			if (findByID() != null){
-				return true;
-			}
-		}
-		
-		Endpoint endpoint = findEndpoint();
-		return endpoint != null;
-	}
+   @Override
+   public boolean duplicatesAllowed() {
+      return false;
+   }
 
-	private Endpoint findByID() {
-		Endpoint ep = null;
-		try {
-			ep = epManager.getEndpoint(basicInfo.getAssetKey().getAssetId());
-		} catch (GovernanceException e) {
-		}
-		return ep;
-	}
+   @Override
+   public boolean hasDuplicates() {
+      Endpoint ep;
+      try {
+         ep = epManager.getEndpointByUrl(basicInfo.getNamespace());
 
-	@Override
-	public void findAsset() {
-		AssetKey assetKey = null;
-		if (basicInfo.getAssetKey() != null) {
-			assetKey = basicInfo.getAssetKey();
-		}
-		
-		if (hasAssetId(assetKey)) {
-			try {
-				EndpointManager manager = new EndpointManager(RSProviderUtil.getRegistry());
-				endpoint = manager.getEndpoint(assetKey.getAssetId());
-				return;
-			} catch (GovernanceException e) {
-			}
-		}
-		
-		endpoint = findEndpoint();
-	}
+      } catch (GovernanceException e) {
+         return false;
+      }
+      return ep != null;
+   }
 
-	private boolean hasAssetId(AssetKey assetKey) {
-		return assetKey != null && assetKey.getAssetId() != null;
-	}
+   @Override
+   public boolean addAsset() {
+      try {
+         epManager.addEndpoint(endpoint);
+      } catch (GovernanceException e) {
+         return false;
+      }
 
-	private Endpoint findEndpoint() {
-		Endpoint ep = null;
-		try {
-			ep = epManager.getEndpointByUrl(basicInfo.getNamespace());
-			if (ep != null) {
-				return ep; 
-			}
-		} catch (GovernanceException e) {
-		}
-		return ep;
-	}
+      if (basicInfo.getAssetKey() == null) {
+         basicInfo.setAssetKey(new AssetKey());
+      }
+      basicInfo.getAssetKey().setAssetId(endpoint.getId());
 
-	@Override
-	public void lockAsset() {
-		try {
-			endpoint.setAttribute(AssetConstants.TURMERIC_LOCK, "true");
-		} catch (GovernanceException e) {
-		}
-		
-	}
+      return true;
+   }
 
-	@Override
-	public void unlock() {
-		try {
-			endpoint.setAttribute(AssetConstants.TURMERIC_LOCK, "false");
-		} catch (GovernanceException e) {
-		}
-		
-	}
+   @Override
+   public String getId() {
+      return endpoint.getId();
+   }
 
-	@Override
-	public boolean isLocked() {
-		try {
-			String lock = endpoint.getAttribute(AssetConstants.TURMERIC_LOCK);
-			if (lock == null || lock.equals("false")) {
-				return false;
-			}
-		} catch (GovernanceException e) {
-		}
-		return true;
-	}
-	
-	@Override
-	public boolean save() {
-		try {
-			epManager.updateEndpoint(endpoint);
-		} catch (GovernanceException e) {
-			return false;
-		}
-		return true;
-	}
-	
+   @Override
+   public GovernanceArtifact addArtifact(ArtifactInfo artifact) {
+      return null;
+   }
+
+   @Override
+   public GovernanceArtifact getGovernanceArtifact() {
+      return endpoint;
+   }
+
+   @Override
+   public boolean exists() {
+      if (basicInfo.getAssetKey().getAssetId() != null) {
+         if (findByID() != null) {
+            return true;
+         }
+      }
+
+      Endpoint endpoint = findEndpoint();
+      return endpoint != null;
+   }
+
+   private Endpoint findByID() {
+      Endpoint ep = null;
+      try {
+         ep = epManager.getEndpoint(basicInfo.getAssetKey().getAssetId());
+      } catch (GovernanceException e) {
+      }
+      return ep;
+   }
+
+   @Override
+   public void findAsset() {
+      AssetKey assetKey = null;
+      if (basicInfo.getAssetKey() != null) {
+         assetKey = basicInfo.getAssetKey();
+      }
+
+      if (hasAssetId(assetKey)) {
+         try {
+            EndpointManager manager = new EndpointManager(RSProviderUtil.getRegistry());
+            endpoint = manager.getEndpoint(assetKey.getAssetId());
+            return;
+         } catch (GovernanceException e) {
+         }
+      }
+
+      endpoint = findEndpoint();
+   }
+
+   private boolean hasAssetId(AssetKey assetKey) {
+      return assetKey != null && assetKey.getAssetId() != null;
+   }
+
+   private Endpoint findEndpoint() {
+      Endpoint ep = null;
+      try {
+         ep = epManager.getEndpointByUrl(basicInfo.getNamespace());
+         if (ep != null) {
+            return ep;
+         }
+      } catch (GovernanceException e) {
+      }
+      return ep;
+   }
+
+   @Override
+   public void lockAsset() {
+      try {
+         endpoint.setAttribute(AssetConstants.TURMERIC_LOCK, "true");
+      } catch (GovernanceException e) {
+      }
+
+   }
+
+   @Override
+   public void unlock() {
+      try {
+         endpoint.setAttribute(AssetConstants.TURMERIC_LOCK, "false");
+      } catch (GovernanceException e) {
+      }
+
+   }
+
+   @Override
+   public boolean isLocked() {
+      try {
+         String lock = endpoint.getAttribute(AssetConstants.TURMERIC_LOCK);
+         if (lock == null || lock.equals("false")) {
+            return false;
+         }
+      } catch (GovernanceException e) {
+      }
+      return true;
+   }
+
+   @Override
+   public boolean save() {
+      try {
+         epManager.updateEndpoint(endpoint);
+      } catch (GovernanceException e) {
+         return false;
+      }
+      return true;
+   }
+
 }

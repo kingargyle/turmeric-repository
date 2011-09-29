@@ -9,7 +9,7 @@
 
 package org.ebayopensource.turmeric.repository.wso2;
 
-import static org.junit.Assert.* ;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -27,88 +27,86 @@ import org.ebayopensource.turmeric.repository.wso2.filters.FindServiceByNameAndN
 import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositoryServiceProvider;
 
 public class GetBasicAssetInfoTest extends Wso2Base {
-	
-	BasicAssetInfo basicInfo = null;
-    @Override
-	@Before
-    public void setUp() throws Exception {
-    	super.setUp();
-        boolean exists = false;
-        try {
-            exists = RSProviderUtil.getRegistry().resourceExists("/");
-        }
-        catch (Exception ex) {
-        }
 
-        assertTrue(exists);
-        try {
-            createRequiredAssetsInWso2();
-        }
-        catch (Exception ex) {
-            fail("failed creating neccesary assets in wso2 registry");
-        }
-        
-        basicInfo = new BasicAssetInfo();
-    	basicInfo.setNamespace("http://www.ebay.com/marketplace/services");
-    	basicInfo.setAssetName("RepositoryMetadataService");
-    	basicInfo.setAssetDescription("The service description");
-    	basicInfo.setVersion("2.0.0");
-    	basicInfo.setAssetType("Service");
-        
-    }
-    
-    
-    private String findAssetId() throws Exception {
-    	
-    	Registry registry = RSProviderUtil.getRegistry();
-    	ServiceManager serviceManager = new ServiceManager(registry);
-    	Service[] services = serviceManager.findServices(new FindServiceByNameAndNamespaceFilter(basicInfo));
-    	if (services.length > 1) {
-    		fail("More than one service was returned.");
-    	}
-    	return services[0].getId();
-    }
+   BasicAssetInfo basicInfo = null;
 
-    @Test
-    public void getAssetByAssetId() throws Exception {
+   @Override
+   @Before
+   public void setUp() throws Exception {
+      super.setUp();
+      boolean exists = false;
+      try {
+         exists = RSProviderUtil.getRegistry().resourceExists("/");
+      } catch (Exception ex) {
+      }
 
-    	String assetId = findAssetId();
-    	
-        AssetKey key = new AssetKey();
-        key.setAssetId(assetId);
-        key.setAssetName(basicInfo.getAssetName());
-        key.setType(basicInfo.getAssetType());
-        key.setVersion(basicInfo.getVersion());
-        
-        GetBasicAssetInfoRequest GetBasicAssetInfoRequest = new GetBasicAssetInfoRequest();
-        GetBasicAssetInfoRequest.setAssetKey(key);
+      assertTrue(exists);
+      try {
+         createRequiredAssetsInWso2();
+      } catch (Exception ex) {
+         fail("failed creating neccesary assets in wso2 registry");
+      }
 
-        GetBasicAssetInfoRequest request = new GetBasicAssetInfoRequest();
-        request.setAssetKey(key);
-        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
-        GetBasicAssetInfoResponse response = provider.getBasicAssetInfo(request);
+      basicInfo = new BasicAssetInfo();
+      basicInfo.setNamespace("http://www.ebay.com/marketplace/services");
+      basicInfo.setAssetName("RepositoryMetadataService");
+      basicInfo.setAssetDescription("The service description");
+      basicInfo.setVersion("2.0.0");
+      basicInfo.setAssetType("Service");
 
-        assertEquals(AckValue.SUCCESS, response.getAck());
-        assertEquals(null, response.getErrorMessage());
-    }
+   }
 
-    @Test
-    @Ignore
-    public void getNonServiceAssetByAssetId() throws Exception {
+   private String findAssetId() throws Exception {
 
-        AssetKey key = new AssetKey();
-        key.setAssetId("/_system/governance/trunk/testassets/libraryname/NonServiceAsset");
-        GetBasicAssetInfoRequest GetBasicAssetInfoRequest = new GetBasicAssetInfoRequest();
-        GetBasicAssetInfoRequest.setAssetKey(key);
+      Registry registry = RSProviderUtil.getRegistry();
+      ServiceManager serviceManager = new ServiceManager(registry);
+      Service[] services = serviceManager.findServices(new FindServiceByNameAndNamespaceFilter(basicInfo));
+      if (services.length > 1) {
+         fail("More than one service was returned.");
+      }
+      return services[0].getId();
+   }
 
-        GetBasicAssetInfoRequest request = new GetBasicAssetInfoRequest();
-        request.setAssetKey(key);
-        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
-        GetBasicAssetInfoResponse response = provider.getBasicAssetInfo(request);
+   @Test
+   public void getAssetByAssetId() throws Exception {
 
-        assertEquals(AckValue.SUCCESS, response.getAck());
-        assertEquals(null, response.getErrorMessage());
+      String assetId = findAssetId();
 
-        validateBasicAssetInfo(response.getBasicAssetInfo());
-    }
+      AssetKey key = new AssetKey();
+      key.setAssetId(assetId);
+      key.setAssetName(basicInfo.getAssetName());
+      key.setType(basicInfo.getAssetType());
+      key.setVersion(basicInfo.getVersion());
+
+      GetBasicAssetInfoRequest GetBasicAssetInfoRequest = new GetBasicAssetInfoRequest();
+      GetBasicAssetInfoRequest.setAssetKey(key);
+
+      GetBasicAssetInfoRequest request = new GetBasicAssetInfoRequest();
+      request.setAssetKey(key);
+      RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
+      GetBasicAssetInfoResponse response = provider.getBasicAssetInfo(request);
+
+      assertEquals(AckValue.SUCCESS, response.getAck());
+      assertEquals(null, response.getErrorMessage());
+   }
+
+   @Test
+   @Ignore
+   public void getNonServiceAssetByAssetId() throws Exception {
+
+      AssetKey key = new AssetKey();
+      key.setAssetId("/_system/governance/trunk/testassets/libraryname/NonServiceAsset");
+      GetBasicAssetInfoRequest GetBasicAssetInfoRequest = new GetBasicAssetInfoRequest();
+      GetBasicAssetInfoRequest.setAssetKey(key);
+
+      GetBasicAssetInfoRequest request = new GetBasicAssetInfoRequest();
+      request.setAssetKey(key);
+      RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
+      GetBasicAssetInfoResponse response = provider.getBasicAssetInfo(request);
+
+      assertEquals(AckValue.SUCCESS, response.getAck());
+      assertEquals(null, response.getErrorMessage());
+
+      validateBasicAssetInfo(response.getBasicAssetInfo());
+   }
 }

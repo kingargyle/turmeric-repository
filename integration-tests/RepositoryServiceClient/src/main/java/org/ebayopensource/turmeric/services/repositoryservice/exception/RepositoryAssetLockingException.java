@@ -8,27 +8,26 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.services.repositoryservice.exception;
 
-public class RepositoryAssetLockingException extends Exception 
-{
+public class RepositoryAssetLockingException extends Exception {
 
-	public RepositoryAssetLockingException() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+   public RepositoryAssetLockingException() {
+      super();
+      // TODO Auto-generated constructor stub
+   }
 
-	public RepositoryAssetLockingException(String message, Throwable cause) {
-		super(message, cause);
-		// TODO Auto-generated constructor stub
-	}
+   public RepositoryAssetLockingException(String message, Throwable cause) {
+      super(message, cause);
+      // TODO Auto-generated constructor stub
+   }
 
-	public RepositoryAssetLockingException(String message) {
-		super(message);
-		// TODO Auto-generated constructor stub
-	}
+   public RepositoryAssetLockingException(String message) {
+      super(message);
+      // TODO Auto-generated constructor stub
+   }
 
-	public RepositoryAssetLockingException(Throwable cause) {
-		super(cause);
-		// TODO Auto-generated constructor stub
-	}
-	
+   public RepositoryAssetLockingException(Throwable cause) {
+      super(cause);
+      // TODO Auto-generated constructor stub
+   }
+
 }

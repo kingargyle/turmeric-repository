@@ -8,28 +8,22 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.services.repositoryservice.exception;
 
-public class ListenerException extends Exception 
-{
+public class ListenerException extends Exception {
 
-	public ListenerException() 
-	{
-		super();
-	}
+   public ListenerException() {
+      super();
+   }
 
-	public ListenerException(String message, Throwable cause) 
-	{
-		super(message, cause);
-	}
+   public ListenerException(String message, Throwable cause) {
+      super(message, cause);
+   }
 
-	public ListenerException(String message) 
-	{
-		super(message);
-	}
+   public ListenerException(String message) {
+      super(message);
+   }
 
-	public ListenerException(Throwable cause) 
-	{
-		super(cause);
-	}
-	
+   public ListenerException(Throwable cause) {
+      super(cause);
+   }
 
 }

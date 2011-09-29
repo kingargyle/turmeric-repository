@@ -10,25 +10,25 @@ package org.ebayopensource.turmeric.services.repositoryservice.impl;
 
 public class ServiceProviderException extends Exception {
 
-	/**
+   /**
 	 * 
 	 */
-	private static final long serialVersionUID = 2623106841603558354L;
+   private static final long serialVersionUID = 2623106841603558354L;
 
-	public ServiceProviderException() {
-		
-	}
+   public ServiceProviderException() {
 
-	public ServiceProviderException(String message) {
-		super(message);
-	}
+   }
 
-	public ServiceProviderException(Throwable cause) {
-		super(cause);
-	}
+   public ServiceProviderException(String message) {
+      super(message);
+   }
 
-	public ServiceProviderException(String message, Throwable cause) {
-		super(message, cause);
-	}
+   public ServiceProviderException(Throwable cause) {
+      super(cause);
+   }
+
+   public ServiceProviderException(String message, Throwable cause) {
+      super(message, cause);
+   }
 
 }

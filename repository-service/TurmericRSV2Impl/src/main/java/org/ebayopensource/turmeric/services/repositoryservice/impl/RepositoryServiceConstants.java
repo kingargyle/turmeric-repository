@@ -9,8 +9,8 @@
 package org.ebayopensource.turmeric.services.repositoryservice.impl;
 
 public class RepositoryServiceConstants {
-	
-	public static final String s_providerConfigXml = "META-INF/config/RepositoryServiceProviderConfig.xml";
-	public static final String s_serviceProviderProperty = "META-INF/soa/services/config/RepositoryService/service_provider.properties";
-	public static final String s_providerPropKey = "preferred-provider";
+
+   public static final String s_providerConfigXml = "META-INF/config/RepositoryServiceProviderConfig.xml";
+   public static final String s_serviceProviderProperty = "META-INF/soa/services/config/RepositoryService/service_provider.properties";
+   public static final String s_providerPropKey = "preferred-provider";
 }

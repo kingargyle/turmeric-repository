@@ -26,81 +26,78 @@ import org.ebayopensource.turmeric.repository.wso2.filters.FindServiceByNameVers
 import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositoryServiceProvider;
 
 public class GetAssetInfoTest extends Wso2Base {
-    @Override
-	@Before
-    public void setUp() throws Exception {
-    	super.setUp();
-        boolean exists = false;
-        try {
-            exists = RSProviderUtil.getRegistry().resourceExists("/");
-        }
-        catch (Exception ex) {
-        }
+   @Override
+   @Before
+   public void setUp() throws Exception {
+      super.setUp();
+      boolean exists = false;
+      try {
+         exists = RSProviderUtil.getRegistry().resourceExists("/");
+      } catch (Exception ex) {
+      }
 
-        assertTrue(exists);
-        try {
-            createRequiredAssetsInWso2();
-        }
-        catch (Exception ex) {
-            fail("failed creating neccesary assets in wso2 registry");
-        }
-    }
+      assertTrue(exists);
+      try {
+         createRequiredAssetsInWso2();
+      } catch (Exception ex) {
+         fail("failed creating neccesary assets in wso2 registry");
+      }
+   }
 
-    @Test
-    public void getAssetByAssetNameVersion() throws Exception {
-        AssetKey key = new AssetKey();
-        key.setAssetName("RepositoryMetadataService");
-        key.setType("Service");
-        key.setVersion("2.0.0");
+   @Test
+   public void getAssetByAssetNameVersion() throws Exception {
+      AssetKey key = new AssetKey();
+      key.setAssetName("RepositoryMetadataService");
+      key.setType("Service");
+      key.setVersion("2.0.0");
 
-        GetAssetInfoRequest request = new GetAssetInfoRequest();
-        request.setAssetKey(key);
-        request.setAssetType("Service");
+      GetAssetInfoRequest request = new GetAssetInfoRequest();
+      request.setAssetKey(key);
+      request.setAssetType("Service");
 
-        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
-        GetAssetInfoResponse response = provider.getAssetInfo(request);
+      RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
+      GetAssetInfoResponse response = provider.getAssetInfo(request);
 
-        assertEquals(AckValue.SUCCESS, response.getAck());
-        assertEquals(null, response.getErrorMessage());
-    }
+      assertEquals(AckValue.SUCCESS, response.getAck());
+      assertEquals(null, response.getErrorMessage());
+   }
 
-    
-    private String findId() throws Exception {
-    	Registry registry = RSProviderUtil.getRegistry();
-    	ServiceManager manager = new ServiceManager(registry);
-    	BasicAssetInfo bi = new BasicAssetInfo();
-    	AssetKey key = new AssetKey();
-    	key.setAssetName("RepositoryMetadataService");
-    	key.setType("Service");
-    	key.setVersion("2.0.0");
-    	
-    	bi.setAssetKey(key);
-    	bi.setVersion(key.getVersion());
-    	bi.setAssetName(key.getAssetName());
-    	bi.setAssetType(key.getType());
-    	Service assets[] = manager.findServices(new FindServiceByNameVersionFilter(bi));
-    	
-    	if (assets.length == 0) {
-    		fail("Unable to locate asset, make sure it exists before the test runs.");
-    	}
-    	return assets[0].getId();
-    }
-    
-    @Test
-    public void getAssetByAssetId() throws Exception {
+   private String findId() throws Exception {
+      Registry registry = RSProviderUtil.getRegistry();
+      ServiceManager manager = new ServiceManager(registry);
+      BasicAssetInfo bi = new BasicAssetInfo();
+      AssetKey key = new AssetKey();
+      key.setAssetName("RepositoryMetadataService");
+      key.setType("Service");
+      key.setVersion("2.0.0");
 
-        AssetKey key = new AssetKey();
-        key.setAssetId(findId());
-        key.setType("Service");
-        GetAssetInfoRequest GetAssetInfoRequest = new GetAssetInfoRequest();
-        GetAssetInfoRequest.setAssetKey(key);
+      bi.setAssetKey(key);
+      bi.setVersion(key.getVersion());
+      bi.setAssetName(key.getAssetName());
+      bi.setAssetType(key.getType());
+      Service assets[] = manager.findServices(new FindServiceByNameVersionFilter(bi));
 
-        GetAssetInfoRequest request = new GetAssetInfoRequest();
-        request.setAssetKey(key);
-        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
-        GetAssetInfoResponse response = provider.getAssetInfo(request);
+      if (assets.length == 0) {
+         fail("Unable to locate asset, make sure it exists before the test runs.");
+      }
+      return assets[0].getId();
+   }
 
-        assertEquals(AckValue.SUCCESS, response.getAck());
-        assertEquals(null, response.getErrorMessage());
-    }
+   @Test
+   public void getAssetByAssetId() throws Exception {
+
+      AssetKey key = new AssetKey();
+      key.setAssetId(findId());
+      key.setType("Service");
+      GetAssetInfoRequest GetAssetInfoRequest = new GetAssetInfoRequest();
+      GetAssetInfoRequest.setAssetKey(key);
+
+      GetAssetInfoRequest request = new GetAssetInfoRequest();
+      request.setAssetKey(key);
+      RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
+      GetAssetInfoResponse response = provider.getAssetInfo(request);
+
+      assertEquals(AckValue.SUCCESS, response.getAck());
+      assertEquals(null, response.getErrorMessage());
+   }
 }

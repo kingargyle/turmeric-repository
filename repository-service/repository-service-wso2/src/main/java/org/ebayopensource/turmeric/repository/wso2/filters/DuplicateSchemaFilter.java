@@ -24,30 +24,31 @@ import org.ebayopensource.turmeric.repository.v2.services.*;
  */
 public class DuplicateSchemaFilter implements SchemaFilter {
 
-	private ArtifactInfo artifactInfo = null;
+   private ArtifactInfo artifactInfo = null;
 
-	/**
-	 * The DuplicateServiceFilter constructor.
-	 * 
-	 * @param bi
-	 *            The BasicAssetInfo used to check for duplicates.
-	 */
-	public DuplicateSchemaFilter(ArtifactInfo ai) {
-		artifactInfo = ai;
-	}
+   /**
+    * The DuplicateServiceFilter constructor.
+    * 
+    * @param bi
+    *           The BasicAssetInfo used to check for duplicates.
+    */
+   public DuplicateSchemaFilter(ArtifactInfo ai) {
+      artifactInfo = ai;
+   }
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @return true if the service is a duplicate.
-	 */
-	@Override
-	public boolean matches(Schema schema) throws GovernanceException {
-		QName qname = new QName(artifactInfo.getArtifact().getTargetNamespace(), artifactInfo.getArtifact().getArtifactName());
-		if (schema.getQName().equals(qname)) {
-			return true;
-		}
-		return false;
-	}
+   /**
+    * {@inheritDoc}
+    * 
+    * @return true if the service is a duplicate.
+    */
+   @Override
+   public boolean matches(Schema schema) throws GovernanceException {
+      QName qname = new QName(artifactInfo.getArtifact().getTargetNamespace(), artifactInfo.getArtifact()
+               .getArtifactName());
+      if (schema.getQName().equals(qname)) {
+         return true;
+      }
+      return false;
+   }
 
 }

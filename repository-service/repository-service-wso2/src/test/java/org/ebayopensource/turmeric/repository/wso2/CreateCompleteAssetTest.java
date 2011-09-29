@@ -29,130 +29,114 @@ import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositorySer
  * 
  */
 public class CreateCompleteAssetTest extends Wso2Base {
-    // First resource path must be the primary resource created by the test
-    // in order for the assumption checks to work correctly.
-    private static final String[] resources = {
+   // First resource path must be the primary resource created by the test
+   // in order for the assumption checks to work correctly.
+   private static final String[] resources = {
             "/_system/governance/trunk/services/com/domain/www/assets/CreateCompleteAssetTest",
             "/_system/governance/trunk/endpoints/com/domain/www/ep-CreateCompleteAssetTest", };
 
-    private static final String assetName = "CreateCompleteAssetTest";
-    private static final String assetDesc = "CreateCompleteAssetTest description";
-    private static final String namespace = "http://www.domain.com/assets";
-    private static final String baseUrl = "http://www.domain.com/assets/";
-    private static final String stringProperty = "a test value";
-    private static final Long longProperty = new Long(1234567l);
-    private static final Boolean booleanProperty = Boolean.FALSE;
+   private static final String assetName = "CreateCompleteAssetTest";
+   private static final String assetDesc = "CreateCompleteAssetTest description";
+   private static final String namespace = "http://www.domain.com/assets";
+   private static final String baseUrl = "http://www.domain.com/assets/";
+   private static final String stringProperty = "a test value";
+   private static final Long longProperty = new Long(1234567l);
+   private static final Boolean booleanProperty = Boolean.FALSE;
 
-    private CreateCompleteAssetResponse createCompleteAsset() throws Exception {
-        AssetKey key = new AssetKey();
-        key.setAssetName(assetName);
+   private CreateCompleteAssetResponse createCompleteAsset() throws Exception {
+      AssetKey key = new AssetKey();
+      key.setAssetName(assetName);
 
-        AssetInfo assetInfo = new AssetInfo();
-        BasicAssetInfo basicInfo = new BasicAssetInfo();
-        basicInfo.setAssetKey(key);
-        basicInfo.setAssetName(assetName);
-        basicInfo.setAssetDescription(assetDesc);
-        basicInfo.setAssetType("Service");
-        basicInfo.setVersion("1.0.0");
-        basicInfo.setNamespace(namespace);
-        
-        assetInfo.setBasicAssetInfo(basicInfo);
+      AssetInfo assetInfo = new AssetInfo();
+      BasicAssetInfo basicInfo = new BasicAssetInfo();
+      basicInfo.setAssetKey(key);
+      basicInfo.setAssetName(assetName);
+      basicInfo.setAssetDescription(assetDesc);
+      basicInfo.setAssetType("Service");
+      basicInfo.setVersion("1.0.0");
+      basicInfo.setNamespace(namespace);
 
-        ExtendedAssetInfo extendedInfo = new ExtendedAssetInfo();
-        List<AttributeNameValue> attrs = extendedInfo.getAttribute();
-        attrs.add(RSProviderUtil.newAttribute("stringProperty", stringProperty));
-        attrs.add(RSProviderUtil.newAttribute("longProperty", longProperty.longValue()));
-        attrs.add(RSProviderUtil.newAttribute("booleanProperty", booleanProperty.booleanValue()));
-        assetInfo.setExtendedAssetInfo(extendedInfo);
-        
-        AssetLifeCycleInfo lifeCycleInfo = new AssetLifeCycleInfo();
-        lifeCycleInfo.setDomainOwner("John Doe");
-        lifeCycleInfo.setDomainType("Technical Owner");
+      assetInfo.setBasicAssetInfo(basicInfo);
 
-        assetInfo.setAssetLifeCycleInfo(lifeCycleInfo);
+      ExtendedAssetInfo extendedInfo = new ExtendedAssetInfo();
+      List<AttributeNameValue> attrs = extendedInfo.getAttribute();
+      attrs.add(RSProviderUtil.newAttribute("stringProperty", stringProperty));
+      attrs.add(RSProviderUtil.newAttribute("longProperty", longProperty.longValue()));
+      attrs.add(RSProviderUtil.newAttribute("booleanProperty", booleanProperty.booleanValue()));
+      assetInfo.setExtendedAssetInfo(extendedInfo);
 
-        Artifact endpoint = new Artifact();
-        endpoint.setArtifactName("ep-" + assetName);
-        endpoint.setArtifactCategory("endpoint");
-        endpoint.setArtifactValueType(ArtifactValueType.URL);
+      AssetLifeCycleInfo lifeCycleInfo = new AssetLifeCycleInfo();
+      lifeCycleInfo.setDomainOwner("John Doe");
+      lifeCycleInfo.setDomainType("Technical Owner");
 
-        String endpointUrl = baseUrl + assetName;
-        ArtifactInfo endpointInfo = new ArtifactInfo();
-        endpointInfo.setArtifact(endpoint);
-        endpointInfo.setArtifactDetail(endpointUrl.getBytes("UTF-8"));
-        endpointInfo.setContentType(GovernanceConstants.ENDPOINT_MEDIA_TYPE);
+      assetInfo.setAssetLifeCycleInfo(lifeCycleInfo);
 
-        Artifact wsdl = new Artifact();
-        wsdl.setArtifactName(assetName + ".wsdl");
-        wsdl.setArtifactCategory("wsdl");
-        wsdl.setArtifactValueType(ArtifactValueType.FILE);
+      Artifact endpoint = new Artifact();
+      endpoint.setArtifactName("ep-" + assetName);
+      endpoint.setArtifactCategory("endpoint");
+      endpoint.setArtifactValueType(ArtifactValueType.URL);
 
-        ArtifactInfo wsdlInfo = new ArtifactInfo();
-        wsdlInfo.setArtifact(wsdl);
-        wsdlInfo.setArtifactDetail(loadFile("src/main/resources/META-INF/soa/services/wsdl/CreateServiceTest/CreateServiceTest.wsdl"));
-        wsdlInfo.setContentType(GovernanceConstants.WSDL_MEDIA_TYPE);
+      String endpointUrl = baseUrl + assetName;
+      ArtifactInfo endpointInfo = new ArtifactInfo();
+      endpointInfo.setArtifact(endpoint);
+      endpointInfo.setArtifactDetail(endpointUrl.getBytes("UTF-8"));
+      endpointInfo.setContentType(GovernanceConstants.ENDPOINT_MEDIA_TYPE);
 
-        List<ArtifactInfo> artifactList = assetInfo.getArtifactInfo();
-        artifactList.add(endpointInfo);
-        artifactList.add(wsdlInfo);
-        
- /*       FlattenedRelationship rel = new FlattenedRelationship();
-        List<Relation> relationList = rel.getRelatedAsset();
-        relationList.add(
-                        new Relation() {
-                            {
-                               this.setSourceAsset(RSProviderUtil.completeAssetKey(
-                                               new AssetKey() {
-                                                    {
-                                                        this.setAssetId(resources[0]);
-                                                    }
-                                                }, null, null));
-                                this.setTargetAsset(RSProviderUtil.completeAssetKey(
-                                                new AssetKey() {
-                                                    {
-                                                        this.setAssetId(dstAsset);
-                                                    }
-                                                }, null, null));
-                                this.setAssetRelationship("DependsOn");
-                            }
-                        });
-        assetInfo.setFlattenedRelationship(rel);
- */
-        
-        CreateCompleteAssetRequest request = new CreateCompleteAssetRequest();
-        request.setAssetInfo(assetInfo);
+      Artifact wsdl = new Artifact();
+      wsdl.setArtifactName(assetName + ".wsdl");
+      wsdl.setArtifactCategory("wsdl");
+      wsdl.setArtifactValueType(ArtifactValueType.FILE);
 
-        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
-        return provider.createCompleteAsset(request);
-    }
+      ArtifactInfo wsdlInfo = new ArtifactInfo();
+      wsdlInfo.setArtifact(wsdl);
+      wsdlInfo.setArtifactDetail(loadFile("src/main/resources/META-INF/soa/services/wsdl/CreateServiceTest/CreateServiceTest.wsdl"));
+      wsdlInfo.setContentType(GovernanceConstants.WSDL_MEDIA_TYPE);
 
-    @Test
-    public void createTest() throws Exception {
-        boolean clean = false;
-        Registry wso2 = RSProviderUtil.getRegistry();
-        try {
-            clean = !wso2.resourceExists(resources[0]);
-        }
-        catch (RegistryException e) {
-        }
-        assertTrue(clean);
+      List<ArtifactInfo> artifactList = assetInfo.getArtifactInfo();
+      artifactList.add(endpointInfo);
+      artifactList.add(wsdlInfo);
 
-        CreateCompleteAssetResponse response = createCompleteAsset();
+      /*
+       * FlattenedRelationship rel = new FlattenedRelationship(); List<Relation> relationList = rel.getRelatedAsset();
+       * relationList.add( new Relation() { { this.setSourceAsset(RSProviderUtil.completeAssetKey( new AssetKey() { {
+       * this.setAssetId(resources[0]); } }, null, null)); this.setTargetAsset(RSProviderUtil.completeAssetKey( new
+       * AssetKey() { { this.setAssetId(dstAsset); } }, null, null)); this.setAssetRelationship("DependsOn"); } });
+       * assetInfo.setFlattenedRelationship(rel);
+       */
 
-        assertEquals(AckValue.SUCCESS, response.getAck());
-        assertEquals(null, response.getErrorMessage());
-        
-        assertNotNull(response.getAssetKey().getAssetId());
-        String id = response.getAssetKey().getAssetId();
-        ServiceManager serviceManager = new ServiceManager(wso2);
-        Service service = serviceManager.getService(id);
-        assertNotNull(service);
-        assertTrue("No WSDLs were found as attachments", service.getAttachedWsdls().length > 0);
-    }
+      CreateCompleteAssetRequest request = new CreateCompleteAssetRequest();
+      request.setAssetInfo(assetInfo);
 
-    @Test
-    public void createDuplicateTest() throws Exception {
-        CreateCompleteAssetResponse response = createCompleteAsset();
-        assertEquals(AckValue.FAILURE, response.getAck());
-    }
+      RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
+      return provider.createCompleteAsset(request);
+   }
+
+   @Test
+   public void createTest() throws Exception {
+      boolean clean = false;
+      Registry wso2 = RSProviderUtil.getRegistry();
+      try {
+         clean = !wso2.resourceExists(resources[0]);
+      } catch (RegistryException e) {
+      }
+      assertTrue(clean);
+
+      CreateCompleteAssetResponse response = createCompleteAsset();
+
+      assertEquals(AckValue.SUCCESS, response.getAck());
+      assertEquals(null, response.getErrorMessage());
+
+      assertNotNull(response.getAssetKey().getAssetId());
+      String id = response.getAssetKey().getAssetId();
+      ServiceManager serviceManager = new ServiceManager(wso2);
+      Service service = serviceManager.getService(id);
+      assertNotNull(service);
+      assertTrue("No WSDLs were found as attachments", service.getAttachedWsdls().length > 0);
+   }
+
+   @Test
+   public void createDuplicateTest() throws Exception {
+      CreateCompleteAssetResponse response = createCompleteAsset();
+      assertEquals(AckValue.FAILURE, response.getAck());
+   }
 }

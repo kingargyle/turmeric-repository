@@ -18,106 +18,106 @@ import org.wso2.carbon.governance.api.common.dataobjects.GovernanceArtifact;
  * A Null Object implementation for an Asset.
  * 
  * @author dcarver
- *
+ * 
  */
 public class NullAsset implements Asset {
 
-	@Override
-	public boolean isNamespaceRequired() {
-		return false;
-	}
+   @Override
+   public boolean isNamespaceRequired() {
+      return false;
+   }
 
-	@Override
-	public boolean hasNamespace() {
-		return false;
-	}
+   @Override
+   public boolean hasNamespace() {
+      return false;
+   }
 
-	@Override
-	public String getType() {
-		return "NULL";
-	}
+   @Override
+   public String getType() {
+      return "NULL";
+   }
 
-	@Override
-	public boolean hasName() {
-		return false;
-	}
+   @Override
+   public boolean hasName() {
+      return false;
+   }
 
-	@Override
-	public boolean duplicatesAllowed() {
-		return false;
-	}
+   @Override
+   public boolean duplicatesAllowed() {
+      return false;
+   }
 
-	@Override
-	public boolean hasDuplicates() {
-		return false;
-	}
+   @Override
+   public boolean hasDuplicates() {
+      return false;
+   }
 
-	@Override
-	public boolean createAsset() {
-		return true;
-	}
+   @Override
+   public boolean createAsset() {
+      return true;
+   }
 
-	@Override
-	public boolean addAsset() {
-		return true;
-	}
+   @Override
+   public boolean addAsset() {
+      return true;
+   }
 
-	@Override
-	public String getId() {
-		return UUID.randomUUID().toString();
-	}
+   @Override
+   public String getId() {
+      return UUID.randomUUID().toString();
+   }
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * Always returns null.
-	 */
-	@Override
-	public GovernanceArtifact addArtifact(ArtifactInfo artifact) {
-		return null;
-	}
+   /**
+    * {@inheritDoc}
+    * 
+    * Always returns null.
+    */
+   @Override
+   public GovernanceArtifact addArtifact(ArtifactInfo artifact) {
+      return null;
+   }
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * Always returns null.
-	 */
-	@Override
-	public GovernanceArtifact getGovernanceArtifact() {
-		return null;
-	}
+   /**
+    * {@inheritDoc}
+    * 
+    * Always returns null.
+    */
+   @Override
+   public GovernanceArtifact getGovernanceArtifact() {
+      return null;
+   }
 
-	@Override
-	public boolean exists() {
-		return false;
-	}
+   @Override
+   public boolean exists() {
+      return false;
+   }
 
-	/**
-	 * We will always return a Null for governance artifact.
-	 */
-	@Override
-	public void findAsset() {
-		
-	}
+   /**
+    * We will always return a Null for governance artifact.
+    */
+   @Override
+   public void findAsset() {
 
-	@Override
-	public void lockAsset() {
-		
-	}
+   }
 
-	@Override
-	public void unlock() {
-		
-	}
+   @Override
+   public void lockAsset() {
 
-	@Override
-	public boolean isLocked() {
-		return false;
-	}
+   }
 
-	@Override
-	public boolean save() {
-		return true;
-	}
+   @Override
+   public void unlock() {
+
+   }
+
+   @Override
+   public boolean isLocked() {
+      return false;
+   }
+
+   @Override
+   public boolean save() {
+      return true;
+   }
 
 }

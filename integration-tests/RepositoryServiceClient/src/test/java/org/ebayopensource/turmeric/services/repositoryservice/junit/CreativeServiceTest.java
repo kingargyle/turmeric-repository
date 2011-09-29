@@ -19,37 +19,36 @@ import org.ebayopensource.turmeric.assetcreation.exception.AssetCreationExceptio
 import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
 import org.ebayopensource.turmeric.repository.v1.services.AssetKey;
 import org.ebayopensource.turmeric.services.repositoryservice.operation.consumer.CreateServiceConsumer;
-public class CreativeServiceTest {
-	public static AssetCreatorIntf assetCreator = AssetCreatorFactory.
-	getAssetCreator("resource/ServiceAsset.xml");
-	@BeforeClass
-	public static void oneTimeSetUp() throws AssetCreationException {	
-		assetCreator.createAsset();
-	}
-	private static final String s_success ="PASSED";
-	/*
-	 * Method under test: updateCompleteAsset
-	 * Test Type        : Positive
-	 * Sub  Type        : validInput
-	 */
-	@Test
-	public void testUpdateCompleteAsset_validInput() {
-		try
-		{
-			AssetInfo assetInfo1 = assetCreator.getAssetAsAssetInfo("Common");
-			AssetInfo assetInfo2 = assetCreator.getAssetAsAssetInfo("Common1");
-			String status = CreateServiceConsumer.testCreateService_validInput("withAllOptionalInputParams",assetInfo1,assetInfo2);
-			AssetKey assetKey = new AssetKey();
-			assetKey.setAssetId(assetInfo1.getBasicAssetInfo().getAssetKey().getAssetId());
-			assetCreator.removeAsset(assetKey);
-			assetKey.setAssetId(assetInfo2.getBasicAssetInfo().getAssetKey().getAssetId());
-			assetCreator.removeAsset(assetKey);
-			Assert.assertEquals(s_success, status);
-		}
-		catch(Exception e )
-		{
-		e.printStackTrace();
-		}
 
-}
+public class CreativeServiceTest {
+   public static AssetCreatorIntf assetCreator = AssetCreatorFactory.getAssetCreator("resource/ServiceAsset.xml");
+
+   @BeforeClass
+   public static void oneTimeSetUp() throws AssetCreationException {
+      assetCreator.createAsset();
+   }
+
+   private static final String s_success = "PASSED";
+
+   /*
+    * Method under test: updateCompleteAsset Test Type : Positive Sub Type : validInput
+    */
+   @Test
+   public void testUpdateCompleteAsset_validInput() {
+      try {
+         AssetInfo assetInfo1 = assetCreator.getAssetAsAssetInfo("Common");
+         AssetInfo assetInfo2 = assetCreator.getAssetAsAssetInfo("Common1");
+         String status = CreateServiceConsumer.testCreateService_validInput("withAllOptionalInputParams", assetInfo1,
+                  assetInfo2);
+         AssetKey assetKey = new AssetKey();
+         assetKey.setAssetId(assetInfo1.getBasicAssetInfo().getAssetKey().getAssetId());
+         assetCreator.removeAsset(assetKey);
+         assetKey.setAssetId(assetInfo2.getBasicAssetInfo().getAssetKey().getAssetId());
+         assetCreator.removeAsset(assetKey);
+         Assert.assertEquals(s_success, status);
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+
+   }
 }

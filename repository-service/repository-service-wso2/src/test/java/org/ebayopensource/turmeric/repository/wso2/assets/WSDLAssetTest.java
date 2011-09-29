@@ -11,7 +11,6 @@ package org.ebayopensource.turmeric.repository.wso2.assets;
 
 import static org.junit.Assert.*;
 
-
 import org.junit.Test;
 import org.wso2.carbon.governance.api.util.GovernanceConstants;
 import org.wso2.carbon.registry.core.Registry;
@@ -21,25 +20,25 @@ import org.ebayopensource.turmeric.repository.wso2.RSProviderUtil;
 import org.ebayopensource.turmeric.repository.wso2.Wso2Base;
 
 public class WSDLAssetTest extends Wso2Base {
-	
-	private static final String ASSETNAME = "testwsdl";
 
-    @Test
-    public void testCreateWSDL() throws Exception {
-        Registry wso2Registry = RSProviderUtil.getRegistry();        
-        Artifact wsdl = new Artifact();
-        wsdl.setArtifactName(ASSETNAME + ".wsdl");
-        wsdl.setArtifactCategory(AssetConstants.TURMERIC_TYPE);
-        wsdl.setArtifactValueType(ArtifactValueType.FILE);
-        wsdl.setTargetNamespace("http://www.example.org/" + ASSETNAME);
+   private static final String ASSETNAME = "testwsdl";
 
-        ArtifactInfo wsdlInfo = new ArtifactInfo();
-        wsdlInfo.setArtifact(wsdl);
-        wsdlInfo.setArtifactDetail(loadFile("src/main/resources/META-INF/soa/services/wsdl/CreateServiceTest/CreateServiceTest.wsdl"));
-        wsdlInfo.setContentType(GovernanceConstants.WSDL_MEDIA_TYPE);
-        
-        WSDLAsset wsdlAsset = new WSDLAsset(wsdlInfo, wso2Registry);
-        assertTrue("WSDL was not created.", wsdlAsset.createAsset());
-        assertTrue("WSDL was not added.", wsdlAsset.addAsset());
-    }
+   @Test
+   public void testCreateWSDL() throws Exception {
+      Registry wso2Registry = RSProviderUtil.getRegistry();
+      Artifact wsdl = new Artifact();
+      wsdl.setArtifactName(ASSETNAME + ".wsdl");
+      wsdl.setArtifactCategory(AssetConstants.TURMERIC_TYPE);
+      wsdl.setArtifactValueType(ArtifactValueType.FILE);
+      wsdl.setTargetNamespace("http://www.example.org/" + ASSETNAME);
+
+      ArtifactInfo wsdlInfo = new ArtifactInfo();
+      wsdlInfo.setArtifact(wsdl);
+      wsdlInfo.setArtifactDetail(loadFile("src/main/resources/META-INF/soa/services/wsdl/CreateServiceTest/CreateServiceTest.wsdl"));
+      wsdlInfo.setContentType(GovernanceConstants.WSDL_MEDIA_TYPE);
+
+      WSDLAsset wsdlAsset = new WSDLAsset(wsdlInfo, wso2Registry);
+      assertTrue("WSDL was not created.", wsdlAsset.createAsset());
+      assertTrue("WSDL was not added.", wsdlAsset.addAsset());
+   }
 }

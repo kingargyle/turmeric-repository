@@ -24,63 +24,63 @@ import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositorySer
  * 
  */
 public class RemoveAssetTest extends Wso2Base {
-    private static final String assetName = "RemoveAssetTest";
-    private static final String assetDesc = "RemoveAssetTest description";
+   private static final String assetName = "RemoveAssetTest";
+   private static final String assetDesc = "RemoveAssetTest description";
 
-    private CreateAssetResponse createAsset() {
-        AssetKey key = new AssetKey();
-        key.setAssetName(assetName);
-        key.setType("Service");
-        key.setVersion("1.0.0");
+   private CreateAssetResponse createAsset() {
+      AssetKey key = new AssetKey();
+      key.setAssetName(assetName);
+      key.setType("Service");
+      key.setVersion("1.0.0");
 
-        BasicAssetInfo basicInfo = new BasicAssetInfo();
-        basicInfo.setAssetKey(key);
-        basicInfo.setAssetName(assetName);
-        basicInfo.setAssetDescription(assetDesc);
-        basicInfo.setAssetType(key.getType());
-        basicInfo.setVersion(key.getVersion());
-        basicInfo.setNamespace("http://www.example.org");
+      BasicAssetInfo basicInfo = new BasicAssetInfo();
+      basicInfo.setAssetKey(key);
+      basicInfo.setAssetName(assetName);
+      basicInfo.setAssetDescription(assetDesc);
+      basicInfo.setAssetType(key.getType());
+      basicInfo.setVersion(key.getVersion());
+      basicInfo.setNamespace("http://www.example.org");
 
-        CreateAssetRequest request = new CreateAssetRequest();
-        request.setBasicAssetInfo(basicInfo);
+      CreateAssetRequest request = new CreateAssetRequest();
+      request.setBasicAssetInfo(basicInfo);
 
-        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
-        CreateAssetResponse response = provider.createAsset(request);
-        
-        assertEquals(AckValue.SUCCESS, response.getAck());
-        assertEquals(null, response.getErrorMessage());
-        
-        return response;
-    }
-    
-    @Test
-    public void removeAssetTest() throws Exception {
-        CreateAssetResponse response = createAsset();
-        
-        AssetKey key = new AssetKey();
-        key.setAssetId(response.getAssetKey().getAssetId());
+      RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
+      CreateAssetResponse response = provider.createAsset(request);
 
-        RemoveAssetRequest request = new RemoveAssetRequest();
-        request.setAssetKey(key);
-        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
-        RemoveAssetResponse responseRemove = provider.removeAsset(request);
+      assertEquals(AckValue.SUCCESS, response.getAck());
+      assertEquals(null, response.getErrorMessage());
 
-        assertEquals(AckValue.SUCCESS, responseRemove.getAck());
-        assertEquals(null, responseRemove.getErrorMessage());
-        
-        String path = GovernanceUtils.getArtifactPath(RSProviderUtil.getRegistry(), response.getAssetKey().getAssetId());
-        assertNull("Path was returned, meaing id was found", path);
-    }
-    
-    @Test
-    public void removeNonExistantAsset() throws Exception {
-        RemoveAssetRequest request = new RemoveAssetRequest();
-        AssetKey assetKey = new AssetKey();
-        assetKey.setAssetId(UUID.randomUUID().toString());
-        request.setAssetKey(assetKey);
-        RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
-        RemoveAssetResponse responseRemove = provider.removeAsset(request);
+      return response;
+   }
 
-        assertEquals(AckValue.FAILURE, responseRemove.getAck());
-    }
+   @Test
+   public void removeAssetTest() throws Exception {
+      CreateAssetResponse response = createAsset();
+
+      AssetKey key = new AssetKey();
+      key.setAssetId(response.getAssetKey().getAssetId());
+
+      RemoveAssetRequest request = new RemoveAssetRequest();
+      request.setAssetKey(key);
+      RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
+      RemoveAssetResponse responseRemove = provider.removeAsset(request);
+
+      assertEquals(AckValue.SUCCESS, responseRemove.getAck());
+      assertEquals(null, responseRemove.getErrorMessage());
+
+      String path = GovernanceUtils.getArtifactPath(RSProviderUtil.getRegistry(), response.getAssetKey().getAssetId());
+      assertNull("Path was returned, meaing id was found", path);
+   }
+
+   @Test
+   public void removeNonExistantAsset() throws Exception {
+      RemoveAssetRequest request = new RemoveAssetRequest();
+      AssetKey assetKey = new AssetKey();
+      assetKey.setAssetId(UUID.randomUUID().toString());
+      request.setAssetKey(assetKey);
+      RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
+      RemoveAssetResponse responseRemove = provider.removeAsset(request);
+
+      assertEquals(AckValue.FAILURE, responseRemove.getAck());
+   }
 }

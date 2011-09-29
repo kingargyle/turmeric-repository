@@ -11,7 +11,6 @@ package org.ebayopensource.turmeric.repository.wso2.assets;
 
 import static org.junit.Assert.*;
 
-
 import org.junit.Test;
 import org.wso2.carbon.governance.api.util.GovernanceConstants;
 import org.wso2.carbon.registry.core.Registry;
@@ -21,26 +20,26 @@ import org.ebayopensource.turmeric.repository.wso2.RSProviderUtil;
 import org.ebayopensource.turmeric.repository.wso2.Wso2Base;
 
 public class SchemaAssetTest extends Wso2Base {
-	
-	private static final String ASSETNAME = "RepositoryServiceProviderConfig";
 
-    @Test
-    public void testCreateWSDL() throws Exception {
-        Registry wso2Registry = RSProviderUtil.getRegistry();        
-        Artifact schema = new Artifact();
-        schema.setArtifactName(ASSETNAME + ".xsd");
-        schema.setArtifactCategory(AssetConstants.TURMERIC_TYPE);
-        schema.setArtifactValueType(ArtifactValueType.FILE);
-        schema.setTargetNamespace("http://www.example.org/" + ASSETNAME);
+   private static final String ASSETNAME = "RepositoryServiceProviderConfig";
 
-        ArtifactInfo schemaInfo = new ArtifactInfo();
-        schemaInfo.setArtifact(schema);
-        schemaInfo.setArtifactDetail(loadFile("src/main/resources/META-INF/schema/RepositoryServiceProviderConfig.xsd"));
-        schemaInfo.setContentType(GovernanceConstants.SCHEMA_MEDIA_TYPE);
-        
-        SchemaAsset schemaAsset = new SchemaAsset(schemaInfo, wso2Registry);
-        assertTrue("Schema was not created.", schemaAsset.createAsset());
-        assertTrue("Schema was not added.", schemaAsset.addAsset());
-        assertTrue("Schema doesn't exist.", schemaAsset.exists());
-    }
+   @Test
+   public void testCreateWSDL() throws Exception {
+      Registry wso2Registry = RSProviderUtil.getRegistry();
+      Artifact schema = new Artifact();
+      schema.setArtifactName(ASSETNAME + ".xsd");
+      schema.setArtifactCategory(AssetConstants.TURMERIC_TYPE);
+      schema.setArtifactValueType(ArtifactValueType.FILE);
+      schema.setTargetNamespace("http://www.example.org/" + ASSETNAME);
+
+      ArtifactInfo schemaInfo = new ArtifactInfo();
+      schemaInfo.setArtifact(schema);
+      schemaInfo.setArtifactDetail(loadFile("src/main/resources/META-INF/schema/RepositoryServiceProviderConfig.xsd"));
+      schemaInfo.setContentType(GovernanceConstants.SCHEMA_MEDIA_TYPE);
+
+      SchemaAsset schemaAsset = new SchemaAsset(schemaInfo, wso2Registry);
+      assertTrue("Schema was not created.", schemaAsset.createAsset());
+      assertTrue("Schema was not added.", schemaAsset.addAsset());
+      assertTrue("Schema doesn't exist.", schemaAsset.exists());
+   }
 }

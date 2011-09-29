@@ -18,131 +18,97 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assume.assumeTrue;
 
-
 public class CreateCompleteAssetTest {
 
-	private static final String s_success ="PASSED";
-	private static AssetInfo fdAssetInfo;
-	
-	@BeforeClass
-    public static void oneTimeSetUp() {
-        fdAssetInfo = CommonUtil.createBasicAsset("Functional Domain", "Functional Domain Template");
-    }
-	
-	/*
-	 * Method under test: createCompleteAsset
-	 * Test Type        : positive
-	 * Sub  Type        : noAssetLongDescription
-	 */
-	
-	@Test
-	public void testCreateAsset_noLibraryName_positive_noAssetLongDescription() 
-	{
-		String status = CreateCompleteAssetConsumer.testCreateCompleteAsset_validInput("noAssetLongDescription",fdAssetInfo);
-		Assert.assertEquals(s_success, status);
-	}
-	/*
-	 * Method under test: createCompleteAsset
-	 * Test Type        : positive
-	 * Sub  Type        : noLibraryId
-	 */
-	@Test
-	public void testCreateCompleteAsset_validInput_noLibraryId() 
-	{
-		String status = CreateCompleteAssetConsumer.testCreateCompleteAsset_validInput("noLibraryId",fdAssetInfo);
-		Assert.assertEquals(s_success, status);
-	}
-	
-	/*
-	 * Method under test: createCompleteAsset
-	 * Test Type        : positive
-	 * Sub  Type        : withAllOptionalInputParams
-	 */
-	@Test
-	public void testCreateCompleteAsset_validInput_withAllOptionalInputParams() 
-	{
-		String status = CreateCompleteAssetConsumer.testCreateCompleteAsset_validInput("withAllOptionalInputParams",fdAssetInfo);
-		Assert.assertEquals(s_success, status);
-	}
-	
-	/*
-	 * Method under test: createCompleteAsset
-	 * Test Type        : Negative
-	 * Sub  Type        : noRequest
-	 */
-	@Test
-	public void testCreateCompleteAsset_invalidInput_noRequest() 
-	{
-		
-		String status = CreateCompleteAssetConsumer.testCreateCompleteAsset_invalidInput("noRequest",fdAssetInfo);
-		Assert.assertEquals(s_success, status);
-	}
-	
+   private static final String s_success = "PASSED";
+   private static AssetInfo fdAssetInfo;
 
-	/*
-	 * Method under test: createCompleteAsset
-	 * Test Type        : Negative
-	 * Sub  Type        : noRequest
-	 */
-	@Test
-	public void testCreateCompleteAsset_invalidInput_noCaptureTemplate()
-	{
-		String status = CreateCompleteAssetConsumer.testCreateCompleteAsset_invalidInput("noCaptureTemplate",fdAssetInfo);
-		Assert.assertEquals(s_success, status);
-	}
-	
-	/*
-	 * Method under test: createCompleteAsset
-	 * Test Type        : Negative
-	 * Sub  Type        : noRequest
-	 */
-	@Test
-	public void testCreateCompleteAsset_invalidInput_noGroupName()
-	{
-		String status = CreateCompleteAssetConsumer.testCreateCompleteAsset_invalidInput("noGroupName",fdAssetInfo);
-		assumeTrue(s_success.equalsIgnoreCase(status));
-	}
-	
-	/*
-	 * Method under test: createCompleteAsset
-	 * Test Type        : Negative
-	 * Sub  Type        : invalidLibraryName
-	 */
-	@Test
-	public void testCreateCompleteAsset_invalidInput_invalidLibraryName()
-	{
-		String status = CreateCompleteAssetConsumer.testCreateCompleteAsset_invalidInput("invalidLibraryName",fdAssetInfo);
-		assumeTrue(s_success.equalsIgnoreCase(status));
-	}
-	
+   @BeforeClass
+   public static void oneTimeSetUp() {
+      fdAssetInfo = CommonUtil.createBasicAsset("Functional Domain", "Functional Domain Template");
+   }
 
-	/*
-	 * Method under test: createCompleteAsset
-	 * Test Type        : Negative
-	 * Sub  Type        : invalidLibraryName
-	 */
-	@Test
-	public void testCreateCompleteAsset_invalidInput_invalidGroupName()
-	{
-		String status = CreateCompleteAssetConsumer.testCreateCompleteAsset_invalidInput("invalidGroupName",fdAssetInfo);
-		assumeTrue(s_success.equals(status));
-	}
-	
-	@AfterClass
-    public static void oneTimeTearDown() {
-        CommonUtil.removeAsset(fdAssetInfo.getBasicAssetInfo().getAssetKey());
-    }
-				
+   /*
+    * Method under test: createCompleteAsset Test Type : positive Sub Type : noAssetLongDescription
+    */
+
+   @Test
+   public void testCreateAsset_noLibraryName_positive_noAssetLongDescription() {
+      String status = CreateCompleteAssetConsumer.testCreateCompleteAsset_validInput("noAssetLongDescription",
+               fdAssetInfo);
+      Assert.assertEquals(s_success, status);
+   }
+
+   /*
+    * Method under test: createCompleteAsset Test Type : positive Sub Type : noLibraryId
+    */
+   @Test
+   public void testCreateCompleteAsset_validInput_noLibraryId() {
+      String status = CreateCompleteAssetConsumer.testCreateCompleteAsset_validInput("noLibraryId", fdAssetInfo);
+      Assert.assertEquals(s_success, status);
+   }
+
+   /*
+    * Method under test: createCompleteAsset Test Type : positive Sub Type : withAllOptionalInputParams
+    */
+   @Test
+   public void testCreateCompleteAsset_validInput_withAllOptionalInputParams() {
+      String status = CreateCompleteAssetConsumer.testCreateCompleteAsset_validInput("withAllOptionalInputParams",
+               fdAssetInfo);
+      Assert.assertEquals(s_success, status);
+   }
+
+   /*
+    * Method under test: createCompleteAsset Test Type : Negative Sub Type : noRequest
+    */
+   @Test
+   public void testCreateCompleteAsset_invalidInput_noRequest() {
+
+      String status = CreateCompleteAssetConsumer.testCreateCompleteAsset_invalidInput("noRequest", fdAssetInfo);
+      Assert.assertEquals(s_success, status);
+   }
+
+   /*
+    * Method under test: createCompleteAsset Test Type : Negative Sub Type : noRequest
+    */
+   @Test
+   public void testCreateCompleteAsset_invalidInput_noCaptureTemplate() {
+      String status = CreateCompleteAssetConsumer
+               .testCreateCompleteAsset_invalidInput("noCaptureTemplate", fdAssetInfo);
+      Assert.assertEquals(s_success, status);
+   }
+
+   /*
+    * Method under test: createCompleteAsset Test Type : Negative Sub Type : noRequest
+    */
+   @Test
+   public void testCreateCompleteAsset_invalidInput_noGroupName() {
+      String status = CreateCompleteAssetConsumer.testCreateCompleteAsset_invalidInput("noGroupName", fdAssetInfo);
+      assumeTrue(s_success.equalsIgnoreCase(status));
+   }
+
+   /*
+    * Method under test: createCompleteAsset Test Type : Negative Sub Type : invalidLibraryName
+    */
+   @Test
+   public void testCreateCompleteAsset_invalidInput_invalidLibraryName() {
+      String status = CreateCompleteAssetConsumer.testCreateCompleteAsset_invalidInput("invalidLibraryName",
+               fdAssetInfo);
+      assumeTrue(s_success.equalsIgnoreCase(status));
+   }
+
+   /*
+    * Method under test: createCompleteAsset Test Type : Negative Sub Type : invalidLibraryName
+    */
+   @Test
+   public void testCreateCompleteAsset_invalidInput_invalidGroupName() {
+      String status = CreateCompleteAssetConsumer.testCreateCompleteAsset_invalidInput("invalidGroupName", fdAssetInfo);
+      assumeTrue(s_success.equals(status));
+   }
+
+   @AfterClass
+   public static void oneTimeTearDown() {
+      CommonUtil.removeAsset(fdAssetInfo.getBasicAssetInfo().getAssetKey());
+   }
+
 }
-				
-
-
-    	
-  
-
-
- 
-    	
-   
-
-
