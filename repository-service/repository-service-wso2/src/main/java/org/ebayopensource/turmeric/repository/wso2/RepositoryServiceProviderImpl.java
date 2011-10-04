@@ -103,8 +103,6 @@ import org.wso2.carbon.registry.core.Registry;
 import org.wso2.carbon.registry.core.RegistryConstants;
 import org.wso2.carbon.registry.core.Resource;
 
-//import edu.emory.mathcs.backport.java.util.Arrays;
-
 /**
  * @author mgorovoy
  * @dcarver refactored lots of the code
@@ -473,12 +471,17 @@ public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider {
          asset.findAsset();
 
          if (!asset.isLocked()) {
-            return createAssetNotLocked(errorDataList, response);
+            asset.lockAsset();
          }
 
-         asset.save();
+         GovernanceArtifact artifact = asset.getGovernanceArtifact();
+         artifact.setAttribute(AssetConstants.TURMERIC_DESCRIPTION, basicInfo.getAssetDescription());
+         artifact.setAttribute(AssetConstants.TURMERIC_NAME, basicInfo.getAssetName());
+         artifact.setAttribute(AssetConstants.TURMERIC_NAMESPACE, basicInfo.getNamespace());
+         artifact.setAttribute(AssetConstants.TURMERIC_LONG_DESCRIPTION, basicInfo.getAssetLongDescription());
+         artifact.setAttribute(AssetConstants.TURMERIC_VERSION, basicInfo.getVersion());
 
-         // TODO: Add new update logic
+         asset.save();
 
          AssetInfo assetInfo = getAssetInfo(asset);
 
