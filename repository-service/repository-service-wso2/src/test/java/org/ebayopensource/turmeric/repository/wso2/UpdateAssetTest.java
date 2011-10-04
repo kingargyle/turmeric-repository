@@ -17,7 +17,6 @@ import org.junit.Test;
 import org.wso2.carbon.governance.api.common.dataobjects.GovernanceArtifact;
 import org.wso2.carbon.governance.api.util.GovernanceUtils;
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
-import org.ebayopensource.turmeric.common.v1.types.BaseResponse;
 import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
 import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
 import org.ebayopensource.turmeric.repository.v2.services.CreateAssetRequest;
@@ -107,13 +106,6 @@ public class UpdateAssetTest extends Wso2Base {
       GovernanceArtifact artifact = GovernanceUtils.retrieveGovernanceArtifactById(RSProviderUtil.getRegistry(),
                assetId);
       assertEquals("Updated" + assetName, artifact.getAttribute(AssetConstants.TURMERIC_NAME));
-   }
-
-   private <T extends BaseResponse> String getErrorMessage(T response) {
-      if (response.getErrorMessage() != null && response.getErrorMessage().getError().size() > 0) {
-         return response.getErrorMessage().getError().get(0).getMessage();
-      }
-      return null;
    }
 
 }

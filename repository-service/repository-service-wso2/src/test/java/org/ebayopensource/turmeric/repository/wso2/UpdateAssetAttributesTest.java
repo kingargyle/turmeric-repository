@@ -81,7 +81,7 @@ public class UpdateAssetAttributesTest extends Wso2Base {
 
       RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
       LockAssetResponse lockRes = provider.lockAsset(lockReq);
-      assertEquals(AckValue.SUCCESS, lockRes.getAck());
+      assertEquals("Lock Asset Error: " + getErrorMessage(lockRes), AckValue.SUCCESS, lockRes.getAck());
 
       BasicAssetInfo basicInfo = new BasicAssetInfo();
       basicInfo.setAssetKey(key);
@@ -124,7 +124,7 @@ public class UpdateAssetAttributesTest extends Wso2Base {
 
       RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
       LockAssetResponse lockRes = provider.lockAsset(lockReq);
-      assertEquals(AckValue.SUCCESS, lockRes.getAck());
+      assertEquals("Lock Asset Response: " + getErrorMessage(lockRes), AckValue.SUCCESS, lockRes.getAck());
 
       BasicAssetInfo basicInfo = new BasicAssetInfo();
       basicInfo.setAssetKey(key);
@@ -214,25 +214,16 @@ public class UpdateAssetAttributesTest extends Wso2Base {
 
       // first, create the complete asset
       CreateCompleteAssetResponse response = createAsset();
-      assertEquals(AckValue.SUCCESS, response.getAck());
+      assertEquals("Create error: " + getErrorMessage(response), AckValue.SUCCESS, response.getAck());
       assertEquals(null, response.getErrorMessage());
 
       // then, update the complete asset, replacing all its related objects
       UpdateCompleteAssetResponse responseUpdate = replaceAsset(response.getAssetKey());
-      String errorMsg = getErrorMsg(responseUpdate);
 
-      assertEquals("Unexpected error: " + errorMsg, AckValue.SUCCESS, responseUpdate.getAck());
+      assertEquals("Unexpected error: " + getErrorMessage(responseUpdate), AckValue.SUCCESS, responseUpdate.getAck());
       assertEquals(null, responseUpdate.getErrorMessage());
 
       validateAsset(responseUpdate.getAssetKey().getAssetId());
-   }
-
-   private String getErrorMsg(UpdateCompleteAssetResponse responseUpdate) {
-      String errorMsg = null;
-      if (responseUpdate.getErrorMessage() != null) {
-         errorMsg = responseUpdate.getErrorMessage().getError().get(0).getMessage();
-      }
-      return errorMsg;
    }
 
    @Test
@@ -241,13 +232,12 @@ public class UpdateAssetAttributesTest extends Wso2Base {
 
       // first, create the complete asset
       CreateCompleteAssetResponse response = createAsset();
-      assertEquals(AckValue.SUCCESS, response.getAck());
+      assertEquals("Create error: " + getErrorMessage(response), AckValue.SUCCESS, response.getAck());
       assertEquals(null, response.getErrorMessage());
 
       // then, update the complete asset, replacing all its related objects
       UpdateCompleteAssetResponse responseUpdate = mergeAsset(response.getAssetKey().getAssetId());
-      String errorMsg = getErrorMsg(responseUpdate);
-      assertEquals("Unexpected Error:" + errorMsg, AckValue.SUCCESS, responseUpdate.getAck());
+      assertEquals("Unexpected Error:" + getErrorMessage(responseUpdate), AckValue.SUCCESS, responseUpdate.getAck());
       assertEquals(null, responseUpdate.getErrorMessage());
 
       validateAsset(responseUpdate.getAssetKey().getAssetId());

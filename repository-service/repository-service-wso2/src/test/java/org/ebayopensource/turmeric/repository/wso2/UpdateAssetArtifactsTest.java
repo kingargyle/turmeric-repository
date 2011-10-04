@@ -102,7 +102,7 @@ public class UpdateAssetArtifactsTest extends Wso2Base {
 
       RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
       LockAssetResponse lockRes = provider.lockAsset(lockReq);
-      assertEquals(AckValue.SUCCESS, lockRes.getAck());
+      assertEquals("Lock Asset Error: " + getErrorMessage(lockRes), AckValue.SUCCESS, lockRes.getAck());
 
       UpdateAssetArtifactsRequest request = new UpdateAssetArtifactsRequest();
       request.setPartialUpdate(false);
@@ -185,12 +185,13 @@ public class UpdateAssetArtifactsTest extends Wso2Base {
    public void updateReplaceTest() throws Exception {
       // first, create the complete asset
       CreateCompleteAssetResponse response = createAsset();
-      assertEquals(AckValue.SUCCESS, response.getAck());
+      assertEquals("Create Error: " + getErrorMessage(response), AckValue.SUCCESS, response.getAck());
       assertEquals(null, response.getErrorMessage());
 
       // then, update the complete asset, replacing all its related objects
       UpdateAssetArtifactsResponse responseUpdate = replaceAsset(response.getAssetKey().getAssetId());
-      assertEquals(AckValue.SUCCESS, responseUpdate.getAck());
+      assertEquals("Update Artifact Error: " + getErrorMessage(responseUpdate), AckValue.SUCCESS,
+               responseUpdate.getAck());
       assertEquals(null, responseUpdate.getErrorMessage());
 
       AssetInfo assetInfo = getAsset(response.getAssetKey().getAssetId());
@@ -223,7 +224,8 @@ public class UpdateAssetArtifactsTest extends Wso2Base {
 
       // then, update the complete asset, replacing all its related objects
       UpdateAssetArtifactsResponse responseUpdate = mergeAsset(response.getAssetKey().getAssetId());
-      assertEquals(AckValue.SUCCESS, responseUpdate.getAck());
+      assertEquals("Update Asset Artifacts Error: " + getErrorMessage(responseUpdate), AckValue.SUCCESS,
+               responseUpdate.getAck());
       assertEquals(null, responseUpdate.getErrorMessage());
 
       AssetInfo assetInfo = this.getAsset(response.getAssetKey().getAssetId());

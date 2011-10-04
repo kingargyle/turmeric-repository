@@ -36,7 +36,6 @@ import org.ebayopensource.turmeric.repository.v2.services.FlattenedRelationship;
 import org.ebayopensource.turmeric.repository.v2.services.RejectAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.RejectAssetResponse;
 import org.ebayopensource.turmeric.repository.v2.services.RejectionInfo;
-import org.ebayopensource.turmeric.repository.v2.services.Relation;
 import org.ebayopensource.turmeric.repository.v2.services.SubmitForPublishingRequest;
 import org.ebayopensource.turmeric.repository.v2.services.SubmitForPublishingResponse;
 import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositoryServiceProvider;
@@ -217,7 +216,8 @@ public class AssetLifeCycleTest extends Wso2Base {
 
       SubmitForPublishingResponse responseSubmit = provider.submitForPublishing(requestSubmit);
 
-      assertEquals(AckValue.SUCCESS, responseSubmit.getAck());
+      assertEquals("Unable to submit for publishing. " + getErrorMessage(responseSubmit), AckValue.SUCCESS,
+               responseSubmit.getAck());
       assertEquals(null, responseSubmit.getErrorMessage());
 
       Resource asset = wso2.get(resources[0]);
@@ -234,7 +234,7 @@ public class AssetLifeCycleTest extends Wso2Base {
       requestReject.setRejectionInfo(rejectionInfo);
 
       RejectAssetResponse responseReject = provider.rejectAsset(requestReject);
-      assertEquals(AckValue.SUCCESS, responseReject.getAck());
+      assertEquals(getErrorMessage(responseReject), AckValue.SUCCESS, responseReject.getAck());
       assertEquals(null, responseReject.getErrorMessage());
 
       asset = wso2.get(resources[0]);

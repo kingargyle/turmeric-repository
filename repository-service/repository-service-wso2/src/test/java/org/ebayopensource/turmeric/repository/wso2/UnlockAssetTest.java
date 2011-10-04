@@ -119,17 +119,17 @@ public class UnlockAssetTest extends Wso2Base {
 
       // first, create the complete asset
       CreateCompleteAssetResponse response = createAsset();
-      assertEquals("Unable to create asset.", AckValue.SUCCESS, response.getAck());
+      assertEquals("Unable to create asset." + getErrorMessage(response), AckValue.SUCCESS, response.getAck());
       assertEquals(null, response.getErrorMessage());
 
       // then lock asset
       LockAssetResponse responseLock = lockAsset(response.getAssetKey());
-      assertEquals("Unable to lock asset", AckValue.SUCCESS, responseLock.getAck());
+      assertEquals("Unable to lock asset: " + getErrorMessage(responseLock), AckValue.SUCCESS, responseLock.getAck());
       assertEquals(null, responseLock.getErrorMessage());
 
       // Now unlock it.
       UnlockAssetResponse reponseUnlock = unlockAsset(response.getAssetKey());
-      assertEquals("Unable to lock asset", AckValue.SUCCESS, reponseUnlock.getAck());
+      assertEquals("Unable to lock asset: " + getErrorMessage(reponseUnlock), AckValue.SUCCESS, reponseUnlock.getAck());
       assertEquals(null, reponseUnlock.getErrorMessage());
 
       ServiceManager manager = new ServiceManager(RSProviderUtil.getRegistry());

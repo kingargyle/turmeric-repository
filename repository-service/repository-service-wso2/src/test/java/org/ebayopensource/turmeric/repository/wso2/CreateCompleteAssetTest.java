@@ -17,9 +17,6 @@ import org.junit.Test;
 import org.wso2.carbon.governance.api.services.ServiceManager;
 import org.wso2.carbon.governance.api.services.dataobjects.Service;
 import org.wso2.carbon.governance.api.util.GovernanceConstants;
-import org.wso2.carbon.registry.core.Registry;
-import org.wso2.carbon.registry.core.exceptions.RegistryException;
-
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
 import org.ebayopensource.turmeric.repository.v2.services.*;
 import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositoryServiceProvider;
@@ -29,12 +26,6 @@ import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositorySer
  * 
  */
 public class CreateCompleteAssetTest extends Wso2Base {
-   // First resource path must be the primary resource created by the test
-   // in order for the assumption checks to work correctly.
-   private static final String[] resources = {
-            "/_system/governance/trunk/services/com/domain/www/assets/CreateCompleteAssetTest",
-            "/_system/governance/trunk/endpoints/com/domain/www/ep-CreateCompleteAssetTest", };
-
    private static final String assetName = "CreateCompleteAssetTest";
    private static final String assetDesc = "CreateCompleteAssetTest description";
    private static final String namespace = "http://www.domain.com/assets";
@@ -113,22 +104,14 @@ public class CreateCompleteAssetTest extends Wso2Base {
 
    @Test
    public void createTest() throws Exception {
-      boolean clean = false;
-      Registry wso2 = RSProviderUtil.getRegistry();
-      try {
-         clean = !wso2.resourceExists(resources[0]);
-      } catch (RegistryException e) {
-      }
-      assertTrue(clean);
-
       CreateCompleteAssetResponse response = createCompleteAsset();
 
-      assertEquals(AckValue.SUCCESS, response.getAck());
+      assertEquals("Error: " + getErrorMessage(response), AckValue.SUCCESS, response.getAck());
       assertEquals(null, response.getErrorMessage());
 
       assertNotNull(response.getAssetKey().getAssetId());
       String id = response.getAssetKey().getAssetId();
-      ServiceManager serviceManager = new ServiceManager(wso2);
+      ServiceManager serviceManager = new ServiceManager(RSProviderUtil.getRegistry());
       Service service = serviceManager.getService(id);
       assertNotNull(service);
       assertTrue("No WSDLs were found as attachments", service.getAttachedWsdls().length > 0);
@@ -137,6 +120,6 @@ public class CreateCompleteAssetTest extends Wso2Base {
    @Test
    public void createDuplicateTest() throws Exception {
       CreateCompleteAssetResponse response = createCompleteAsset();
-      assertEquals(AckValue.FAILURE, response.getAck());
+      assertEquals("Error: " + getErrorMessage(response), AckValue.FAILURE, response.getAck());
    }
 }

@@ -110,7 +110,7 @@ public class UpdateCompleteAssetTest extends Wso2Base {
 
       RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
       LockAssetResponse lockRes = provider.lockAsset(lockReq);
-      assertEquals(AckValue.SUCCESS, lockRes.getAck());
+      assertEquals("Lock Error: " + getErrorMessage(lockRes), AckValue.SUCCESS, lockRes.getAck());
 
       BasicAssetInfo basicInfo = new BasicAssetInfo();
       basicInfo.setAssetKey(key);
@@ -165,7 +165,7 @@ public class UpdateCompleteAssetTest extends Wso2Base {
 
       RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
       LockAssetResponse lockRes = provider.lockAsset(lockReq);
-      assertEquals(AckValue.SUCCESS, lockRes.getAck());
+      assertEquals("Lock Error: " + getErrorMessage(lockRes), AckValue.SUCCESS, lockRes.getAck());
 
       BasicAssetInfo basicInfo = new BasicAssetInfo();
       basicInfo.setAssetKey(key);
@@ -227,7 +227,7 @@ public class UpdateCompleteAssetTest extends Wso2Base {
       request.setAssetType("Service");
 
       GetAssetInfoResponse assetInfoResponse = provider.getAssetInfo(request);
-      assertEquals(AckValue.SUCCESS, assetInfoResponse.getAck());
+      assertEquals("Get Error: " + getErrorMessage(assetInfoResponse), AckValue.SUCCESS, assetInfoResponse.getAck());
       assertEquals(null, assetInfoResponse.getErrorMessage());
 
       // //now, validating the basic info of the updated asset
@@ -261,12 +261,12 @@ public class UpdateCompleteAssetTest extends Wso2Base {
 
       // first, create the complete asset
       CreateCompleteAssetResponse response = createAsset();
-      assertEquals(AckValue.SUCCESS, response.getAck());
+      assertEquals("Create Error: " + getErrorMessage(response), AckValue.SUCCESS, response.getAck());
       assertEquals(null, response.getErrorMessage());
 
       // then, update the complete asset, replacing all its related objects
       UpdateCompleteAssetResponse responseUpdate = replaceAsset(response.getAssetKey().getAssetId());
-      assertEquals(AckValue.SUCCESS, responseUpdate.getAck());
+      assertEquals("Update Error:" + getErrorMessage(responseUpdate), AckValue.SUCCESS, responseUpdate.getAck());
       assertEquals(null, responseUpdate.getErrorMessage());
 
       AssetInfo assetInfo = validateAsset(responseUpdate.getAssetKey().getAssetId());
@@ -289,12 +289,12 @@ public class UpdateCompleteAssetTest extends Wso2Base {
    public void mergeCompleteAssetTest() throws Exception {
       // first, create the complete asset
       CreateCompleteAssetResponse response = createAsset();
-      assertEquals(AckValue.SUCCESS, response.getAck());
+      assertEquals("Create Error" + getErrorMessage(response), AckValue.SUCCESS, response.getAck());
       assertEquals(null, response.getErrorMessage());
 
       // then, update the complete asset, replacing all its related objects
       UpdateCompleteAssetResponse responseUpdate = mergeAsset(response.getAssetKey().getAssetId());
-      assertEquals(AckValue.SUCCESS, responseUpdate.getAck());
+      assertEquals("Update Error: " + getErrorMessage(responseUpdate), AckValue.SUCCESS, responseUpdate.getAck());
       assertEquals(null, responseUpdate.getErrorMessage());
 
       AssetInfo assetInfo = validateAsset(responseUpdate.getAssetKey().getAssetId());

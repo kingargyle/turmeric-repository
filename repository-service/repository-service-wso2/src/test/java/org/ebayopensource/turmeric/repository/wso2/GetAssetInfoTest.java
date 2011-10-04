@@ -30,13 +30,6 @@ public class GetAssetInfoTest extends Wso2Base {
    @Before
    public void setUp() throws Exception {
       super.setUp();
-      boolean exists = false;
-      try {
-         exists = RSProviderUtil.getRegistry().resourceExists("/");
-      } catch (Exception ex) {
-      }
-
-      assertTrue(exists);
       try {
          createRequiredAssetsInWso2();
       } catch (Exception ex) {
@@ -58,7 +51,7 @@ public class GetAssetInfoTest extends Wso2Base {
       RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
       GetAssetInfoResponse response = provider.getAssetInfo(request);
 
-      assertEquals(AckValue.SUCCESS, response.getAck());
+      assertEquals("Error: " + getErrorMessage(response), AckValue.SUCCESS, response.getAck());
       assertEquals(null, response.getErrorMessage());
    }
 
@@ -97,7 +90,7 @@ public class GetAssetInfoTest extends Wso2Base {
       RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
       GetAssetInfoResponse response = provider.getAssetInfo(request);
 
-      assertEquals(AckValue.SUCCESS, response.getAck());
+      assertEquals("Error:  " + getErrorMessage(response), AckValue.SUCCESS, response.getAck());
       assertEquals(null, response.getErrorMessage());
    }
 }

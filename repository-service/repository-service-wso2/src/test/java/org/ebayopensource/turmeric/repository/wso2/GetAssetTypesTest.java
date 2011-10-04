@@ -19,13 +19,15 @@ import org.ebayopensource.turmeric.repository.v2.services.GetAssetTypesRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetAssetTypesResponse;
 import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositoryServiceProvider;
 
-public class GetAssetTypesTest {
+public class GetAssetTypesTest extends Wso2Base {
 
    GetAssetTypesRequest request = null;
    RepositoryServiceProvider provider = null;
 
+   @Override
    @Before
    public void setUp() throws Exception {
+      super.setUp();
       request = new GetAssetTypesRequest();
       provider = new RepositoryServiceProviderImpl();
 
@@ -35,7 +37,7 @@ public class GetAssetTypesTest {
    public void getAssetTypes() throws Exception {
       RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
       GetAssetTypesResponse response = provider.getAssetTypes(request);
-      assertEquals(AckValue.SUCCESS, response.getAck());
+      assertEquals("Error: " + getErrorMessage(response), AckValue.SUCCESS, response.getAck());
       assertEquals(null, response.getErrorMessage());
    }
 

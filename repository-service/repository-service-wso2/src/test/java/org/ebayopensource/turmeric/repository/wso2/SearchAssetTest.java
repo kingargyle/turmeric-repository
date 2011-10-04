@@ -29,12 +29,8 @@ public class SearchAssetTest extends Wso2Base {
    }
 
    @Test
-   @Ignore("Ignorning due to possible bug in WSO2 RemoteRegistry search")
    public void testResponseNotNull() {
       SearchAssetsRequest request = new SearchAssetsRequest();
-      new AssetQuery();
-      new ArtifactCriteria();
-      new Artifact();
 
       SearchAssetsResponse response = provider.searchAssets(request);
       assertNotNull("Response returned null", response);
@@ -45,12 +41,13 @@ public class SearchAssetTest extends Wso2Base {
       SearchAssetsRequest request = new SearchAssetsRequest();
 
       SearchAssetsResponse response = provider.searchAssets(request);
-      assertEquals(AckValue.FAILURE, response.getAck());
+      assertEquals("Search Error: " + getErrorMessage(response), AckValue.FAILURE, response.getAck());
       assertEquals(RepositoryServiceErrorDescriptor.INVALID_INPUT_EXCEPTION.getErrorId(), response.getErrorMessage()
                .getError().get(0).getErrorId());
    }
 
    @Test
+   @Ignore("Ignorning due to possible bug in WSO2 RemoteRegistry search")
    public void testSearchAssetByID() {
       SearchAssetsRequest request = new SearchAssetsRequest();
       AssetQuery query = new AssetQuery();
@@ -62,7 +59,7 @@ public class SearchAssetTest extends Wso2Base {
       request.setAssetQuery(query);
 
       SearchAssetsResponse response = provider.searchAssets(request);
-      assertEquals(AckValue.SUCCESS, response.getAck());
+      assertEquals("Search Error: " + getErrorMessage(response), AckValue.SUCCESS, response.getAck());
       assertNull(response.getErrorMessage());
    }
 

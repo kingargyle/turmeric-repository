@@ -104,7 +104,7 @@ public class UpdateAssetDependenciesTest extends Wso2Base {
 
       RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
       LockAssetResponse lockRes = provider.lockAsset(lockReq);
-      assertEquals(AckValue.SUCCESS, lockRes.getAck());
+      assertEquals("Lock Asset Error: " + getErrorMessage(lockRes), AckValue.SUCCESS, lockRes.getAck());
 
       FlattenedRelationshipForUpdate relationship = new FlattenedRelationshipForUpdate();
       relationship.setDepth(1);
@@ -146,12 +146,12 @@ public class UpdateAssetDependenciesTest extends Wso2Base {
    public void updateTest() throws Exception {
       // first, create the complete asset
       CreateCompleteAssetResponse response = createAsset();
-      assertEquals(AckValue.SUCCESS, response.getAck());
+      assertEquals("Create Error: " + getErrorMessage(response), AckValue.SUCCESS, response.getAck());
       assertEquals(null, response.getErrorMessage());
 
       // then, update the complete asset, replacing all its related objects
       UpdateAssetDependenciesResponse responseUpdate = updateDependencies(response.getAssetKey().getAssetId());
-      assertEquals(AckValue.SUCCESS, responseUpdate.getAck());
+      assertEquals("Update Error: " + getErrorMessage(responseUpdate), AckValue.SUCCESS, responseUpdate.getAck());
       assertEquals(null, responseUpdate.getErrorMessage());
 
       validateAsset(response.getAssetKey().getAssetId());

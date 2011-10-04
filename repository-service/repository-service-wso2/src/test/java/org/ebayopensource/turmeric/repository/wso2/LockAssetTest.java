@@ -105,12 +105,12 @@ public class LockAssetTest extends Wso2Base {
 
       // first, create the complete asset
       CreateCompleteAssetResponse response = createAsset();
-      assertEquals(AckValue.SUCCESS, response.getAck());
+      assertEquals("Error: " + getErrorMessage(response), AckValue.SUCCESS, response.getAck());
       assertEquals(null, response.getErrorMessage());
 
       // then, update the complete asset, replacing all its related objects
       LockAssetResponse responseLock = lockAsset(response.getAssetKey());
-      assertEquals(AckValue.SUCCESS, responseLock.getAck());
+      assertEquals("Lock Error: " + getErrorMessage(responseLock), AckValue.SUCCESS, responseLock.getAck());
       assertEquals(null, responseLock.getErrorMessage());
 
       ServiceManager manager = new ServiceManager(RSProviderUtil.getRegistry());

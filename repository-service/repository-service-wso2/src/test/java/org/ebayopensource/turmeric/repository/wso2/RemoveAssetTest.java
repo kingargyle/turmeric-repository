@@ -65,7 +65,7 @@ public class RemoveAssetTest extends Wso2Base {
       RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
       RemoveAssetResponse responseRemove = provider.removeAsset(request);
 
-      assertEquals(AckValue.SUCCESS, responseRemove.getAck());
+      assertEquals("Remove Error: " + getErrorMessage(responseRemove), AckValue.SUCCESS, responseRemove.getAck());
       assertEquals(null, responseRemove.getErrorMessage());
 
       String path = GovernanceUtils.getArtifactPath(RSProviderUtil.getRegistry(), response.getAssetKey().getAssetId());

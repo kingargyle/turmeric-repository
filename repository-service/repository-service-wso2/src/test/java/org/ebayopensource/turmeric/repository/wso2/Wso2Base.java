@@ -26,6 +26,7 @@ import org.wso2.carbon.registry.app.RemoteRegistry;
 import org.wso2.carbon.registry.core.Registry;
 import org.wso2.carbon.registry.core.Resource;
 
+import org.ebayopensource.turmeric.common.v1.types.BaseResponse;
 import org.ebayopensource.turmeric.repository.v2.services.*;
 import org.ebayopensource.turmeric.repository.wso2.assets.ServiceAsset;
 import org.ebayopensource.turmeric.repository.wso2.utils.AbstractCarbonIntegrationTestCase;
@@ -322,5 +323,12 @@ public class Wso2Base extends AbstractCarbonIntegrationTestCase {
       fin.read(content, 0, size);
       fin.close();
       return content;
+   }
+
+   protected <T extends BaseResponse> String getErrorMessage(T response) {
+      if (response.getErrorMessage() != null && response.getErrorMessage().getError().size() > 0) {
+         return response.getErrorMessage().getError().get(0).getMessage();
+      }
+      return null;
    }
 }

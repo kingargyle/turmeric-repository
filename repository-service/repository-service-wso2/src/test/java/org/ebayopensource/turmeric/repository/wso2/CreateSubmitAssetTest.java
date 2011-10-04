@@ -129,7 +129,7 @@ public class CreateSubmitAssetTest extends Wso2Base {
    public void createTest() throws Exception {
       CreateAndSubmitAssetResponse response = createAndSubmitAsset();
 
-      assertEquals(AckValue.SUCCESS, response.getAck());
+      assertEquals("Error: " + getErrorMessage(response), AckValue.SUCCESS, response.getAck());
       assertEquals(null, response.getErrorMessage());
 
       // assertEquals("New", lc.getState());
