@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2006-2010 eBay Inc. All Rights Reserved.
+ * Copyright (c) 2006-2011 eBay Inc. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,7 +13,6 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
@@ -200,16 +199,7 @@ public class UpdateAssetAttributesTest extends Wso2Base {
       return assetInfoResponse.getAssetInfo();
    }
 
-   private String getErrorMessage(GetAssetInfoResponse assetInfoResponse) {
-      String errorMsg = null;
-      if (assetInfoResponse.getErrorMessage() != null) {
-         errorMsg = assetInfoResponse.getErrorMessage().getError().get(0).getMessage();
-      }
-      return errorMsg;
-   }
-
    @Test
-   @Ignore
    public void updateReplaceTest() throws Exception {
 
       // first, create the complete asset
@@ -227,7 +217,6 @@ public class UpdateAssetAttributesTest extends Wso2Base {
    }
 
    @Test
-   @Ignore
    public void mergeCompleteAssetTest() throws Exception {
 
       // first, create the complete asset
