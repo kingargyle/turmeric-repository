@@ -3215,10 +3215,9 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          Asset needs to be locked before calling this operation. Possible errors include
          InvalidData, InsufficientPrivileges, InvalidAssetState,
          AssetNotLocked.</wsdl:documentation>
-         <wsdl:documentation>If a value is not passed, or is null within the request the entry is not updated.
-         </wsdl:documentation>
 
          <input message="tns:updateAssetRequest">
+         <wsdl:documentation>If a value is not passed, or is null within the request the entry is not updated.</wsdl:documentation>
          </input>
 
          <output message="tns:updateAssetResponse">
@@ -3230,12 +3229,12 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          asset. This will add a new, or replaces an existing asset. The asset must be
          locked. Possible errors include InvalidData, InsufficientPrivileges,
          InvalidAssetState, AssetNotLocked.</wsdl:documentation>
-         <wsdl:documentation>If the request flag, replaceAll is set to true then the entire asset is updated,
-           only those values which are sent in the request are updated.  If a value is not passed, or is null
-           within the request the entry is not updated.
-         </wsdl:documentation>
 
          <input message="tns:updateAssetArtifactsRequest">
+            <wsdl:documentation>If the request flag, replaceAll is set to true then the entire asset is updated,
+              only those values which are sent in the request are updated.  If a value is not passed, or is null
+              within the request the entry is not updated.
+            </wsdl:documentation>
          </input>
 
          <output message="tns:updateAssetArtifactsResponse">
@@ -3247,12 +3246,12 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          asset. This will add a new, or replaces existing attribtues. The asset must be
          locked. Possible errors include InvalidInput, InsufficientPrivileges,
          InvalidAssetState, AssetNotLocked.</wsdl:documentation>
-         <wsdl:documentation>If the request flag, replaceAll is set to true then the entire asset is updated,
-           only those values which are sent in the request are updated.  If a value is not passed, or is null
-           within the request the entry is not updated.
-         </wsdl:documentation>
 
          <input message="tns:updateAssetAttributesRequest">
+            <wsdl:documentation>If the request flag, replaceAll is set to true then the entire asset is updated,
+              only those values which are sent in the request are updated.  If a value is not passed, or is null
+              within the request the entry is not updated.
+            </wsdl:documentation>
          </input>
 
          <output message="tns:updateAssetAttributesResponse">
