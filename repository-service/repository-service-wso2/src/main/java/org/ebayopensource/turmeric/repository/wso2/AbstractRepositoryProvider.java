@@ -216,11 +216,31 @@ public abstract class AbstractRepositoryProvider {
       return assetKey;
    }
 
-   public static AttributeNameValue newAttribute(String name, boolean value) {
+   public AttributeNameValue newAttribute(String name, boolean value) {
       AttributeNameValue attr = new AttributeNameValue();
       attr.setAttributeName(name);
       attr.setAttributeValueBoolean(value);
       return attr;
+   }
+
+   protected FlattenedRelationship getRelationShip(Asset asset) {
+      FlattenedRelationship relationship = new FlattenedRelationship();
+      // TODO complete me!
+   
+      return relationship;
+   
+   }
+
+   protected BasicAssetInfo createBasicAsset(AssetKey assetKey, GovernanceArtifact asset, String type) throws Exception {
+      BasicAssetInfo basicAssetInfo = new BasicAssetInfo();
+      basicAssetInfo.setAssetKey(assetKey);
+   
+      basicAssetInfo.setAssetName(asset.getAttribute("name"));
+      basicAssetInfo.setAssetType(type);
+      basicAssetInfo.setGroupName(asset.getAttribute("Owner"));
+      basicAssetInfo.setNamespace(asset.getQName().getNamespaceURI());
+      basicAssetInfo.setAssetDescription(asset.getAttribute("description"));
+      return basicAssetInfo;
    }
 
 }
