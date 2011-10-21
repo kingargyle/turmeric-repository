@@ -30,7 +30,6 @@ import org.ebayopensource.turmeric.repository.v2.services.AssetInfo;
 import org.ebayopensource.turmeric.repository.v2.services.AssetInfoForUpdate;
 import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
 import org.ebayopensource.turmeric.repository.v2.services.AssetStatus;
-import org.ebayopensource.turmeric.repository.v2.services.AttributeNameValue;
 import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
 import org.ebayopensource.turmeric.repository.v2.services.CreateAndSubmitAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.CreateAndSubmitAssetResponse;
@@ -38,7 +37,6 @@ import org.ebayopensource.turmeric.repository.v2.services.CreateAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.CreateAssetResponse;
 import org.ebayopensource.turmeric.repository.v2.services.CreateCompleteAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.CreateCompleteAssetResponse;
-import org.ebayopensource.turmeric.repository.v2.services.ExtendedAssetInfo;
 import org.ebayopensource.turmeric.repository.v2.services.FlattenedRelationship;
 import org.ebayopensource.turmeric.repository.v2.services.GetAllAssetsGroupedByCategoryRequest;
 import org.ebayopensource.turmeric.repository.v2.services.GetAllAssetsGroupedByCategoryResponse;
@@ -97,6 +95,7 @@ import org.ebayopensource.turmeric.repository.v2.services.ValidateAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.ValidateAssetResponse;
 import org.ebayopensource.turmeric.repository.wso2.assets.AssetConstants;
 import org.ebayopensource.turmeric.services.common.error.RepositoryServiceErrorDescriptor;
+import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositoryServiceProvider;
 import org.wso2.carbon.governance.api.common.dataobjects.GovernanceArtifact;
 import org.wso2.carbon.governance.api.exception.GovernanceException;
 import org.wso2.carbon.governance.api.util.GovernanceUtils;
@@ -109,7 +108,7 @@ import org.wso2.carbon.registry.core.Resource;
  * @dcarver refactored lots of the code
  * 
  */
-public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider {
+public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider implements RepositoryServiceProvider {
 
    /**
     * @see org.ebayopensource.turmeric.repositoryservice.impl.RepositoryServiceProvider#lockAsset(org.ebayopensource.turmeric.repository.v1.services.LockAssetRequest)
@@ -148,75 +147,6 @@ public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider {
          return RSProviderUtil.handleException(ex, response,
                   RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
       }
-   }
-
-   private AssetInfo getAssetInfo(Asset asset) throws GovernanceException {
-      AssetInfo assetInfo = new AssetInfo();
-
-      BasicAssetInfo info = getBasicAssetInfo(asset);
-      assetInfo.setBasicAssetInfo(info);
-
-      ExtendedAssetInfo extendedInfo = getExtendedAssetInfo(asset);
-      assetInfo.setExtendedAssetInfo(extendedInfo);
-
-      GovernanceArtifact gart = asset.getGovernanceArtifact();
-      GovernanceArtifact[] dependencies = gart.getDependencies();
-      if (dependencies != null && dependencies.length > 0) {
-         List<ArtifactInfo> artifacts = assetInfo.getArtifactInfo();
-         for (GovernanceArtifact dependency : dependencies) {
-            ArtifactInfo ai = new ArtifactInfo();
-            Artifact art = new Artifact();
-            art.setArtifactCategory(dependency.getAttribute(AssetConstants.TURMERIC_ARTIFACT_CATEGORY));
-            art.setArtifactDisplayName(dependency.getAttribute(AssetConstants.TURMERIC_DISPLAY_NAME));
-            art.setArtifactIdentifier(dependency.getId());
-            ai.setArtifact(art);
-            artifacts.add(ai);
-         }
-      }
-
-      return assetInfo;
-   }
-
-   private BasicAssetInfo getBasicAssetInfo(Asset asset) throws GovernanceException {
-      GovernanceArtifact gart = asset.getGovernanceArtifact();
-      BasicAssetInfo bi = new BasicAssetInfo();
-      AssetKey assetKey = getAssetKey(asset);
-      bi.setAssetKey(assetKey);
-      bi.setAssetName(assetKey.getAssetName());
-      bi.setAssetType(assetKey.getType());
-      bi.setVersion(assetKey.getVersion());
-      bi.setGroupName(gart.getAttribute(AssetConstants.TURMERIC_OWNER));
-      bi.setNamespace(gart.getAttribute(AssetConstants.TURMERIC_NAMESPACE));
-      bi.setAssetDescription(gart.getAttribute(AssetConstants.TURMERIC_DESCRIPTION));
-      bi.setAssetLongDescription(gart.getAttribute(AssetConstants.TURMERIC_LONG_DESCRIPTION));
-      return bi;
-   }
-
-   private AssetKey getAssetKey(Asset asset) throws GovernanceException {
-      GovernanceArtifact gart = asset.getGovernanceArtifact();
-      AssetKey assetKey = new AssetKey();
-
-      assetKey.setAssetId(asset.getId());
-      assetKey.setAssetName(gart.getAttribute(AssetConstants.TURMERIC_NAME));
-      assetKey.setType(gart.getAttribute(AssetConstants.TURMERIC_TYPE));
-      assetKey.setVersion(gart.getAttribute(AssetConstants.TURMERIC_VERSION));
-
-      return assetKey;
-   }
-
-   private ExtendedAssetInfo getExtendedAssetInfo(Asset asset) throws GovernanceException {
-      ExtendedAssetInfo eai = new ExtendedAssetInfo();
-
-      return eai;
-   }
-
-   private BasicAssetInfo populateMinBasicAssetInfo(AssetKey assetKey) {
-      BasicAssetInfo basicInfo = new BasicAssetInfo();
-      basicInfo.setAssetName(assetKey.getAssetName());
-      basicInfo.setAssetType(assetKey.getType());
-      basicInfo.setVersion(assetKey.getVersion());
-      basicInfo.setAssetKey(assetKey);
-      return basicInfo;
    }
 
    /**
@@ -835,66 +765,7 @@ public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider {
     */
    @Override
    public UpdateAssetAttributesResponse updateAssetAttributes(UpdateAssetAttributesRequest request) {
-      Registry wso2 = RSProviderUtil.getRegistry();
-      List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
-      UpdateAssetAttributesResponse response = new UpdateAssetAttributesResponse();
-
-      try {
-         AssetKey assetKey = request.getAssetKey();
-         BasicAssetInfo basicInfo = populateMinBasicAssetInfo(assetKey);
-
-         AssetFactory factory = new AssetFactory(basicInfo, wso2);
-         Asset asset = factory.createAsset();
-
-         if (!asset.exists()) {
-            return createAssetNotFoundError(errorDataList, response);
-         }
-
-         asset.findAsset();
-         if (!asset.isLocked()) {
-            asset.lockAsset();
-            asset.save();
-         }
-
-         // get the existing assetInfo
-         AssetInfo assetInfo = getAssetInfo(asset);
-
-         if (assetInfo == null) {
-            return createAssetTypeException(errorDataList, response);
-         }
-
-         ExtendedAssetInfo extInfo = request.getExtendedAssetInfo();
-         List<AttributeNameValue> attributes = extInfo.getAttribute();
-         List<String> respattrs = response.getAttributeName();
-
-         if (attributes.size() > 0) {
-            if (request.isReplaceCurrent()) {
-               GovernanceArtifact artifact = asset.getGovernanceArtifact();
-               for (AttributeNameValue attr : attributes) {
-                  if (attr.getAttributeValueString() != null) {
-                     artifact.setAttribute(attr.getAttributeName(), attr.getAttributeValueString());
-                     respattrs.add(attr.getAttributeName());
-                  } else if (attr.getAttributeValueLong() != null) {
-                     artifact.setAttribute(attr.getAttributeName(), attr.getAttributeValueLong().toString());
-                     respattrs.add(attr.getAttributeName());
-                  }
-               }
-            } else {
-               // RSProviderUtil.updateExtendedInfo(
-               // assetInfo.getExtendedAssetInfo(),
-               // request.getExtendedAssetInfo());
-            }
-            asset.save();
-         }
-
-         // populate the response
-         response.setVersion(assetInfo.getBasicAssetInfo().getVersion());
-         return RSProviderUtil.setSuccessResponse(response);
-
-      } catch (Exception ex) {
-         return RSProviderUtil.handleException(ex, response,
-                  RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
-      }
+      return new UpdateAssetAttributesStrategy().process(request);
    }
 
    /**
@@ -1116,5 +987,4 @@ public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider {
    public UpdateSubscriptionResponse updateSubscription(UpdateSubscriptionRequest request) {
       return null;
    }
-
 }

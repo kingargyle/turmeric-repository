@@ -14,113 +14,12 @@ import java.util.List;
 import org.ebayopensource.turmeric.common.v1.types.BaseResponse;
 import org.ebayopensource.turmeric.common.v1.types.CommonErrorData;
 import org.ebayopensource.turmeric.repository.v2.services.*;
+import org.ebayopensource.turmeric.repository.wso2.assets.AssetConstants;
 import org.ebayopensource.turmeric.services.common.error.RepositoryServiceErrorDescriptor;
-import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositoryServiceProvider;
+import org.wso2.carbon.governance.api.common.dataobjects.GovernanceArtifact;
+import org.wso2.carbon.governance.api.exception.GovernanceException;
 
-public abstract class AbstractRepositoryProvider implements RepositoryServiceProvider {
-
-   @Override
-   public abstract CreateAndSubmitAssetResponse createAndSubmitAsset(
-            CreateAndSubmitAssetRequest createAndSubmitAssetRequest);
-
-   @Override
-   public abstract GetAssetTreeByAttributesResponse getAssetTreeByAttributes(
-            GetAssetTreeByAttributesRequest getAssetTreeByAttributesRequest);
-
-   @Override
-   public abstract GetBasicAssetInfoResponse getBasicAssetInfo(GetBasicAssetInfoRequest getBasicAssetInfoRequest);
-
-   @Override
-   public abstract GetAssetDependenciesResponse getAssetDependencies(
-            GetAssetDependenciesRequest getAssetDependenciesRequest);
-
-   @Override
-   public abstract UpdateAssetResponse updateAsset(UpdateAssetRequest updateAssetRequest);
-
-   @Override
-   public abstract RemoveAssetResponse removeAsset(RemoveAssetRequest removeAssetRequest);
-
-   @Override
-   public abstract CreateCompleteAssetResponse createCompleteAsset(CreateCompleteAssetRequest createCompleteAssetRequest);
-
-   @Override
-   public abstract SubscribeResponse subscribe(SubscribeRequest subscribeRequest);
-
-   @Override
-   public abstract GetAssetSubmissionPropertiesResponse getAssetSubmissionProperties(
-            GetAssetSubmissionPropertiesRequest getAssetSubmissionPropertiesRequest);
-
-   @Override
-   public abstract SubmitForPublishingResponse submitForPublishing(SubmitForPublishingRequest submitForPublishingRequest);
-
-   @Override
-   public abstract GetAllAssetsGroupedByCategoryResponse getAllAssetsGroupedByCategory(
-            GetAllAssetsGroupedByCategoryRequest getAllAssetsGroupedByCategoryRequest);
-
-   @Override
-   public abstract CreateAssetResponse createAsset(CreateAssetRequest createAssetRequest);
-
-   @Override
-   public abstract GetAssetVersionsResponse getAssetVersions(GetAssetVersionsRequest getAssetVersionsRequest);
-
-   @Override
-   public abstract UpdateCompleteAssetResponse updateCompleteAsset(UpdateCompleteAssetRequest updateCompleteAssetRequest);
-
-   @Override
-   public abstract GetAssetStatusResponse getAssetStatus(GetAssetStatusRequest getAssetStatusRequest);
-
-   @Override
-   public abstract UnlockAssetResponse unlockAsset(UnlockAssetRequest unlockAssetRequest);
-
-   @Override
-   public abstract LockAssetResponse lockAsset(LockAssetRequest lockAssetRequest);
-
-   @Override
-   public abstract SearchAssetsDetailedResponse searchAssetsDetailed(
-            SearchAssetsDetailedRequest searchAssetsDetailedRequest);
-
-   @Override
-   public abstract UpdateAssetDependenciesResponse updateAssetDependencies(
-            UpdateAssetDependenciesRequest updateAssetDependenciesRequest);
-
-   @Override
-   public abstract ApproveAssetResponse approveAsset(ApproveAssetRequest approveAssetRequest);
-
-   @Override
-   public abstract ValidateAssetResponse validateAsset(ValidateAssetRequest validateAssetRequest);
-
-   @Override
-   public abstract UpdateSubscriptionResponse updateSubscription(UpdateSubscriptionRequest updateSubscriptionRequest);
-
-   @Override
-   public abstract RejectAssetResponse rejectAsset(RejectAssetRequest rejectAssetRequest);
-
-   @Override
-   public abstract GetAssetLifeCycleStatesResponse getAssetLifeCycleStates(
-            GetAssetLifeCycleStatesRequest getAssetLifeCycleStatesRequest);
-
-   @Override
-   public abstract UnsubscribeResponse unsubscribe(UnsubscribeRequest unsubscribeRequest);
-
-   @Override
-   public abstract GetSubscriptionResponse getSubscription(GetSubscriptionRequest getSubscriptionRequest);
-
-   @Override
-   public abstract UpdateAssetAttributesResponse updateAssetAttributes(
-            UpdateAssetAttributesRequest updateAssetAttributesRequest);
-
-   @Override
-   public abstract SearchAssetsResponse searchAssets(SearchAssetsRequest searchAssetsRequest);
-
-   @Override
-   public abstract UpdateAssetArtifactsResponse updateAssetArtifacts(
-            UpdateAssetArtifactsRequest updateAssetArtifactsRequest);
-
-   @Override
-   public abstract GetAssetTypesResponse getAssetTypes(GetAssetTypesRequest getAssetTypesRequest);
-
-   @Override
-   public abstract GetAssetInfoResponse getAssetInfo(GetAssetInfoRequest getAssetInfoRequest);
+public abstract class AbstractRepositoryProvider {
 
    /**
     * Creates the error message Missing Asset Name.
@@ -246,6 +145,75 @@ public abstract class AbstractRepositoryProvider implements RepositoryServicePro
       attr.setAttributeName(name);
       attr.setAttributeValueLong(value);
       return attr;
+   }
+
+   protected BasicAssetInfo populateMinBasicAssetInfo(AssetKey assetKey) {
+      BasicAssetInfo basicInfo = new BasicAssetInfo();
+      basicInfo.setAssetName(assetKey.getAssetName());
+      basicInfo.setAssetType(assetKey.getType());
+      basicInfo.setVersion(assetKey.getVersion());
+      basicInfo.setAssetKey(assetKey);
+      return basicInfo;
+   }
+
+   protected AssetInfo getAssetInfo(Asset asset) throws Exception {
+      AssetInfo assetInfo = new AssetInfo();
+
+      BasicAssetInfo info = getBasicAssetInfo(asset);
+      assetInfo.setBasicAssetInfo(info);
+
+      ExtendedAssetInfo extendedInfo = getExtendedAssetInfo(asset);
+      assetInfo.setExtendedAssetInfo(extendedInfo);
+
+      GovernanceArtifact gart = asset.getGovernanceArtifact();
+      GovernanceArtifact[] dependencies = gart.getDependencies();
+      if (dependencies != null && dependencies.length > 0) {
+         List<ArtifactInfo> artifacts = assetInfo.getArtifactInfo();
+         for (GovernanceArtifact dependency : dependencies) {
+            ArtifactInfo ai = new ArtifactInfo();
+            Artifact art = new Artifact();
+            art.setArtifactCategory(dependency.getAttribute(AssetConstants.TURMERIC_ARTIFACT_CATEGORY));
+            art.setArtifactDisplayName(dependency.getAttribute(AssetConstants.TURMERIC_DISPLAY_NAME));
+            art.setArtifactIdentifier(dependency.getId());
+            ai.setArtifact(art);
+            artifacts.add(ai);
+         }
+      }
+
+      return assetInfo;
+   }
+
+   BasicAssetInfo getBasicAssetInfo(Asset asset) throws Exception {
+      GovernanceArtifact gart = asset.getGovernanceArtifact();
+      BasicAssetInfo bi = new BasicAssetInfo();
+      AssetKey assetKey = getAssetKey(asset);
+      bi.setAssetKey(assetKey);
+      bi.setAssetName(assetKey.getAssetName());
+      bi.setAssetType(assetKey.getType());
+      bi.setVersion(assetKey.getVersion());
+      bi.setGroupName(gart.getAttribute(AssetConstants.TURMERIC_OWNER));
+      bi.setNamespace(gart.getAttribute(AssetConstants.TURMERIC_NAMESPACE));
+      bi.setAssetDescription(gart.getAttribute(AssetConstants.TURMERIC_DESCRIPTION));
+      bi.setAssetLongDescription(gart.getAttribute(AssetConstants.TURMERIC_LONG_DESCRIPTION));
+      return bi;
+   }
+
+   ExtendedAssetInfo getExtendedAssetInfo(Asset asset) throws GovernanceException {
+      ExtendedAssetInfo eai = new ExtendedAssetInfo();
+
+      return eai;
+   }
+
+   protected AssetKey getAssetKey(Asset asset) throws Exception {
+      GovernanceArtifact gart = asset.getGovernanceArtifact();
+      AssetKey assetKey = new AssetKey();
+
+      assetKey.setAssetId(asset.getId());
+      assetKey.setAssetName(gart.getAttribute(AssetConstants.TURMERIC_NAME));
+      assetKey.setType(gart.getAttribute(AssetConstants.TURMERIC_TYPE));
+      assetKey.setVersion(gart.getAttribute(AssetConstants.TURMERIC_VERSION));
+
+      return assetKey;
    }
 
    public static AttributeNameValue newAttribute(String name, boolean value) {
