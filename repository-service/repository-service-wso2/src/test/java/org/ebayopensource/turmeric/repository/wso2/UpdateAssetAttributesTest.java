@@ -69,7 +69,7 @@ public class UpdateAssetAttributesTest extends Wso2Base {
       return provider.createCompleteAsset(request);
    }
 
-   private UpdateCompleteAssetResponse replaceAsset(AssetKey assetKey) throws Exception {
+   private UpdateAssetAttributesResponse replaceAsset(AssetKey assetKey) throws Exception {
       AssetKey key = assetKey;
       key.setType("Service");
       key.setVersion("1.0.0");
@@ -85,7 +85,7 @@ public class UpdateAssetAttributesTest extends Wso2Base {
       BasicAssetInfo basicInfo = new BasicAssetInfo();
       basicInfo.setAssetKey(key);
       basicInfo.setAssetName(assetName);
-      basicInfo.setAssetDescription(assetDesc + " updated");
+      basicInfo.setAssetDescription(assetDesc);
       basicInfo.setAssetType("Service");
 
       ExtendedAssetInfo extendedInfo = new ExtendedAssetInfo();
@@ -104,12 +104,13 @@ public class UpdateAssetAttributesTest extends Wso2Base {
       assetInfo.setExtendedAssetInfo(extendedInfo);
       assetInfo.setAssetLifeCycleInfo(lifeCycleInfo);
 
-      UpdateCompleteAssetRequest request = new UpdateCompleteAssetRequest();
+      UpdateAssetAttributesRequest request = new UpdateAssetAttributesRequest();
       request.setPartialUpdate(false);
-      request.setAssetInfoForUpdate(assetInfo);
+      request.setAssetKey(key);
+      request.setExtendedAssetInfo(extendedInfo);
       request.setReplaceCurrent(true);
 
-      return provider.updateCompleteAsset(request);
+      return provider.updateAssetAttributes(request);
    }
 
    private UpdateCompleteAssetResponse mergeAsset(String assetId) throws Exception {
@@ -178,7 +179,7 @@ public class UpdateAssetAttributesTest extends Wso2Base {
       BasicAssetInfo assetInfo = assetInfoResponse.getAssetInfo().getBasicAssetInfo();
       assertEquals(assetName, assetInfo.getAssetName());
       assertEquals("Service", assetInfo.getAssetType());
-      assertEquals(assetDesc + " updated", assetInfo.getAssetDescription());
+      assertEquals(assetDesc, assetInfo.getAssetDescription());
       // now, validating extended info
       ExtendedAssetInfo extededAssetInfo = assetInfoResponse.getAssetInfo().getExtendedAssetInfo();
       List<AttributeNameValue> attrValues = extededAssetInfo.getAttribute();
@@ -191,10 +192,6 @@ public class UpdateAssetAttributesTest extends Wso2Base {
             assertEquals(Boolean.toString(!booleanProperty), attributeNameValue.getAttributeValueString());
          }
       }
-      // now, validating lifecycle info
-      AssetLifeCycleInfo lifeCycleInfo = assetInfoResponse.getAssetInfo().getAssetLifeCycleInfo();
-      assertEquals("John Doe Junior", lifeCycleInfo.getDomainOwner());
-      assertEquals("Business Owner", lifeCycleInfo.getDomainType());
 
       return assetInfoResponse.getAssetInfo();
    }
@@ -208,12 +205,12 @@ public class UpdateAssetAttributesTest extends Wso2Base {
       assertEquals(null, response.getErrorMessage());
 
       // then, update the complete asset, replacing all its related objects
-      UpdateCompleteAssetResponse responseUpdate = replaceAsset(response.getAssetKey());
+      UpdateAssetAttributesResponse responseUpdate = replaceAsset(response.getAssetKey());
 
       assertEquals("Unexpected error: " + getErrorMessage(responseUpdate), AckValue.SUCCESS, responseUpdate.getAck());
       assertEquals(null, responseUpdate.getErrorMessage());
 
-      validateAsset(responseUpdate.getAssetKey().getAssetId());
+      validateAsset(response.getAssetKey().getAssetId());
    }
 
    @Test

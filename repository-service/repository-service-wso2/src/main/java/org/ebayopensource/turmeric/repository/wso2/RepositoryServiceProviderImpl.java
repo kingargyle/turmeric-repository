@@ -30,6 +30,7 @@ import org.ebayopensource.turmeric.repository.v2.services.AssetInfo;
 import org.ebayopensource.turmeric.repository.v2.services.AssetInfoForUpdate;
 import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
 import org.ebayopensource.turmeric.repository.v2.services.AssetStatus;
+import org.ebayopensource.turmeric.repository.v2.services.AttributeNameValue;
 import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
 import org.ebayopensource.turmeric.repository.v2.services.CreateAndSubmitAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.CreateAndSubmitAssetResponse;
@@ -851,7 +852,8 @@ public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider {
 
          asset.findAsset();
          if (!asset.isLocked()) {
-            return createAssetNotLocked(errorDataList, response);
+            asset.lockAsset();
+            asset.save();
          }
 
          // get the existing assetInfo
@@ -861,16 +863,29 @@ public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider {
             return createAssetTypeException(errorDataList, response);
          }
 
-         if (request.isReplaceCurrent()) {
-            // Uh...this will never work...it never actually updates the item
-            assetInfo.setExtendedAssetInfo(request.getExtendedAssetInfo());
-         } else {
-            // RSProviderUtil.updateExtendedInfo(
-            // assetInfo.getExtendedAssetInfo(),
-            // request.getExtendedAssetInfo());
-         }
+         ExtendedAssetInfo extInfo = request.getExtendedAssetInfo();
+         List<AttributeNameValue> attributes = extInfo.getAttribute();
+         List<String> respattrs = response.getAttributeName();
 
-         asset.save();
+         if (attributes.size() > 0) {
+            if (request.isReplaceCurrent()) {
+               GovernanceArtifact artifact = asset.getGovernanceArtifact();
+               for (AttributeNameValue attr : attributes) {
+                  if (attr.getAttributeValueString() != null) {
+                     artifact.setAttribute(attr.getAttributeName(), attr.getAttributeValueString());
+                     respattrs.add(attr.getAttributeName());
+                  } else if (attr.getAttributeValueLong() != null) {
+                     artifact.setAttribute(attr.getAttributeName(), attr.getAttributeValueLong().toString());
+                     respattrs.add(attr.getAttributeName());
+                  }
+               }
+            } else {
+               // RSProviderUtil.updateExtendedInfo(
+               // assetInfo.getExtendedAssetInfo(),
+               // request.getExtendedAssetInfo());
+            }
+            asset.save();
+         }
 
          // populate the response
          response.setVersion(assetInfo.getBasicAssetInfo().getVersion());

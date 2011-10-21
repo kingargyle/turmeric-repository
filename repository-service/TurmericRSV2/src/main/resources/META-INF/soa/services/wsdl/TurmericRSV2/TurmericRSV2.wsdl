@@ -3345,13 +3345,13 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
          <wsdl:documentation>Updates an asset along with its artifacts. If replaceCurrent
          is true, then the properties and artifacts related to the asset are overriden.
          Possible Errors, etc.</wsdl:documentation>
-         <wsdl:documentation>If the request flag, replaceAll is set to true then the entire asset is updated,
-           only those values which are sent in the request are updated.  If a value is not passed, or is null
-           within the request the entry is not updated.
-         </wsdl:documentation>
          
 
          <input message="tns:updateCompleteAssetRequest">
+            <wsdl:documentation>If the request flag, replaceAll is set to true then the entire asset is updated,
+              only those values which are sent in the request are updated.  If a value is not passed, or is null
+              within the request the entry is not updated.
+            </wsdl:documentation>
          </input>
 
          <output message="tns:updateCompleteAssetResponse">
@@ -3359,8 +3359,6 @@ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
       </operation>
 
       <operation name="updateAssetDependencies">
-         <wsdl:documentation>Needs Documentation. Possible Errors,
-         etc.</wsdl:documentation>
          <wsdl:documentation>If the request flag, replaceAll is set to true then the entire asset is updated,
            only those values which are sent in the request are updated.  If a value is not passed, or is null
            within the request the entry is not updated.
