@@ -103,16 +103,14 @@ public class UpdateAssetAttributesStrategy extends AbstractRepositoryProvider {
             throws GovernanceException {
       GovernanceArtifact artifact = asset.getGovernanceArtifact();
       for (AttributeNameValue attr : attributes) {
-         if (attr.getAttributeName() != null) {
-            if (attr.getAttributeValueString() != null) {
-               artifact.setAttribute(attr.getAttributeName(), attr.getAttributeValueString());
-               respattrs.add(attr.getAttributeName());
-            } else if (attr.getAttributeValueLong() != null) {
-               artifact.setAttribute(attr.getAttributeName(), attr.getAttributeValueLong().toString());
-               respattrs.add(attr.getAttributeName());
-            } else {
-               artifact.removeAttribute(attr.getAttributeName());
-            }
+         if (attr.getAttributeValueString() != null) {
+            artifact.setAttribute(attr.getAttributeName(), attr.getAttributeValueString());
+            respattrs.add(attr.getAttributeName());
+         } else if (attr.getAttributeValueLong() != null) {
+            artifact.setAttribute(attr.getAttributeName(), attr.getAttributeValueLong().toString());
+            respattrs.add(attr.getAttributeName());
+         } else {
+            artifact.removeAttribute(attr.getAttributeName());
          }
       }
    }
