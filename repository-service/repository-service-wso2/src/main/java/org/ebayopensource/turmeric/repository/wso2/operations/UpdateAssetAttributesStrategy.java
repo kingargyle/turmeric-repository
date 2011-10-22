@@ -26,6 +26,7 @@ import org.ebayopensource.turmeric.repository.wso2.AssetFactory;
 import org.ebayopensource.turmeric.repository.wso2.RSProviderUtil;
 import org.ebayopensource.turmeric.services.common.error.RepositoryServiceErrorDescriptor;
 import org.wso2.carbon.governance.api.common.dataobjects.GovernanceArtifact;
+import org.wso2.carbon.governance.api.exception.GovernanceException;
 import org.wso2.carbon.registry.core.Registry;
 
 /**
@@ -80,24 +81,9 @@ public class UpdateAssetAttributesStrategy extends AbstractRepositoryProvider {
 
          if (attributes.size() > 0) {
             if (request.isReplaceCurrent()) {
-               GovernanceArtifact artifact = asset.getGovernanceArtifact();
-               for (AttributeNameValue attr : attributes) {
-                  if (attr.getAttributeName() != null) {
-                     if (attr.getAttributeValueString() != null) {
-                        artifact.setAttribute(attr.getAttributeName(), attr.getAttributeValueString());
-                        respattrs.add(attr.getAttributeName());
-                     } else if (attr.getAttributeValueLong() != null) {
-                        artifact.setAttribute(attr.getAttributeName(), attr.getAttributeValueLong().toString());
-                        respattrs.add(attr.getAttributeName());
-                     } else {
-                        artifact.removeAttribute(attr.getAttributeName());
-                     }
-                  }
-               }
+               replaceAllAttributes(asset, attributes, respattrs);
             } else {
-               // RSProviderUtil.updateExtendedInfo(
-               // assetInfo.getExtendedAssetInfo(),
-               // request.getExtendedAssetInfo());
+               mergeAttributes(asset, attributes, respattrs);
             }
             asset.save();
          }
@@ -112,4 +98,39 @@ public class UpdateAssetAttributesStrategy extends AbstractRepositoryProvider {
       }
 
    }
+
+   private void replaceAllAttributes(Asset asset, List<AttributeNameValue> attributes, List<String> respattrs)
+            throws GovernanceException {
+      GovernanceArtifact artifact = asset.getGovernanceArtifact();
+      for (AttributeNameValue attr : attributes) {
+         if (attr.getAttributeName() != null) {
+            if (attr.getAttributeValueString() != null) {
+               artifact.setAttribute(attr.getAttributeName(), attr.getAttributeValueString());
+               respattrs.add(attr.getAttributeName());
+            } else if (attr.getAttributeValueLong() != null) {
+               artifact.setAttribute(attr.getAttributeName(), attr.getAttributeValueLong().toString());
+               respattrs.add(attr.getAttributeName());
+            } else {
+               artifact.removeAttribute(attr.getAttributeName());
+            }
+         }
+      }
+   }
+
+   private void mergeAttributes(Asset asset, List<AttributeNameValue> attributes, List<String> respattrs)
+            throws GovernanceException {
+      GovernanceArtifact artifact = asset.getGovernanceArtifact();
+      for (AttributeNameValue attr : attributes) {
+         if (attr.getAttributeName() != null) {
+            if (attr.getAttributeValueString() != null) {
+               artifact.setAttribute(attr.getAttributeName(), attr.getAttributeValueString());
+               respattrs.add(attr.getAttributeName());
+            } else if (attr.getAttributeValueLong() != null) {
+               artifact.setAttribute(attr.getAttributeName(), attr.getAttributeValueLong().toString());
+               respattrs.add(attr.getAttributeName());
+            }
+         }
+      }
+   }
+
 }

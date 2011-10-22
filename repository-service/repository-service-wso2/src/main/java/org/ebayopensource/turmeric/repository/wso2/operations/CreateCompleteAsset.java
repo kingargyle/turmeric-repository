@@ -50,6 +50,7 @@ public class CreateCompleteAsset extends AbstractRepositoryProvider {
          AssetInfo assetInfo = request.getAssetInfo();
          BasicAssetInfo basicInfo = assetInfo.getBasicAssetInfo();
          AssetKey assetKey = basicInfo.getAssetKey();
+         response.setAssetKey(assetKey);
 
          AssetFactory factory = new AssetFactory(basicInfo, wso2Registry);
          Asset asset = factory.createAsset();
@@ -77,7 +78,6 @@ public class CreateCompleteAsset extends AbstractRepositoryProvider {
          // RSProviderUtil.createDependencies(assetKey,
          // assetInfo.getFlattenedRelationship());
 
-         response.setAssetKey(assetKey);
          return RSProviderUtil.setSuccessResponse(response);
       } catch (Exception ex) {
          return RSProviderUtil.handleException(ex, response,

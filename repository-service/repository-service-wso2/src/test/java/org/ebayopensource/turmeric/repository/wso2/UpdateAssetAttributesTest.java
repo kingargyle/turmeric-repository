@@ -14,7 +14,6 @@ import static org.junit.Assert.*;
 import java.util.List;
 
 import org.junit.Test;
-
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
 import org.ebayopensource.turmeric.repository.v2.services.*;
 import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositoryServiceProvider;
@@ -42,7 +41,7 @@ public class UpdateAssetAttributesTest extends Wso2Base {
 
       BasicAssetInfo basicInfo = new BasicAssetInfo();
       basicInfo.setAssetKey(key);
-      basicInfo.setAssetName(assetName);
+      basicInfo.setAssetName(assetName + Math.random());
       basicInfo.setAssetDescription(assetDesc);
       basicInfo.setAssetType("Service");
       basicInfo.setVersion("1.0.0");
@@ -113,24 +112,12 @@ public class UpdateAssetAttributesTest extends Wso2Base {
       return provider.updateAssetAttributes(request);
    }
 
-   private UpdateCompleteAssetResponse mergeAsset(String assetId) throws Exception {
+   private UpdateAssetAttributesResponse mergeAsset(String assetId) throws Exception {
       AssetKey key = new AssetKey();
       key.setAssetId(assetId);
       key.setAssetName(assetName);
+      key.setType("Service");
       key.setVersion("1.0.0");
-
-      LockAssetRequest lockReq = new LockAssetRequest();
-      lockReq.setAssetKey(key);
-
-      RepositoryServiceProvider provider = new RepositoryServiceProviderImpl();
-      LockAssetResponse lockRes = provider.lockAsset(lockReq);
-      assertEquals("Lock Asset Response: " + getErrorMessage(lockRes), AckValue.SUCCESS, lockRes.getAck());
-
-      BasicAssetInfo basicInfo = new BasicAssetInfo();
-      basicInfo.setAssetKey(key);
-      basicInfo.setAssetName(assetName);
-      basicInfo.setAssetDescription(assetDesc + " updated");
-      basicInfo.setAssetType("Service");
 
       ExtendedAssetInfo extendedInfo = new ExtendedAssetInfo();
       List<AttributeNameValue> attrs = extendedInfo.getAttribute();
@@ -139,21 +126,14 @@ public class UpdateAssetAttributesTest extends Wso2Base {
       attrs.add(RSProviderUtil.newAttribute("longProperty", longProperty.longValue() * 10));
       attrs.add(RSProviderUtil.newAttribute("booleanProperty", !booleanProperty.booleanValue()));
 
-      AssetLifeCycleInfo lifeCycleInfo = new AssetLifeCycleInfo();
-      lifeCycleInfo.setDomainOwner("John Doe Junior");
-      lifeCycleInfo.setDomainType("Business Owner");
-
-      AssetInfoForUpdate assetInfo = new AssetInfoForUpdate();
-      assetInfo.setBasicAssetInfo(basicInfo);
-      assetInfo.setExtendedAssetInfo(extendedInfo);
-      assetInfo.setAssetLifeCycleInfo(lifeCycleInfo);
-
-      UpdateCompleteAssetRequest request = new UpdateCompleteAssetRequest();
+      UpdateAssetAttributesRequest request = new UpdateAssetAttributesRequest();
       request.setPartialUpdate(false);
-      request.setAssetInfoForUpdate(assetInfo);
       request.setReplaceCurrent(false);
+      request.setExtendedAssetInfo(extendedInfo);
+      request.setAssetKey(key);
 
-      return provider.updateCompleteAsset(request);
+      RepositoryServiceProviderImpl provider = new RepositoryServiceProviderImpl();
+      return provider.updateAssetAttributes(request);
    }
 
    /**
@@ -177,7 +157,6 @@ public class UpdateAssetAttributesTest extends Wso2Base {
 
       // //now, validating the basic info of the updated asset
       BasicAssetInfo assetInfo = assetInfoResponse.getAssetInfo().getBasicAssetInfo();
-      assertEquals(assetName, assetInfo.getAssetName());
       assertEquals("Service", assetInfo.getAssetType());
       assertEquals(assetDesc, assetInfo.getAssetDescription());
       // now, validating extended info
@@ -218,14 +197,12 @@ public class UpdateAssetAttributesTest extends Wso2Base {
 
       // first, create the complete asset
       CreateCompleteAssetResponse response = createAsset();
-      assertEquals("Create error: " + getErrorMessage(response), AckValue.SUCCESS, response.getAck());
-      assertEquals(null, response.getErrorMessage());
 
       // then, update the complete asset, replacing all its related objects
-      UpdateCompleteAssetResponse responseUpdate = mergeAsset(response.getAssetKey().getAssetId());
+      UpdateAssetAttributesResponse responseUpdate = mergeAsset(response.getAssetKey().getAssetId());
       assertEquals("Unexpected Error:" + getErrorMessage(responseUpdate), AckValue.SUCCESS, responseUpdate.getAck());
       assertEquals(null, responseUpdate.getErrorMessage());
 
-      validateAsset(responseUpdate.getAssetKey().getAssetId());
+      validateAsset(response.getAssetKey().getAssetId());
    }
 }
