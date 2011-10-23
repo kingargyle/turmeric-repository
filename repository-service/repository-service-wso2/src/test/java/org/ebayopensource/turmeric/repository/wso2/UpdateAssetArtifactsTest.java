@@ -15,7 +15,6 @@ import static org.junit.Assert.fail;
 
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.wso2.carbon.governance.api.util.GovernanceConstants;
 
@@ -95,6 +94,7 @@ public class UpdateAssetArtifactsTest extends Wso2Base {
 
    private UpdateAssetArtifactsResponse replaceAsset(String assetId) throws Exception {
       AssetKey key = new AssetKey();
+      key.setType("Service");
       key.setAssetId(assetId);
 
       LockAssetRequest lockReq = new LockAssetRequest();
@@ -152,7 +152,7 @@ public class UpdateAssetArtifactsTest extends Wso2Base {
       ArtifactInfo endpointInfo = new ArtifactInfo();
       endpointInfo.setArtifact(endpoint);
       endpointInfo.setArtifactDetail(endpointUrl.getBytes("UTF-8"));
-      endpointInfo.setContentType("application/vnd.wso2.endpoint");
+      endpointInfo.setContentType(GovernanceConstants.ENDPOINT_MEDIA_TYPE);
       artifactList.add(endpointInfo);
 
       return provider.updateAssetArtifacts(request);
@@ -181,7 +181,6 @@ public class UpdateAssetArtifactsTest extends Wso2Base {
    }
 
    @Test
-   @Ignore
    public void updateReplaceTest() throws Exception {
       // first, create the complete asset
       CreateCompleteAssetResponse response = createAsset();
@@ -205,12 +204,11 @@ public class UpdateAssetArtifactsTest extends Wso2Base {
       assertEquals(ArtifactValueType.URL, artifactInfo.getArtifact().getArtifactValueType());
       assertEquals(new String((baseUrl + assetName + "-updated").getBytes("UTF-8")),
                new String(artifactInfo.getArtifactDetail()));
-      assertEquals("application/vnd.wso2.endpoint", artifactInfo.getContentType());
+      assertEquals(GovernanceConstants.ENDPOINT_MEDIA_TYPE, artifactInfo.getContentType());
 
    }
 
    @Test
-   @Ignore
    public void mergeCompleteAssetTest() throws Exception {
       // first, create the complete asset
       CreateCompleteAssetResponse response = createAsset();
@@ -248,7 +246,7 @@ public class UpdateAssetArtifactsTest extends Wso2Base {
 
          assertEquals("Endpoint", artifactInfo.getArtifact().getArtifactCategory());
          assertEquals(ArtifactValueType.URL, artifactInfo.getArtifact().getArtifactValueType());
-         assertEquals("application/vnd.wso2.endpoint", artifactInfo.getContentType());
+         assertEquals(GovernanceConstants.ENDPOINT_MEDIA_TYPE, artifactInfo.getContentType());
       }
    }
 }

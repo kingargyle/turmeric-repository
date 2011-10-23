@@ -41,38 +41,7 @@ public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider im
     */
    @Override
    public LockAssetResponse lockAsset(LockAssetRequest request) {
-      Registry wso2 = RSProviderUtil.getRegistry();
-      List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
-      LockAssetResponse response = new LockAssetResponse();
-
-      try {
-         AssetKey assetKey = request.getAssetKey();
-         BasicAssetInfo basicInfo = populateMinBasicAssetInfo(assetKey);
-
-         AssetFactory factory = new AssetFactory(basicInfo, wso2);
-         Asset asset = factory.createAsset();
-
-         if (!asset.exists()) {
-            return createAssetNotFoundError(errorDataList, response);
-         }
-
-         asset.findAsset();
-
-         if (!asset.isLocked()) {
-            asset.lockAsset();
-            asset.save();
-         }
-
-         AssetInfo assetInfo = getAssetInfo(asset);
-
-         // populate the response
-         response.setAssetInfo(assetInfo);
-         response.setVersion(assetInfo.getBasicAssetInfo().getVersion());
-         return RSProviderUtil.setSuccessResponse(response);
-      } catch (Exception ex) {
-         return RSProviderUtil.handleException(ex, response,
-                  RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
-      }
+      return new LockAsset().process(request);
    }
 
    /**
@@ -133,47 +102,7 @@ public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider im
     */
    @Override
    public UpdateAssetArtifactsResponse updateAssetArtifacts(UpdateAssetArtifactsRequest request) {
-      Registry wso2 = RSProviderUtil.getRegistry();
-      List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
-      UpdateAssetArtifactsResponse response = new UpdateAssetArtifactsResponse();
-
-      try {
-         AssetFactory factory = new AssetFactory(request.getAssetKey(), wso2);
-         Asset asset = factory.createAsset();
-         String assetId = asset.getId();
-
-         if (!wso2.resourceExists(assetId)) {
-            return createAssetNotFoundError(errorDataList, response);
-         }
-
-         if (!asset.isLocked()) {
-            return createAssetNotLocked(errorDataList, response);
-         }
-
-         // get the existing assetInfo
-         AssetInfo assetInfo = getAssetInfo(asset);
-
-         if (assetInfo == null) {
-            return createAssetTypeException(errorDataList, response);
-         }
-
-         if (request.isReplaceCurrent()) {
-            // TODO: remove and add artifacts
-            // remove Artifacts
-            // add artifacts
-
-         } else {
-            // Update existing artifacts and add new ones
-         }
-
-         // populate the response
-         response.setVersion(assetInfo.getBasicAssetInfo().getVersion());
-         return RSProviderUtil.setSuccessResponse(response);
-
-      } catch (Exception ex) {
-         return RSProviderUtil.handleException(ex, response,
-                  RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
-      }
+      return new UpdateAssetArtifacts().process(request);
    }
 
    /**

@@ -20,6 +20,7 @@ import org.ebayopensource.turmeric.repository.wso2.assets.ServiceAsset;
 import org.ebayopensource.turmeric.repository.wso2.assets.WSDLAsset;
 import org.wso2.carbon.governance.api.common.dataobjects.GovernanceArtifact;
 import org.wso2.carbon.governance.api.exception.GovernanceException;
+import org.wso2.carbon.governance.api.util.GovernanceUtils;
 import org.wso2.carbon.registry.core.Registry;
 
 /**
@@ -97,6 +98,12 @@ public class AssetFactory {
       return asset;
    }
 
+   /**
+    * Creates an artifact assest. Currently this creates WSDL or Schema artifacts. Any other asset request returns a
+    * NullAsset object.
+    * 
+    * @return an artifact asset
+    */
    public Asset createArtifactAsset() {
       String category = artifactInfo.getArtifact().getArtifactCategory();
       if (ASSET_TYPE_WSDL.equalsIgnoreCase(category)) {
@@ -112,6 +119,29 @@ public class AssetFactory {
          } catch (Exception e) {
          }
       }
+      return new NullAsset();
+   }
+
+   /**
+    * Create an asset based on the id. This can be used in situations where only an id is passed in a request, and no
+    * other information is passed. This makes it possible to leave items like Type out of the key, and just use the id.
+    * 
+    * @return the asset or a NullAsset object if none is found.
+    */
+   public Asset createAssetById() {
+      String artifactId = basicInfo.getAssetKey().getAssetId();
+      if (artifactId == null) {
+         artifactId = artifactInfo.getArtifact().getArtifactIdentifier();
+      }
+
+      try {
+         GovernanceArtifact artifact = GovernanceUtils.retrieveGovernanceArtifactById(registry, artifactId);
+         AssetFactory factory = new AssetFactory(artifact, registry);
+         return factory.createAsset();
+      } catch (GovernanceException ex) {
+
+      }
+
       return new NullAsset();
    }
 
