@@ -10,9 +10,11 @@
 package org.ebayopensource.turmeric.repository.wso2.operations;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.ebayopensource.turmeric.common.v1.types.CommonErrorData;
+import org.ebayopensource.turmeric.repository.v2.services.ArtifactInfo;
 import org.ebayopensource.turmeric.repository.v2.services.AssetInfo;
 import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetArtifactsRequest;
 import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetArtifactsResponse;
@@ -20,7 +22,9 @@ import org.ebayopensource.turmeric.repository.wso2.AbstractRepositoryProvider;
 import org.ebayopensource.turmeric.repository.wso2.Asset;
 import org.ebayopensource.turmeric.repository.wso2.AssetFactory;
 import org.ebayopensource.turmeric.repository.wso2.RSProviderUtil;
+import org.ebayopensource.turmeric.repository.wso2.assets.AssetConstants;
 import org.ebayopensource.turmeric.services.common.error.RepositoryServiceErrorDescriptor;
+import org.wso2.carbon.governance.api.common.dataobjects.GovernanceArtifact;
 import org.wso2.carbon.registry.core.Registry;
 
 /**
@@ -49,15 +53,24 @@ public class UpdateAssetArtifacts extends AbstractRepositoryProvider {
 
       try {
          AssetFactory factory = new AssetFactory(request.getAssetKey(), wso2);
-         Asset asset = factory.createAsset();
-         String assetId = asset.getId();
+         Asset asset = null;
+         String assetId = request.getAssetKey().getAssetId();
+         if (assetId != null) {
+            asset = factory.createAssetById();
+         } else {
+            asset = factory.createAsset();
+         }
 
-         if (!wso2.resourceExists(assetId)) {
+         if (!asset.exists()) {
             return createAssetNotFoundError(errorDataList, response);
          }
 
+         asset.findAsset();
+
          if (!asset.isLocked()) {
-            return createAssetNotLocked(errorDataList, response);
+            asset.lockAsset();
+            asset.save();
+            // return createAssetNotLocked(errorDataList, response);
          }
 
          // get the existing assetInfo
@@ -67,14 +80,27 @@ public class UpdateAssetArtifacts extends AbstractRepositoryProvider {
             return createAssetTypeException(errorDataList, response);
          }
 
+         GovernanceArtifact artifact = asset.getGovernanceArtifact();
+
          if (request.isReplaceCurrent()) {
-            // TODO: remove and add artifacts
-            // remove Artifacts
-            // add artifacts
+            ArrayList<GovernanceArtifact> gdependencies = new ArrayList(Arrays.asList(artifact.getDependencies()));
+            for (ArtifactInfo ainfo : request.getArtifactInfo()) {
+               for (GovernanceArtifact gart : gdependencies) {
+                  if (gart.getAttribute(AssetConstants.TURMERIC_NAME).equals(ainfo.getArtifact().getArtifactName())) {
+                     AssetFactory dfactory = new AssetFactory(ainfo, wso2);
+                     Asset artAsset = dfactory.createAssetById();
+                     if (artAsset.exists()) {
+
+                     }
+                  }
+               }
+            }
 
          } else {
             // Update existing artifacts and add new ones
          }
+
+         asset.save();
 
          // populate the response
          response.setVersion(assetInfo.getBasicAssetInfo().getVersion());
