@@ -9,25 +9,9 @@
 
 package org.ebayopensource.turmeric.repository.wso2;
 
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import javax.xml.datatype.DatatypeFactory;
-
-import org.ebayopensource.turmeric.common.v1.types.CommonErrorData;
 import org.ebayopensource.turmeric.repository.v2.services.*;
-import org.ebayopensource.turmeric.repository.wso2.assets.AssetConstants;
 import org.ebayopensource.turmeric.repository.wso2.operations.*;
-import org.ebayopensource.turmeric.services.common.error.RepositoryServiceErrorDescriptor;
 import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositoryServiceProvider;
-import org.wso2.carbon.governance.api.common.dataobjects.GovernanceArtifact;
-import org.wso2.carbon.governance.api.util.GovernanceUtils;
-import org.wso2.carbon.registry.core.Registry;
-import org.wso2.carbon.registry.core.RegistryConstants;
-import org.wso2.carbon.registry.core.Resource;
 
 /**
  * @author mgorovoy
@@ -59,42 +43,7 @@ public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider im
     */
    @Override
    public SearchAssetsResponse searchAssets(SearchAssetsRequest request) {
-      RSProviderUtil.getRegistry();
-      List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
-      SearchAssetsResponse response = new SearchAssetsResponse();
-
-      if (request.getAssetQuery() == null) {
-         return createErrorInvalidInput(errorDataList, response);
-      }
-
-      ArtifactCriteria artifactCriteria = request.getAssetQuery().getArtifactCriteria();
-      List<Artifact> artifacts = artifactCriteria.getArtifact();
-
-      Registry registry = RSProviderUtil.getRegistry();
-
-      String searchByID = "SELECT REG_PATH_ID, REG_NAME FROM REG_RESOURCE WHERE REG_PATH_ID = ?";
-      try {
-         Resource queryResource = registry.newResource();
-         queryResource.setContent(searchByID);
-         queryResource.setMediaType(RegistryConstants.SQL_QUERY_MEDIA_TYPE);
-         queryResource
-                  .addProperty(RegistryConstants.RESULT_TYPE_PROPERTY_NAME, RegistryConstants.RESOURCES_RESULT_TYPE);
-         registry.put(RegistryConstants.CONFIG_REGISTRY_BASE_PATH + RegistryConstants.QUERIES_COLLECTION_PATH
-                  + "/turmeric-queries-findbyid", queryResource);
-
-         Map<String, String> parameters = new ConcurrentHashMap<String, String>();
-         for (Artifact art : artifacts) {
-            parameters.put(art.getArtifactIdentifier(), "%services%");
-         }
-         registry.executeQuery(RegistryConstants.CONFIG_REGISTRY_BASE_PATH + RegistryConstants.QUERIES_COLLECTION_PATH
-                  + "/turmeric-queries-findbyid", parameters);
-
-         return RSProviderUtil.setSuccessResponse(response);
-      } catch (Exception ex) {
-         return RSProviderUtil.handleException(ex, response,
-                  RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
-      }
-
+      return new SearchAssets().process(request);
    }
 
    /**
@@ -110,28 +59,7 @@ public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider im
     */
    @Override
    public ApproveAssetResponse approveAsset(ApproveAssetRequest request) {
-      Registry wso2 = RSProviderUtil.getRegistry();
-      List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
-      ApproveAssetResponse response = new ApproveAssetResponse();
-
-      try {
-         ApprovalInfo approvalInfo = request.getApprovalInfo();
-         String assetId = approvalInfo.getAssetId();
-         GovernanceArtifact gart = GovernanceUtils.retrieveGovernanceArtifactById(wso2, assetId);
-
-         if (gart == null) {
-            return createAssetNotFoundError(errorDataList, response);
-         }
-
-         // TODO Re-implement approveAsset
-
-         response.setTimestamp(DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar()));
-         response.setVersion(gart.getAttribute(AssetConstants.TURMERIC_VERSION));
-         return RSProviderUtil.setSuccessResponse(response);
-      } catch (Exception ex) {
-         return RSProviderUtil.handleException(ex, response,
-                  RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
-      }
+      return new ApproveAsset().process(request);
    }
 
    /**
@@ -163,27 +91,7 @@ public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider im
     */
    @Override
    public RemoveAssetResponse removeAsset(RemoveAssetRequest request) {
-      Registry wso2 = RSProviderUtil.getRegistry();
-      List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
-      RemoveAssetResponse response = new RemoveAssetResponse();
-
-      try {
-         AssetKey assetKey = request.getAssetKey();
-         String assetId = assetKey.getAssetId();
-         String path = null;
-         path = GovernanceUtils.getArtifactPath(wso2, assetId);
-
-         if (path == null) {
-            return createAssetNotFoundError(errorDataList, response);
-         }
-
-         GovernanceUtils.removeArtifact(wso2, assetId);
-
-         return RSProviderUtil.setSuccessResponse(response);
-      } catch (Exception ex) {
-         return RSProviderUtil.handleException(ex, response,
-                  RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
-      }
+      return new RemoveAsset().process(request);
    }
 
    /**
@@ -199,45 +107,7 @@ public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider im
     */
    @Override
    public UpdateAssetResponse updateAsset(UpdateAssetRequest request) {
-      Registry wso2 = RSProviderUtil.getRegistry();
-      List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
-      UpdateAssetResponse response = new UpdateAssetResponse();
-
-      try {
-         BasicAssetInfo basicInfo = request.getBasicAssetInfo();
-
-         AssetFactory factory = new AssetFactory(basicInfo, wso2);
-         Asset asset = factory.createAsset();
-
-         if (!asset.exists()) {
-            return createErrorDuplicateAsset(errorDataList, response);
-         }
-
-         asset.findAsset();
-
-         if (!asset.isLocked()) {
-            asset.lockAsset();
-         }
-
-         GovernanceArtifact artifact = asset.getGovernanceArtifact();
-         artifact.setAttribute(AssetConstants.TURMERIC_DESCRIPTION, basicInfo.getAssetDescription());
-         artifact.setAttribute(AssetConstants.TURMERIC_NAME, basicInfo.getAssetName());
-         artifact.setAttribute(AssetConstants.TURMERIC_NAMESPACE, basicInfo.getNamespace());
-         artifact.setAttribute(AssetConstants.TURMERIC_LONG_DESCRIPTION, basicInfo.getAssetLongDescription());
-         artifact.setAttribute(AssetConstants.TURMERIC_VERSION, basicInfo.getVersion());
-
-         asset.save();
-
-         AssetInfo assetInfo = getAssetInfo(asset);
-
-         // populate the response
-         response.setAssetInfo(assetInfo);
-         response.setVersion(assetInfo.getBasicAssetInfo().getVersion());
-         return RSProviderUtil.setSuccessResponse(response);
-      } catch (Exception ex) {
-         return RSProviderUtil.handleException(ex, new UpdateAssetResponse(),
-                  RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
-      }
+      return new UpdateAsset().process(request);
    }
 
    /**
@@ -245,31 +115,7 @@ public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider im
     */
    @Override
    public RejectAssetResponse rejectAsset(RejectAssetRequest request) {
-      Registry wso2 = RSProviderUtil.getRegistry();
-      List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
-      RejectAssetResponse response = new RejectAssetResponse();
-
-      try {
-         RejectionInfo rejectionInfo = request.getRejectionInfo();
-         String assetId = rejectionInfo.getAssetId();
-         GovernanceArtifact gart = GovernanceUtils.retrieveGovernanceArtifactById(wso2, assetId);
-
-         if (gart == null) {
-            return createAssetNotFoundError(errorDataList, response);
-         }
-
-         Resource asset = wso2.get(assetId);
-         RSLifeCycle.reject(asset, rejectionInfo.getComments());
-
-         wso2.put(assetId, asset);
-
-         response.setTimestamp(DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar()));
-         response.setVersion(asset.getProperty(RSProviderUtil.__artifactVersionPropName));
-         return RSProviderUtil.setSuccessResponse(response);
-      } catch (Exception ex) {
-         return RSProviderUtil.handleException(ex, response,
-                  RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
-      }
+      return new RejectAsset().process(request);
    }
 
    /**
@@ -293,33 +139,7 @@ public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider im
     */
    @Override
    public SubmitForPublishingResponse submitForPublishing(SubmitForPublishingRequest request) {
-      Registry wso2 = RSProviderUtil.getRegistry();
-      List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
-      SubmitForPublishingResponse response = new SubmitForPublishingResponse();
-
-      try {
-
-         AssetFactory factory = new AssetFactory(request.getAssetKey(), wso2);
-         Asset gasset = factory.createAsset();
-         AssetKey assetKey = getAssetKey(gasset);
-         String assetId = assetKey.getAssetId();
-
-         if (!gasset.exists()) {
-            return createAssetNotFoundError(errorDataList, response);
-         }
-
-         Resource asset = wso2.get(assetId);
-         RSLifeCycle.submit(asset, request.getComment());
-
-         wso2.put(assetId, asset);
-
-         response.setTimestamp(DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar()));
-         response.setVersion(asset.getProperty(AssetConstants.TURMERIC_VERSION));
-         return RSProviderUtil.setSuccessResponse(response);
-      } catch (Exception ex) {
-         return RSProviderUtil.handleException(ex, response,
-                  RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
-      }
+      return new SubmitForPublishing().process(request);
    }
 
    /**
@@ -359,38 +179,7 @@ public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider im
     */
    @Override
    public UnlockAssetResponse unlockAsset(UnlockAssetRequest request) {
-      Registry wso2 = RSProviderUtil.getRegistry();
-      List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
-      UnlockAssetResponse response = new UnlockAssetResponse();
-
-      try {
-         AssetKey assetKey = request.getAssetKey();
-         BasicAssetInfo basicInfo = populateMinBasicAssetInfo(assetKey);
-
-         AssetFactory factory = new AssetFactory(basicInfo, wso2);
-         Asset asset = factory.createAsset();
-
-         if (!asset.exists()) {
-            return createAssetNotFoundError(errorDataList, response);
-         }
-
-         asset.findAsset();
-
-         if (asset.isLocked()) {
-            asset.unlock();
-            asset.save();
-         }
-
-         AssetInfo assetInfo = getAssetInfo(asset);
-
-         // populate the response
-         response.setAssetInfo(assetInfo);
-         response.setVersion(assetInfo.getBasicAssetInfo().getVersion());
-         return RSProviderUtil.setSuccessResponse(response);
-      } catch (Exception ex) {
-         return RSProviderUtil.handleException(ex, response,
-                  RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
-      }
+      return new UnlockAsset().process(request);
    }
 
    /**
@@ -447,65 +236,7 @@ public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider im
     */
    @Override
    public UpdateCompleteAssetResponse updateCompleteAsset(UpdateCompleteAssetRequest request) {
-      Registry wso2 = RSProviderUtil.getRegistry();
-      List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
-      UpdateCompleteAssetResponse response = new UpdateCompleteAssetResponse();
-
-      try {
-         AssetInfoForUpdate updateInfo = request.getAssetInfoForUpdate();
-         BasicAssetInfo basicInfo = updateInfo.getBasicAssetInfo();
-         AssetKey assetKey = basicInfo.getAssetKey();
-         AssetFactory factory = new AssetFactory(basicInfo, wso2);
-         Asset asset = factory.createAsset();
-
-         if (!asset.exists()) {
-            return createAssetNotFoundError(errorDataList, response);
-         }
-
-         asset.findAsset();
-
-         // if (!asset.isLocked()) {
-         // return createAssetNotLocked(errorDataList, response);
-         // }
-
-         // get the existing assetInfo
-         AssetInfo origAssetInfo = getAssetInfo(asset);
-
-         if (origAssetInfo == null) {
-            return createAssetTypeException(errorDataList, response);
-         }
-
-         AssetKey origAssetKey = origAssetInfo.getBasicAssetInfo().getAssetKey();
-
-         // update the assetInfo
-         AssetKey newAssetKey = new AssetKey();
-         newAssetKey.setAssetName(basicInfo.getAssetName());
-         newAssetKey.setAssetId(origAssetKey.getAssetId());
-
-         basicInfo.setAssetKey(newAssetKey);
-         origAssetInfo.setBasicAssetInfo(basicInfo);
-
-         GovernanceArtifact wso2artifact = asset.getGovernanceArtifact();
-         updateBasicInfo(basicInfo, wso2artifact);
-         // updateRelationships - i.e. dependencies
-         // update LifeCycles
-
-         // Update the asset
-         asset.save();
-
-         // populate the response
-         response.setAssetKey(assetKey);
-         response.setVersion(basicInfo.getVersion());
-         return RSProviderUtil.setSuccessResponse(response);
-      } catch (Exception ex) {
-         return RSProviderUtil.handleException(ex, response,
-                  RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
-      }
-   }
-
-   private GovernanceArtifact updateBasicInfo(BasicAssetInfo basicInfo, GovernanceArtifact artifact) {
-      GovernanceArtifact gart = artifact;
-      return gart;
+      return new UpdateCompleteAsset().process(request);
    }
 
    @Override
@@ -526,45 +257,7 @@ public class RepositoryServiceProviderImpl extends AbstractRepositoryProvider im
     */
    @Override
    public UpdateAssetDependenciesResponse updateAssetDependencies(UpdateAssetDependenciesRequest request) {
-      Registry wso2 = RSProviderUtil.getRegistry();
-      List<CommonErrorData> errorDataList = new ArrayList<CommonErrorData>();
-      UpdateAssetDependenciesResponse response = new UpdateAssetDependenciesResponse();
-
-      try {
-         AssetFactory factory = new AssetFactory(request.getAssetKey(), wso2);
-         Asset asset = factory.createAsset();
-
-         if (asset.exists()) {
-            return createAssetNotFoundError(errorDataList, response);
-         }
-
-         asset.findAsset();
-
-         if (asset.isLocked()) {
-            return createAssetNotLocked(errorDataList, response);
-         }
-
-         // get the existing assetInfo
-         AssetInfo assetInfo = getAssetInfo(asset);
-
-         if (assetInfo == null) {
-            return createAssetTypeException(errorDataList, response);
-         }
-
-         if (request.isReplaceCurrent()) {
-            // Remove and Update everything.
-         } else {
-            // Add and Update
-         }
-
-         // populate the response
-         response.setVersion(assetInfo.getBasicAssetInfo().getVersion());
-         return RSProviderUtil.setSuccessResponse(response);
-
-      } catch (Exception ex) {
-         return RSProviderUtil.handleException(ex, response,
-                  RepositoryServiceErrorDescriptor.SERVICE_PROVIDER_EXCEPTION);
-      }
+      return new UpdateAssetDependencies().process(request);
    }
 
    /**

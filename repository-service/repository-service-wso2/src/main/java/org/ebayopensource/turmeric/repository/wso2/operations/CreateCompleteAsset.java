@@ -69,6 +69,8 @@ public class CreateCompleteAsset extends AbstractRepositoryProvider {
 
          asset.addAsset();
 
+         // TODO: Implement complete asset
+
          // Attach items to the asset after it has been added.
          List<ArtifactInfo> artifactInfoList = request.getAssetInfo().getArtifactInfo();
          for (ArtifactInfo artifactInfo : artifactInfoList) {

@@ -13,7 +13,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.xerces.jaxp.datatype.DatatypeFactoryImpl;
 import org.ebayopensource.turmeric.common.v1.types.CommonErrorData;
+import org.ebayopensource.turmeric.repository.v2.services.Artifact;
 import org.ebayopensource.turmeric.repository.v2.services.ArtifactInfo;
 import org.ebayopensource.turmeric.repository.v2.services.AssetInfo;
 import org.ebayopensource.turmeric.repository.v2.services.UpdateAssetArtifactsRequest;
@@ -81,9 +83,10 @@ public class UpdateAssetArtifacts extends AbstractRepositoryProvider {
          }
 
          GovernanceArtifact artifact = asset.getGovernanceArtifact();
+         ArrayList<GovernanceArtifact> gdependencies = new ArrayList(Arrays.asList(artifact.getDependencies()));
+         ArrayList<GovernanceArtifact> newDependencies = new ArrayList(gdependencies);
 
          if (request.isReplaceCurrent()) {
-            ArrayList<GovernanceArtifact> gdependencies = new ArrayList(Arrays.asList(artifact.getDependencies()));
             for (ArtifactInfo ainfo : request.getArtifactInfo()) {
                for (GovernanceArtifact gart : gdependencies) {
                   if (gart.getAttribute(AssetConstants.TURMERIC_NAME).equals(ainfo.getArtifact().getArtifactName())) {
@@ -101,6 +104,19 @@ public class UpdateAssetArtifacts extends AbstractRepositoryProvider {
          }
 
          asset.save();
+
+         List<Artifact> rInfo = response.getArtifact();
+         for (GovernanceArtifact gart : newDependencies) {
+            Artifact art = new Artifact();
+            art.setArtifactCategory(gart.getAttribute(AssetConstants.TURMERIC_TYPE));
+            art.setArtifactDisplayName(gart.getAttribute(AssetConstants.TURMERIC_DISPLAY_NAME));
+            art.setArtifactIdentifier(gart.getId());
+            art.setArtifactName(gart.getAttribute(AssetConstants.TURMERIC_NAME));
+            art.setTargetNamespace(gart.getAttribute(AssetConstants.TURMERIC_NAMESPACE));
+            rInfo.add(art);
+         }
+
+         response.setTimestamp(new DatatypeFactoryImpl().newXMLGregorianCalendar());
 
          // populate the response
          response.setVersion(assetInfo.getBasicAssetInfo().getVersion());
