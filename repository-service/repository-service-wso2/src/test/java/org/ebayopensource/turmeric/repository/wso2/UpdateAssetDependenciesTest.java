@@ -13,7 +13,6 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import org.ebayopensource.turmeric.common.v1.types.AckValue;
@@ -142,7 +141,6 @@ public class UpdateAssetDependenciesTest extends Wso2Base {
    }
 
    @Test
-   @Ignore
    public void updateTest() throws Exception {
       // first, create the complete asset
       CreateCompleteAssetResponse response = createAsset();
