@@ -115,6 +115,8 @@ public class CreateCompleteAssetTest extends Wso2Base {
       Service service = serviceManager.getService(id);
       assertNotNull(service);
       assertTrue("No WSDLs were found as attachments", service.getAttachedWsdls().length > 0);
+      assertTrue("No Endpoints were found as attachments", service.getAttachedEndpoints().length > 0);
+      assertNotNull("Missing string extended attribute", service.getAttribute("stringProperty"));
    }
 
    @Test

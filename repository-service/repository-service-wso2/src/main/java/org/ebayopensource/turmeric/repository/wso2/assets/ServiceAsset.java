@@ -18,7 +18,10 @@ import org.ebayopensource.turmeric.repository.wso2.RSProviderUtil;
 import org.ebayopensource.turmeric.repository.wso2.filters.DuplicateServiceFilter;
 import org.ebayopensource.turmeric.repository.wso2.filters.FindServiceByNameVersionFilter;
 import org.wso2.carbon.governance.api.common.dataobjects.GovernanceArtifact;
+import org.wso2.carbon.governance.api.endpoints.EndpointManager;
+import org.wso2.carbon.governance.api.endpoints.dataobjects.Endpoint;
 import org.wso2.carbon.governance.api.exception.GovernanceException;
+import org.wso2.carbon.governance.api.schema.dataobjects.Schema;
 import org.wso2.carbon.governance.api.services.ServiceManager;
 import org.wso2.carbon.governance.api.services.dataobjects.Service;
 import org.wso2.carbon.governance.api.wsdls.WsdlManager;
@@ -137,6 +140,29 @@ public class ServiceAsset implements Asset {
                e.printStackTrace();
             }
          }
+         if ("Schema".equalsIgnoreCase(asset.getType())) {
+            try {
+               String artifactId = asset.getId();
+               SchemaManager manager = new SchemaManager(registry);
+               Schema schema = manager.getSchema(artifactId);
+               service.attachSchema(schema);
+               return asset.getGovernanceArtifact();
+            } catch (GovernanceException e) {
+               e.printStackTrace();
+            }
+         }
+         if ("EndPoint".equalsIgnoreCase(asset.getType())) {
+            try {
+               String artifactId = asset.getId();
+               EndpointManager manager = new EndpointManager(registry);
+               Endpoint ep = manager.getEndpoint(artifactId);
+               service.attachEndpoint(ep);
+               return asset.getGovernanceArtifact();
+            } catch (GovernanceException e) {
+               e.printStackTrace();
+            }
+         }
+
       }
       return null;
    }

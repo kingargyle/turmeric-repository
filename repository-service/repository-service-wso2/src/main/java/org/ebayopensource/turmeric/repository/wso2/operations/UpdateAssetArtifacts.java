@@ -87,6 +87,12 @@ public class UpdateAssetArtifacts extends AbstractRepositoryProvider {
          ArrayList<GovernanceArtifact> newDependencies = new ArrayList(gdependencies);
 
          if (request.isReplaceCurrent()) {
+            // Remove all existing dependencies.
+            // Locate a Dependency
+            // if artifact does not already exist in repository create it.
+            // if artifact already exists, update it.
+            // add as depdency to Asset
+
             for (ArtifactInfo ainfo : request.getArtifactInfo()) {
                for (GovernanceArtifact gart : gdependencies) {
                   if (gart.getAttribute(AssetConstants.TURMERIC_NAME).equals(ainfo.getArtifact().getArtifactName())) {
@@ -100,7 +106,9 @@ public class UpdateAssetArtifacts extends AbstractRepositoryProvider {
             }
 
          } else {
-            // Update existing artifacts and add new ones
+            // check for artifact if it doesn't exist not create it and then add.
+            // if it exists update it
+
          }
 
          asset.save();
