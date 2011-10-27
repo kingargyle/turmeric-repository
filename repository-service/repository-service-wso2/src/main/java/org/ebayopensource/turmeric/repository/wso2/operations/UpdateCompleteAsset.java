@@ -15,15 +15,19 @@ import org.ebayopensource.turmeric.common.v1.types.CommonErrorData;
 import org.ebayopensource.turmeric.repository.v2.services.AssetInfo;
 import org.ebayopensource.turmeric.repository.v2.services.AssetInfoForUpdate;
 import org.ebayopensource.turmeric.repository.v2.services.AssetKey;
+import org.ebayopensource.turmeric.repository.v2.services.AttributeNameValue;
 import org.ebayopensource.turmeric.repository.v2.services.BasicAssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.ExtendedAssetInfo;
 import org.ebayopensource.turmeric.repository.v2.services.UpdateCompleteAssetRequest;
 import org.ebayopensource.turmeric.repository.v2.services.UpdateCompleteAssetResponse;
 import org.ebayopensource.turmeric.repository.wso2.AbstractRepositoryProvider;
 import org.ebayopensource.turmeric.repository.wso2.Asset;
 import org.ebayopensource.turmeric.repository.wso2.AssetFactory;
 import org.ebayopensource.turmeric.repository.wso2.RSProviderUtil;
+import org.ebayopensource.turmeric.repository.wso2.assets.AssetConstants;
 import org.ebayopensource.turmeric.services.common.error.RepositoryServiceErrorDescriptor;
 import org.wso2.carbon.governance.api.common.dataobjects.GovernanceArtifact;
+import org.wso2.carbon.governance.api.exception.GovernanceException;
 import org.wso2.carbon.registry.core.Registry;
 
 public class UpdateCompleteAsset extends AbstractRepositoryProvider {
@@ -67,9 +71,12 @@ public class UpdateCompleteAsset extends AbstractRepositoryProvider {
          basicInfo.setAssetKey(newAssetKey);
          origAssetInfo.setBasicAssetInfo(basicInfo);
 
-         GovernanceArtifact wso2artifact = asset.getGovernanceArtifact();
-         updateBasicInfo(basicInfo, wso2artifact);
-         // updateRelationships - i.e. dependencies
+         updateBasicInfo(basicInfo, asset);
+
+         ExtendedAssetInfo extInfo = request.getAssetInfoForUpdate().getExtendedAssetInfo();
+
+         updateExtendedAttributes(extInfo, asset);
+
          // update LifeCycles
 
          // Update the asset
@@ -85,9 +92,33 @@ public class UpdateCompleteAsset extends AbstractRepositoryProvider {
       }
    }
 
-   private GovernanceArtifact updateBasicInfo(BasicAssetInfo basicInfo, GovernanceArtifact artifact) {
-      GovernanceArtifact gart = artifact;
-      return gart;
+   private void updateBasicInfo(BasicAssetInfo basicInfo, Asset asset) throws GovernanceException {
+      GovernanceArtifact gart = asset.getGovernanceArtifact();
+
+      if (basicInfo.getAssetDescription() != null) {
+         gart.setAttribute(AssetConstants.TURMERIC_DESCRIPTION, basicInfo.getAssetDescription());
+      }
+
+      if (basicInfo.getAssetLongDescription() != null) {
+         gart.setAttribute(AssetConstants.TURMERIC_LONG_DESCRIPTION, basicInfo.getAssetLongDescription());
+      }
+
+      if (basicInfo.getGroupName() != null) {
+         gart.setAttribute(AssetConstants.TURMERIC_OWNER, basicInfo.getGroupName());
+      }
    }
 
+   private void updateExtendedAttributes(ExtendedAssetInfo extInfo, Asset asset) throws GovernanceException {
+      GovernanceArtifact gart = asset.getGovernanceArtifact();
+
+      for (AttributeNameValue attr : extInfo.getAttribute()) {
+         if (attr.getAttributeName() != null) {
+            if (attr.getAttributeValueString() != null) {
+               gart.setAttribute(attr.getAttributeName(), attr.getAttributeValueString());
+            } else if (attr.getAttributeValueLong() != null) {
+               gart.setAttribute(attr.getAttributeName(), attr.getAttributeValueLong().toString());
+            }
+         }
+      }
+   }
 }
