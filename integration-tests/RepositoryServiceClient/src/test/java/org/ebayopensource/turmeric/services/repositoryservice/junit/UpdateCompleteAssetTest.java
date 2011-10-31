@@ -13,8 +13,7 @@ import junit.framework.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AssetKey;
+import org.ebayopensource.turmeric.repository.v2.services.*;
 import org.ebayopensource.turmeric.services.repository.listener.util.CommonUtil;
 import org.ebayopensource.turmeric.services.repositoryservice.operation.consumer.UpdateCompleteAssetConsumer;
 import static org.junit.Assume.assumeTrue;

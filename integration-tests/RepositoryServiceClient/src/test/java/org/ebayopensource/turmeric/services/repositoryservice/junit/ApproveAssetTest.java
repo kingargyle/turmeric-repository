@@ -21,9 +21,7 @@ import org.ebayopensource.turmeric.assetcreation.exception.AssetCreationExceptio
 import org.ebayopensource.turmeric.assetcreation.exception.AssetInfoNotFoundException;
 import org.ebayopensource.turmeric.assetcreation.exception.IdNotFoundException;
 import org.ebayopensource.turmeric.assetcreation.exception.UpdateCompleteAssetException;
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfoForUpdate;
-import org.ebayopensource.turmeric.repository.v1.services.AssetKey;
+import org.ebayopensource.turmeric.repository.v2.services.*;
 import org.ebayopensource.turmeric.repository.wso2.utils.AbstractCarbonIntegrationTestCase;
 import org.ebayopensource.turmeric.services.repositoryservice.exception.ProcessingException;
 import org.ebayopensource.turmeric.services.repositoryservice.operation.consumer.ApproveAssetConsumer;

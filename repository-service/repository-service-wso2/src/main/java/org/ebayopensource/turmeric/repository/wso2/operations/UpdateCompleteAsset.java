@@ -10,7 +10,11 @@
 package org.ebayopensource.turmeric.repository.wso2.operations;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
+
+import javax.xml.datatype.DatatypeFactory;
+
 import org.ebayopensource.turmeric.common.v1.types.CommonErrorData;
 import org.ebayopensource.turmeric.repository.v2.services.AssetInfo;
 import org.ebayopensource.turmeric.repository.v2.services.AssetInfoForUpdate;
@@ -73,6 +77,8 @@ public class UpdateCompleteAsset extends AbstractRepositoryProvider {
 
          updateBasicInfo(basicInfo, asset);
 
+         // Add Update Dependencies
+
          ExtendedAssetInfo extInfo = request.getAssetInfoForUpdate().getExtendedAssetInfo();
 
          updateExtendedAttributes(extInfo, asset);
@@ -85,6 +91,7 @@ public class UpdateCompleteAsset extends AbstractRepositoryProvider {
          // populate the response
          response.setAssetKey(assetKey);
          response.setVersion(basicInfo.getVersion());
+         response.setTimestamp(DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar()));
          return RSProviderUtil.setSuccessResponse(response);
       } catch (Exception ex) {
          return RSProviderUtil.handleException(ex, response,

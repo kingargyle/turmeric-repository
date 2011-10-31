@@ -16,87 +16,8 @@ import java.util.concurrent.Future;
 import javax.xml.ws.AsyncHandler;
 import javax.xml.ws.Response;
 
-import org.ebayopensource.turmeric.repository.v1.services.ApproveAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.ApproveAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.CreateAndSubmitAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.CreateAndSubmitAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.CreateAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.CreateAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.CreateCompleteAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.CreateCompleteAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.CreateServiceRequest;
-import org.ebayopensource.turmeric.repository.v1.services.CreateServiceResponse;
-import org.ebayopensource.turmeric.repository.v1.services.GetAllAssetsGroupedByCategoryRequest;
-import org.ebayopensource.turmeric.repository.v1.services.GetAllAssetsGroupedByCategoryResponse;
-import org.ebayopensource.turmeric.repository.v1.services.GetAllProjectsAndGroupsRequest;
-import org.ebayopensource.turmeric.repository.v1.services.GetAllProjectsAndGroupsResponse;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetDependenciesByGraphRequest;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetDependenciesByGraphResponse;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetDependenciesRequest;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetDependenciesResponse;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetInfoRequest;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetInfoResponse;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetLifeCycleStatesRequest;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetLifeCycleStatesResponse;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetStatusRequest;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetStatusResponse;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetSubmissionPropertiesRequest;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetSubmissionPropertiesResponse;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetTreeByAttributesRequest;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetTreeByAttributesResponse;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetTypesRequest;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetTypesResponse;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetVersionsRequest;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetVersionsResponse;
-import org.ebayopensource.turmeric.repository.v1.services.GetBasicAssetInfoRequest;
-import org.ebayopensource.turmeric.repository.v1.services.GetBasicAssetInfoResponse;
-import org.ebayopensource.turmeric.repository.v1.services.GetCatalogAssetInfoRequest;
-import org.ebayopensource.turmeric.repository.v1.services.GetCatalogAssetInfoResponse;
-import org.ebayopensource.turmeric.repository.v1.services.GetLibraryListRequest;
-import org.ebayopensource.turmeric.repository.v1.services.GetLibraryListResponse;
-import org.ebayopensource.turmeric.repository.v1.services.GetServiceRequest;
-import org.ebayopensource.turmeric.repository.v1.services.GetServiceResponse;
-import org.ebayopensource.turmeric.repository.v1.services.GetSubscriptionRequest;
-import org.ebayopensource.turmeric.repository.v1.services.GetSubscriptionResponse;
-import org.ebayopensource.turmeric.repository.v1.services.GetUsersProjectsAndGroupsRequest;
-import org.ebayopensource.turmeric.repository.v1.services.GetUsersProjectsAndGroupsResponse;
-import org.ebayopensource.turmeric.repository.v1.services.LockAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.LockAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.RejectAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.RejectAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.RemoveAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.RemoveAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.SearchAssetsDetailedRequest;
-import org.ebayopensource.turmeric.repository.v1.services.SearchAssetsDetailedResponse;
-import org.ebayopensource.turmeric.repository.v1.services.SearchAssetsRequest;
-import org.ebayopensource.turmeric.repository.v1.services.SearchAssetsResponse;
-import org.ebayopensource.turmeric.repository.v1.services.SubmitForPublishingRequest;
-import org.ebayopensource.turmeric.repository.v1.services.SubmitForPublishingResponse;
-import org.ebayopensource.turmeric.repository.v1.services.SubscribeRequest;
-import org.ebayopensource.turmeric.repository.v1.services.SubscribeResponse;
-import org.ebayopensource.turmeric.repository.v1.services.UnlockAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.UnlockAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.UnsubscribeRequest;
-import org.ebayopensource.turmeric.repository.v1.services.UnsubscribeResponse;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateAssetArtifactsRequest;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateAssetArtifactsResponse;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateAssetAttributesRequest;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateAssetAttributesResponse;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateAssetDependenciesByGraphRequest;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateAssetDependenciesByGraphResponse;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateAssetDependenciesRequest;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateAssetDependenciesResponse;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateCompleteAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateCompleteAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateServiceRequest;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateServiceResponse;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateSubscriptionRequest;
-import org.ebayopensource.turmeric.repository.v1.services.UpdateSubscriptionResponse;
-import org.ebayopensource.turmeric.repository.v1.services.ValidateAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.ValidateAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.repositoryservice.impl.AsyncTurmericRSV1;
+import org.ebayopensource.turmeric.repository.v2.services.*;
+import org.ebayopensource.turmeric.repository.v2.services.impl.AsyncTurmericRSV2;
 
 import org.ebayopensource.turmeric.runtime.common.exceptions.ServiceException;
 import org.ebayopensource.turmeric.runtime.common.exceptions.ServiceRuntimeException;
@@ -114,7 +35,7 @@ import org.ebayopensource.turmeric.services.repositoryservice.operation.consumer
 public class BaseRepositoryServiceConsumer {
 
    private URL m_serviceLocation = null;
-   private AsyncTurmericRSV1 m_proxy = null;
+   private AsyncTurmericRSV2 m_proxy = null;
    private String m_authToken = null;
    private Cookie[] m_cookies;
    private Service m_service = null;
@@ -162,7 +83,7 @@ public class BaseRepositoryServiceConsumer {
       return m_service.getInvokerOptions();
    }
 
-   protected AsyncTurmericRSV1 getProxy() throws ServiceException {
+   protected AsyncTurmericRSV2 getProxy() throws ServiceException {
       m_service = getService();
       m_proxy = m_service.getProxy();
       return m_proxy;
@@ -190,28 +111,6 @@ public class BaseRepositoryServiceConsumer {
          throw ServiceRuntimeException.wrap(serviceException);
       }
       result = m_proxy.poll(param0, param1);
-      return result;
-   }
-
-   public Response<GetServiceResponse> getServiceAsync(GetServiceRequest param0) {
-      Response<GetServiceResponse> result = null;
-      try {
-         m_proxy = getProxy();
-      } catch (ServiceException serviceException) {
-         throw ServiceRuntimeException.wrap(serviceException);
-      }
-      result = m_proxy.getServiceAsync(param0);
-      return result;
-   }
-
-   public Future<?> getServiceAsync(GetServiceRequest param0, AsyncHandler<GetServiceResponse> param1) {
-      Future<?> result = null;
-      try {
-         m_proxy = getProxy();
-      } catch (ServiceException serviceException) {
-         throw ServiceRuntimeException.wrap(serviceException);
-      }
-      result = m_proxy.getServiceAsync(param0, param1);
       return result;
    }
 
@@ -259,30 +158,6 @@ public class BaseRepositoryServiceConsumer {
       return result;
    }
 
-   public Future<?> getUsersProjectsAndGroupsAsync(GetUsersProjectsAndGroupsRequest param0,
-            AsyncHandler<GetUsersProjectsAndGroupsResponse> param1) {
-      Future<?> result = null;
-      try {
-         m_proxy = getProxy();
-      } catch (ServiceException serviceException) {
-         throw ServiceRuntimeException.wrap(serviceException);
-      }
-      result = m_proxy.getUsersProjectsAndGroupsAsync(param0, param1);
-      return result;
-   }
-
-   public Response<GetUsersProjectsAndGroupsResponse> getUsersProjectsAndGroupsAsync(
-            GetUsersProjectsAndGroupsRequest param0) {
-      Response<GetUsersProjectsAndGroupsResponse> result = null;
-      try {
-         m_proxy = getProxy();
-      } catch (ServiceException serviceException) {
-         throw ServiceRuntimeException.wrap(serviceException);
-      }
-      result = m_proxy.getUsersProjectsAndGroupsAsync(param0);
-      return result;
-   }
-
    public Response<SearchAssetsResponse> searchAssetsAsync(SearchAssetsRequest param0) {
       Response<SearchAssetsResponse> result = null;
       try {
@@ -325,30 +200,6 @@ public class BaseRepositoryServiceConsumer {
          throw ServiceRuntimeException.wrap(serviceException);
       }
       result = m_proxy.updateAssetArtifactsAsync(param0, param1);
-      return result;
-   }
-
-   public Response<UpdateAssetDependenciesByGraphResponse> updateAssetDependenciesByGraphAsync(
-            UpdateAssetDependenciesByGraphRequest param0) {
-      Response<UpdateAssetDependenciesByGraphResponse> result = null;
-      try {
-         m_proxy = getProxy();
-      } catch (ServiceException serviceException) {
-         throw ServiceRuntimeException.wrap(serviceException);
-      }
-      result = m_proxy.updateAssetDependenciesByGraphAsync(param0);
-      return result;
-   }
-
-   public Future<?> updateAssetDependenciesByGraphAsync(UpdateAssetDependenciesByGraphRequest param0,
-            AsyncHandler<UpdateAssetDependenciesByGraphResponse> param1) {
-      Future<?> result = null;
-      try {
-         m_proxy = getProxy();
-      } catch (ServiceException serviceException) {
-         throw ServiceRuntimeException.wrap(serviceException);
-      }
-      result = m_proxy.updateAssetDependenciesByGraphAsync(param0, param1);
       return result;
    }
 
@@ -465,28 +316,6 @@ public class BaseRepositoryServiceConsumer {
       return result;
    }
 
-   public Response<CreateServiceResponse> createServiceAsync(CreateServiceRequest param0) {
-      Response<CreateServiceResponse> result = null;
-      try {
-         m_proxy = getProxy();
-      } catch (ServiceException serviceException) {
-         throw ServiceRuntimeException.wrap(serviceException);
-      }
-      result = m_proxy.createServiceAsync(param0);
-      return result;
-   }
-
-   public Future<?> createServiceAsync(CreateServiceRequest param0, AsyncHandler<CreateServiceResponse> param1) {
-      Future<?> result = null;
-      try {
-         m_proxy = getProxy();
-      } catch (ServiceException serviceException) {
-         throw ServiceRuntimeException.wrap(serviceException);
-      }
-      result = m_proxy.createServiceAsync(param0, param1);
-      return result;
-   }
-
    public Future<?> getAssetSubmissionPropertiesAsync(GetAssetSubmissionPropertiesRequest param0,
             AsyncHandler<GetAssetSubmissionPropertiesResponse> param1) {
       Future<?> result = null;
@@ -555,29 +384,6 @@ public class BaseRepositoryServiceConsumer {
       return result;
    }
 
-   public Response<GetAllProjectsAndGroupsResponse> getAllProjectsAndGroupsAsync(GetAllProjectsAndGroupsRequest param0) {
-      Response<GetAllProjectsAndGroupsResponse> result = null;
-      try {
-         m_proxy = getProxy();
-      } catch (ServiceException serviceException) {
-         throw ServiceRuntimeException.wrap(serviceException);
-      }
-      result = m_proxy.getAllProjectsAndGroupsAsync(param0);
-      return result;
-   }
-
-   public Future<?> getAllProjectsAndGroupsAsync(GetAllProjectsAndGroupsRequest param0,
-            AsyncHandler<GetAllProjectsAndGroupsResponse> param1) {
-      Future<?> result = null;
-      try {
-         m_proxy = getProxy();
-      } catch (ServiceException serviceException) {
-         throw ServiceRuntimeException.wrap(serviceException);
-      }
-      result = m_proxy.getAllProjectsAndGroupsAsync(param0, param1);
-      return result;
-   }
-
    public Future<?> searchAssetsDetailedAsync(SearchAssetsDetailedRequest param0,
             AsyncHandler<SearchAssetsDetailedResponse> param1) {
       Future<?> result = null;
@@ -620,30 +426,6 @@ public class BaseRepositoryServiceConsumer {
          throw ServiceRuntimeException.wrap(serviceException);
       }
       result = m_proxy.getSubscriptionAsync(param0, param1);
-      return result;
-   }
-
-   public Response<GetAssetDependenciesByGraphResponse> getAssetDependenciesByGraphAsync(
-            GetAssetDependenciesByGraphRequest param0) {
-      Response<GetAssetDependenciesByGraphResponse> result = null;
-      try {
-         m_proxy = getProxy();
-      } catch (ServiceException serviceException) {
-         throw ServiceRuntimeException.wrap(serviceException);
-      }
-      result = m_proxy.getAssetDependenciesByGraphAsync(param0);
-      return result;
-   }
-
-   public Future<?> getAssetDependenciesByGraphAsync(GetAssetDependenciesByGraphRequest param0,
-            AsyncHandler<GetAssetDependenciesByGraphResponse> param1) {
-      Future<?> result = null;
-      try {
-         m_proxy = getProxy();
-      } catch (ServiceException serviceException) {
-         throw ServiceRuntimeException.wrap(serviceException);
-      }
-      result = m_proxy.getAssetDependenciesByGraphAsync(param0, param1);
       return result;
    }
 
@@ -849,51 +631,6 @@ public class BaseRepositoryServiceConsumer {
       return result;
    }
 
-   public Response<GetCatalogAssetInfoResponse> getCatalogAssetInfoAsync(GetCatalogAssetInfoRequest param0) {
-      Response<GetCatalogAssetInfoResponse> result = null;
-      try {
-         m_proxy = getProxy();
-      } catch (ServiceException serviceException) {
-         throw ServiceRuntimeException.wrap(serviceException);
-      }
-      result = m_proxy.getCatalogAssetInfoAsync(param0);
-      return result;
-   }
-
-   public Future<?> getCatalogAssetInfoAsync(GetCatalogAssetInfoRequest param0,
-            AsyncHandler<GetCatalogAssetInfoResponse> param1) {
-      Future<?> result = null;
-      try {
-         m_proxy = getProxy();
-      } catch (ServiceException serviceException) {
-         throw ServiceRuntimeException.wrap(serviceException);
-      }
-      result = m_proxy.getCatalogAssetInfoAsync(param0, param1);
-      return result;
-   }
-
-   public Response<GetLibraryListResponse> getLibraryListAsync(GetLibraryListRequest param0) {
-      Response<GetLibraryListResponse> result = null;
-      try {
-         m_proxy = getProxy();
-      } catch (ServiceException serviceException) {
-         throw ServiceRuntimeException.wrap(serviceException);
-      }
-      result = m_proxy.getLibraryListAsync(param0);
-      return result;
-   }
-
-   public Future<?> getLibraryListAsync(GetLibraryListRequest param0, AsyncHandler<GetLibraryListResponse> param1) {
-      Future<?> result = null;
-      try {
-         m_proxy = getProxy();
-      } catch (ServiceException serviceException) {
-         throw ServiceRuntimeException.wrap(serviceException);
-      }
-      result = m_proxy.getLibraryListAsync(param0, param1);
-      return result;
-   }
-
    public Response<GetAllAssetsGroupedByCategoryResponse> getAllAssetsGroupedByCategoryAsync(
             GetAllAssetsGroupedByCategoryRequest param0) {
       Response<GetAllAssetsGroupedByCategoryResponse> result = null;
@@ -915,28 +652,6 @@ public class BaseRepositoryServiceConsumer {
          throw ServiceRuntimeException.wrap(serviceException);
       }
       result = m_proxy.getAllAssetsGroupedByCategoryAsync(param0, param1);
-      return result;
-   }
-
-   public Response<UpdateServiceResponse> updateServiceAsync(UpdateServiceRequest param0) {
-      Response<UpdateServiceResponse> result = null;
-      try {
-         m_proxy = getProxy();
-      } catch (ServiceException serviceException) {
-         throw ServiceRuntimeException.wrap(serviceException);
-      }
-      result = m_proxy.updateServiceAsync(param0);
-      return result;
-   }
-
-   public Future<?> updateServiceAsync(UpdateServiceRequest param0, AsyncHandler<UpdateServiceResponse> param1) {
-      Future<?> result = null;
-      try {
-         m_proxy = getProxy();
-      } catch (ServiceException serviceException) {
-         throw ServiceRuntimeException.wrap(serviceException);
-      }
-      result = m_proxy.updateServiceAsync(param0, param1);
       return result;
    }
 
@@ -1099,28 +814,6 @@ public class BaseRepositoryServiceConsumer {
       return result;
    }
 
-   public GetServiceResponse getService(GetServiceRequest param0) {
-      GetServiceResponse result = null;
-      try {
-         m_proxy = getProxy();
-      } catch (ServiceException serviceException) {
-         throw ServiceRuntimeException.wrap(serviceException);
-      }
-      result = m_proxy.getService(param0);
-      return result;
-   }
-
-   public CreateServiceResponse createService(CreateServiceRequest param0) {
-      CreateServiceResponse result = null;
-      try {
-         m_proxy = getProxy();
-      } catch (ServiceException serviceException) {
-         throw ServiceRuntimeException.wrap(serviceException);
-      }
-      result = m_proxy.createService(param0);
-      return result;
-   }
-
    public SubscribeResponse subscribe(SubscribeRequest param0) {
       SubscribeResponse result = null;
       try {
@@ -1154,17 +847,6 @@ public class BaseRepositoryServiceConsumer {
       return result;
    }
 
-   public GetUsersProjectsAndGroupsResponse getUsersProjectsAndGroups(GetUsersProjectsAndGroupsRequest param0) {
-      GetUsersProjectsAndGroupsResponse result = null;
-      try {
-         m_proxy = getProxy();
-      } catch (ServiceException serviceException) {
-         throw ServiceRuntimeException.wrap(serviceException);
-      }
-      result = m_proxy.getUsersProjectsAndGroups(param0);
-      return result;
-   }
-
    public SearchAssetsResponse searchAssets(SearchAssetsRequest param0) {
       SearchAssetsResponse result = null;
       try {
@@ -1184,18 +866,6 @@ public class BaseRepositoryServiceConsumer {
          throw ServiceRuntimeException.wrap(serviceException);
       }
       result = m_proxy.updateAssetArtifacts(param0);
-      return result;
-   }
-
-   public UpdateAssetDependenciesByGraphResponse updateAssetDependenciesByGraph(
-            UpdateAssetDependenciesByGraphRequest param0) {
-      UpdateAssetDependenciesByGraphResponse result = null;
-      try {
-         m_proxy = getProxy();
-      } catch (ServiceException serviceException) {
-         throw ServiceRuntimeException.wrap(serviceException);
-      }
-      result = m_proxy.updateAssetDependenciesByGraph(param0);
       return result;
    }
 
@@ -1287,17 +957,6 @@ public class BaseRepositoryServiceConsumer {
       return result;
    }
 
-   public GetAllProjectsAndGroupsResponse getAllProjectsAndGroups(GetAllProjectsAndGroupsRequest param0) {
-      GetAllProjectsAndGroupsResponse result = null;
-      try {
-         m_proxy = getProxy();
-      } catch (ServiceException serviceException) {
-         throw ServiceRuntimeException.wrap(serviceException);
-      }
-      result = m_proxy.getAllProjectsAndGroups(param0);
-      return result;
-   }
-
    public SearchAssetsDetailedResponse searchAssetsDetailed(SearchAssetsDetailedRequest param0) {
       SearchAssetsDetailedResponse result = null;
       try {
@@ -1317,17 +976,6 @@ public class BaseRepositoryServiceConsumer {
          throw ServiceRuntimeException.wrap(serviceException);
       }
       result = m_proxy.getSubscription(param0);
-      return result;
-   }
-
-   public GetAssetDependenciesByGraphResponse getAssetDependenciesByGraph(GetAssetDependenciesByGraphRequest param0) {
-      GetAssetDependenciesByGraphResponse result = null;
-      try {
-         m_proxy = getProxy();
-      } catch (ServiceException serviceException) {
-         throw ServiceRuntimeException.wrap(serviceException);
-      }
-      result = m_proxy.getAssetDependenciesByGraph(param0);
       return result;
    }
 
@@ -1419,28 +1067,6 @@ public class BaseRepositoryServiceConsumer {
       return result;
    }
 
-   public GetCatalogAssetInfoResponse getCatalogAssetInfo(GetCatalogAssetInfoRequest param0) {
-      GetCatalogAssetInfoResponse result = null;
-      try {
-         m_proxy = getProxy();
-      } catch (ServiceException serviceException) {
-         throw ServiceRuntimeException.wrap(serviceException);
-      }
-      result = m_proxy.getCatalogAssetInfo(param0);
-      return result;
-   }
-
-   public GetLibraryListResponse getLibraryList(GetLibraryListRequest param0) {
-      GetLibraryListResponse result = null;
-      try {
-         m_proxy = getProxy();
-      } catch (ServiceException serviceException) {
-         throw ServiceRuntimeException.wrap(serviceException);
-      }
-      result = m_proxy.getLibraryList(param0);
-      return result;
-   }
-
    public GetAllAssetsGroupedByCategoryResponse getAllAssetsGroupedByCategory(
             GetAllAssetsGroupedByCategoryRequest param0) {
       GetAllAssetsGroupedByCategoryResponse result = null;
@@ -1450,17 +1076,6 @@ public class BaseRepositoryServiceConsumer {
          throw ServiceRuntimeException.wrap(serviceException);
       }
       result = m_proxy.getAllAssetsGroupedByCategory(param0);
-      return result;
-   }
-
-   public UpdateServiceResponse updateService(UpdateServiceRequest param0) {
-      UpdateServiceResponse result = null;
-      try {
-         m_proxy = getProxy();
-      } catch (ServiceException serviceException) {
-         throw ServiceRuntimeException.wrap(serviceException);
-      }
-      result = m_proxy.updateService(param0);
       return result;
    }
 

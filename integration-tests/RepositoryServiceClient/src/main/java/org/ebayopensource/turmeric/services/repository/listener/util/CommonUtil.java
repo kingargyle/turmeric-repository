@@ -15,30 +15,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.apache.commons.io.IOUtils;
-import org.ebayopensource.turmeric.repository.v1.services.Artifact;
-import org.ebayopensource.turmeric.repository.v1.services.ArtifactInfo;
-import org.ebayopensource.turmeric.repository.v1.services.ArtifactValueType;
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AssetKey;
-import org.ebayopensource.turmeric.repository.v1.services.AssetLifeCycleInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AttributeNameValue;
-import org.ebayopensource.turmeric.repository.v1.services.BasicAssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.CreateAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.CreateAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.CreateCompleteAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.CreateCompleteAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.ExtendedAssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.FlattenedRelationship;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetInfoRequest;
-import org.ebayopensource.turmeric.repository.v1.services.GetAssetInfoResponse;
-import org.ebayopensource.turmeric.repository.v1.services.Library;
-import org.ebayopensource.turmeric.repository.v1.services.LockAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.LockAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.Relation;
-import org.ebayopensource.turmeric.repository.v1.services.RemoveAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.RemoveAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.UnlockAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.UnlockAssetResponse;
+import org.ebayopensource.turmeric.repository.v2.services.*;
 import org.ebayopensource.turmeric.services.repositoryservice.operation.consumer.RepositoryServiceClientConstants;
 
 import org.ebayopensource.turmeric.runtime.common.exceptions.ServiceException;
@@ -50,7 +27,7 @@ public class CommonUtil {
       Properties prop = loadPropertyFile("properties/common.properties");
 
       String assetName = "testasset";
-      String libraryName = prop.getProperty("libraryName", "GovernedAssets");
+      prop.getProperty("libraryName", "GovernedAssets");
       String groupName = prop.getProperty("groupName", "GroupName");
       String assetDescription = "Test asset created using junit";
       String versionOne = "1.0.0";
@@ -61,13 +38,10 @@ public class CommonUtil {
       CreateAssetRequest createAssetRequest = new CreateAssetRequest();
       BasicAssetInfo basicAssetInfo = new BasicAssetInfo();
       AssetKey assetKey = new AssetKey();
-      Library library = new Library();
       AssetInfo responseAssetInfo = new AssetInfo();
       responseAssetInfo.setBasicAssetInfo(basicAssetInfo);
 
-      library.setLibraryName(libraryName);
       assetKey.setAssetName(assetName);
-      assetKey.setLibrary(library);
 
       basicAssetInfo.setAssetKey(assetKey);
       basicAssetInfo.setAssetDescription(assetDescription);
@@ -77,7 +51,6 @@ public class CommonUtil {
       basicAssetInfo.setVersion(versionOne);
       basicAssetInfo.setGroupName(groupName);// required according to RepositoryService wsdl on createAsset
       createAssetRequest.setBasicAssetInfo(basicAssetInfo);
-      createAssetRequest.setCaptureTemplateName(captureTemplateName);
 
       RepositoryServiceConsumer rsConsumer = new RepositoryServiceConsumer();
 
@@ -111,19 +84,15 @@ public class CommonUtil {
       AssetKey serviceAssetKey = null;
 
       String assetName = "testasset";
-      String libraryName = prop.getProperty("libraryName", "GovernedAssets");
+      prop.getProperty("libraryName", "GovernedAssets");
       String groupName = prop.getProperty("groupName", "GroupName");
       String assetDescription = "Test asset created using junit";
       String versionOne = "1.0.0";
       String appendTimeStamp = new Long(System.currentTimeMillis()).toString();
       assetName = assetName.concat(appendTimeStamp);
 
-      Library library = new Library();
-      library.setLibraryName(libraryName);
-
       AssetKey assetKey = new AssetKey();
       assetKey.setAssetName(assetName);
-      assetKey.setLibrary(library);
 
       BasicAssetInfo basicAssetInfo = new BasicAssetInfo();
       basicAssetInfo.setAssetDescription(assetDescription);
@@ -190,8 +159,6 @@ public class CommonUtil {
 
       CreateCompleteAssetRequest createCompleteAssetRequest = new CreateCompleteAssetRequest();
       createCompleteAssetRequest.setAssetInfo(assetInfo);
-      createCompleteAssetRequest
-               .setCaptureTemplateName(RepositoryServiceClientConstants.VALID_SERVICE_CAPTURE_TEMPLATE);
 
       RepositoryServiceConsumer rsConsumer = new RepositoryServiceConsumer();
 

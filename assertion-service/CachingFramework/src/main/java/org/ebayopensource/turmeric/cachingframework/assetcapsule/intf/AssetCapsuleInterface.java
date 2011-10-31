@@ -9,17 +9,20 @@
 package org.ebayopensource.turmeric.cachingframework.assetcapsule.intf;
 
 public interface AssetCapsuleInterface {
-/*	public Boolean isAssetExpired();
- public String getAssetNamespace();
- public void refreshAsset();
- */
-	public String getAssetName();
-	public String getAssetId();
-	public String getLibraryName();
-	public String getAssetType();
-	public String getAssetVersion();
-	
-	
-	public Object getAsset(String libraryName,String assetName, String assetVersion, String assetType );
-	public Object getAsset(String libraryName,String assetId);
+   /*
+    * public Boolean isAssetExpired(); public String getAssetNamespace(); public void refreshAsset();
+    */
+   public String getAssetName();
+
+   public String getAssetId();
+
+   public String getLibraryName();
+
+   public String getAssetType();
+
+   public String getAssetVersion();
+
+   public Object getAsset(String assetId, String assetName, String assetVersion, String assetType);
+
+   public Object getAsset(String assetId);
 }

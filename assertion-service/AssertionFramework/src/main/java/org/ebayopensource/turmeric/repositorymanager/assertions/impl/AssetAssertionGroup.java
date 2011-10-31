@@ -10,94 +10,93 @@ package org.ebayopensource.turmeric.repositorymanager.assertions.impl;
 
 import java.util.ArrayList;
 
-import org.ebayopensource.turmeric.repository.v1.services.*;
+import org.ebayopensource.turmeric.repository.v2.services.*;
 import org.ebayopensource.turmeric.repositorymanager.assertions.Assertable;
 import org.ebayopensource.turmeric.repositorymanager.assertions.AssetReference;
 import org.ebayopensource.turmeric.repositorymanager.assertions.exception.AssertionIllegalArgumentException;
 
-
 /**
- * AssetAssertion implements Assertion.  
+ * AssetAssertion implements Assertion.
  * 
  * @author pcopeland
  */
-public class AssetAssertionGroup
-    extends BasicAssertionGroup
-    implements AssetReferent
-{
-    private AssetReference assetRef;
-    private boolean isDereferenced = false;
+public class AssetAssertionGroup extends BasicAssertionGroup implements AssetReferent {
+   private final AssetReference assetRef;
+   private boolean isDereferenced = false;
 
-    /**
-     * Constructs an AssetAssertionGroup. The object is initially "hollow".
-     * The description and list of Assertables are not valid until
-     * the Asset is dereferenced.
-     * 
-     * @param assetRef the AssetReference for this referent.
-     */
-    public AssetAssertionGroup(AssetReference assetRef)
-    {
-        super(assetRef.getAssetName(), assetRef.getVersion());
-        this.assetRef = assetRef;
-    }
+   /**
+    * Constructs an AssetAssertionGroup. The object is initially "hollow". The description and list of Assertables are
+    * not valid until the Asset is dereferenced.
+    * 
+    * @param assetRef
+    *           the AssetReference for this referent.
+    */
+   public AssetAssertionGroup(AssetReference assetRef) {
+      super(assetRef.getAssetName(), assetRef.getVersion());
+      this.assetRef = assetRef;
+   }
 
-    /**
-     * Returns the AssetReference for this AssetAssertion.
-     * 
-     * @return the AssetReference for this AssetAssertion.
-     */
-    @Override
-	public AssetReference getAssetReference() { return assetRef; }
+   /**
+    * Returns the AssetReference for this AssetAssertion.
+    * 
+    * @return the AssetReference for this AssetAssertion.
+    */
+   @Override
+   public AssetReference getAssetReference() {
+      return assetRef;
+   }
 
-    /**
-     * Initializes the state of this AssetAssertion.
-     *
-     * @param context the context for accessing the Repository.
-     * @throws AssertionIllegalArgumentException the assertion illegal argument exception
-     */
-    @Override
-	public void dereference(AssertionProcessorContext context) throws AssertionIllegalArgumentException
-    {
-        if (isDereferenced) return;
+   /**
+    * Initializes the state of this AssetAssertion.
+    * 
+    * @param context
+    *           the context for accessing the Repository.
+    * @throws AssertionIllegalArgumentException
+    *            the assertion illegal argument exception
+    */
+   @Override
+   public void dereference(AssertionProcessorContext context) throws AssertionIllegalArgumentException {
+      if (isDereferenced) {
+         return;
+      }
 
-        // Sanity check
-        AssetInfo assetInfo = context.getAssetInfo(this);
-        BasicAssetInfo basicAssetInfo = assetInfo.getBasicAssetInfo();
-        AssetKey assetKey = basicAssetInfo.getAssetKey();
-        if (!getName().equals(basicAssetInfo.getAssetName())
-                || !getVersion().equals(basicAssetInfo.getVersion()))
-            throw new IllegalStateException(
-                    this +" does not match Repository asset ["
-                    + basicAssetInfo.getAssetName()
-                    + ",version="+ basicAssetInfo.getVersion());
+      // Sanity check
+      AssetInfo assetInfo = context.getAssetInfo(this);
+      BasicAssetInfo basicAssetInfo = assetInfo.getBasicAssetInfo();
+      AssetKey assetKey = basicAssetInfo.getAssetKey();
+      if (!getName().equals(basicAssetInfo.getAssetName()) || !getVersion().equals(basicAssetInfo.getVersion())) {
+         throw new IllegalStateException(this + " does not match Repository asset [" + basicAssetInfo.getAssetName()
+                  + ",version=" + basicAssetInfo.getVersion());
+      }
 
-        this.description = basicAssetInfo.getAssetDescription();
+      this.description = basicAssetInfo.getAssetDescription();
 
-        // Group members
-        groupMembers = new ArrayList<Assertable>();
-        if(assetInfo != null && assetInfo.getFlattenedRelationship() != null){
-	        for (Relation relation : assetInfo.getFlattenedRelationship().getRelatedAsset()) {
-	            String relationship = relation.getAssetRelationship();
-	            if (relationship.equals("assertion-groupmember-assertion")) {
-	                AssetKey memberKey = relation.getTargetAsset();
-	                groupMembers.add(context.getAssertion(memberKey));
-	            } else if (relationship.equals("assertion-groupmember-group")) {
-	                AssetKey memberKey = relation.getTargetAsset();
-	                groupMembers.add(context.getAssertionGroup(memberKey));
-	            }
-	        }
-        }
-        context.addAssertionGroup(assetKey, this);
-        isDereferenced = true;
-    }
+      // Group members
+      groupMembers = new ArrayList<Assertable>();
+      if (assetInfo != null && assetInfo.getFlattenedRelationship() != null) {
+         for (Relation relation : assetInfo.getFlattenedRelationship().getRelatedAsset()) {
+            String relationship = relation.getAssetRelationship();
+            if (relationship.equals("assertion-groupmember-assertion")) {
+               AssetKey memberKey = relation.getTargetAsset();
+               groupMembers.add(context.getAssertion(memberKey));
+            } else if (relationship.equals("assertion-groupmember-group")) {
+               AssetKey memberKey = relation.getTargetAsset();
+               groupMembers.add(context.getAssertionGroup(memberKey));
+            }
+         }
+      }
+      context.addAssertionGroup(assetKey, this);
+      isDereferenced = true;
+   }
 
-	/* (non-Javadoc)
-	 * @see org.ebayopensource.turmeric.repositorymanager.assertions.impl.BasicAssertionGroup#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object o) 
-	{
-		return super.equals(o);
-	}
-    
+   /*
+    * (non-Javadoc)
+    * 
+    * @see org.ebayopensource.turmeric.repositorymanager.assertions.impl.BasicAssertionGroup#equals(java.lang.Object)
+    */
+   @Override
+   public boolean equals(Object o) {
+      return super.equals(o);
+   }
+
 }

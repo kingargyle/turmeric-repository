@@ -10,9 +10,8 @@ package org.ebayopensource.turmeric.services.repositoryservice.junit;
 
 import java.util.Properties;
 
-import junit.framework.Assert;
-
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
+import static org.junit.Assert.*;
+import org.ebayopensource.turmeric.repository.v2.services.*;
 import org.ebayopensource.turmeric.services.repository.listener.util.CommonUtil;
 import org.ebayopensource.turmeric.services.repositoryservice.operation.consumer.RemoveAssetConsumer;
 import org.junit.BeforeClass;
@@ -37,7 +36,7 @@ public class RemoveAssetTest {
    @Test
    public void testRemoveAsset_positiveScenario() {
       String status = RemoveAssetConsumer.testRemoveAsset_positiveScenario(assetInfo1);
-      Assert.assertEquals(s_success, status);
+      assertEquals(s_success, status);
    }
 
    /*
@@ -49,7 +48,7 @@ public class RemoveAssetTest {
       String password = prop.getProperty("password", "");
       CommonUtil.lockAsset(assetInfo2.getBasicAssetInfo().getAssetKey(), userId, password);
       String status = RemoveAssetConsumer.testRemoveAsset_assetIsLockedByAnotherUser(assetInfo2);
-      Assert.assertEquals(s_success, status);
+      assertEquals(s_success, status);
    }
 
 }

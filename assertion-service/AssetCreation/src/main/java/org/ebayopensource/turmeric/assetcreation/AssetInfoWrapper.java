@@ -8,48 +8,50 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.assetcreation;
 
-import org.ebayopensource.turmeric.repository.v1.services.*;
+import org.ebayopensource.turmeric.repository.v2.services.*;
 
 /**
  * The Class AssetInfoWrapper.
  */
 public class AssetInfoWrapper {
-	private AssetInfo assetInfo;
-	private boolean consumed = false;
+   private final AssetInfo assetInfo;
+   private boolean consumed = false;
 
-	/**
-	 * Instantiates a new asset info wrapper.
-	 *
-	 * @param assetInfo the asset info
-	 */
-	public AssetInfoWrapper(AssetInfo assetInfo) {
-		this.assetInfo = assetInfo;
-	}
+   /**
+    * Instantiates a new asset info wrapper.
+    * 
+    * @param assetInfo
+    *           the asset info
+    */
+   public AssetInfoWrapper(AssetInfo assetInfo) {
+      this.assetInfo = assetInfo;
+   }
 
-	/**
-	 * Gets the asset info.
-	 *
-	 * @return the asset info
-	 */
-	public AssetInfo getAssetInfo() {
-		return assetInfo;
-	}
+   /**
+    * Gets the asset info.
+    * 
+    * @return the asset info
+    */
+   public AssetInfo getAssetInfo() {
+      return assetInfo;
+   }
 
-	/**
-	 * Checks if is consumed.
-	 *
-	 * @return true, if is consumed
-	 */
-	public boolean isConsumed() {
-		return consumed;
-	}
+   /**
+    * Checks if is consumed.
+    * 
+    * @return true, if is consumed
+    */
+   public boolean isConsumed() {
+      return consumed;
+   }
 
-	/**
-	 * Sets the consumed.
-	 *
-	 * @param consumed the new consumed
-	 */
-	public void setConsumed(boolean consumed) {
-		this.consumed = consumed;
-	}
+   /**
+    * Sets the consumed.
+    * 
+    * @param consumed
+    *           the new consumed
+    */
+   public void setConsumed(boolean consumed) {
+      this.consumed = consumed;
+   }
 }

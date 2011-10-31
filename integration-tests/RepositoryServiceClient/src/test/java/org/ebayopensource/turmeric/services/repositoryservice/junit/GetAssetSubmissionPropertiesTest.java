@@ -16,9 +16,7 @@ import org.junit.Test;
 import org.ebayopensource.turmeric.assetcreation.AssetCreatorFactory;
 import org.ebayopensource.turmeric.assetcreation.AssetCreatorIntf;
 import org.ebayopensource.turmeric.assetcreation.exception.AssetCreationException;
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfoForUpdate;
-import org.ebayopensource.turmeric.repository.v1.services.AssetKey;
+import org.ebayopensource.turmeric.repository.v2.services.*;
 import org.ebayopensource.turmeric.services.repositoryservice.operation.consumer.GetAssetSubmissionPropertiesConsumer;
 
 public class GetAssetSubmissionPropertiesTest {

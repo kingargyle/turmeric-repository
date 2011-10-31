@@ -8,22 +8,6 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.services.repositoryservice.junit;
 
-import java.util.List;
-
-import org.ebayopensource.turmeric.repository.v1.services.Artifact;
-import org.ebayopensource.turmeric.repository.v1.services.ArtifactInfo;
-import org.ebayopensource.turmeric.repository.v1.services.ArtifactValueType;
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AssetKey;
-import org.ebayopensource.turmeric.repository.v1.services.AssetLifeCycleInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AttributeNameValue;
-import org.ebayopensource.turmeric.repository.v1.services.BasicAssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.CreateCompleteAssetRequest;
-import org.ebayopensource.turmeric.repository.v1.services.CreateCompleteAssetResponse;
-import org.ebayopensource.turmeric.repository.v1.services.ExtendedAssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.Library;
-import org.ebayopensource.turmeric.repository.wso2.RSProviderUtil;
-import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositoryServiceProvider;
 import org.ebayopensource.turmeric.services.repositoryservice.impl.RepositoryServiceProviderFactory;
 import org.junit.Test;
 

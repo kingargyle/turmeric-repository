@@ -10,7 +10,7 @@ package org.ebayopensource.turmeric.services.repositoryservice.junit;
 
 import junit.framework.Assert;
 
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
+import org.ebayopensource.turmeric.repository.v2.services.*;
 import org.ebayopensource.turmeric.services.repository.listener.util.CommonUtil;
 import org.ebayopensource.turmeric.services.repositoryservice.operation.consumer.LockAssetConsumer;
 import org.junit.AfterClass;

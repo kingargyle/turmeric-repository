@@ -11,7 +11,7 @@ package org.ebayopensource.turmeric.repositorymanager.assertions.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ebayopensource.turmeric.repository.v1.services.*;
+import org.ebayopensource.turmeric.repository.v2.services.*;
 import org.ebayopensource.turmeric.repositorymanager.assertions.Assertion;
 import org.ebayopensource.turmeric.repositorymanager.assertions.AssertionModule;
 import org.ebayopensource.turmeric.repositorymanager.assertions.AssetContent;
@@ -19,110 +19,109 @@ import org.ebayopensource.turmeric.repositorymanager.assertions.AssetReference;
 import org.ebayopensource.turmeric.repositorymanager.assertions.ValidationResult;
 import org.ebayopensource.turmeric.repositorymanager.assertions.exception.AssertionIllegalArgumentException;
 
-
 /**
- * AssetAssertion implements Assertion.  
+ * AssetAssertion implements Assertion.
  * 
  * @author pcopeland
  */
-public class AssetAssertion
-    extends BasicAssertion
-    implements Assertion, AssetReferent
-{
-    
-    /** The asset ref. */
-    private AssetReference assetRef;
-    
-    /** The is dereferenced. */
-    private boolean isDereferenced = false;
+public class AssetAssertion extends BasicAssertion implements Assertion, AssetReferent {
 
-    /**
-     * Constructs an AssetAssertion. The object is initially "hollow".
-     * The description, assertion script, assertion modules, error severity
-     * and processor type are not valid until the Ssset is dereferenced.
-     * 
-     * @param assetRef the AssetReference for this referent.
-     */
-    public AssetAssertion(AssetReference assetRef)
-    {
-        super(assetRef.getAssetName(), assetRef.getVersion());
-        this.assetRef = assetRef;
-    }
+   /** The asset ref. */
+   private final AssetReference assetRef;
 
-    /**
-     * Returns the AssetReference for this AssetAssertion.
-     * 
-     * @return the AssetReference for this AssetAssertion.
-     */
-    @Override
-	public AssetReference getAssetReference() { return assetRef; }
+   /** The is dereferenced. */
+   private boolean isDereferenced = false;
 
-    /**
-     * Initializes the state of this AssetAssertion.
-     *
-     * @param context the context for accessing the Repository.
-     * @throws AssertionIllegalArgumentException the assertion illegal argument exception
-     */
-    @Override
-	public void dereference(AssertionProcessorContext context) throws AssertionIllegalArgumentException
-    {
-        if (isDereferenced) return;
+   /**
+    * Constructs an AssetAssertion. The object is initially "hollow". The description, assertion script, assertion
+    * modules, error severity and processor type are not valid until the Ssset is dereferenced.
+    * 
+    * @param assetRef
+    *           the AssetReference for this referent.
+    */
+   public AssetAssertion(AssetReference assetRef) {
+      super(assetRef.getAssetName(), assetRef.getVersion());
+      this.assetRef = assetRef;
+   }
 
-        // Sanity check
-        AssetInfo assetInfo = context.getAssetInfo(this);
-        BasicAssetInfo basicAssetInfo = assetInfo.getBasicAssetInfo();
-        AssetKey assetKey = basicAssetInfo.getAssetKey();
-        if (!getName().equals(basicAssetInfo.getAssetName())
-                || !getVersion().equals(basicAssetInfo.getVersion()))
-            throw new IllegalStateException(
-                    this +" does not match Repository asset ["
-                    + basicAssetInfo.getAssetName()
-                    + ",version="+ basicAssetInfo.getVersion());
+   /**
+    * Returns the AssetReference for this AssetAssertion.
+    * 
+    * @return the AssetReference for this AssetAssertion.
+    */
+   @Override
+   public AssetReference getAssetReference() {
+      return assetRef;
+   }
 
-        // Attributes
-        this.description = basicAssetInfo.getAssetDescription();
-        List<AttributeNameValue> attributes = assetInfo.getExtendedAssetInfo().getAttribute();
-        for (AttributeNameValue attribute: attributes) {
-            String attributeName = attribute.getAttributeName();
-            if (attributeName.equals("assertion-processor"))
-                this.assertionProcessorType = attribute.getAttributeValueString();
-            else if (attributeName.equals("assertion-error-severity"))
-                this.errorSeverity = Enum.valueOf(
-                        ValidationResult.class, attribute.getAttributeValueString().toUpperCase());
-        }
+   /**
+    * Initializes the state of this AssetAssertion.
+    * 
+    * @param context
+    *           the context for accessing the Repository.
+    * @throws AssertionIllegalArgumentException
+    *            the assertion illegal argument exception
+    */
+   @Override
+   public void dereference(AssertionProcessorContext context) throws AssertionIllegalArgumentException {
+      if (isDereferenced) {
+         return;
+      }
 
-        // Script artifact
-        List<ArtifactInfo> artifacts = assetInfo.getArtifactInfo();
-        if (artifacts.size() == 1) {
-            String artifactName = artifacts.get(0).getArtifact().getArtifactCategory();
-            this.assertionScript = new AssetContent(artifactName, assetRef);
-        } else
-            throw new IllegalStateException(
-                    "Assertion asset can only have one artifact: "+this);
+      // Sanity check
+      AssetInfo assetInfo = context.getAssetInfo(this);
+      BasicAssetInfo basicAssetInfo = assetInfo.getBasicAssetInfo();
+      AssetKey assetKey = basicAssetInfo.getAssetKey();
+      if (!getName().equals(basicAssetInfo.getAssetName()) || !getVersion().equals(basicAssetInfo.getVersion())) {
+         throw new IllegalStateException(this + " does not match Repository asset [" + basicAssetInfo.getAssetName()
+                  + ",version=" + basicAssetInfo.getVersion());
+      }
 
-        // Modules
-        assertionModules = new ArrayList<AssertionModule>();
-        if(assetInfo != null && assetInfo.getFlattenedRelationship() != null){
-	        for (Relation relation : assetInfo.getFlattenedRelationship().getRelatedAsset()) {
-	            String relationship = relation.getAssetRelationship();
-	            if (relationship.equals("assertion-module")) {
-	                AssetKey moduleKey = relation.getTargetAsset();
-	                assertionModules.add(context.getAssertionModule(moduleKey));
-	            }
-	        }
-        }
-        context.addAssertion(assetKey, this);
-        isDereferenced = true;
-    }
+      // Attributes
+      this.description = basicAssetInfo.getAssetDescription();
+      List<AttributeNameValue> attributes = assetInfo.getExtendedAssetInfo().getAttribute();
+      for (AttributeNameValue attribute : attributes) {
+         String attributeName = attribute.getAttributeName();
+         if (attributeName.equals("assertion-processor")) {
+            this.assertionProcessorType = attribute.getAttributeValueString();
+         } else if (attributeName.equals("assertion-error-severity")) {
+            this.errorSeverity = Enum
+                     .valueOf(ValidationResult.class, attribute.getAttributeValueString().toUpperCase());
+         }
+      }
 
-	/* (non-Javadoc)
-	 * @see org.ebayopensource.turmeric.repositorymanager.assertions.impl.BasicAssertion#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object o) 
-	{
-		return super.equals(o);
-	}
-    
-    
+      // Script artifact
+      List<ArtifactInfo> artifacts = assetInfo.getArtifactInfo();
+      if (artifacts.size() == 1) {
+         String artifactName = artifacts.get(0).getArtifact().getArtifactCategory();
+         this.assertionScript = new AssetContent(artifactName, assetRef);
+      } else {
+         throw new IllegalStateException("Assertion asset can only have one artifact: " + this);
+      }
+
+      // Modules
+      assertionModules = new ArrayList<AssertionModule>();
+      if (assetInfo != null && assetInfo.getFlattenedRelationship() != null) {
+         for (Relation relation : assetInfo.getFlattenedRelationship().getRelatedAsset()) {
+            String relationship = relation.getAssetRelationship();
+            if (relationship.equals("assertion-module")) {
+               AssetKey moduleKey = relation.getTargetAsset();
+               assertionModules.add(context.getAssertionModule(moduleKey));
+            }
+         }
+      }
+      context.addAssertion(assetKey, this);
+      isDereferenced = true;
+   }
+
+   /*
+    * (non-Javadoc)
+    * 
+    * @see org.ebayopensource.turmeric.repositorymanager.assertions.impl.BasicAssertion#equals(java.lang.Object)
+    */
+   @Override
+   public boolean equals(Object o) {
+      return super.equals(o);
+   }
+
 }

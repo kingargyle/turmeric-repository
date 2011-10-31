@@ -8,20 +8,20 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.services.repository.listener.util;
 
-import org.ebayopensource.turmeric.repository.v1.services.repositoryservice.impl.AsyncTurmericRSV1;
 import org.ebayopensource.turmeric.services.repositoryservice.intf.gen.BaseRepositoryServiceConsumer;
 import org.ebayopensource.turmeric.services.repositoryservice.operation.consumer.RepositoryServiceClientConstants;
 
+import org.ebayopensource.turmeric.repository.v2.services.impl.AsyncTurmericRSV2;
 import org.ebayopensource.turmeric.runtime.common.exceptions.ServiceException;
 import org.ebayopensource.turmeric.runtime.sif.service.Service;
 import org.ebayopensource.turmeric.runtime.sif.service.ServiceFactory;
 
 public class RepositoryServiceConsumer extends BaseRepositoryServiceConsumer {
 
-   private AsyncTurmericRSV1 m_proxy;
+   private AsyncTurmericRSV2 m_proxy;
 
    @Override
-   public AsyncTurmericRSV1 getProxy() throws ServiceException {
+   public AsyncTurmericRSV2 getProxy() throws ServiceException {
       if (m_proxy == null) {
          String svcAdminName = RepositoryServiceClientConstants.SERVICE_NAME;
          Service service = ServiceFactory.create(svcAdminName, RepositoryServiceClientConstants.SERVICE_NAME);
@@ -35,7 +35,7 @@ public class RepositoryServiceConsumer extends BaseRepositoryServiceConsumer {
       return m_proxy;
    }
 
-   public AsyncTurmericRSV1 getProxy(String userId, String password) throws ServiceException {
+   public AsyncTurmericRSV2 getProxy(String userId, String password) throws ServiceException {
       if (m_proxy == null) {
          String svcAdminName = RepositoryServiceClientConstants.SERVICE_NAME;
          Service service = ServiceFactory.create(svcAdminName, RepositoryServiceClientConstants.SERVICE_NAME);

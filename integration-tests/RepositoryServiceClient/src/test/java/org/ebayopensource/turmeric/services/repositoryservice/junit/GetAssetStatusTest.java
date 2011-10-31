@@ -14,11 +14,9 @@ import org.junit.Test;
 import org.ebayopensource.turmeric.assetcreation.AssetCreatorFactory;
 import org.ebayopensource.turmeric.assetcreation.AssetCreatorIntf;
 import org.ebayopensource.turmeric.assetcreation.exception.AssetCreationException;
-import org.ebayopensource.turmeric.repository.v1.services.AssetInfo;
-import org.ebayopensource.turmeric.repository.v1.services.AssetKey;
+import org.ebayopensource.turmeric.repository.v2.services.*;
 import org.ebayopensource.turmeric.services.repositoryservice.operation.consumer.GetAssetStatusConsumer;
-//import junit.framework.TestCase;
-import junit.framework.Assert;
+import static org.junit.Assert.*;
 
 public class GetAssetStatusTest {
    public static AssetCreatorIntf assetCreator = AssetCreatorFactory
@@ -44,7 +42,7 @@ public class GetAssetStatusTest {
          assetCreator.unlockAsset(assetKey);
          String status = GetAssetStatusConsumer.testGetAssetStatus_validAsset(assetInfo);
          assetCreator.removeAsset(assetKey);
-         Assert.assertEquals(s_success, status);
+         assertEquals(s_success, status);
       } catch (Exception e) {
          e.printStackTrace();
          throw e;
@@ -64,7 +62,7 @@ public class GetAssetStatusTest {
          assetKey.setAssetName(assetInfo.getBasicAssetInfo().getAssetKey().getAssetName());
          String status = GetAssetStatusConsumer.testGetAssetStatus_assetwithnoassetRequests(assetInfo);
          assetCreator.removeAsset(assetKey);
-         Assert.assertEquals(s_success, status);
+         assertEquals(s_success, status);
       } catch (Exception e) {
          e.printStackTrace();
          throw e;

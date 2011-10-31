@@ -278,7 +278,7 @@ public class UpdateCompleteAssetTest extends Wso2Base {
       assertEquals(ArtifactValueType.URL, artifactInfo.getArtifact().getArtifactValueType());
       assertEquals(new String((baseUrl + assetName + "-updated").getBytes("UTF-8")),
                new String(artifactInfo.getArtifactDetail()));
-      assertEquals("application/vnd.wso2.endpoint", artifactInfo.getContentType());
+      assertEquals(GovernanceConstants.ENDPOINT_MEDIA_TYPE, artifactInfo.getContentType());
 
    }
 

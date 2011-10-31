@@ -49,7 +49,7 @@
     </dependency>
     <dependency>
       <groupId>org.ebayopensource.turmeric.intf</groupId>
-	  <artifactId>TurmericRSV1</artifactId>
+	  <artifactId>TurmericRSV2</artifactId>
 	  <version>${project.version}</version>
 	</dependency>
   </dependencies>

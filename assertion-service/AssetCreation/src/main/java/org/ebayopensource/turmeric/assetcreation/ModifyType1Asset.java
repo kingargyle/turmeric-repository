@@ -9,24 +9,28 @@
 package org.ebayopensource.turmeric.assetcreation;
 
 import org.ebayopensource.turmeric.assetcreation.artifacts.AssetInput;
-import org.ebayopensource.turmeric.repository.v1.services.*;
+import org.ebayopensource.turmeric.repository.v2.services.*;
 
 /**
  * The Class ModifyType1Asset.
  */
 public class ModifyType1Asset extends ModifyAsset {
-	
-	/* (non-Javadoc)
-	 * @see org.ebayopensource.turmeric.assetcreation.ModifyAsset#modify(org.ebayopensource.turmeric.repository.v1.services.AssetInfo, org.ebayopensource.turmeric.assetcreation.artifacts.AssetInput)
-	 */
-	@Override
-	public void modify(AssetInfo assetInfo, AssetInput assetInput) {
-		
-		modifyAssetName(assetInfo, assetInput);
-		modifyComments(assetInfo, assetInput.getComments());
-		modifyAssetId(assetInfo);
-		setClassifier(assetInfo);
-		
-	}
+
+   /*
+    * (non-Javadoc)
+    * 
+    * @see
+    * org.ebayopensource.turmeric.assetcreation.ModifyAsset#modify(org.ebayopensource.turmeric.repository.v1.services
+    * .AssetInfo, org.ebayopensource.turmeric.assetcreation.artifacts.AssetInput)
+    */
+   @Override
+   public void modify(AssetInfo assetInfo, AssetInput assetInput) {
+
+      modifyAssetName(assetInfo, assetInput);
+      modifyComments(assetInfo, assetInput.getComments());
+      modifyAssetId(assetInfo);
+      setClassifier(assetInfo);
+
+   }
 
 }
