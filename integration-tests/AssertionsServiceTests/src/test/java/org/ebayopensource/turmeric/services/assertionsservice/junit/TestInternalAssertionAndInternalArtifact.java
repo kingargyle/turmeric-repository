@@ -19,7 +19,8 @@ import org.ebayopensource.turmeric.assetcreation.AssetCreatorFactory;
 import org.ebayopensource.turmeric.assetcreation.AssetCreatorIntf;
 import org.ebayopensource.turmeric.assetcreation.exception.AssetInfoNotFoundException;
 import org.ebayopensource.turmeric.assetcreation.exception.IdNotFoundException;
-import org.ebayopensource.turmeric.repository.v1.services.*;
+import org.ebayopensource.turmeric.assertion.v1.services.*;
+import org.ebayopensource.turmeric.repository.v2.services.AssetInfo;
 
 /**
  * @author szacharias
@@ -27,426 +28,416 @@ import org.ebayopensource.turmeric.repository.v1.services.*;
  */
 public class TestInternalAssertionAndInternalArtifact extends BaseAssertionsServiceTest {
 
+   public static AssetCreatorIntf assetCreator = AssetCreatorFactory
+            .getAssetCreator("resources/assetCreationxmls/Services.xml");
 
-	public static AssetCreatorIntf assetCreator = AssetCreatorFactory.
-	getAssetCreator("resources/assetCreationxmls/Services.xml");
-	
-	@BeforeClass
-	public static void setUpClass() throws Throwable
-	{
-		try
-		{
-			assetCreator.createAsset();
-		}
-		catch (Throwable exception) 
-		{
-			exception.printStackTrace();
-			throw exception;
-		}
-		
-	}
-	
-	@Test
-	public void testAssertionsRequestWithSingleAssertionAndSingleArtifact() {
-		System.out.println("\n***Starting testAssertionsRequestWithSingleAssertionAndSingleArtifact");
+   @BeforeClass
+   public static void setUpClass() throws Throwable {
+      try {
+         assetCreator.createAsset();
+      } catch (Throwable exception) {
+         exception.printStackTrace();
+         throw exception;
+      }
 
-		ApplyAssertionsRequest request = new ApplyAssertionsRequest();
+   }
 
-		Assertion assertion = createAssertion();
-		AssertableArtifact artifact = createArtifactWithPassingContent();
-		request.getArtifacts().add(artifact);
-		request.getAssertions().add(assertion);
-		
-		String result = processRequest(request, POSITIVE_CASE);
-		System.out.println("testAssertionsRequestWithSingleAssertionAndSingleArtifact : "  + result);
-		
-		Assert.assertEquals(PASS, result);
-	}
-	
-	@Test
-	public void testAssertionsRequestWithSingleAssertionAndMultipleArtifact() {
-		System.out.println("\n***Starting testAssertionsRequestWithSingleAssertionAndMultipleArtifact");
+   @Test
+   public void testAssertionsRequestWithSingleAssertionAndSingleArtifact() {
+      System.out.println("\n***Starting testAssertionsRequestWithSingleAssertionAndSingleArtifact");
 
-		ApplyAssertionsRequest request = new ApplyAssertionsRequest();
+      ApplyAssertionsRequest request = new ApplyAssertionsRequest();
 
-		Assertion assertion = createAssertion();
-		request.getAssertions().add(assertion);
-		
-		List<AssertableArtifact> artifacts = createArtifacts();
-		request.getArtifacts().addAll(artifacts);
-		
-		String result = processRequest(request, POSITIVE_CASE);
-		System.out.println("testAssertionsRequestWithSingleAssertionAndMultipleArtifact : "  + result);
-		
-		Assert.assertEquals(PASS, result);
-	}
-	
-	@Test
-	public void testAssertionsRequestWithMultipleAssertionAndSingleArtifact() {
-		System.out.println("\n***Starting testAssertionsRequestWithMultipleAssertionAndSingleArtifact");
+      Assertion assertion = createAssertion();
+      AssertableArtifact artifact = createArtifactWithPassingContent();
+      request.getArtifacts().add(artifact);
+      request.getAssertions().add(assertion);
 
-		ApplyAssertionsRequest request = new ApplyAssertionsRequest();
+      String result = processRequest(request, POSITIVE_CASE);
+      System.out.println("testAssertionsRequestWithSingleAssertionAndSingleArtifact : " + result);
 
-		List<Assertion> assertions = createAssertions();
-		request.getAssertions().addAll(assertions);
-		
-		AssertableArtifact artifact = createArtifactWithPassingContent();
-		request.getArtifacts().add(artifact);
-		
-		String result = processRequest(request, POSITIVE_CASE);
-		System.out.println("testAssertionsRequestWithMultipleAssertionAndSingleArtifact : "  + result);
-		
-		Assert.assertEquals(PASS, result);
-	}
-	
-	@Test
-	public void testAssertionsRequestWithMultipleAssertionAndMultipleArtifact() {
-		System.out.println("\n***Starting testAssertionsRequestWithMultipleAssertionAndMultipleArtifact");
+      Assert.assertEquals(PASS, result);
+   }
 
-		ApplyAssertionsRequest request = new ApplyAssertionsRequest();
-		
-		List<Assertion> assertions = createAssertions();
-		request.getAssertions().addAll(assertions);
+   @Test
+   public void testAssertionsRequestWithSingleAssertionAndMultipleArtifact() {
+      System.out.println("\n***Starting testAssertionsRequestWithSingleAssertionAndMultipleArtifact");
 
-		List<AssertableArtifact> artifacts = createArtifacts();
-		request.getArtifacts().addAll(artifacts);
-		
-		String result = processRequest(request, POSITIVE_CASE);
-		System.out.println("testAssertionsRequestWithMultipleAssertionAndMultipleArtifact : "  + result);
-		
-		Assert.assertEquals(PASS, result);
-	}
-	
-	@Test
-	public void testAssertionsRequest_Positive() {
-		System.out.println("\n***Starting testAssertionsRequest_Positive");
+      ApplyAssertionsRequest request = new ApplyAssertionsRequest();
 
-		ApplyAssertionsRequest request = new ApplyAssertionsRequest();
+      Assertion assertion = createAssertion();
+      request.getAssertions().add(assertion);
 
-		Assertion assertion = createAssertion();
-		request.getAssertions().add(assertion);
-		
-		AssertableArtifact artifact = createArtifactWithPassingContent();
-		request.getArtifacts().add(artifact);
-		
-		String result = processRequest(request, POSITIVE_CASE);
-		System.out.println("testAssertionsRequest_Positive : "  + result);
-		
-		Assert.assertEquals(PASS, result);
-	}
-	
-	@Test
-	public void testAssertionsRequest_Negative() {
-		System.out.println("\n***Starting testAssertionsRequest_Negative");
+      List<AssertableArtifact> artifacts = createArtifacts();
+      request.getArtifacts().addAll(artifacts);
 
-		ApplyAssertionsRequest request = new ApplyAssertionsRequest();
+      String result = processRequest(request, POSITIVE_CASE);
+      System.out.println("testAssertionsRequestWithSingleAssertionAndMultipleArtifact : " + result);
 
-		Assertion assertion = createAssertion();
-		request.getAssertions().add(assertion);
-		
-		AssertableArtifact artifact = createArtifactWithFailingContent();
-		request.getArtifacts().add(artifact);
-		
-		String result = processRequest(request, NEGATIVE_CASE);
-		System.out.println("testAssertionsRequest_Negative : "  + result);
-		
-		Assert.assertEquals(PASS, result);
-	}
-	
-	@Test
-	public void testAssertionsRequest_InvalidAssertionVersion() {
-		System.out.println("\n***Starting testAssertionsRequest_InvalidAssertionVersion");
+      Assert.assertEquals(PASS, result);
+   }
 
-		ApplyAssertionsRequest request = new ApplyAssertionsRequest();
+   @Test
+   public void testAssertionsRequestWithMultipleAssertionAndSingleArtifact() {
+      System.out.println("\n***Starting testAssertionsRequestWithMultipleAssertionAndSingleArtifact");
 
-		Assertion assertion = createAssertion();
-		assertion.getAssertionAsset().setVersion(";k&*");
-		request.getAssertions().add(assertion);
-		
-		AssertableArtifact artifact = createArtifactWithFailingContent();
-		request.getArtifacts().add(artifact);
-		
-		String result = processRequest(request, FAILURE_CASE);
-		System.out.println("testAssertionsRequest_InvalidAssertionVersion : "  + result);
-		
-		Assert.assertEquals(PASS, result);
-	}
-	
-	@Test
-	public void testAssertionsRequest_WithoutArtifactCategory() {
-		System.out.println("\n***Starting testAssertionsRequest_WithoutArtifactCategory");
+      ApplyAssertionsRequest request = new ApplyAssertionsRequest();
 
-		ApplyAssertionsRequest request = new ApplyAssertionsRequest();
+      List<Assertion> assertions = createAssertions();
+      request.getAssertions().addAll(assertions);
 
-		Assertion assertion = createAssertion();
-		request.getAssertions().add(assertion);
-		
-		AssertableArtifact artifact = createArtifactWithFailingContent();
-		artifact.getArtifactAssetReference().setArtifactCategory(null);
-		request.getArtifacts().add(artifact);
-		
-		String result = processRequest(request, FAILURE_CASE);
-		System.out.println("testAssertionsRequest_WithoutArtifactCategory : "  + result);
-		
-		Assert.assertEquals(PASS, result);
-	}
-	
-	@Test
-	public void testAssertionsRequest_InvalidArtifactCategory() {
-		System.out.println("\n***Starting testAssertionsRequest_InvalidArtifactName");
+      AssertableArtifact artifact = createArtifactWithPassingContent();
+      request.getArtifacts().add(artifact);
 
-		ApplyAssertionsRequest request = new ApplyAssertionsRequest();
+      String result = processRequest(request, POSITIVE_CASE);
+      System.out.println("testAssertionsRequestWithMultipleAssertionAndSingleArtifact : " + result);
 
-		Assertion assertion = createAssertion();
-		request.getAssertions().add(assertion);
-		
-		AssertableArtifact artifact = createArtifactWithFailingContent();
-		artifact.getArtifactAssetReference().setArtifactCategory(ArtifactContentTypes.XSD);
-		request.getArtifacts().add(artifact);
-		
-		String result = processRequest(request, FAILURE_CASE);
-		System.out.println("testAssertionsRequest_InvalidArtifactCategory : "  + result);
+      Assert.assertEquals(PASS, result);
+   }
 
-		Assert.assertEquals(PASS, result);
-	}
-	
-	@Test
-	public void testAssertionsRequest_WithoutArtifactVersion() {
-		System.out.println("\n***Starting testAssertionsRequest_WithoutArtifactVersion");
+   @Test
+   public void testAssertionsRequestWithMultipleAssertionAndMultipleArtifact() {
+      System.out.println("\n***Starting testAssertionsRequestWithMultipleAssertionAndMultipleArtifact");
 
-		ApplyAssertionsRequest request = new ApplyAssertionsRequest();
+      ApplyAssertionsRequest request = new ApplyAssertionsRequest();
 
-		Assertion assertion = createAssertion();
-		request.getAssertions().add(assertion);
-		
-		AssertableArtifact artifact = createArtifactWithPassingContent();
-		artifact.getArtifactAssetReference().setVersion(null);
-		request.getArtifacts().add(artifact);
-		
-		String result = processRequest(request, POSITIVE_CASE);
-		System.out.println("testAssertionsRequest_WithoutArtifactVersion : "  + result);
-		
-		Assert.assertEquals(PASS, result);
-	}
-	
-	@Test
-	public void testAssertionsRequest_WithoutArtifactAssetName() {
-		System.out.println("\n***Starting testAssertionsRequest_WithoutArtifactAssetName");
+      List<Assertion> assertions = createAssertions();
+      request.getAssertions().addAll(assertions);
 
-		ApplyAssertionsRequest request = new ApplyAssertionsRequest();
+      List<AssertableArtifact> artifacts = createArtifacts();
+      request.getArtifacts().addAll(artifacts);
 
-		Assertion assertion = createAssertion();
-		request.getAssertions().add(assertion);
-		
-		AssertableArtifact artifact = createArtifactWithFailingContent();
-		artifact.getArtifactAssetReference().setAssetName(null);
-		request.getArtifacts().add(artifact);
-		
-		String result = processRequest(request, FAILURE_CASE);
-		System.out.println("testAssertionsRequest_WithoutArtifactAssetName : "  + result);
-		
-		Assert.assertEquals(PASS, result);
-	}
-	
-	@Test
-	public void testAssertionsRequest_WithoutArtifactAssetType() {
-		System.out.println("\n***Starting testAssertionsRequest_WithoutArtifactAssetType");
+      String result = processRequest(request, POSITIVE_CASE);
+      System.out.println("testAssertionsRequestWithMultipleAssertionAndMultipleArtifact : " + result);
 
-		ApplyAssertionsRequest request = new ApplyAssertionsRequest();
+      Assert.assertEquals(PASS, result);
+   }
 
-		Assertion assertion = createAssertion();
-		request.getAssertions().add(assertion);
-		
-		AssertableArtifact artifact = createArtifactWithFailingContent();
-		artifact.getArtifactAssetReference().setAssetType(null);
-		request.getArtifacts().add(artifact);
-		
-		String result = processRequest(request, FAILURE_CASE);
-		System.out.println("testAssertionsRequest_WithoutArtifactAssetType : "  + result);
-		
-		Assert.assertEquals(PASS, result);
-	}
-	
-	@Test
-	public void testAssertionsRequest_WithoutArtifactLibraryName() {
-		System.out.println("\n***Starting testAssertionsRequest_WithoutArtifactLibraryName");
+   @Test
+   public void testAssertionsRequest_Positive() {
+      System.out.println("\n***Starting testAssertionsRequest_Positive");
 
-		ApplyAssertionsRequest request = new ApplyAssertionsRequest();
+      ApplyAssertionsRequest request = new ApplyAssertionsRequest();
 
-		Assertion assertion = createAssertion();
-		request.getAssertions().add(assertion);
-		
-		AssertableArtifact artifact = createArtifactWithFailingContent();
-		artifact.getArtifactAssetReference().setLibraryName(null);
-		request.getArtifacts().add(artifact);
-		
-		String result = processRequest(request, FAILURE_CASE);
-		System.out.println("testAssertionsRequest_WithoutArtifactLibraryName : "  + result);
-		
-		Assert.assertEquals(PASS, result);
-	}
-	
-	private Assertion createAssertion(){
-		
-		Assertion assertion = new Assertion();
-		AssertionAsset reference = new AssertionAsset();
-		reference.setAssetName("soa_complexTypeNameUppercase_assertion");
-		reference.setAssetType(AssertionAssetTypes.ASSERTION);
-		reference.setLibraryName("SystemAssets");
-		reference.setVersion("1.0.0");
-		assertion.setAssertionAsset(reference);
-		
-		return assertion;
-	}
-	
-	private List<Assertion> createAssertions(){
-		
-		List<Assertion> assertions = new ArrayList<Assertion>();
-		
-		Assertion assertion = new Assertion();
-		AssertionAsset reference = new AssertionAsset();
-		reference.setAssetName("soa_complexTypeNameUppercase_assertion");
-		reference.setAssetType(AssertionAssetTypes.ASSERTION);
-		reference.setLibraryName("SystemAssets");
-		reference.setVersion("1.0.0");
-		assertion.setAssertionAsset(reference);
-		
-		Assertion assertion1 = new Assertion();
-		AssertionAsset reference1 = new AssertionAsset();
-		reference1.setAssetName("soa_serviceNameUppercase_assertion"); 
-		reference1.setAssetType(AssertionAssetTypes.ASSERTION);
-		reference1.setLibraryName("SystemAssets");
-		reference1.setVersion("1.0.0");
-		assertion1.setAssertionAsset(reference1);
+      Assertion assertion = createAssertion();
+      request.getAssertions().add(assertion);
 
-		assertions.add(assertion);
-		assertions.add(assertion1);
-		
-		return assertions;
-	}
-	
-	private AssertableArtifact createArtifactWithPassingContent(){
-		
-		AssetInfo assetInfo = null;
-		try {
-			assetInfo = assetCreator.getAssetAsAssetInfo("InternalServiceAsset1");			
-		} catch (AssetInfoNotFoundException e) {
-			e.printStackTrace();
-		} catch (IdNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-		if(assetInfo == null)
-		{
-			return null;
-		}
-		
-		String assetName = assetInfo.getBasicAssetInfo().getAssetName();
-		String assetVersion = assetInfo.getBasicAssetInfo().getVersion();
-		
-		AssertableArtifact artifact = new AssertableArtifact();
-		ArtifactAsset artifactReference = new ArtifactAsset();
-		artifactReference.setArtifactCategory(ArtifactContentTypes.WSDL);
-		artifactReference.setAssetName(assetName); 
-		artifactReference.setAssetType("Service");
-		artifactReference.setLibraryName("GovernedAssets");
-		artifactReference.setVersion(assetVersion);
-		artifact.setArtifactAssetReference(artifactReference);
-		
-		return artifact;
-	}	
-	
-	
-	private List<AssertableArtifact> createArtifacts(){
-		
-		List<AssertableArtifact> artifacts  = new ArrayList<AssertableArtifact>();
-		
-		AssetInfo assetInfo = null;
-		try {
-			assetInfo = assetCreator.getAssetAsAssetInfo("InternalServiceAsset1");
-		} catch (AssetInfoNotFoundException e) {
-			e.printStackTrace();
-		} catch (IdNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-		if(assetInfo == null)
-		{
-			return null;
-		}
-		
-		String assetName1 = assetInfo.getBasicAssetInfo().getAssetName();
-		String assetVersion1 = assetInfo.getBasicAssetInfo().getVersion();
-		
-		AssertableArtifact artifact = new AssertableArtifact();
-		ArtifactAsset artifactReference = new ArtifactAsset();
-		artifactReference.setArtifactCategory(ArtifactContentTypes.WSDL);
-		artifactReference.setAssetName(assetName1); 
-		artifactReference.setAssetType("Service");
-		artifactReference.setLibraryName("GovernedAssets");
-		artifactReference.setVersion(assetVersion1);
-		artifact.setArtifactAssetReference(artifactReference);
-		
-		try {
-			assetInfo = assetCreator.getAssetAsAssetInfo("InternalServiceAsset1");
-		} catch (AssetInfoNotFoundException e) {
-			e.printStackTrace();
-		} catch (IdNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-		if(assetInfo == null)
-		{
-			return null;
-		}
-		
-		String assetName2 = assetInfo.getBasicAssetInfo().getAssetName();
-		String assetVersion2 = assetInfo.getBasicAssetInfo().getVersion();
-		
-		AssertableArtifact artifact1 = new AssertableArtifact();
-		ArtifactAsset artifactReference1 = new ArtifactAsset();
-		artifactReference1.setArtifactCategory(ArtifactContentTypes.WSDL);
-		artifactReference1.setAssetName(assetName2);
-		artifactReference1.setAssetType("Service");
-		artifactReference1.setLibraryName("GovernedAssets");
-		artifactReference1.setVersion(assetVersion2);
-		artifact1.setArtifactAssetReference(artifactReference1);
-		
-		artifacts.add(artifact);
-		artifacts.add(artifact1);
-		
-		return artifacts;
-	}
-	
-	private AssertableArtifact createArtifactWithFailingContent(){
-		
-		AssetInfo assetInfo = null;
-		try {
-			assetInfo = assetCreator.getAssetAsAssetInfo("InternalServiceAsset2");
-		} catch (AssetInfoNotFoundException e) {
-			e.printStackTrace();
-		} catch (IdNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-		if(assetInfo == null)
-		{
-			return null;
-		}
-		
-		String assetName = assetInfo.getBasicAssetInfo().getAssetName();
-		String assetVersion = assetInfo.getBasicAssetInfo().getVersion();
-		
-		AssertableArtifact artifact = new AssertableArtifact();
-		ArtifactAsset artifactReference = new ArtifactAsset();
-		artifactReference.setArtifactCategory(ArtifactContentTypes.WSDL);
-		artifactReference.setAssetName(assetName); 
-		artifactReference.setAssetType("Service");
-		artifactReference.setLibraryName("GovernedAssets");
-		artifactReference.setVersion(assetVersion);
-		artifact.setArtifactAssetReference(artifactReference);
-		
-		return artifact;
-	}
+      AssertableArtifact artifact = createArtifactWithPassingContent();
+      request.getArtifacts().add(artifact);
+
+      String result = processRequest(request, POSITIVE_CASE);
+      System.out.println("testAssertionsRequest_Positive : " + result);
+
+      Assert.assertEquals(PASS, result);
+   }
+
+   @Test
+   public void testAssertionsRequest_Negative() {
+      System.out.println("\n***Starting testAssertionsRequest_Negative");
+
+      ApplyAssertionsRequest request = new ApplyAssertionsRequest();
+
+      Assertion assertion = createAssertion();
+      request.getAssertions().add(assertion);
+
+      AssertableArtifact artifact = createArtifactWithFailingContent();
+      request.getArtifacts().add(artifact);
+
+      String result = processRequest(request, NEGATIVE_CASE);
+      System.out.println("testAssertionsRequest_Negative : " + result);
+
+      Assert.assertEquals(PASS, result);
+   }
+
+   @Test
+   public void testAssertionsRequest_InvalidAssertionVersion() {
+      System.out.println("\n***Starting testAssertionsRequest_InvalidAssertionVersion");
+
+      ApplyAssertionsRequest request = new ApplyAssertionsRequest();
+
+      Assertion assertion = createAssertion();
+      assertion.getAssertionAsset().setVersion(";k&*");
+      request.getAssertions().add(assertion);
+
+      AssertableArtifact artifact = createArtifactWithFailingContent();
+      request.getArtifacts().add(artifact);
+
+      String result = processRequest(request, FAILURE_CASE);
+      System.out.println("testAssertionsRequest_InvalidAssertionVersion : " + result);
+
+      Assert.assertEquals(PASS, result);
+   }
+
+   @Test
+   public void testAssertionsRequest_WithoutArtifactCategory() {
+      System.out.println("\n***Starting testAssertionsRequest_WithoutArtifactCategory");
+
+      ApplyAssertionsRequest request = new ApplyAssertionsRequest();
+
+      Assertion assertion = createAssertion();
+      request.getAssertions().add(assertion);
+
+      AssertableArtifact artifact = createArtifactWithFailingContent();
+      artifact.getArtifactAssetReference().setArtifactCategory(null);
+      request.getArtifacts().add(artifact);
+
+      String result = processRequest(request, FAILURE_CASE);
+      System.out.println("testAssertionsRequest_WithoutArtifactCategory : " + result);
+
+      Assert.assertEquals(PASS, result);
+   }
+
+   @Test
+   public void testAssertionsRequest_InvalidArtifactCategory() {
+      System.out.println("\n***Starting testAssertionsRequest_InvalidArtifactName");
+
+      ApplyAssertionsRequest request = new ApplyAssertionsRequest();
+
+      Assertion assertion = createAssertion();
+      request.getAssertions().add(assertion);
+
+      AssertableArtifact artifact = createArtifactWithFailingContent();
+      artifact.getArtifactAssetReference().setArtifactCategory(ArtifactContentTypes.XSD);
+      request.getArtifacts().add(artifact);
+
+      String result = processRequest(request, FAILURE_CASE);
+      System.out.println("testAssertionsRequest_InvalidArtifactCategory : " + result);
+
+      Assert.assertEquals(PASS, result);
+   }
+
+   @Test
+   public void testAssertionsRequest_WithoutArtifactVersion() {
+      System.out.println("\n***Starting testAssertionsRequest_WithoutArtifactVersion");
+
+      ApplyAssertionsRequest request = new ApplyAssertionsRequest();
+
+      Assertion assertion = createAssertion();
+      request.getAssertions().add(assertion);
+
+      AssertableArtifact artifact = createArtifactWithPassingContent();
+      artifact.getArtifactAssetReference().setVersion(null);
+      request.getArtifacts().add(artifact);
+
+      String result = processRequest(request, POSITIVE_CASE);
+      System.out.println("testAssertionsRequest_WithoutArtifactVersion : " + result);
+
+      Assert.assertEquals(PASS, result);
+   }
+
+   @Test
+   public void testAssertionsRequest_WithoutArtifactAssetName() {
+      System.out.println("\n***Starting testAssertionsRequest_WithoutArtifactAssetName");
+
+      ApplyAssertionsRequest request = new ApplyAssertionsRequest();
+
+      Assertion assertion = createAssertion();
+      request.getAssertions().add(assertion);
+
+      AssertableArtifact artifact = createArtifactWithFailingContent();
+      artifact.getArtifactAssetReference().setAssetName(null);
+      request.getArtifacts().add(artifact);
+
+      String result = processRequest(request, FAILURE_CASE);
+      System.out.println("testAssertionsRequest_WithoutArtifactAssetName : " + result);
+
+      Assert.assertEquals(PASS, result);
+   }
+
+   @Test
+   public void testAssertionsRequest_WithoutArtifactAssetType() {
+      System.out.println("\n***Starting testAssertionsRequest_WithoutArtifactAssetType");
+
+      ApplyAssertionsRequest request = new ApplyAssertionsRequest();
+
+      Assertion assertion = createAssertion();
+      request.getAssertions().add(assertion);
+
+      AssertableArtifact artifact = createArtifactWithFailingContent();
+      artifact.getArtifactAssetReference().setAssetType(null);
+      request.getArtifacts().add(artifact);
+
+      String result = processRequest(request, FAILURE_CASE);
+      System.out.println("testAssertionsRequest_WithoutArtifactAssetType : " + result);
+
+      Assert.assertEquals(PASS, result);
+   }
+
+   @Test
+   public void testAssertionsRequest_WithoutArtifactLibraryName() {
+      System.out.println("\n***Starting testAssertionsRequest_WithoutArtifactLibraryName");
+
+      ApplyAssertionsRequest request = new ApplyAssertionsRequest();
+
+      Assertion assertion = createAssertion();
+      request.getAssertions().add(assertion);
+
+      AssertableArtifact artifact = createArtifactWithFailingContent();
+      artifact.getArtifactAssetReference().setLibraryName(null);
+      request.getArtifacts().add(artifact);
+
+      String result = processRequest(request, FAILURE_CASE);
+      System.out.println("testAssertionsRequest_WithoutArtifactLibraryName : " + result);
+
+      Assert.assertEquals(PASS, result);
+   }
+
+   private Assertion createAssertion() {
+
+      Assertion assertion = new Assertion();
+      AssertionAsset reference = new AssertionAsset();
+      reference.setAssetName("soa_complexTypeNameUppercase_assertion");
+      reference.setAssetType(AssertionAssetTypes.ASSERTION);
+      reference.setLibraryName("SystemAssets");
+      reference.setVersion("1.0.0");
+      assertion.setAssertionAsset(reference);
+
+      return assertion;
+   }
+
+   private List<Assertion> createAssertions() {
+
+      List<Assertion> assertions = new ArrayList<Assertion>();
+
+      Assertion assertion = new Assertion();
+      AssertionAsset reference = new AssertionAsset();
+      reference.setAssetName("soa_complexTypeNameUppercase_assertion");
+      reference.setAssetType(AssertionAssetTypes.ASSERTION);
+      reference.setLibraryName("SystemAssets");
+      reference.setVersion("1.0.0");
+      assertion.setAssertionAsset(reference);
+
+      Assertion assertion1 = new Assertion();
+      AssertionAsset reference1 = new AssertionAsset();
+      reference1.setAssetName("soa_serviceNameUppercase_assertion");
+      reference1.setAssetType(AssertionAssetTypes.ASSERTION);
+      reference1.setLibraryName("SystemAssets");
+      reference1.setVersion("1.0.0");
+      assertion1.setAssertionAsset(reference1);
+
+      assertions.add(assertion);
+      assertions.add(assertion1);
+
+      return assertions;
+   }
+
+   private AssertableArtifact createArtifactWithPassingContent() {
+
+      AssetInfo assetInfo = null;
+      try {
+         assetInfo = assetCreator.getAssetAsAssetInfo("InternalServiceAsset1");
+      } catch (AssetInfoNotFoundException e) {
+         e.printStackTrace();
+      } catch (IdNotFoundException e) {
+         e.printStackTrace();
+      }
+
+      if (assetInfo == null) {
+         return null;
+      }
+
+      String assetName = assetInfo.getBasicAssetInfo().getAssetName();
+      String assetVersion = assetInfo.getBasicAssetInfo().getVersion();
+
+      AssertableArtifact artifact = new AssertableArtifact();
+      ArtifactAsset artifactReference = new ArtifactAsset();
+      artifactReference.setArtifactCategory(ArtifactContentTypes.WSDL);
+      artifactReference.setAssetName(assetName);
+      artifactReference.setAssetType("Service");
+      artifactReference.setLibraryName("GovernedAssets");
+      artifactReference.setVersion(assetVersion);
+      artifact.setArtifactAssetReference(artifactReference);
+
+      return artifact;
+   }
+
+   private List<AssertableArtifact> createArtifacts() {
+
+      List<AssertableArtifact> artifacts = new ArrayList<AssertableArtifact>();
+
+      AssetInfo assetInfo = null;
+      try {
+         assetInfo = assetCreator.getAssetAsAssetInfo("InternalServiceAsset1");
+      } catch (AssetInfoNotFoundException e) {
+         e.printStackTrace();
+      } catch (IdNotFoundException e) {
+         e.printStackTrace();
+      }
+
+      if (assetInfo == null) {
+         return null;
+      }
+
+      String assetName1 = assetInfo.getBasicAssetInfo().getAssetName();
+      String assetVersion1 = assetInfo.getBasicAssetInfo().getVersion();
+
+      AssertableArtifact artifact = new AssertableArtifact();
+      ArtifactAsset artifactReference = new ArtifactAsset();
+      artifactReference.setArtifactCategory(ArtifactContentTypes.WSDL);
+      artifactReference.setAssetName(assetName1);
+      artifactReference.setAssetType("Service");
+      artifactReference.setLibraryName("GovernedAssets");
+      artifactReference.setVersion(assetVersion1);
+      artifact.setArtifactAssetReference(artifactReference);
+
+      try {
+         assetInfo = assetCreator.getAssetAsAssetInfo("InternalServiceAsset1");
+      } catch (AssetInfoNotFoundException e) {
+         e.printStackTrace();
+      } catch (IdNotFoundException e) {
+         e.printStackTrace();
+      }
+
+      if (assetInfo == null) {
+         return null;
+      }
+
+      String assetName2 = assetInfo.getBasicAssetInfo().getAssetName();
+      String assetVersion2 = assetInfo.getBasicAssetInfo().getVersion();
+
+      AssertableArtifact artifact1 = new AssertableArtifact();
+      ArtifactAsset artifactReference1 = new ArtifactAsset();
+      artifactReference1.setArtifactCategory(ArtifactContentTypes.WSDL);
+      artifactReference1.setAssetName(assetName2);
+      artifactReference1.setAssetType("Service");
+      artifactReference1.setLibraryName("GovernedAssets");
+      artifactReference1.setVersion(assetVersion2);
+      artifact1.setArtifactAssetReference(artifactReference1);
+
+      artifacts.add(artifact);
+      artifacts.add(artifact1);
+
+      return artifacts;
+   }
+
+   private AssertableArtifact createArtifactWithFailingContent() {
+
+      AssetInfo assetInfo = null;
+      try {
+         assetInfo = assetCreator.getAssetAsAssetInfo("InternalServiceAsset2");
+      } catch (AssetInfoNotFoundException e) {
+         e.printStackTrace();
+      } catch (IdNotFoundException e) {
+         e.printStackTrace();
+      }
+
+      if (assetInfo == null) {
+         return null;
+      }
+
+      String assetName = assetInfo.getBasicAssetInfo().getAssetName();
+      String assetVersion = assetInfo.getBasicAssetInfo().getVersion();
+
+      AssertableArtifact artifact = new AssertableArtifact();
+      ArtifactAsset artifactReference = new ArtifactAsset();
+      artifactReference.setArtifactCategory(ArtifactContentTypes.WSDL);
+      artifactReference.setAssetName(assetName);
+      artifactReference.setAssetType("Service");
+      artifactReference.setLibraryName("GovernedAssets");
+      artifactReference.setVersion(assetVersion);
+      artifact.setArtifactAssetReference(artifactReference);
+
+      return artifact;
+   }
 
 }
