@@ -28,10 +28,5 @@
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.ebayopensource.turmeric.repository</groupId>
-      <artifactId>RepositoryServiceClient</artifactId>
-      <version>${project.version}</version>
-    </dependency>
   </dependencies>
 </project>
