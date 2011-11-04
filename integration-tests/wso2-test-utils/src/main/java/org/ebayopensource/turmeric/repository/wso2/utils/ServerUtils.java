@@ -32,137 +32,132 @@ import java.io.InputStreamReader;
  */
 public class ServerUtils {
 
-    private static Process process;
-    private static Thread consoleLogPrinter;
-    private static String originalUserDir = null;
+   private static Process process;
+   private static Thread consoleLogPrinter;
+   private static String originalUserDir = null;
 
-    private final static String SERVER_STARTUP_MESSAGE = "WSO2 Carbon started in";
-    private final static String SERVER_SHUTDOWN_MESSAGE = "Halting JVM";
-    private final static long DEFAULT_START_STOP_WAIT_MS = 1000 * 60 * 4;
+   private final static String SERVER_STARTUP_MESSAGE = "WSO2 Carbon started in";
+   private final static String SERVER_SHUTDOWN_MESSAGE = "Halting JVM";
+   private final static long DEFAULT_START_STOP_WAIT_MS = 1000 * 60 * 4;
 
-    public synchronized static void startServerUsingCarbonHome(String carbonHome)
-            throws ServerConfigurationException {
-        if (process != null) { // An instance of the server is running
-            return;
-        }
-        Process tempProcess;
-        try {
-            System.setProperty(ServerConstants.CARBON_HOME, carbonHome);
-            originalUserDir = System.getProperty("user.dir");
-            System.setProperty("user.dir", carbonHome);
-            String temp;
-            if (System.getProperty("os.name").toLowerCase().contains("windows")) {
-                tempProcess = Runtime.getRuntime().exec(new String[]{"bat", "bin/wso2server.bat"},
-                        null, new File(carbonHome));
-            } else {
-                tempProcess = Runtime.getRuntime().exec(new String[]{"sh", "bin/wso2server.sh", "test"},
-                        null, new File(carbonHome));
+   public synchronized static void startServerUsingCarbonHome(String carbonHome) throws ServerConfigurationException {
+      if (process != null) { // An instance of the server is running
+         return;
+      }
+      Process tempProcess;
+      try {
+         System.setProperty(ServerConstants.CARBON_HOME, carbonHome);
+         originalUserDir = System.getProperty("user.dir");
+         System.setProperty("user.dir", carbonHome);
+         String temp;
+         if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+            tempProcess = Runtime.getRuntime().exec(new String[] { "bat", "bin/wso2server.bat" }, null,
+                     new File(carbonHome));
+         } else {
+            tempProcess = Runtime.getRuntime().exec(new String[] { "sh", "bin/wso2server.sh", "test" }, null,
+                     new File(carbonHome));
+         }
+         Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+               try {
+                  System.out.println("Shutting down server...");
+                  ServerUtils.shutdown();
+               } catch (Exception e) {
+                  e.printStackTrace();
+               }
             }
-            Runtime.getRuntime().addShutdownHook(new Thread() {
-                public void run() {
-                    try {
-                        System.out.println("Shutting down server...");
-                        ServerUtils.shutdown();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-            final BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(tempProcess.getInputStream()));
+         });
+         final BufferedReader reader = new BufferedReader(new InputStreamReader(tempProcess.getInputStream()));
+         long time = System.currentTimeMillis() + DEFAULT_START_STOP_WAIT_MS;
+         while ((temp = reader.readLine()) != null && System.currentTimeMillis() < time) {
+            System.out.println(temp);
+            if (temp.contains(SERVER_STARTUP_MESSAGE)) {
+               consoleLogPrinter = new Thread() {
+                  @Override
+                  public void run() {
+                     try {
+                        String temp;
+                        while ((temp = reader.readLine()) != null) {
+                           System.out.println(temp);
+                        }
+                     } catch (Exception ignore) {
+
+                     }
+                  }
+               };
+               consoleLogPrinter.start();
+               break;
+            }
+         }
+      } catch (IOException e) {
+         throw new RuntimeException("Unable to start server", e);
+      }
+      process = tempProcess;
+      System.out.println("Successfully started Carbon server. Returning...");
+   }
+
+   public synchronized static void startServerUsingCarbonZip(String carbonServerZipFile)
+            throws ServerConfigurationException, IOException {
+      if (process != null) { // An instance of the server is running
+         return;
+      }
+      String carbonHome = setUpCarbonHome(carbonServerZipFile);
+      carbonHome = carbonHome.replace("/carbon", "/wso2greg-4.1.0");
+      // instrumentJarsForEmma(carbonHome);
+      startServerUsingCarbonHome(carbonHome);
+   }
+
+   public synchronized static String setUpCarbonHome(String carbonServerZipFile) throws IOException {
+      if (process != null) { // An instance of the server is running
+         return null;
+      }
+      int indexOfZip = carbonServerZipFile.lastIndexOf(".zip");
+      if (indexOfZip == -1) {
+         throw new IllegalArgumentException(carbonServerZipFile + " is not a zip file");
+      }
+      String fileSeparator = (File.separator.equals("\\")) ? "\\" : "/";
+      String extractedCarbonDir = carbonServerZipFile.substring(carbonServerZipFile.lastIndexOf(fileSeparator) + 1,
+               indexOfZip);
+      FileManipulator.deleteDir(extractedCarbonDir);
+      new ArchiveManipulator().extract(carbonServerZipFile, "wso2temp");
+      return new File(".").getAbsolutePath() + File.separator + "wso2temp" + File.separator + extractedCarbonDir;
+   }
+
+   public synchronized static void shutdown() throws Exception {
+      if (process != null) {
+         process.destroy();
+         InputStream inputstream = null;
+         try {
+            String temp;
+            process.destroy();
+            inputstream = process.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputstream));
             long time = System.currentTimeMillis() + DEFAULT_START_STOP_WAIT_MS;
             while ((temp = reader.readLine()) != null && System.currentTimeMillis() < time) {
-                System.out.println(temp);
-                if (temp.contains(SERVER_STARTUP_MESSAGE)) {
-                    consoleLogPrinter = new Thread() {
-                        public void run() {
-                            try {
-                                String temp;
-                                while ((temp = reader.readLine()) != null) {
-                                    System.out.println(temp);
-                                }
-                            } catch (Exception ignore) {
-
-                            }
-                        }
-                    };
-                    consoleLogPrinter.start();
-                    break;
-                }
-            }
-        } catch (IOException e) {
-            throw new RuntimeException("Unable to start server", e);
-        }
-        process = tempProcess;
-        System.out.println("Successfully started Carbon server. Returning...");
-    }
-
-    public synchronized static void startServerUsingCarbonZip(String carbonServerZipFile)
-            throws ServerConfigurationException, IOException {
-        if (process != null) { // An instance of the server is running
-            return;
-        }
-        String carbonHome = setUpCarbonHome(carbonServerZipFile);
-        carbonHome = carbonHome.replace("/carbon", "/wso2greg-4.0.0");
-        //instrumentJarsForEmma(carbonHome);
-        startServerUsingCarbonHome(carbonHome);
-    }
-
-    public synchronized static String setUpCarbonHome(String carbonServerZipFile)
-            throws IOException {
-        if (process != null) { // An instance of the server is running
-            return null;
-        }
-        int indexOfZip = carbonServerZipFile.lastIndexOf(".zip");
-        if (indexOfZip == -1) {
-            throw new IllegalArgumentException(carbonServerZipFile + " is not a zip file");
-        }
-        String fileSeparator = (File.separator.equals("\\")) ? "\\" : "/";
-        String extractedCarbonDir =
-                carbonServerZipFile.substring(carbonServerZipFile.lastIndexOf(fileSeparator) + 1,
-                        indexOfZip);
-        FileManipulator.deleteDir(extractedCarbonDir);
-        new ArchiveManipulator().extract(carbonServerZipFile, "wso2temp");
-        return new File(".").getAbsolutePath() + File.separator + "wso2temp" +
-                File.separator + extractedCarbonDir;
-    }
-
-    public synchronized static void shutdown() throws Exception {
-        if (process != null) {
-            process.destroy();
-            InputStream inputstream = null;
-            try {
-                String temp;
-                process.destroy();
-                inputstream = process.getInputStream();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(inputstream));
-                long time = System.currentTimeMillis() + DEFAULT_START_STOP_WAIT_MS;
-                while ((temp = reader.readLine()) != null && System.currentTimeMillis() < time) {
-                    if (temp.contains(SERVER_SHUTDOWN_MESSAGE)) {
-                        break;
-                    }
-                }
-
-            } catch (IOException ignored) {
-            } finally {
-            	if (inputstream != null) {
-            		inputstream.close();
-            	}
+               if (temp.contains(SERVER_SHUTDOWN_MESSAGE)) {
+                  break;
+               }
             }
 
-            try {
-                consoleLogPrinter.interrupt();
-            } catch (Exception e) {
-                e.printStackTrace();
+         } catch (IOException ignored) {
+         } finally {
+            if (inputstream != null) {
+               inputstream.close();
             }
-            
-            
-            
-            consoleLogPrinter = null;
-            process = null;
-            System.clearProperty(ServerConstants.CARBON_HOME);
-            System.setProperty("user.dir", originalUserDir);
-        }
-    }
+         }
+
+         try {
+            consoleLogPrinter.interrupt();
+         } catch (Exception e) {
+            e.printStackTrace();
+         }
+
+         consoleLogPrinter = null;
+         process = null;
+         System.clearProperty(ServerConstants.CARBON_HOME);
+         System.setProperty("user.dir", originalUserDir);
+      }
+   }
 
 }
