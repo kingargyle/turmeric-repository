@@ -17,7 +17,7 @@
 		<dependency>
 			<groupId>org.wso2.carbon</groupId>
 			<artifactId>wso2carbon-core</artifactId>
-			<version>3.2.0</version>
+			<version>3.2.2</version>
 			<type>zip</type>
 			<exclusions>
 				<exclusion>
@@ -29,12 +29,12 @@
 		<dependency>
 			<groupId>org.wso2.carbon</groupId>
 			<artifactId>org.wso2.carbon.base</artifactId>
-			<version>3.2.0</version>
+			<version>3.2.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.wso2.carbon</groupId>
 			<artifactId>org.wso2.carbon.server</artifactId>
-			<version>3.2.0</version>
+			<version>3.2.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.wso2.carbon</groupId>

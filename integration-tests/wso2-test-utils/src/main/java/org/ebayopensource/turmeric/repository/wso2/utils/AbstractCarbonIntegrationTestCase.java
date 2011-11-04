@@ -39,59 +39,58 @@ import org.junit.AfterClass;
 import org.junit.Before;
 
 /**
- * This is the base class of all JUnit TestCases which require starting of a
- * WSO2 Governance server instance
+ * This is the base class of all JUnit TestCases which require starting of a WSO2 Governance server instance
  * <p/>
  * The governance server is downloaded from the ebayopensource hudson instance.
  * <p/>
  */
 public abstract class AbstractCarbonIntegrationTestCase {
 
-	protected String carbonHome;
+   protected String carbonHome;
 
-	@Before
-	public void setUp() throws Exception {
+   @Before
+   public void setUp() throws Exception {
 
-		String carbonZip = downloadZip();
-		copyArtifacts();
+      String carbonZip = downloadZip();
+      copyArtifacts();
 
-		ServerUtils.startServerUsingCarbonZip(carbonZip);
-	}
+      ServerUtils.startServerUsingCarbonZip(carbonZip);
+   }
 
-	/**
-	 * Copy any artifacts that may be needed before starting the server
-	 * 
-	 * @throws java.io.IOException
-	 *             If an error occurs while copying artifacts
-	 */
-	abstract protected void copyArtifacts() throws IOException;
+   /**
+    * Copy any artifacts that may be needed before starting the server
+    * 
+    * @throws java.io.IOException
+    *            If an error occurs while copying artifacts
+    */
+   abstract protected void copyArtifacts() throws IOException;
 
-	@AfterClass
-	public static void tearDown() throws Exception {
-		ServerUtils.shutdown();
-		Thread.sleep(15000L);
-	}
+   @AfterClass
+   public static void tearDown() throws Exception {
+      ServerUtils.shutdown();
+      Thread.sleep(15000L);
+   }
 
-	public String downloadZip() throws Exception {
-		BufferedInputStream in = new BufferedInputStream(new URL(
-				"http://dist.wso2.org/products/registry/4.0.0/wso2greg-4.0.0.zip").openStream());
-		String location = System.getProperty("java.io.tmpdir") + "/carbon.zip";
+   public String downloadZip() throws Exception {
+      BufferedInputStream in = new BufferedInputStream(new URL(
+               "http://dist.wso2.org/products/registry/4.1.0/wso2greg-4.1.0.zip").openStream());
+      String location = System.getProperty("java.io.tmpdir") + "/carbon.zip";
 
-		if (!new File(location).exists()) {
-			System.out.println("Downloading WSO2 Governance Registry.");
-			FileOutputStream fos = new FileOutputStream(location);
-			BufferedOutputStream bout = new BufferedOutputStream(fos, 1024);
-			byte[] data = new byte[1024];
-			int x = 0;
-			while ((x = in.read(data, 0, 1024)) >= 0) {
-				bout.write(data, 0, x);
-			}
-			bout.close();
-			in.close();
-			System.out.println("Finished download.");
-		}
-		
-		return location;
-	}
+      if (!new File(location).exists()) {
+         System.out.println("Downloading WSO2 Governance Registry.");
+         FileOutputStream fos = new FileOutputStream(location);
+         BufferedOutputStream bout = new BufferedOutputStream(fos, 1024);
+         byte[] data = new byte[1024];
+         int x = 0;
+         while ((x = in.read(data, 0, 1024)) >= 0) {
+            bout.write(data, 0, x);
+         }
+         bout.close();
+         in.close();
+         System.out.println("Finished download.");
+      }
+
+      return location;
+   }
 
 }
