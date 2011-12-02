@@ -21,7 +21,7 @@
 	<name>Turmeric Parent :: Repository</name>
 	<packaging>pom</packaging>
 	<properties>
-		<turmeric-runtime-version>1.1.0</turmeric-runtime-version>
+		<turmeric-runtime-version>1.0.0</turmeric-runtime-version>
 	</properties>
 	  <scm>
 	    <connection>scm:git:git@github.com:ebayopensource/turmeric-repository.git</connection>
