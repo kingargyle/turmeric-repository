@@ -120,17 +120,6 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.ebayopensource.turmeric.intf</groupId>
-			<artifactId>TurmericRSV1</artifactId>
-			<version>${project.version}</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.ebayopensource.turmeric.impl</groupId>
-			<artifactId>TurmericRSV1Impl</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.ebayopensource.turmeric.intf</groupId>
 			<artifactId>TurmericASV1</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>

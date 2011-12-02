@@ -93,7 +93,7 @@
 						</connector>
 					</connectors>
 					<webAppConfig>
-						<contextPath>/TurmericRSV1</contextPath>
+						<contextPath>/TurmericRSV2</contextPath>
 					</webAppConfig>
 					<stopKey>foo</stopKey>
 					<stopPort>9999</stopPort>
