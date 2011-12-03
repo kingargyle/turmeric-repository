@@ -13,6 +13,7 @@
     <groupId>org.ebayopensource.turmeric.repository</groupId>
     <artifactId>turmeric-assertion-service-parent</artifactId>
     <version>1.0.0.2-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>    
   </parent>
   <groupId>org.ebayopensource.turmeric.intf</groupId>
   <artifactId>TurmericASV1</artifactId>

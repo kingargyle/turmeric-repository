@@ -5,6 +5,7 @@
 		<artifactId>turmeric-repository-it-parent</artifactId>
 		<groupId>org.ebayopensource.turmeric.repository</groupId>
 		<version>1.0.0.2-SNAPSHOT</version>
+                <relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>wso2-test-utils</artifactId>
 	<name>WSO2 Turmeric Testing Utils</name>

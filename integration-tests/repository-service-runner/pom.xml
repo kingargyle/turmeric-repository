@@ -5,6 +5,7 @@
     		<groupId>org.ebayopensource.turmeric.repository</groupId>
     		<artifactId>turmeric-repository-parent</artifactId>
     		<version>0.9.1.0-SNAPSHOT</version>
+                <relativePath>../../pom.xml</relativePath>    		
   	</parent>
 	<groupId>org.ebayopensource.turmeric.repository</groupId>
 	<artifactId>repository-service-runner</artifactId>
