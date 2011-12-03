@@ -12,12 +12,12 @@
   <parent>
 	<groupId>org.ebayopensource.turmeric.repository</groupId>
 	<artifactId>turmeric-repository-parent</artifactId>
-	<version>1.0.0-Beta</version>
+	<version>1.0.0.3-SNAPSHOT</version>
        <relativePath>../pom.xml</relativePath>
   </parent>
 	<groupId>org.ebayopensource.turmeric.repository</groupId>
 	<artifactId>turmeric-assertion-service-parent</artifactId>
-	<version>1.0.0-Beta</version>
+	<version>1.0.0.3-SNAPSHOT</version>
 	<name>Turmeric Parent :: Repository :: Assertion Service</name>
 	<packaging>pom</packaging>
 	<modules>
