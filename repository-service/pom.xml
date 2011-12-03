@@ -12,12 +12,12 @@
   <parent>
 	<groupId>org.ebayopensource.turmeric.repository</groupId>
 	<artifactId>turmeric-repository-parent</artifactId>
-	<version>1.0.0.2-SNAPSHOT</version>
+	<version>1.0.0-Beta</version>
         <relativePath>../pom.xml</relativePath>	
   </parent>
 	<groupId>org.ebayopensource.turmeric.repository</groupId>
 	<artifactId>turmeric-repository-service-parent</artifactId>
-	<version>1.0.0.2-SNAPSHOT</version>
+	<version>1.0.0-Beta</version>
 	<name>Turmeric Parent :: Repository Service</name>
 	<packaging>pom</packaging>
 	<modules>
