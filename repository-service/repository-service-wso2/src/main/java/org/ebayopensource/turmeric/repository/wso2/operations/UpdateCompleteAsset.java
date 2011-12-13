@@ -113,6 +113,7 @@ public class UpdateCompleteAsset extends AbstractRepositoryProvider {
       if (basicInfo.getGroupName() != null) {
          gart.setAttribute(AssetConstants.TURMERIC_OWNER, basicInfo.getGroupName());
       }
+      asset.save();
    }
 
    private void updateExtendedAttributes(ExtendedAssetInfo extInfo, Asset asset) throws GovernanceException {
@@ -127,5 +128,7 @@ public class UpdateCompleteAsset extends AbstractRepositoryProvider {
             }
          }
       }
+
+      asset.save();
    }
 }

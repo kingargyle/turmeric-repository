@@ -29,6 +29,7 @@ public class WSDLAsset implements Asset {
    private WSDLManager wsdlManager = null;
    private Wsdl wsdl;
    private Registry registry = null;
+   private BasicAssetInfo bainfo = null;
 
    /**
     * Constructor for a WSDL created from an ArtifactInfo object.
@@ -49,6 +50,7 @@ public class WSDLAsset implements Asset {
    public WSDLAsset(BasicAssetInfo bi, Registry registry) throws Exception {
       this.registry = registry;
       wsdlManager = new WSDLManager(registry);
+      bainfo = bi;
    }
 
    @Override
@@ -134,7 +136,18 @@ public class WSDLAsset implements Asset {
 
    @Override
    public void findAsset() {
-
+      if (bainfo != null) {
+         if (bainfo.getAssetKey() != null) {
+            if (bainfo.getAssetKey().getAssetId() != null) {
+               try {
+                  wsdl = wsdlManager.getWsdl(bainfo.getAssetKey().getAssetId());
+                  return;
+               } catch (GovernanceException e) {
+               }
+            }
+         }
+      }
+      return;
    }
 
    @Override

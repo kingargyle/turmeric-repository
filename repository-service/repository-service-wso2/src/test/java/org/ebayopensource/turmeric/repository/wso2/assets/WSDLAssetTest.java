@@ -12,7 +12,9 @@ package org.ebayopensource.turmeric.repository.wso2.assets;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.wso2.carbon.governance.api.common.dataobjects.GovernanceArtifact;
 import org.wso2.carbon.governance.api.util.GovernanceConstants;
+import org.wso2.carbon.governance.api.util.GovernanceUtils;
 import org.wso2.carbon.registry.core.Registry;
 
 import org.ebayopensource.turmeric.repository.v2.services.*;
@@ -22,6 +24,7 @@ import org.ebayopensource.turmeric.repository.wso2.Wso2Base;
 public class WSDLAssetTest extends Wso2Base {
 
    private static final String ASSETNAME = "testwsdl";
+   private String assetId = null;
 
    @Test
    public void testCreateWSDL() throws Exception {
@@ -40,5 +43,15 @@ public class WSDLAssetTest extends Wso2Base {
       WSDLAsset wsdlAsset = new WSDLAsset(wsdlInfo, wso2Registry);
       assertTrue("WSDL was not created.", wsdlAsset.createAsset());
       assertTrue("WSDL was not added.", wsdlAsset.addAsset());
+      assetId = wsdlAsset.getId();
+      assertNotNull("Unable to retrieve wsdl", GovernanceUtils.retrieveGovernanceArtifactById(wso2Registry, assetId));
+
+      GovernanceArtifact gart = wsdlAsset.getGovernanceArtifact();
+      gart.setAttribute(AssetConstants.TURMERIC_NAME, "New WSDL Name");
+      wsdlAsset.save();
+
+      gart = GovernanceUtils.retrieveGovernanceArtifactById(wso2Registry, wsdlAsset.getId());
+      assertEquals("New WSDL Name", gart.getAttribute(AssetConstants.TURMERIC_NAME));
    }
+
 }
